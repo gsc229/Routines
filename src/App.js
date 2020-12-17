@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import {getWeek} from './3_APIs/routineWeekHelpers'
-import UserDashBoard from './5_Pages/UserDashBoard'
+import './App.scss'
+import UserDashBoard from './5_Pages/user_dashboard/UserDashBoard'
 import ManageRoutines from './5_Pages/ManageRoutines'
 
 // experimental
