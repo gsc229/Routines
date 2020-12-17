@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import {Switch, Route} from 'react-router-dom'
-import {getWeek} from './3_API_Helpers/temp_helpers/routineWeekHelpers'
-
+import {getWeek} from './3_APIs/routineWeekHelpers'
+import Menu from './4_Components/menu/Menu'
 import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
 
   return (
     <div className="App">
+      <Menu />
       <Switch>
         <Route exact path="/routines-dnd">
             <RoutineWeekDnD weekData={weekData} setWeekData={setWeekData}/>

@@ -1,4 +1,4 @@
-import axiosWithAuth from '../../utils/axiosWithAuth'
+import axiosWithAuth from '../utils/axiosWithAuth'
 
 export const upadateRoutineExercise = (routine_exercise_id, updates) => {
 

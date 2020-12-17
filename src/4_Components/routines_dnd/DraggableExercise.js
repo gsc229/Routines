@@ -1,6 +1,6 @@
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
-import RoutineExercise from './RoutineExercise'
+import RoutineExercise from '../routine_exercise/RoutineExercise'
 
 // styles
 const draggableExerciseStyles = (snapshot, providedDraggablePropsStyle) => {
