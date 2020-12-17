@@ -1,9 +1,5 @@
 export const weekConstructor = (weekData) => {
   let weekExercises = {
-    "U": {
-      name: "Sunday",
-      items: []
-    },
     "M": {
       name: "Monday",
       items: []
@@ -26,6 +22,10 @@ export const weekConstructor = (weekData) => {
     },
     "S": {
       name: "Saturday",
+      items: []
+    },
+    "U": {
+      name: "Sunday",
       items: []
     }
 }

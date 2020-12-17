@@ -1,10 +1,10 @@
 import React from 'react'
 import Menu from '../../4_Components/menu/Menu'
 
-const LayoutOne = ({children, showTop=true}) => {
+const LayoutOne = ({children, showTop=false}) => {
 
   return (
-    <div className='layout-one-container'>
+    <div className='layout-one'>
       <Menu />
       {showTop &&
       <div className="layout-one-top">

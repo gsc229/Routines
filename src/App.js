@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 import {getWeek} from './3_APIs/routineWeekHelpers'
 import './App.scss'
 import UserDashBoard from './5_Pages/user_dashboard/UserDashBoard'
-import ManageRoutines from './5_Pages/ManageRoutines'
+import ManageRoutines from './5_Pages/manage_routine/ManageRoutines'
 
 // experimental
 import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'

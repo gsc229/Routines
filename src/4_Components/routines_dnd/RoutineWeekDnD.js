@@ -3,6 +3,7 @@ import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd'
 import {weekConstructor} from './helpers/weekConstructor'
 import {onDragEnd} from './helpers/routineWeekHelpers'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
+import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import DraggableExercise from './DraggableExercise'
 
 const RoutinesWeekDnD = ({weekData}) => {
@@ -88,45 +89,47 @@ const RoutinesWeekDnD = ({weekData}) => {
   
 
   return (
-    <div className='container-fluid'>
-      <p>height: {height} width: {width}</p>
-      <div className='row week-droppable-row' style={getWeekDroppableRowStyles()}>
-        <DragDropContext
-          onDragEnd={ result=> onDragEnd(result, columns, setColumns)}
-        >
-          {Object.entries(columns).map(([id, column]) => {
-            
-            return(
-              <div className='day-droppable-container' style={getDayDroppableContainerStyles()}>                
-                  <h4 style={{fontSize: `${width < 1700 ? '25px' : '1.5vw'}`}}>{column.name}</h4>
-                  
-                    <Droppable
-                      key={id}
-                      droppableId={id}
-                    >
-                      {(provided, snapshot) => {
-                        return (
-                        <div
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          style={getDayDroppableStyles(snapshot, id)}
-                        >
-                          {column.items.map((item, index) => {
-                            return(
-                              <DraggableExercise item={item} index={index} width={width} />
-                            )
-                          })}
-        
-                        {provided.placeholder}
-                        </div>)
-                      }}
-                    </Droppable>
-              </div>
-            )
-          })}
-        </DragDropContext>
+    <LayoutOne>
+      <div className='container-fluid'>
+        <p>height: {height} width: {width}</p>
+        <div className='row week-droppable-row' style={getWeekDroppableRowStyles()}>
+          <DragDropContext
+            onDragEnd={ result=> onDragEnd(result, columns, setColumns)}
+          >
+            {Object.entries(columns).map(([id, column]) => {
+              
+              return(
+                <div className='day-droppable-container' style={getDayDroppableContainerStyles()}>                
+                    <h4 style={{fontSize: `${width < 1700 ? '25px' : '1.5vw'}`}}>{column.name}</h4>
+                    
+                      <Droppable
+                        key={id}
+                        droppableId={id}
+                      >
+                        {(provided, snapshot) => {
+                          return (
+                          <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            style={getDayDroppableStyles(snapshot, id)}
+                          >
+                            {column.items.map((item, index) => {
+                              return(
+                                <DraggableExercise item={item} index={index} width={width} />
+                              )
+                            })}
+          
+                          {provided.placeholder}
+                          </div>)
+                        }}
+                      </Droppable>
+                </div>
+              )
+            })}
+          </DragDropContext>
+        </div>
       </div>
-    </div>
+    </LayoutOne>
   )
 }
 

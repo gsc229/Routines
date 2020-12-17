@@ -1,0 +1,59 @@
+.main-calendar{
+  //background-color: blue;
+  width: fit-content;
+  margin: 40px auto;
+  border-bottom: 1px solid black;
+  border-radius: 4px;
+  .calendar-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    background-color: #212529;
+    padding: 10px;
+    color: white;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  
+  .arrow{
+    cursor: pointer;
+    font-size: 40px;
+    position: relative;
+    bottom: 5px;
+  }
+  
+  .week{
+    display: flex;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+  }
+  
+  .day{
+    width: 200px;
+    height: 200px;
+    border-right: 1px solid black;
+    cursor: pointer;
+  }
+  
+  .today{
+    background-color: gray;
+    color: white;
+  }
+  
+  .before{
+    color: lightgray;
+    cursor: not-allowed;
+  }
+  
+  .selected{
+    background-color: rgb(160, 14, 14);
+    color: white;
+  }
+
+
+}
+
+
+
+
