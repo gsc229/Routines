@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState, useEffect} from 'react'
+import {Switch, Route} from 'react-router-dom'
+import {getWeek} from './3_APIs/routineWeekHelpers'
+import Menu from './4_Components/menu/Menu'
+import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'
 
 function App() {
+
+  const testWeekId = '5fd6eb71b0321644dc6bf08a'
+  const testWeekQueryStr = 'populate_one=exercises&populate_two=exercise'
+  // /routines/weeks/5fd6eb71b0321644dc6bf08a?populate_one=exercises
+  const [weekData, setWeekData] = useState()
+  
+  useEffect(()=>{
+    getWeek(testWeekId, testWeekQueryStr)
+    .then(response => {
+      if(response.success){
+        setWeekData(response.data)
+      } else{
+        console.log({response})
+      }
+    })
+  }, [])
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Menu />
+      <Switch>
+        <Route exact path="/routines-dnd">
+            <RoutineWeekDnD weekData={weekData} setWeekData={setWeekData}/>
+          </Route>
+      </Switch>
     </div>
   );
 }
