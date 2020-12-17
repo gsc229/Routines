@@ -1,7 +1,10 @@
 import {useState, useEffect} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import {getWeek} from './3_APIs/routineWeekHelpers'
-import Menu from './4_Components/menu/Menu'
+import UserDashBoard from './5_Pages/UserDashBoard'
+import ManageRoutines from './5_Pages/ManageRoutines'
+
+// experimental
 import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'
 
 function App() {
@@ -26,11 +29,19 @@ function App() {
 
   return (
     <div className="App">
-      <Menu />
       <Switch>
+        <Route exact path="/">
+          <UserDashBoard />
+        </Route>
+        <Route exact path="/manage-routines">
+          <ManageRoutines />
+        </Route>
+
+
+        {/* Experimental */}
         <Route exact path="/routines-dnd">
-            <RoutineWeekDnD weekData={weekData} setWeekData={setWeekData}/>
-          </Route>
+          <RoutineWeekDnD weekData={weekData} setWeekData={setWeekData}/>
+        </Route>
       </Switch>
     </div>
   );

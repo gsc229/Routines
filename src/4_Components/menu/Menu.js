@@ -18,7 +18,7 @@ const Menu = () => {
     <div className="menu">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">YouFit</Link>
+          <Link className="navbar-brand" to="/">Routines</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -31,14 +31,9 @@ const Menu = () => {
                 <Link className="nav-link" to="/goals">Goals</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/progress">Progress</Link>
+                <Link className="nav-link" to="/manage-routines">Manage Routines</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/drag-and-drop-play">Drag and Drop Play</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/drag-and-drop-play2">Drag and Drop Play 2</Link>
-              </li><li className="nav-item">
                 <Link className="nav-link" to="/routines-dnd">Routines DnD</Link>
               </li>
               <li className={`${isActivePath()} nav-item dropdown`}>
