@@ -2,6 +2,7 @@
 export const FETCHING = 'FETCHING'
 export const FETCH_SUCCES = 'FETCH_SUCCES'
 export const FETCH_FAIL = 'FETCH_FAIL'
+export const CLEAR_ERROR_MESSAGE = 'CLEAR_ERROR_MESSAGE'
 
 /* USER ACTIONS */
 export const FETCHING_USER = 'FETCHING_USER'

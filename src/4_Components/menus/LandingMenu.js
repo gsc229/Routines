@@ -8,16 +8,11 @@ const activeStyle = {
 
 
 const LandingMenu = () => {
-
-  const params = useParams()
   const location = useLocation()
-  const history = useHistory()
 
   const isActiveTab = (pathname) => {
     return location.pathname === pathname ? { active: true, style: activeStyle} : {active: false, style: {}}
   }
-
-  console.log({params, location, history})
   return (
     <div className="menu">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

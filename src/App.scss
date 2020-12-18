@@ -1,3 +1,10 @@
+// Variables
+@import './variables';
+
+
+// Auth
+@import './7_Auth/auth.scss';
+
 @import './5_Pages/user_dashboard/user_dashboard.scss';
 
 // Calendar
@@ -6,4 +13,6 @@
 
 
 // Exercises
-@import './5_Pages/manage_exercises/manage_exercises.scss'
+@import './5_Pages/manage_exercises/manage_exercises.scss';
+
+

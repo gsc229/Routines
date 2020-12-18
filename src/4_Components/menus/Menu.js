@@ -1,7 +1,9 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {logout} from '../../1_Actions/userActions'
 import {Link, useLocation} from 'react-router-dom'
 
-const Menu = () => {
+const Menu = ({logout}) => {
   
   const pathname = useLocation().pathname
 
@@ -50,6 +52,9 @@ const Menu = () => {
                   <li><Link className="dropdown-item" to="/browse-exercises">Browse Exercises</Link></li>
                 </ul>
               </li>
+              <li className="nav-item">
+                <Link onClick={logout} className="nav-link" to="/">Log Out</Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -58,4 +63,4 @@ const Menu = () => {
   )
 }
 
-export default Menu
+export default connect( null, {logout})(Menu)

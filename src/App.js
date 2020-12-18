@@ -33,15 +33,13 @@ function App({loggedIn}) {
     })
   }, [])
 
-
+  console.log({loggedIn})
 
   return (
     <div className="App">
       <Switch>
 
-        <Route exact path="/signin">
-          <SignIn/>
-        </Route>
+        <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signup">
           <SignUp/>
         </Route>  
