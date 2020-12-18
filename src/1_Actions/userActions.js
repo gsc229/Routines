@@ -1,5 +1,5 @@
 import {LOGGING_IN, LOG_IN_SUCCESS, LOG_IN_FAIL, LOG_OUT, CLEAR_ERROR_MESSAGE} from './index'
-import {signIn} from '../3_APIs/auth'
+import {signIn} from '../3_APIs/authApi'
 
 export const logInUser = (userInfo) => dispatch => {
 
@@ -19,8 +19,11 @@ export const logInUser = (userInfo) => dispatch => {
 }
 
 export const logout = () => dispatch => {
-  localStorage.setItem('user', '')
   dispatch({type: LOG_OUT})
+  
+  localStorage.removeItem('user')
+  localStorage.removeItem('loggedIn')
+  localStorage.removeItem('token')
 }
 
 export const clearErrorMessage = () => dispatch => {

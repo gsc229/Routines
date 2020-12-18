@@ -5,8 +5,7 @@ const initialState = {
   loggingIn: false,
   loggedIn: false,
   error_message: '',
-  user: JSON.parse(localStorage.getItem('user')) || {}
-  
+  user: {}
 }
 
 const reducer = (state=initialState, action) => {
@@ -34,7 +33,7 @@ const reducer = (state=initialState, action) => {
         loggedIn: false
       }
     case LOG_OUT: 
-      return initialState
+    return initialState
     case CLEAR_ERROR_MESSAGE: 
       return {
         ...state,

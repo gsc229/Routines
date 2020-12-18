@@ -2,11 +2,9 @@ import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import LandingPageLayout from '../6_Layouts/layout_two/LandingPageLayout.js'
 import {logInUser, clearErrorMessage} from '../1_Actions/userActions'
+import {userRoutinesQuery} from '../1_Actions/routineActions'
 
-
-
-
-export const SignIn = ({logInUser, clearErrorMessage, loggingIn, loggedIn, error_message, history}) => {
+export const SignIn = ({logInUser, clearErrorMessage, loggingIn, loggedIn, error_message, history, token}) => {
   /* 
     test user:
     username: user1@mail.com
@@ -32,13 +30,12 @@ export const SignIn = ({logInUser, clearErrorMessage, loggingIn, loggedIn, error
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
     logInUser(credentials)
-
   }
 
   if(loggedIn){
     history.push('/')
+    userRoutinesQuery()
   }
 
   if(error_message){
