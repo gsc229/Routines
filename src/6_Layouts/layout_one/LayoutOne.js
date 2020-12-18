@@ -1,5 +1,5 @@
 import React from 'react'
-import Menu from '../../4_Components/menu/Menu'
+import Menu from '../../4_Components/menus/Menu'
 
 const LayoutOne = ({children, showTop=false}) => {
 

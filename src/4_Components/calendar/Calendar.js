@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import moment from 'moment'
 import buildCalendar from './build'
-import {dayStyles, beforeToday} from './styles'
+import {dayStyles, beforeToday, weekStyles} from './styles'
 import CalendarHeader from './CalendarHeader'
 
 const Calendar = ({calendarId}) => {
@@ -13,13 +13,15 @@ const Calendar = ({calendarId}) => {
     setCalendar(buildCalendar(value))
   },[value])
 
+  console.log({value})
+  console.log({calendar})
   return (
     <div className="main-calendar" id={calendarId}>
-      <CalendarHeader value={value} setValue={setValue} />
+      <CalendarHeader value={value} setValue={setValue} />      
       {
-      calendar.map(week=> 
+      calendar.map(week => 
       <div className="calendar">
-        <div className="week">
+        <div className={weekStyles(week) + " week" }>
         {week.map(day=> 
         <div 
         onClick={() => !beforeToday(day) && setValue(day)}

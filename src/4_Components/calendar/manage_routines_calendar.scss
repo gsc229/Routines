@@ -1,11 +1,15 @@
 #manage-routines-calendar{
   //background-color: green;
 
-  .calendar-header{
+  .calendar-header-top{
     font-size: 15px;
     .arrow{
       font-size: 25px;
     }
+  }
+
+  .live-week:hover{
+    border: 1px solid red;
   }
 
   .day{

@@ -27,9 +27,7 @@ export const ManageRoutines = () => {
         <div style={{height: '500px'}} className='routines-and-stats-container'>
           <div className='col-sm-6 routines-container'>
             <div className="options-menu">
-              <nav className="nav">
-                <button className="btn btn-outline-success nav-link" aria-current="page" href="#"><FaPlus /> New</button>
-              </nav>
+                <button className="btn btn-outline-success" aria-current="page" href="#"><FaPlus /> New</button>
             </div>            
             <div className="routines-bank">
               routines bank

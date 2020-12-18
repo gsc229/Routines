@@ -1,6 +1,5 @@
 import React from 'react'
 import {Link, useLocation} from 'react-router-dom'
-import './Menu.css'
 
 const Menu = () => {
   
@@ -32,6 +31,9 @@ const Menu = () => {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/manage-routines">Manage Routines</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/manage-exercises">Manage Exercises</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/routines-dnd">Routines DnD</Link>
