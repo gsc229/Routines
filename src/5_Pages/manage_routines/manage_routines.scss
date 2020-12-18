@@ -1,5 +1,11 @@
 .routines-and-stats-container{
+  background-color: lightcoral;
+  //width: fit-content;
+  /* margin: auto;
   display: flex;
+  @media only screen and (max-width: 1420) {
+    flex-direction: column;
+  } */
 }
 
 

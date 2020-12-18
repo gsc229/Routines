@@ -23,17 +23,17 @@ const CalendarHeader = ({value, setValue}) => {
   return (
     <div className='calendar-header'>
       <div className="calendar-header-top">
-        <div 
+        <h6
           onClick={() => setValue(prevMonth)}
           className='prev-month  arrow'>
             {String.fromCharCode(171)}
-        </div>
+        </h6>
         <div>{currMonthName()} {currYear()}</div>
-        <div 
+        <h6 
           onClick={() => setValue(nextMonth)}
           className="next-month arrow">
             {String.fromCharCode(187)}
-        </div>
+        </h6>
       </div>
 
         <div className="calendar-header-bottom">
