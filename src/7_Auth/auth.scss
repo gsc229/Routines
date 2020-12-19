@@ -1,0 +1,35 @@
+.auth-form{
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 20px auto;
+  input{
+   margin-top: 10px;
+  }
+}
+
+.signin-form{
+  
+  button{
+    background-color: $routine-red;
+    margin-top: 10px;
+    color: white;
+  }
+}
+
+.error-message-container{
+  height: 0px;
+  transition: height .5s cubic-bezier(.17,.67,.83,.67);
+  /* .error-message{
+    transition: all linear 4s;
+    display: block;
+  }
+
+  .hide-message{
+    opacity: 0;
+  } */
+}
+
+.open-container{
+  height: 25px;
+}

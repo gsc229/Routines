@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 export const CreateExercise = () => {
   return (
     <div>
-      
+      <h2>Create New Exercise</h2>
     </div>
   )
 }

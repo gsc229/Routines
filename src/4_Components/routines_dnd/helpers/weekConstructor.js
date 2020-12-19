@@ -1,9 +1,5 @@
 export const weekConstructor = (weekData) => {
   let weekExercises = {
-    "U": {
-      name: "Sunday",
-      items: []
-    },
     "M": {
       name: "Monday",
       items: []
@@ -27,14 +23,18 @@ export const weekConstructor = (weekData) => {
     "S": {
       name: "Saturday",
       items: []
+    },
+    "U": {
+      name: "Sunday",
+      items: []
     }
 }
 
-  weekData &&  console.log("weekData.exercises", weekData[0].exercises)
+  
   weekData && weekData[0].exercises.map(exercise => {
-    weekExercises[exercise.day].items.push(exercise)
+   return weekExercises[exercise.day].items.push(exercise)
   })
-  console.log({weekExercises})
+
   return weekExercises
 
 }

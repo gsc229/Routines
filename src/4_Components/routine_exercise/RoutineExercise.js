@@ -1,8 +1,10 @@
 import React from 'react'
+import {VscGripper} from 'react-icons/vsc'
+
 
 const RoutineExercise = ({routine_exercise, width}) => {
 
-  const {exercise, day} = routine_exercise
+  const {exercise} = routine_exercise
 
   const getExerciseHeadingStyles = () => {
 
@@ -14,8 +16,9 @@ const RoutineExercise = ({routine_exercise, width}) => {
   }
 
   return (
-    <div>
+    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
       <h5 style={getExerciseHeadingStyles()}>{exercise.name}</h5>
+      <VscGripper fontSize={30} />
     </div>
   )
 }
