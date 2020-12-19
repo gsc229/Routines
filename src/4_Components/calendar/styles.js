@@ -1,9 +1,3 @@
-import moment from 'moment'
-const newMoment = moment()
-
-
-
-
 // helper functions for styling
 export function isSelected(day, value){
   return value.isSame(day, 'day')

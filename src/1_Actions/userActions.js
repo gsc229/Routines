@@ -21,9 +21,9 @@ export const logInUser = (userInfo) => dispatch => {
 export const logout = () => dispatch => {
   dispatch({type: LOG_OUT})
   
-  localStorage.removeItem('user')
-  localStorage.removeItem('loggedIn')
+  localStorage.removeItem('state')
   localStorage.removeItem('token')
+  
 }
 
 export const clearErrorMessage = () => dispatch => {

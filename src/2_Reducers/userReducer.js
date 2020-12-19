@@ -33,7 +33,9 @@ const reducer = (state=initialState, action) => {
         loggedIn: false
       }
     case LOG_OUT: 
-    return initialState
+      return {
+        ...initialState
+      }
     case CLEAR_ERROR_MESSAGE: 
       return {
         ...state,

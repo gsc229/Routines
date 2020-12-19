@@ -18,10 +18,11 @@ const Calendar = ({calendarId}) => {
     <div className="main-calendar" id={calendarId}>
       <CalendarHeader value={value} setValue={setValue} />      
       {
-      calendar.map(week => 
-        <div className={weekStyles(week) + " week" }>
+      calendar.map((week, index) => 
+        <div key={index} className={weekStyles(week) + " week" }>
         {week.map(day=> 
-        <div 
+        <div
+        key={day._d}
         onClick={() => !beforeToday(day) && setValue(day)}
         className={dayStyles(day, value) + " day"}>
           <p>{day.format("D")}</p>

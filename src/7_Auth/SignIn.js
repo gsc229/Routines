@@ -1,10 +1,19 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import LandingPageLayout from '../6_Layouts/layout_two/LandingPageLayout.js'
 import {logInUser, clearErrorMessage} from '../1_Actions/userActions'
 import {userRoutinesQuery} from '../1_Actions/routineActions'
 
-export const SignIn = ({logInUser, clearErrorMessage, loggingIn, loggedIn, error_message, history, token}) => {
+export const SignIn = ({
+  logInUser, 
+  clearErrorMessage,
+  userRoutinesQuery,
+  user, 
+  loggingIn, 
+  loggedIn, 
+  error_message, 
+  history
+}) => {
   /* 
     test user:
     username: user1@mail.com
@@ -17,6 +26,20 @@ export const SignIn = ({logInUser, clearErrorMessage, loggingIn, loggedIn, error
   })
 
   const disabled = credentials.email.length < 1 || credentials.password.length < 1
+
+  useEffect(()=> {
+    console.log(user._id)
+    if(loggedIn){
+      history.push('/')
+      userRoutinesQuery(`user=${user._id}&populate_one=weeks&populate_two=exercises&populate_three=excercise`)
+    }
+
+    if(error_message){
+      setTimeout(() => {
+        clearErrorMessage()
+      }, 4000)
+    }
+  })
 
   const handleChange = (e) => {
     if(error_message){
@@ -33,16 +56,7 @@ export const SignIn = ({logInUser, clearErrorMessage, loggingIn, loggedIn, error
     logInUser(credentials)
   }
 
-  if(loggedIn){
-    history.push('/')
-    userRoutinesQuery()
-  }
-
-  if(error_message){
-    setTimeout(() => {
-      clearErrorMessage()
-    }, 4000)
-  }
+  
 
   return (
     <LandingPageLayout >
@@ -80,12 +94,14 @@ export const SignIn = ({logInUser, clearErrorMessage, loggingIn, loggedIn, error
 const mapStateToProps = (state) => ({
   loggingIn: state.userReducer.loggingIn,
   loggedIn: state.userReducer.loggedIn,
-  error_message: state.userReducer.error_message
+  error_message: state.userReducer.error_message,
+  user: state.userReducer.user
 })
 
 const mapDispatchToProps = {
   logInUser,
-  clearErrorMessage
+  clearErrorMessage,
+  userRoutinesQuery
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn)

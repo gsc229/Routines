@@ -1,6 +1,5 @@
 import React from 'react'
-import {Link, useHistory, useLocation, useParams} from 'react-router-dom'
-
+import {Link, useLocation} from 'react-router-dom'
 
 const activeStyle = {
   color: 'rgb(160, 14, 14)'

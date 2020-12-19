@@ -1,24 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import './user_dashboard.scss'
 
-export const UserDashBoard = ({user}) => {
-
+export const UserDashBoard = ({user,userRoutines}) => {
   
-
   return (
     <LayoutOne showTop={false}>
       <div className="user-dashboard">
         <h1>User Dashboard</h1>
-        {JSON.stringify(user)}
+        <div className='raw-data' style={{color: 'white'}}>
+          <pre>{JSON.stringify(user, null, 2)}</pre>
+          <pre>{JSON.stringify(userRoutines, null, 2)}</pre>
+        </div>
       </div>
     </LayoutOne>
   )
 }
 
 const mapStateToProps = (state) => ({
-  user: state.userReducer.user
+  user: state.userReducer.user,
+  userRoutines: state.routineReducer.userRoutines
 })
 
 const mapDispatchToProps = {

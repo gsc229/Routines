@@ -37,7 +37,7 @@ const CalendarHeader = ({value, setValue}) => {
       </div>
 
         <div className="calendar-header-bottom">
-          {dayOfWeek.map(day => <h6>{day}</h6>)}
+          {dayOfWeek.map(day => <h6 key={day}>{day}</h6>)}
         </div>
 
     </div>

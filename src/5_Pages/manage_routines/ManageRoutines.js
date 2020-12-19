@@ -1,43 +1,61 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {FaPlus} from 'react-icons/fa'
-import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Calendar from '../../4_Components/calendar/Calendar'
-import './manage_routines.scss'
 
+export const ManageRoutines = ({userRoutines}) => {
+  console.log({userRoutines})
 
-const routines = [
-  {
-    name: "Legs Routine"
-  },
-  {
-    name: "Back Routine"
-  },
-  {
-    name: "Chest Routine"
+  const [opnedId, setOpenedId] = useState("")
+
+  const handleOpen = (id) => {
+    if(id === opnedId){
+      return setOpenedId("")
+    } 
+
+    setOpenedId(id)
   }
-]
-
-export const ManageRoutines = () => {
-
-  const {height, width} = useWindowSize()
 
   return (
     <LayoutOne showTop={false}>
       <div className='container manage-routines'>
         <h1>Manage Routines</h1>
         <div className='row routines-and-stats-container'>
-          <div className='col-xl-6 routines-container'>
+          <div className='col-xl-3 routines-container'>
             <div className="options-menu">
-                <button className="btn btn-outline-success" aria-current="page" href="#"><FaPlus /> New</button>
+                <button id='new-routine' className="btn btn-outline-success" aria-current="page"><FaPlus /> New</button>
             </div>            
             <div className="routines-bank">
-              routines bank
-
+              {userRoutines && userRoutines.map(routine=>
+                <div key={routine._id} className={`in-bank-routine ${opnedId === routine._id ? 'opened' : ''}`} >
+                  
+                  <button
+                    onClick={() => handleOpen(routine._id)}
+                    className="btn btn-outline-secondary routine-bank-btn" 
+                    data-bs-toggle="collapse"
+                    data-bs-target={`#${routine._id}`} 
+                    aria-expanded='false'
+                    aria-controls={`${routine._id}`}>
+                       {routine.name}
+                  </button>
+                  
+                  <div 
+                  id={`${routine._id}`}
+                  className={`collapse ${opnedId === routine._id ? "show" : ''}`}>
+                    <ul className='list-group'>
+                      <li>{routine.category ? routine.category : 'none chosen'}</li>
+                      <li>{routine.category ? routine.category : 'none chosen'}</li>
+                      <li>{routine.category ? routine.category : 'none chosen'}</li>
+                      <li>{routine.category ? routine.category : 'none chosen'}</li>
+                      <li>{routine.category ? routine.category : 'none chosen'}</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-          <div className="col-xl-6 stats-container">
+          <div className="col-xl-9 stats-container">
             <Calendar calendarId='manage-routines-calendar' />
           </div>
         </div>
@@ -47,7 +65,7 @@ export const ManageRoutines = () => {
 }
 
 const mapStateToProps = (state) => ({
-  
+  userRoutines: state.routineReducer.userRoutines
 })
 
 const mapDispatchToProps = {
@@ -55,3 +73,5 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageRoutines)
+
+

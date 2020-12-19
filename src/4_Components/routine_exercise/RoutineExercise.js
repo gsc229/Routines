@@ -4,7 +4,7 @@ import {VscGripper} from 'react-icons/vsc'
 
 const RoutineExercise = ({routine_exercise, width}) => {
 
-  const {exercise, day} = routine_exercise
+  const {exercise} = routine_exercise
 
   const getExerciseHeadingStyles = () => {
 

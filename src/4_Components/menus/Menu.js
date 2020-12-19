@@ -6,7 +6,7 @@ import {Link, useLocation} from 'react-router-dom'
 const Menu = ({logout}) => {
   
   const pathname = useLocation().pathname
-
+  
   function isActivePath(){
     if(pathname === "/my-routines" || pathname === "/create-routine" || pathname === "/find-routine" || pathname === "/browse-exercises" ){
       return "active"
@@ -41,12 +41,13 @@ const Menu = ({logout}) => {
                 <Link className="nav-link" to="/routines-dnd">Routines DnD</Link>
               </li>
               <li className={`${isActivePath()} nav-item dropdown`}>
-                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a
+                className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Workout Routines
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><Link className="dropdown-item" to="/my-routines">My Saved Routines</Link></li>
-                  <li><Link className="dropdown-item" to="/create-routine">Create New Routine</Link></li>
+                  <li><Link className="dropdown-item" to="/create-routine">Create Ne Routine</Link></li>
                   <li><Link className="dropdown-item" to="/find-routine">Find Routines</Link></li>
                   <li><hr className="dropdown-divider" /></li>
                   <li><Link className="dropdown-item" to="/browse-exercises">Browse Exercises</Link></li>

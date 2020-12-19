@@ -1,4 +1,4 @@
-import { FETCHING_USER_ROUTINES, FETCH_USER_ROUTINES_FAIL, FETCH_USER_ROUTINE_SUCCESSS } from '../1_Actions'
+import { FETCHING_USER_ROUTINES, FETCH_USER_ROUTINES_FAIL, FETCH_USER_ROUTINES_SUCCESS } from '../1_Actions'
 
 
 const initialState = {
@@ -6,8 +6,8 @@ const initialState = {
   editRoutineMode: false,
   error_message: '',
   pagination: null,
-  userRoutines: JSON.parse(localStorage.getItem('userRoutines')) || [],
-  currentRoutine: JSON.parse(localStorage.getItem('currentRoutine')) || {}
+  userRoutines: '',
+  currentRoutine: ''
 }
 
 const reducer = (state=initialState, action) => {
@@ -24,7 +24,8 @@ const reducer = (state=initialState, action) => {
         fetchingRoutineData: false,
         error_message: action.payload
       }
-    case FETCH_USER_ROUTINE_SUCCESSS:
+    case FETCH_USER_ROUTINES_SUCCESS:
+      console.log("YAY!!! WE GOT IT!!!!")
       return {
         ...state,
         fetchingRoutineData: false,
