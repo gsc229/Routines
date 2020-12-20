@@ -1,5 +1,4 @@
-import { CLEAR_ERROR_MESSAGE, LOGGING_IN, LOG_IN_FAIL, LOG_IN_SUCCESS, LOG_OUT } from '../1_Actions/index'
-
+import * as constants from '../1_Actions'
 
 const initialState = {
   loggingIn: false,
@@ -11,14 +10,14 @@ const initialState = {
 const reducer = (state=initialState, action) => {
   switch(action.type){
 
-    case LOGGING_IN:
+    case constants.LOGGING_IN:
       return {
         ...state,
         loggingIn: true,
         loggedIn: false,
         error_message: ''
       }
-    case LOG_IN_SUCCESS:
+    case constants.LOG_IN_SUCCESS:
       return {
         ...state,
         user: action.payload,
@@ -26,17 +25,17 @@ const reducer = (state=initialState, action) => {
         loggingIn: false,
         error_message: ''
       }
-    case LOG_IN_FAIL:
+    case constants.LOG_IN_FAIL:
       return {
         ...state,
         error_message: action.payload,
         loggedIn: false
       }
-    case LOG_OUT: 
+    case constants.LOG_OUT: 
       return {
         ...initialState
       }
-    case CLEAR_ERROR_MESSAGE: 
+    case constants.CLEAR_ERROR_MESSAGE: 
       return {
         ...state,
         error_message: ''

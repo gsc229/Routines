@@ -8,15 +8,14 @@ const RoutineExercise = ({routine_exercise, width}) => {
 
   const getExerciseHeadingStyles = () => {
 
-    if(width < 1500){
-      return {fontSize: '20px'}
+    return {
+      fontSize: '15px',
+      
     }
-
-    return {fontSize: '1.5vw'}
   }
 
   return (
-    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+    <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center', border: '1px solid red'}}>
       <h5 style={getExerciseHeadingStyles()}>{exercise.name}</h5>
       <VscGripper fontSize={30} />
     </div>

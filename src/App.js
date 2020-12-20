@@ -11,6 +11,7 @@ import SignUp from './7_Auth/SignUp'
 import UserDashBoard from './5_Pages/user_dashboard/UserDashBoard'
 import Schedule from './4_Components/calendar/Calendar'
 import ManageRoutines from './5_Pages/manage_routines/ManageRoutines'
+import CreateRoutine from './5_Pages/create_routine/CreateRoutine'
 import ManageExercises from './5_Pages/manage_exercises/ManageExercises'
 
 // experimental
@@ -66,9 +67,8 @@ function App({loggedIn}) {
         <Route exact path="/manage-exercises">
           <ManageExercises />
         </Route>
-        <Route exact path="/manage-routines">
-          <ManageRoutines />
-        </Route>
+        <Route exact path="/manage-routines" component={ManageRoutines} />
+        <Route exact path="/create-routine" component={CreateRoutine} />
 
 
         {/* Experimental */}

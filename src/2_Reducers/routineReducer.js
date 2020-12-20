@@ -1,5 +1,4 @@
-import { FETCHING_USER_ROUTINES, FETCH_USER_ROUTINES_FAIL, FETCH_USER_ROUTINES_SUCCESS } from '../1_Actions'
-
+import * as constants from '../1_Actions'
 
 const initialState = {
   fetchingRoutineData: false,
@@ -13,19 +12,18 @@ const initialState = {
 const reducer = (state=initialState, action) => {
   switch(action.type){
 
-    case FETCHING_USER_ROUTINES:
+    case constants.FETCHING_USER_ROUTINES:
       return {
         ...state,
         fetchingRoutineData: true
       }
-    case FETCH_USER_ROUTINES_FAIL:
+    case constants.FETCH_USER_ROUTINES_FAIL:
       return {
         ...state,
         fetchingRoutineData: false,
         error_message: action.payload
       }
-    case FETCH_USER_ROUTINES_SUCCESS:
-      console.log("YAY!!! WE GOT IT!!!!")
+    case constants.FETCH_USER_ROUTINES_SUCCESS:
       return {
         ...state,
         fetchingRoutineData: false,
