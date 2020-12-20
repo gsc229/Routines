@@ -12,7 +12,7 @@ const RoutinesWeekDnD = ({weekData}) => {
 
   const [columns, setColumns] = useState(weekConstructor(weekData))
 
-  
+  console.log({weekData})
   useEffect(() => {  
     setColumns(weekConstructor(weekData))
   }, [weekData])

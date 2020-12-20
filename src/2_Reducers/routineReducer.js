@@ -6,11 +6,20 @@ const initialState = {
   error_message: '',
   pagination: null,
   userRoutines: '',
-  currentRoutine: ''
+  currentRoutine: {}
 }
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
+
+    case  constants.WRITING_ROUTINE:
+      return{
+        ...state,
+        currentRoutine: {
+          ...state.currentRoutine,
+          [action.payload.field]: action.payload.string
+        }
+      }
 
     case constants.FETCHING_USER_ROUTINES:
       return {

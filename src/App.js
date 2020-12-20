@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {Switch, Route} from 'react-router-dom'
 import {getWeek} from './3_APIs/routineWeekHelpers'
+import {getQuery} from './3_APIs/queryApi'
 import './App.scss'
 import './_variables.scss'
 import PrivateRoute from './7_Auth/PrivateRoute'
@@ -20,17 +21,20 @@ import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'
 function App({loggedIn}) {
 
   const testWeekId = '5fd6eb71b0321644dc6bf08a'
-  const testWeekQueryStr = 'populate_one=exercises&populate_two=exercise'
+  const testWeekQueryStr = 'populate_one=exercise_sets&populate_two=exercise'
+  const query = `/routines/weeks/${testWeekId}?populate_one=exercise_sets&populate_two=exercise`
   // /routines/weeks/5fd6eb71b0321644dc6bf08a?populate_one=exercises
   const [weekData, setWeekData] = useState()
   
   useEffect(()=>{
-    getWeek(testWeekId, testWeekQueryStr)
-    .then(response => {
-      if(response.success){
-        setWeekData(response.data)
+    /* getWeek(testWeekId, testWeekQueryStr) */
+    getQuery(query)
+    .then(AppJsQueryResponse => {
+      console.log({AppJsQueryResponse})
+      if(AppJsQueryResponse.success){
+        setWeekData(AppJsQueryResponse.data)
       } else{
-        console.log({response})
+        console.log({AppJsQueryResponse})
       }
     })
   }, [])

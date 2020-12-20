@@ -1,23 +1,22 @@
 import axiosWithAuth from '../utils/axiosWithAuth'
 
-export const upadateRoutineExercise = (routine_exercise_id, updates) => {
-
+export const upadateRoutineExercise = (exercise_set_id, updates) => {
+    console.log({exercise_set_id, updates })
     return axiosWithAuth()
-    .put(`routine-exercises/${routine_exercise_id}`, updates)
+    .put(`/exercise-sets/${exercise_set_id}`, updates)
     .then(upadateRoutineExerciseResponse => {
       return upadateRoutineExerciseResponse.data
     })
     .catch(upadateRoutineExerciseError => {
-      console.log({upadateRoutineExerciseError})
+      console.log({upadateRoutineExerciseError: upadateRoutineExerciseError.response})
       return upadateRoutineExerciseError.response.data
     })
-
 
 }
 
 
 export const getWeek = (weekId, queryStr) => {
-  console.log({weekId, queryStr})
+  console.log({weekId, queryStr}, 'hhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiii')
   return axiosWithAuth()
     .get(`/routines/weeks/${weekId}?${queryStr}`)
     .then(res=>{
@@ -66,11 +65,14 @@ export const onDragEnd = async (result, columns, setColumns) => {
       }
     })
     
+    alert('About to update!')
     upadateRoutineExercise(removed._id, {day: removed.day})
     .then(response => {
+      
+      alert(`Sorry there was a problem with the server. We couldn't save your changes at this time.\nerror_message: ${response.error_message}`)
+      console.log({response})
       if(!response.success){
         // if api call fails, take the item back out of the destination and put back in the source
-        alert(`Sorry there was a problem with the server. We couldn't save your changes at this time.\nerror_message: ${response.error_message}`)
        
         // ↓↓↓↓↓↓↓ reverse the logic from above reset local state ↓↓↓↓↓↓↓
         
