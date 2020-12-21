@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
-import './user_dashboard.scss'
 
 export const UserDashBoard = ({user,userRoutines}) => {
   

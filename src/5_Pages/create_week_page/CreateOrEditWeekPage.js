@@ -1,11 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Layout from '../../6_Layouts/layout_one/LayoutOne'
+import Container from 'react-bootstrap/Container'
 
 export const CreateOrEditWeek = (props) => {
   return (
-    <div>
-      
-    </div>
+    <Layout>
+      <Container>
+        <h1>Create or Edit Week Page</h1>
+      </Container>
+    </Layout>
   )
 }
 

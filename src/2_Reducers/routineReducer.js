@@ -7,7 +7,8 @@ const initialState = {
   pagination: null,
   routineSearchResults: [],
   userRoutines: '', // [{}]
-  currentRoutine: {} // will have an array of routine weeks
+  currentRoutineName: {}, 
+  currentRoutine: {}
 }
 
 const reducer = (state=initialState, action) => {
@@ -16,7 +17,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         currentRoutine: action.payload,
-        
+        currentRoutineName: action.payload.name
       }
     case  constants.WRITING_ROUTINE:
       return{

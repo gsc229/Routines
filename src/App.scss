@@ -5,19 +5,17 @@
 
 // Auth
 @import './7_Auth/auth.scss';
-@import './5_Pages/user_dashboard/user_dashboard.scss';
+@import './5_Pages/user_dashboard_page/user_dashboard_page.scss';
+
+// Exercises
+@import './5_Pages/manage_exercises_page/manage_exercises_page.scss';
+
+// Routines 
+@import './5_Pages/manage_routines_page/manage_routines_page.scss';
+
+// Layouts 
+@import './6_Layouts/layout_one/layout_one.scss';
+
 
 // Calendar
 @import './4_Components/calendar/basic_calendar.scss';
-
-
-// Exercises
-@import './5_Pages/manage_exercises/manage_exercises.scss';
-
-// Routines 
-@import './5_Pages/manage_routines/manage_routines.scss';
-
-// Layouts 
-@import './6_Layouts/layout_one/layout_one.scss'
-
-

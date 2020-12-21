@@ -2,16 +2,17 @@ import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {majorMuscleGroups, categories} from './routineFormData'
-import {writingRoutine, createNewRoutine} from '../../1_Actions/routineActions'
+import {writingRoutine, createNewRoutine, editRoutine, clearCurrentRoutine} from '../../1_Actions/routineActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import Form from 'react-bootstrap/Form'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import SaveBtn from '../buttons/SaveBtn'
 import DiscardBtn from '../buttons/DiscardBtn'
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 
-export const RoutineInfoForm = ({
-  setStep, 
-  currentRoutine, 
+export const RoutineInfoForm = ({ 
+  currentRoutine,
+  currentRoutineName, 
   writingRoutine, 
   error_message, 
   clearErrorMessage, 
@@ -21,7 +22,6 @@ export const RoutineInfoForm = ({
 
 
   const {name, category, muscle_group, target_muscle, description, difficulty_scale} = currentRoutine
-  const [originalName, setOriginalName] = useState(name)
   const history = useHistory()
   const handleChange = e => {
     writingRoutine(e.target.name, e.target.value)
@@ -33,24 +33,50 @@ export const RoutineInfoForm = ({
     }
   }, [error_message])
 
-  useEffect(()=>{
-    setOriginalName(name)
-  },[])
+  // Handles logic to distinguish the need of POST vs PUT requests of the currentRoutine
+  // What distinguishes an unsaved-on-the-backend-routine from a saved one will be the _id (or lack thereof)
+  const handleCreateOrEdit = async (path) => {
+    // after the update or save, redirect will depend on whether eiditing old or createing new routine and user input. 
+    const getRedirect = (userId) => {
+      const redirects = {
+        manageRoutines: '/manage-routines',
+        createContinue: `/editing-routine/${userId}/create-week`,
+        updateContinue: `/editing-routine/${userId}/weeks`
+      }
 
-  const handleCreateOrEdit = async () => {
+      return redirects[path]
+
+    }
+
     if(!currentRoutine.original_creator){
       const success = await createNewRoutine({...currentRoutine, original_creator: userId, user: userId})
       console.log({success})
       if(success){
-        history.push(`/editing-routine/${currentRoutine._id}`)
+       path && history.push(getRedirect(currentRoutine._id))
+      }
+    }else if(!currentRoutine.user){
+      const success = await createNewRoutine({...currentRoutine, user: userId})
+      console.log({success})
+      if(success){
+       path && history.push(getRedirect(currentRoutine._id))
+      }
+    } else{
+      const success = await editRoutine(currentRoutine)
+      console.log({success})
+      if(success){
+       path && history.push(getRedirect(currentRoutine._id))
       }
     }
-    
+  }
+
+  const handleDisguard = () => {
+    clearCurrentRoutine()
+    history.push('/manage-routines')
   }
 
   return (
     <Form>
-        {currentRoutine._id ? <h2>Currently Editing: {currentRoutine.name}</h2> : <h2>Basic Routine Info: {originalName}</h2>}
+        {currentRoutine._id ? <h2>Currently Editing: {currentRoutineName}</h2> : <h2>Basic Routine Info:</h2>}
         
         <Form.Group controlId="completeRoutineForm.Name">
           <Form.Label>Name</Form.Label>
@@ -88,10 +114,19 @@ export const RoutineInfoForm = ({
           <Form.Control onChange={handleChange} name="description" value={description} as="textarea" placeholder="More about your routine..." rows={3} />
         </Form.Group>
 
-        <ButtonGroup>
-          <DiscardBtn styles={{fontWeight: "600"}} />
-          <SaveBtn onClick={handleCreateOrEdit} text=" Save and Continue" />
-        </ButtonGroup>
+
+        <ButtonToolbar>
+          <ButtonGroup className="mr-2 mt-2">
+            <DiscardBtn onClick={handleDisguard} styles={{fontWeight: "600"}} />
+          </ButtonGroup>
+          <ButtonGroup className="mt-2">
+            <SaveBtn style={{textAlign: 'center'}} className='mr-1'  onClick={() => handleCreateOrEdit('manageRoutines')} text=" Save"/>
+            <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('createContinue')} text=" Save and Continue" Icon="" />
+            <SaveBtn onClick={() => handleCreateOrEdit('manageRoutines')} text=" Save and Finishe Later" Icon="" />
+          </ButtonGroup>
+        </ButtonToolbar>
+
+
         <br></br>
         <br/>
         <pre>{JSON.stringify({error_message, userId, currentRoutine}, null, 2)}</pre>
@@ -101,6 +136,7 @@ export const RoutineInfoForm = ({
 
 const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
+  currentRoutineName: state.routineReducer.currentRoutineName,
   error_message: state.routineReducer.error_message,
   userId: state.userReducer.user._id
 })
@@ -108,7 +144,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   writingRoutine,
   clearErrorMessage,
-  createNewRoutine
+  createNewRoutine,
+  clearCurrentRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineInfoForm)

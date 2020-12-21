@@ -11,7 +11,7 @@ import {FaPlus} from 'react-icons/fa'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Calendar from '../../4_Components/calendar/Calendar'
 
-export const ManageRoutines = ({userRoutines, history, clearCurrentRoutine}) => {
+export const ManageRoutinesPage = ({userRoutines, history, clearCurrentRoutine}) => {
 
   const handleNewClick = () => {
      clearCurrentRoutine()
@@ -70,6 +70,6 @@ const mapDispatchToProps = {
   clearCurrentRoutine
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageRoutines)
+export default connect(mapStateToProps, mapDispatchToProps)(ManageRoutinesPage)
 
 

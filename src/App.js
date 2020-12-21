@@ -9,11 +9,12 @@ import PrivateRoute from './7_Auth/PrivateRoute'
 import PublicLandingPage from './5_Pages/landing_page/LandingPage'
 import SignIn from './7_Auth/SignIn'
 import SignUp from './7_Auth/SignUp'
-import UserDashBoard from './5_Pages/user_dashboard/UserDashBoard'
+import UserDashBoard from './5_Pages/user_dashboard_page/UserDashBoardPage'
 import Schedule from './4_Components/calendar/Calendar'
-import ManageRoutines from './5_Pages/manage_routines/ManageRoutines'
-import CreateRoutine from './5_Pages/create_routine/CreateRoutine'
-import ManageExercises from './5_Pages/manage_exercises/ManageExercises'
+import ManageRoutinesPage from './5_Pages/manage_routines_page/ManageRoutinesPage'
+import CreateOrEditRoutinePage from './5_Pages/create_routine_page/CreateOrEditRoutinePage'
+import CreateOrEditWeekPage from './5_Pages/create_week_page/CreateOrEditWeekPage'
+import ManageExercisesPage from './5_Pages/manage_exercises_page/ManageExercisesPage'
 
 // experimental
 import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'
@@ -66,13 +67,14 @@ function App({loggedIn}) {
           <Schedule />
         </Route>
         <Route exact path="/exercises">
-          <ManageRoutines />
+          <ManageRoutinesPage />
         </Route>
         <Route exact path="/manage-exercises">
-          <ManageExercises />
+          <ManageExercisesPage />
         </Route>
-        <Route exact path="/manage-routines" component={ManageRoutines} />
-        <Route exact path="/create-routine" component={CreateRoutine} />
+        <Route exact path="/manage-routines" component={ManageRoutinesPage} />
+        <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
+        <Route exact path="/editing-routine/:routineId/create-week" component={CreateOrEditWeekPage} />
 
 
         {/* Experimental */}
