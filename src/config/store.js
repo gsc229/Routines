@@ -30,6 +30,6 @@ const persistedState = loadFromLocalStorage()
 const store = createStore(reducer, persistedState, composeWithDevTools(applyMiddleware(thunk, logger)))
 
 // persist data when ready: 
-//store.subscribe(() => saveToLocalStorage(store.getState()))
+store.subscribe(() => saveToLocalStorage(store.getState()))
 
 export default store

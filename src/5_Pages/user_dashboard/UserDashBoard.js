@@ -9,9 +9,9 @@ export const UserDashBoard = ({user,userRoutines}) => {
     <LayoutOne showTop={false}>
       <div className="user-dashboard">
         <h1>User Dashboard</h1>
-        <div className='raw-data' style={{color: 'white'}}>
-          <pre>{JSON.stringify(user, null, 2)}</pre>
-          <pre>{JSON.stringify(userRoutines, null, 2)}</pre>
+        <div className='raw-data' >
+          <pre style={{color: 'white'}}>{JSON.stringify(user, null, 2)}</pre>
+          <pre style={{color: 'white'}}>{JSON.stringify(userRoutines, null, 2)}</pre>
         </div>
       </div>
     </LayoutOne>

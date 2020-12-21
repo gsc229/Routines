@@ -16,7 +16,6 @@ export const upadateRoutineExercise = (exercise_set_id, updates) => {
 
 
 export const getWeek = (weekId, queryStr) => {
-  console.log({weekId, queryStr}, 'hhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiii')
   return axiosWithAuth()
     .get(`/routines/weeks/${weekId}?${queryStr}`)
     .then(res=>{

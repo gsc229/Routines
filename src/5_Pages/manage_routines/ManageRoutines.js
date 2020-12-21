@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
+import {clearCurrentRoutine} from '../../1_Actions/routineActions'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -10,7 +11,12 @@ import {FaPlus} from 'react-icons/fa'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Calendar from '../../4_Components/calendar/Calendar'
 
-export const ManageRoutines = ({userRoutines, history}) => {
+export const ManageRoutines = ({userRoutines, history, clearCurrentRoutine}) => {
+
+  const handleNewClick = () => {
+     clearCurrentRoutine()
+     history.push('/create-routine')
+  }
 
   return (
     <LayoutOne showTop={false}>
@@ -19,7 +25,7 @@ export const ManageRoutines = ({userRoutines, history}) => {
         <Row>
           <Col xl={4} className='routines-container'>
             <div className="options-menu">
-                <Button onClick={() => history.push('/create-routine')} variant='outline-success' id='new-routine' aria-current="page"><FaPlus /> New</Button>
+                <Button onClick={handleNewClick} variant='outline-success' id='new-routine' aria-current="page"><FaPlus /> New</Button>
             </div>            
             <Accordion defaultActiveKey={userRoutines && userRoutines[0]._id} className="routines-bank">
               {userRoutines && userRoutines.map(routine=>
@@ -61,7 +67,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  
+  clearCurrentRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageRoutines)
