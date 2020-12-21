@@ -3,6 +3,9 @@ import {updateRoutine, createRoutine, getRoutines} from '../3_APIs/routinesApi'
 
 const generalErrorMessage = "Something went wrong with the request."
 
+export const setCurrentRoutine = (routine) => dispatch => {
+  dispatch({type: constants.SET_CURRENT_ROUTINE, payload: routine})
+}
 
 export const writingRoutine = (field, data) => dispatch => {
   dispatch({type: constants.WRITING_ROUTINE, payload: {field, data}})
@@ -50,12 +53,12 @@ export const createNewRoutine = (newRoutine) => dispatch => {
   })
 }
 
-export const editRoutine = (updates) => dispatch => {
+export const saveRoutineChanges = (routineId, updates) => dispatch => {
   dispatch({type: constants.UPDATING_ROUTINE})
-  return updateRoutine(updates)
+  return updateRoutine(routineId, updates)
   .then(response => {
     if(response.success){
-     dispatch({type: constants.UPDATE_ROUTINE_SUCCESS})
+     dispatch({type: constants.UPDATE_ROUTINE_SUCCESS, payload: response.data})
      return true
     } 
     if(response.error_message){

@@ -1,14 +1,25 @@
+import { VscActivateBreakpoints } from 'react-icons/vsc'
 import * as constants from '../1_Actions'
 
 const initialState = {
   crudingRoutine: false,
-  editRoutineMode: false,
+  saveRoutineChangesMode: false,
+  unsavedChanges: false,
   error_message: '',
   pagination: null,
   routineSearchResults: [],
   userRoutines: '', // [{}]
-  currentRoutineName: {}, 
-  currentRoutine: {}
+  currentRoutineName: '', 
+  currentRoutine: {
+    name: '',
+    category: '',
+    muscle_group: '',
+    target_muscle: '',
+    description: '',
+    difficulty_scale: '',
+    start_date: '',
+    end_date: ''
+  }
 }
 
 const reducer = (state=initialState, action) => {
@@ -17,11 +28,13 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         currentRoutine: action.payload,
-        currentRoutineName: action.payload.name
+        currentRoutineName: action.payload.name,
+        unsavedChanges: false
       }
     case  constants.WRITING_ROUTINE:
       return{
         ...state,
+        unsavedChanges: true,
         currentRoutine: {
           ...state.currentRoutine,
           [action.payload.field]: action.payload.data
@@ -60,7 +73,9 @@ const reducer = (state=initialState, action) => {
         ...state,
         crudingRoutine: false,
         currentRoutineIsSaved: true,
-        currentRoutine: action.payload
+        unsavedChanges: false,
+        currentRoutine: action.payload,
+        currentRoutineName: action.payload.name
       }
     case constants.CREATE_ROUTINE_FAIL:
       return {
@@ -77,7 +92,9 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingRoutine: false,
-        currentRoutine: action.payload
+        unsavedChanges: false,
+        currentRoutine: action.payload,
+        currentRoutineName: action.payload.name
       }
     case constants.UPDATE_ROUTINE_FAIL:
       return{
@@ -94,7 +111,7 @@ const reducer = (state=initialState, action) => {
         return{
           ...state,
           crudingRoutine: false,
-          currentROUTINE: {}
+          currentRoutine: initialState.currentRoutine
         }
       case constants.DELETE_ROUTINE_FAIL:
         return{

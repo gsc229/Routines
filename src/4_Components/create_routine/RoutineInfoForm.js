@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {majorMuscleGroups, categories} from './routineFormData'
-import {writingRoutine, createNewRoutine, editRoutine, clearCurrentRoutine} from '../../1_Actions/routineActions'
+import {writingRoutine, createNewRoutine, saveRoutineChanges, clearCurrentRoutine} from '../../1_Actions/routineActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import Form from 'react-bootstrap/Form'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
@@ -15,8 +15,10 @@ export const RoutineInfoForm = ({
   currentRoutineName, 
   writingRoutine, 
   error_message, 
+  unsavedChanges,
   clearErrorMessage, 
   createNewRoutine, 
+  saveRoutineChanges,
   userId
 }) => {
 
@@ -61,7 +63,8 @@ export const RoutineInfoForm = ({
        path && history.push(getRedirect(currentRoutine._id))
       }
     } else{
-      const success = await editRoutine(currentRoutine)
+      console.log('About to send this: ', {currentRoutine})
+      const success = await saveRoutineChanges(currentRoutine._id, currentRoutine)
       console.log({success})
       if(success){
        path && history.push(getRedirect(currentRoutine._id))
@@ -120,16 +123,21 @@ export const RoutineInfoForm = ({
             <DiscardBtn onClick={handleDisguard} styles={{fontWeight: "600"}} />
           </ButtonGroup>
           <ButtonGroup className="mt-2">
-            <SaveBtn style={{textAlign: 'center'}} className='mr-1'  onClick={() => handleCreateOrEdit('manageRoutines')} text=" Save"/>
-            <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('createContinue')} text=" Save and Continue" Icon="" />
-            <SaveBtn onClick={() => handleCreateOrEdit('manageRoutines')} text=" Save and Finishe Later" Icon="" />
+            <SaveBtn style={{textAlign: 'center'}} className='mr-1'  onClick={() => handleCreateOrEdit()} text=" Save"/>
+            
+            
+          </ButtonGroup>
+          <p>TODO: Turn these into a modal that pops up after save</p>
+          <ButtonGroup className="mt-2">
+            <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('manageRoutines')} text=" Save and Finishe Later" Icon="" />
+            {!unsavedChanges && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Go to Weeks" Icon="" />}
+            {!unsavedChanges && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Exercise Bank" Icon="" />}
+            {!unsavedChanges && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Continue Editing" Icon="" />}
           </ButtonGroup>
         </ButtonToolbar>
-
-
         <br></br>
         <br/>
-        <pre>{JSON.stringify({error_message, userId, currentRoutine}, null, 2)}</pre>
+        <pre>{JSON.stringify({error_message, currentRoutineName, unsavedChanges, userId, currentRoutine,}, null, 2)}</pre>
       </Form>
   )
 }
@@ -138,6 +146,7 @@ const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentRoutineName: state.routineReducer.currentRoutineName,
   error_message: state.routineReducer.error_message,
+  unsavedChanges: state.routineReducer.unsavedChanges,
   userId: state.userReducer.user._id
 })
 
@@ -145,6 +154,7 @@ const mapDispatchToProps = {
   writingRoutine,
   clearErrorMessage,
   createNewRoutine,
+  saveRoutineChanges,
   clearCurrentRoutine
 }
 

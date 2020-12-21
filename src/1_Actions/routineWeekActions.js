@@ -42,7 +42,7 @@ export const createNewWeek = (newWeek) => dispatch => {
   })
 }
 
-export const editWeek = (updates) => dispatch => {
+export const saveWeekChanges = (updates) => dispatch => {
   dispatch({type: constants.UPDATING_WEEK})
   return updateWeek(updates)
   .then(response => {

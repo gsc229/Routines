@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {clearCurrentRoutine} from '../../1_Actions/routineActions'
+import {clearCurrentRoutine, setCurrentRoutine} from '../../1_Actions/routineActions'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -8,14 +8,21 @@ import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import {FaPlus} from 'react-icons/fa'
+import {TiEdit} from 'react-icons/ti'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Calendar from '../../4_Components/calendar/Calendar'
 
-export const ManageRoutinesPage = ({userRoutines, history, clearCurrentRoutine}) => {
+export const ManageRoutinesPage = ({userRoutines, history, clearCurrentRoutine, setCurrentRoutine}) => {
 
   const handleNewClick = () => {
      clearCurrentRoutine()
      history.push('/create-routine')
+  }
+
+  const handleEditClick = (routine) => {
+    console.log({routine})
+    setCurrentRoutine(routine)
+    history.push('/create-routine')
   }
 
   return (
@@ -31,10 +38,18 @@ export const ManageRoutinesPage = ({userRoutines, history, clearCurrentRoutine})
               {userRoutines && userRoutines.map(routine=>
                 {return (
                 <Card style={{border: 'none'}} bg="dark" key={routine._id}>
-                  <Card.Header>
-                    <Accordion.Toggle as={Button} style={{width: '100%'}} eventKey={routine._id} >
-                         {routine.name}
+                  <Card.Header style={{display: 'flex', alignItems: 'center', position: 'relative'}}>
+                    <Accordion.Toggle as={Button} style={{width: '100%', display: 'flex', justifyContent: 'center', postion: 'relative'}} eventKey={routine._id} >
+                    
+                      {routine.name}
+                      
+                                     
                     </Accordion.Toggle>
+                    <div
+                      style={{postion: 'relative', marginBottom: '5px', marginLeft: '20px', color: 'white', fontSize: '25px'}}
+                      >
+                        <TiEdit  onClick={()=>handleEditClick(routine)} />   
+                      </div> 
                   </Card.Header>
                   <Accordion.Collapse eventKey={routine._id}>
                     <Card.Body style={{backgroundColor: 'white'}}>
@@ -47,7 +62,8 @@ export const ManageRoutinesPage = ({userRoutines, history, clearCurrentRoutine})
                       <li><strong>Description: </strong>
                         {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
                       </li>
-                    </ul>
+                    </ul>  
+                    <Calendar calendarId='manage-routines-calendar' />        
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>)})}
@@ -67,7 +83,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  clearCurrentRoutine
+  clearCurrentRoutine,
+  setCurrentRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageRoutinesPage)
