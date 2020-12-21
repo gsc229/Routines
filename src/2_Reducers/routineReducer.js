@@ -12,6 +12,12 @@ const initialState = {
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
+    case constants.SET_CURRENT_ROUTINE:
+      return{
+        ...state,
+        currentRoutine: action.payload,
+        
+      }
     case  constants.WRITING_ROUTINE:
       return{
         ...state,
@@ -19,6 +25,11 @@ const reducer = (state=initialState, action) => {
           ...state.currentRoutine,
           [action.payload.field]: action.payload.data
         }
+      }
+    case constants.CLEAR_CURRENT_ROUTINE:
+      return{
+        ...state,
+        currentRoutine: {}
       }
     case constants.FETCHING_ROUTINES:
       return {
@@ -47,6 +58,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingRoutine: false,
+        currentRoutineIsSaved: true,
         currentRoutine: action.payload
       }
     case constants.CREATE_ROUTINE_FAIL:
@@ -89,11 +101,6 @@ const reducer = (state=initialState, action) => {
           crudingRoutine: false,
           error_message: action.payload
         }
-    case constants.CLEAR_CURRENT_ROUTINE:
-      return{
-        ...state,
-        currentRoutine: {}
-      }
       case constants.CLEAR_ERROR_MESSAGE: 
       return {
         ...state,

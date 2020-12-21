@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
+import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {majorMuscleGroups, categories} from './routineFormData'
 import {writingRoutine, createNewRoutine} from '../../1_Actions/routineActions'
@@ -6,6 +7,7 @@ import {clearErrorMessage} from '../../1_Actions/userActions'
 import Form from 'react-bootstrap/Form'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import SaveBtn from '../buttons/SaveBtn'
+import DiscardBtn from '../buttons/DiscardBtn'
 
 export const RoutineInfoForm = ({
   setStep, 
@@ -19,7 +21,8 @@ export const RoutineInfoForm = ({
 
 
   const {name, category, muscle_group, target_muscle, description, difficulty_scale} = currentRoutine
-
+  const [originalName, setOriginalName] = useState(name)
+  const history = useHistory()
   const handleChange = e => {
     writingRoutine(e.target.name, e.target.value)
   }
@@ -28,33 +31,27 @@ export const RoutineInfoForm = ({
     if(error_message){
     setTimeout(() => clearErrorMessage(),4000)
     }
-    
   }, [error_message])
+
+  useEffect(()=>{
+    setOriginalName(name)
+  },[])
 
   const handleCreateOrEdit = async () => {
     if(!currentRoutine.original_creator){
-      writingRoutine("original_creator", userId)
-      writingRoutine("user", userId)
-      const success = await createNewRoutine(currentRoutine)
+      const success = await createNewRoutine({...currentRoutine, original_creator: userId, user: userId})
       console.log({success})
       if(success){
-        setStep("create-week")
+        history.push(`/editing-routine/${currentRoutine._id}`)
       }
     }
-
-     
-   
-    
-      
-    
-
-
     
   }
 
   return (
     <Form>
-        <h2>Basic Routine Info:</h2>
+        {currentRoutine._id ? <h2>Currently Editing: {currentRoutine.name}</h2> : <h2>Basic Routine Info: {originalName}</h2>}
+        
         <Form.Group controlId="completeRoutineForm.Name">
           <Form.Label>Name</Form.Label>
           <Form.Control onChange={handleChange} name="name" value={name} type="text" placeholder="Required" />
@@ -92,6 +89,7 @@ export const RoutineInfoForm = ({
         </Form.Group>
 
         <ButtonGroup>
+          <DiscardBtn styles={{fontWeight: "600"}} />
           <SaveBtn onClick={handleCreateOrEdit} text=" Save and Continue" />
         </ButtonGroup>
         <br></br>

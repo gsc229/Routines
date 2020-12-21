@@ -3,6 +3,7 @@ import {updateRoutine, createRoutine, getRoutines} from '../3_APIs/routinesApi'
 
 const generalErrorMessage = "Something went wrong with the request."
 
+
 export const writingRoutine = (field, data) => dispatch => {
   dispatch({type: constants.WRITING_ROUTINE, payload: {field, data}})
 }
