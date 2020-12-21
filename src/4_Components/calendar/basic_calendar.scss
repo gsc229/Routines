@@ -7,6 +7,8 @@
     color: white;
   }
   .calendar-header-top{
+    border: 1px dashed $routine-red;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;

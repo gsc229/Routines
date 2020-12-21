@@ -8,8 +8,7 @@ export const SignIn = ({
   logInUser, 
   clearErrorMessage,
   userRoutinesQuery,
-  user, 
-  loggingIn, 
+  user,  
   loggedIn, 
   error_message, 
   history

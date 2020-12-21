@@ -3,7 +3,7 @@ import axiosWithAuth from '../../../utils/axiosWithAuth'
 export const upadateRoutineExercise = (routine_exercise_id, updates) => {
 
     return axiosWithAuth()
-    .put(`routine-exercises/${routine_exercise_id}`, updates)
+    .put(`exercise-sets/${routine_exercise_id}`, updates)
     .then(upadateRoutineExerciseResponse => {
       return upadateRoutineExerciseResponse.data
     })

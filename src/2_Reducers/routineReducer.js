@@ -1,36 +1,103 @@
-import { FETCHING_USER_ROUTINES, FETCH_USER_ROUTINES_FAIL, FETCH_USER_ROUTINES_SUCCESS } from '../1_Actions'
-
+import * as constants from '../1_Actions'
 
 const initialState = {
-  fetchingRoutineData: false,
+  crudingRoutine: false,
   editRoutineMode: false,
   error_message: '',
   pagination: null,
-  userRoutines: '',
-  currentRoutine: ''
+  routineSearchResults: [],
+  userRoutines: '', // [{}]
+  currentRoutine: {} // will have an array of routine weeks
 }
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
-
-    case FETCHING_USER_ROUTINES:
-      return {
+    case  constants.WRITING_ROUTINE:
+      return{
         ...state,
-        fetchingRoutineData: true
+        currentRoutine: {
+          ...state.currentRoutine,
+          [action.payload.field]: action.payload.data
+        }
       }
-    case FETCH_USER_ROUTINES_FAIL:
+    case constants.FETCHING_ROUTINES:
       return {
         ...state,
-        fetchingRoutineData: false,
+        crudingRoutine: "fetching"
+      }
+    case constants.FETCH_ROUTINES_FAIL:
+      return {
+        ...state,
+        crudingRoutine: false,
         error_message: action.payload
       }
-    case FETCH_USER_ROUTINES_SUCCESS:
-      console.log("YAY!!! WE GOT IT!!!!")
+    case constants.FETCH_ROUTINES_SUCCESS:
       return {
         ...state,
-        fetchingRoutineData: false,
+        crudingRoutine: false,
         userRoutines: action.payload.data,
         pagination: action.payload.pagination
+      }
+    case constants.CREATING_ROUTINE:
+      return{
+        ...state,
+        crudingRoutine: "creating"
+      }
+    case constants.CREATE_ROUTINE_SUCCESS:
+      return{
+        ...state,
+        crudingRoutine: false,
+        currentRoutine: action.payload
+      }
+    case constants.CREATE_ROUTINE_FAIL:
+      return {
+        ...state,
+        crudingRoutine: false,
+        error_message: action.payload
+      }
+    case constants.UPDATING_ROUTINE:
+      return{
+        ...state,
+        crudingRoutine: "updating"
+      }
+    case constants.UPDATE_ROUTINE_SUCCESS:
+      return{
+        ...state,
+        crudingRoutine: false,
+        currentRoutine: action.payload
+      }
+    case constants.UPDATE_ROUTINE_FAIL:
+      return{
+        ...state,
+        crudingRoutine: false,
+        error_message: action.payload
+      }
+      case constants.DELETING_ROUTINE:
+        return{
+          ...state,
+          crudingRoutine: "deleting"
+        }
+      case constants.DELETE_ROUTINE_SUCCESS:
+        return{
+          ...state,
+          crudingRoutine: false,
+          currentROUTINE: {}
+        }
+      case constants.DELETE_ROUTINE_FAIL:
+        return{
+          ...state,
+          crudingRoutine: false,
+          error_message: action.payload
+        }
+    case constants.CLEAR_CURRENT_ROUTINE:
+      return{
+        ...state,
+        currentRoutine: {}
+      }
+      case constants.CLEAR_ERROR_MESSAGE: 
+      return {
+        ...state,
+        error_message: ''
       }
 
     default: 

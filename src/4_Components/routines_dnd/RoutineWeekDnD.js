@@ -12,7 +12,7 @@ const RoutinesWeekDnD = ({weekData}) => {
 
   const [columns, setColumns] = useState(weekConstructor(weekData))
 
-  
+  console.log({weekData})
   useEffect(() => {  
     setColumns(weekConstructor(weekData))
   }, [weekData])
@@ -22,8 +22,9 @@ const RoutinesWeekDnD = ({weekData}) => {
   const getWeekDroppableRowStyles = () => {
 
     const commom = {
-      //border: '1px solid greenyellow',
+      border: '1px solid greenyellow',
       display: 'flex',
+      minHeight: '300px',
       width: 'fit-content',
       margin: 'auto',
       padding:'0px'
@@ -40,7 +41,7 @@ const RoutinesWeekDnD = ({weekData}) => {
   const getDayDroppableContainerStyles = (saturday=false) => {
     const commom = {
       //backgroundColor: 'orangered',
-      height: 'fit-content',
+      minHeight: '100%',
       marginBottom: '20px',
       maxWidth: '60%',
       margin: 'auto'
@@ -64,12 +65,15 @@ const RoutinesWeekDnD = ({weekData}) => {
       border: snapshot.isDraggingOver ? `lightsalmon 5px solid` : '',
       borderRadius: '4px',
       padding: '8px',
-      height: 'fit-content',
+      height: '100%',
       minHeight: '100px',
+      minWidth: '200px',
       margin: '20px auto',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      marginRight: '20px'
+    
     }
 
     if(width < 500){
@@ -98,7 +102,7 @@ const RoutinesWeekDnD = ({weekData}) => {
               
               return(
                 <div key={id} className='day-droppable-container' style={getDayDroppableContainerStyles()}>                
-                    <h4 style={{fontSize: `${width < 1700 ? '25px' : '1.5vw'}`}}>{column.name}</h4>
+                    <h4 style={{fontSize:"18px"}}>{column.name}</h4>
                     
                       <Droppable
                         key={id}
