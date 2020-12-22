@@ -1,28 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import {useHistory} from 'react-router-dom'
+import React from 'react'
 import { connect } from 'react-redux'
-import {majorMuscleGroups, categories} from './routineFormData'
-import {writingRoutine, createNewRoutine, saveRoutineChanges, clearCurrentRoutine} from '../../1_Actions/routineActions'
-import {clearErrorMessage} from '../../1_Actions/userActions'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import SaveBtn from '../buttons/SaveBtn'
-import DiscardBtn from '../buttons/DiscardBtn'
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import {createNewExercise, clearCurrentExercise, saveExerciseChanges} from '../../1_Actions/exerciseActions'
 
-
-export const RoutineInfoForm = ({ 
-  currentRoutine,
-  currentRoutineName, 
-  writingRoutine, 
+export const ExerciseForm = ({ 
+  currentExercise,
+  currentExerciseName, 
+  writingExercise, 
   error_message, 
   unsavedChanges,
   clearErrorMessage, 
-  createNewRoutine, 
-  saveRoutineChanges,
+  createNewExercise, 
+  saveExerciseChanges,
   userId,
   showHeader=true,
   disguardBtn=true,
@@ -34,10 +22,10 @@ export const RoutineInfoForm = ({
 }) => {
 
 
-  const {name, category, muscle_group, target_muscle, description, difficulty_scale} = currentRoutine
+  const {name, category, muscle_group, target_muscle, description, difficulty_scale} = currentExercise
   const history = useHistory()
   const handleChange = e => {
-    writingRoutine(e.target.name, e.target.value)
+    writingExercise(e.target.name, e.target.value)
   }
 
   useEffect(()=> {
@@ -46,51 +34,51 @@ export const RoutineInfoForm = ({
     }
   }, [error_message])
 
-  // Handles logic to distinguish the need of POST vs PUT requests of the currentRoutine
-  // What distinguishes an unsaved-on-the-backend-routine from a saved one will be the _id (or lack thereof)
+  // Handles logic to distinguish the need of POST vs PUT requests of the currentExercise
+  // What distinguishes an unsaved-on-the-backend-exercise from a saved one will be the _id (or lack thereof)
   const handleCreateOrEdit = async (path) => {
-    // after the update or save, redirect will depend on whether eiditing old or createing new routine and user input. 
+    // after the update or save, redirect will depend on whether eiditing old or createing new exercise and user input. 
     const getRedirect = (userId) => {
       const redirects = {
-        manageRoutines: '/manage-routines',
-        createContinue: `/editing-routine/${userId}/create-week`,
-        updateContinue: `/editing-routine/${userId}/weeks`
+        manageExercises: '/manage-exercises',
+        createContinue: `/editing-exercise/${userId}/create-week`,
+        updateContinue: `/editing-exercise/${userId}/weeks`
       }
 
       return redirects[path]
 
     }
 
-    if(!currentRoutine.original_creator){
-      const success = await createNewRoutine({...currentRoutine, original_creator: userId, user: userId})
+    if(!currentExercise.original_creator){
+      const success = await createNewExercise({...currentExercise, original_creator: userId, user: userId})
       console.log({success})
       if(success){
-       path && history.push(getRedirect(currentRoutine._id))
+       path && history.push(getRedirect(currentExercise._id))
       }
-    }else if(!currentRoutine.user){
-      const success = await createNewRoutine({...currentRoutine, user: userId})
+    }else if(!currentExercise.user){
+      const success = await createNewExercise({...currentExercise, user: userId})
       console.log({success})
       if(success){
-       path && history.push(getRedirect(currentRoutine._id))
+       path && history.push(getRedirect(currentExercise._id))
       }
     } else{
-      console.log('About to send this: ', {currentRoutine})
-      const success = await saveRoutineChanges(currentRoutine._id, currentRoutine)
+      console.log('About to send this: ', {currentExercise})
+      const success = await saveExerciseChanges(currentExercise._id, currentExercise)
       console.log({success})
       if(success){
-       path && history.push(getRedirect(currentRoutine._id))
+       path && history.push(getRedirect(currentExercise._id))
       }
     }
   }
 
   const handleDisguard = () => {
-    clearCurrentRoutine()
-    history.push('/manage-routines')
+    clearCurrentExercise()
+    history.push('/manage-exercises')
   }
 
   const getHeader = () => {
-  if(currentRoutine._id ) return <h2>Currently Editing: {currentRoutineName}</h2> 
-  if(!currentRoutine._id) return <h2>Basic Routine Info:</h2>
+  if(currentExercise._id ) return <h2>Currently Editing: {currentExerciseName}</h2> 
+  if(!currentExercise._id) return <h2>Basic Exercise Info:</h2>
   }
 
 
@@ -98,12 +86,12 @@ export const RoutineInfoForm = ({
     <Form>
         
         {showHeader && getHeader()}
-        <Form.Group controlId="completeRoutineForm.Name">
+        <Form.Group controlId="completeExerciseForm.Name">
           <Form.Label>Name</Form.Label>
           <Form.Control onChange={handleChange} name="name" value={name} type="text" placeholder="Required" />
         </Form.Group>
         
-        <Form.Group controlId="completeRoutineForm.Category">
+        <Form.Group controlId="completeExerciseForm.Category">
           <Form.Label>Category</Form.Label>
           <Form.Control placeholder="- select -" onChange={handleChange} name="category" value={category} as="select">
             <option value="">none</option>
@@ -111,7 +99,7 @@ export const RoutineInfoForm = ({
           </Form.Control>
         </Form.Group>
         
-        <Form.Group controlId="completeRoutineForm.DifficultyScale">
+        <Form.Group controlId="completeExerciseForm.DifficultyScale">
           <Form.Label style={{width: '100%'}}>
           <Container>
             <Row>
@@ -140,7 +128,7 @@ export const RoutineInfoForm = ({
           </Container>
         </Form.Group>
         
-        <Form.Group controlId="completeRoutineForm.MuslceGroup">
+        <Form.Group controlId="completeExerciseForm.MuslceGroup">
           <Form.Label>Major Muscle Group</Form.Label>
           <Form.Control placeholder="- select -"onChange={handleChange} name="muscle_group" value={muscle_group} as="select">
             <option value="">none</option>
@@ -148,14 +136,14 @@ export const RoutineInfoForm = ({
           </Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="completeRoutineForm.TargetMuslce">
+        <Form.Group controlId="completeExerciseForm.TargetMuslce">
           <Form.Label>Target Muscle</Form.Label>
           <Form.Control onChange={handleChange} name="target_muscle" value={target_muscle} type="text" placeholder="Any particular muscle?" />
         </Form.Group>
 
-        <Form.Group controlId="completeRoutineForm.Description">
+        <Form.Group controlId="completeExerciseForm.Description">
           <Form.Label>Description</Form.Label>
-          <Form.Control onChange={handleChange} name="description" value={description} as="textarea" placeholder="More about your routine..." rows={3} />
+          <Form.Control onChange={handleChange} name="description" value={description} as="textarea" placeholder="More about your exercise..." rows={3} />
         </Form.Group>
 
 
@@ -170,7 +158,7 @@ export const RoutineInfoForm = ({
           </ButtonGroup>
           <p>TODO: Turn these into a modal that pops up after save</p>
           <ButtonGroup className="mt-2">
-            {finishLaterBtn && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('manageRoutines')} text=" Save and Finish Later" Icon="" />}
+            {finishLaterBtn && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('manageExercises')} text=" Save and Finish Later" Icon="" />}
             {!unsavedChanges && goToWeekBtn && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Go to Weeks" Icon="" />}
             {!unsavedChanges && goToExerciseBank && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Exercise Bank" Icon="" />}
             {!unsavedChanges && continueEditingBtn && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Continue Editing" Icon="" />}
@@ -178,25 +166,25 @@ export const RoutineInfoForm = ({
         </ButtonToolbar>
         <br></br>
         <br/>
-        <pre>{JSON.stringify({error_message, currentRoutineName, unsavedChanges, userId, currentRoutine,}, null, 2)}</pre>
+        <pre>{JSON.stringify({error_message, currentExerciseName, unsavedChanges, userId, currentExercise,}, null, 2)}</pre>
       </Form>
   )
 }
 
 const mapStateToProps = (state) => ({
-  currentRoutine: state.routineReducer.currentRoutine,
-  currentRoutineName: state.routineReducer.currentRoutineName,
-  error_message: state.routineReducer.error_message,
-  unsavedChanges: state.routineReducer.unsavedChanges,
+  currentExercise: state.exerciseReducer.currentExercise,
+  currentExerciseName: state.exerciseReducer.currentExerciseName,
+  error_message: state.exerciseReducer.error_message,
+  unsavedChanges: state.exerciseReducer.unsavedChanges,
   userId: state.userReducer.user._id
 })
 
 const mapDispatchToProps = {
-  writingRoutine,
+  writingExercise,
   clearErrorMessage,
-  createNewRoutine,
-  saveRoutineChanges,
-  clearCurrentRoutine
+  createNewExercise,
+  saveExerciseChanges,
+  clearCurrentExercise
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoutineInfoForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseForm)

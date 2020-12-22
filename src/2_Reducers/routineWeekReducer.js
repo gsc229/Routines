@@ -37,7 +37,7 @@ const reducer = (state=initialState, action) => {
         ...state,
         crudingWeek: false,
         userRoutines: action.payload.data,
-        pagination: action.payload.pagination
+        weeksPagination: action.payload.weeksPagination
       }
     case constants.CREATING_WEEK:
       return{

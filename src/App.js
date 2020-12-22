@@ -4,16 +4,17 @@ import {Switch, Route} from 'react-router-dom'
 import {getWeek} from './3_APIs/routineWeekHelpers'
 import {getQuery} from './3_APIs/queryApi'
 import './App.scss'
-import './_variables.scss'
 import PrivateRoute from './7_Auth/PrivateRoute'
 import PublicLandingPage from './5_Pages/landing_page/LandingPage'
 import SignIn from './7_Auth/SignIn'
 import SignUp from './7_Auth/SignUp'
-import UserDashBoard from './5_Pages/user_dashboard/UserDashBoard'
+import UserDashBoard from './5_Pages/user_dashboard_page/UserDashBoardPage'
 import Schedule from './4_Components/calendar/Calendar'
-import ManageRoutines from './5_Pages/manage_routines/ManageRoutines'
-import CreateOrEditRoutine from './5_Pages/create_routine/CreateOrEditRoutine'
-import ManageExercises from './5_Pages/manage_exercises/ManageExercises'
+import ManageRoutinesPage from './5_Pages/manage_routines_page/ManageRoutinesPage'
+import CreateOrEditRoutinePage from './5_Pages/create_routine_page/CreateOrEditRoutinePage'
+import CreateOrEditWeekPage from './5_Pages/create_week_page/CreateOrEditWeekPage'
+import ManageExercisesPage from './5_Pages/manage_exercises_page/ManageExercisesPage'
+
 
 // experimental
 import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'
@@ -50,7 +51,7 @@ function App({loggedIn}) {
           <SignUp/>
         </Route>  
 
-        {loggedIn ? 
+      {loggedIn ? 
         <Route exact path="/">
           <UserDashBoard />
         </Route> 
@@ -59,20 +60,19 @@ function App({loggedIn}) {
           <PublicLandingPage />
         </Route>  
       }
-
-        
-
-        <Route exact path="/schedule">
-          <Schedule />
-        </Route>
-        <Route exact path="/exercises">
-          <ManageRoutines />
-        </Route>
-        <Route exact path="/manage-exercises">
-          <ManageExercises />
-        </Route>
-        <Route exact path="/manage-routines" component={ManageRoutines} />
-        <Route exact path="/create-routine" component={CreateOrEditRoutine} />
+      <Route exact path="/schedule">
+        <Schedule />
+      </Route>
+      <Route exact path="/exercises">
+        <ManageRoutinesPage />
+      </Route>
+      <Route exact path="/manage-exercises">
+        <ManageExercisesPage />
+      </Route>
+      <Route exact path="/manage-routines" component={ManageRoutinesPage} />
+      <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
+      <Route exact path="/editing-routine/:routineId/create-week" component={CreateOrEditWeekPage} />
+      <Route exact path="/manage-exercises" component={ManageExercisesPage} />
 
 
         {/* Experimental */}

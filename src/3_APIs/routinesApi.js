@@ -33,9 +33,10 @@ export const createRoutine = (newRoutine) => {
   })
 }
 
-export const updateRoutine = (userId, updates) => {
+export const updateRoutine = (routineId, updates) => {
+  
   return axiosWihAuth()
-  .put(`/routines/${userId}`, updates)
+  .put(`/routines/routine/${routineId}`, updates)
   .then(routinesResponse=>{
     console.log({routinesResponse})
     return routinesResponse.data

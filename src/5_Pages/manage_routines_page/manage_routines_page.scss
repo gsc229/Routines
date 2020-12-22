@@ -1,0 +1,80 @@
+.manage-routines{
+  //border: 1px solid yellow;
+  height: 100%;
+  .row{
+    .routines-column{
+      margin: auto;
+    }
+  }
+}
+
+
+.options-menu{
+  
+  #new-routine{
+    display: 'flex';
+    //align-items: 'center';
+    width: 100%;
+  }
+}
+
+.routines-bank{
+  margin: 20px 0;
+  ul{
+    list-style: none;
+  }
+
+  .details-and-btns-container{
+    display: flex;
+    justify-content: space-between;
+    .spinner{
+      margin: auto;
+    }
+    .edit-complete-expand-btns{
+    display: flex;
+    justify-content: flex-end;
+      
+      .discard-btn{
+        color: $banana-mania;
+      }
+      .cmd-btn{
+        margin: 10px;
+        font-size:  25px;
+        cursor: pointer;
+      }
+      .click-edit-btn{
+        font-size: 30px;
+        color: $routine-red;
+      }
+      .expand-btn{
+        font-size: 25px;
+        
+      }
+      .complete-btn{
+        font-size: 25px;
+        color: $kelly-green;
+      }
+    }
+  }
+}
+
+
+#manage-routines-calendar{
+  //background-color: green;
+  font-size: 15px;
+  //border-bottom: 1px solid black;
+
+  .live-week:hover{
+    border: 1px solid red;
+  }
+
+  .day{
+    font-size: 10px;
+    min-height: 100px;
+  }
+
+
+
+
+
+}

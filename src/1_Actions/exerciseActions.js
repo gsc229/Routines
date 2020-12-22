@@ -1,14 +1,66 @@
 import * as constants from '../1_Actions'
 
+const generalErrorMessage = "Something went wrong with the request."
+
 export const userExercisesQuery = (queryString) => dispatch => {
   dispatch({type: constants.FETCHING_EXERCISES})
-  getRoutines(queryString)
+  getExercises(queryString)
   .then(res=>{
     if(res.success){
-      return dispatch({type: constants.FETCH_EXERCISES_SUCCESS, payload: {data: res.data, pagination: res.pagination}})
+      return dispatch({type: constants.FETCH_EXERCISES_SUCCESS, payload: {data: res.data, exersisesPagination: res.exersisesPagination}})
     } else if(res.error_message){
       return dispatch({type: constants.FETCH_EXERCISES_FAIL, payload: res.error_message})
     } else return dispatch({type: constants.FETCH_EXERCISES_FAIL, payload: res.error_message})
+  })
+
+}
+
+export const setCurrentExercise = (exercise) => dispatch => {
+  dispatch({type: constants.SET_CURRENT_EXERCISE, payload: exercise})
+}
+
+export const writingExercise = (field, data) => dispatch => {
+  dispatch({type: constants.WRITING_EXERCISE, payload: {field, data}})
+}
+
+export const clearCurrentExercise = () => dispatch => {
+  dispatch({type: constants.CLEAR_CURRENT_EXERCISE})
+}
+
+export const createNewExercise = (newExercise) => dispatch => {
+  console.log("exerciseActoins create new", {newExercise})
+  dispatch({type: constants.CREATING_EXERCISE})
+  return createExercise(newExercise)
+  .then(response => {
+    if(response.success){
+     dispatch({type: constants.CREATE_EXERCISE_SUCCESS, payload: response.data})
+     return true
+    } 
+    if(response.error_message){
+      dispatch({type: constants.CREATE_EXERCISE_FAIL, payload: response.error_message})
+      return false
+    } 
+
+    dispatch({type: constants.CREATE_EXERCISE_FAIL, payload: generalErrorMessage})
+    return false
+  })
+}
+
+export const saveExerciseChanges = (exerciseId, updates) => dispatch => {
+  dispatch({type: constants.UPDATING_EXERCISE})
+  return updateExercise(exerciseId, updates)
+  .then(response => {
+    if(response.success){
+     dispatch({type: constants.UPDATE_EXERCISE_SUCCESS, payload: response.data})
+     return true
+    } 
+    if(response.error_message){
+      dispatch({type: constants.UPDATE_EXERCISE_FAIL, payload: response.error_message})
+      return false
+    } 
+    
+    dispatch({type: constants.UPDATE_EXERCISE_FAIL, payload: generalErrorMessage})
+    return false
   })
 
 }

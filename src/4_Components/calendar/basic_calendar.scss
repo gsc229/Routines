@@ -1,3 +1,4 @@
+
 .main-calendar{
   //background-color: blue;
   border-bottom: 1px solid black;
@@ -20,7 +21,7 @@
     display: flex;
     color: darkgray;
     justify-content: space-between;
-    background-color:  rgb(160, 14, 14);
+    background-color:  $routine-red;
     h6{
       margin: auto;
     }
@@ -60,7 +61,7 @@
   }
   
   .selected{
-    background-color: rgb(160, 14, 14);
+    background-color: $routine-red;
     color: white;
   }
 

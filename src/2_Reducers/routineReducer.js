@@ -1,24 +1,50 @@
+import { VscActivateBreakpoints } from 'react-icons/vsc'
 import * as constants from '../1_Actions'
 
 const initialState = {
   crudingRoutine: false,
-  editRoutineMode: false,
+  saveRoutineChangesMode: false,
+  unsavedChanges: false,
   error_message: '',
-  pagination: null,
+  routinePagination: null,
   routineSearchResults: [],
   userRoutines: '', // [{}]
-  currentRoutine: {} // will have an array of routine weeks
+  currentRoutineName: '', 
+  currentRoutine: {
+    name: null,
+    category: null,
+    muscle_group: null,
+    target_muscle: null,
+    description: null,
+    difficulty_scale: null,
+    start_date: null,
+    end_date: null
+  }
 }
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
+    case constants.SET_CURRENT_ROUTINE:
+      return{
+        ...state,
+        currentRoutine: action.payload,
+        currentRoutineName: action.payload.name,
+        unsavedChanges: false
+      }
     case  constants.WRITING_ROUTINE:
       return{
         ...state,
+        unsavedChanges: true,
         currentRoutine: {
           ...state.currentRoutine,
           [action.payload.field]: action.payload.data
         }
+      }
+    case constants.CLEAR_CURRENT_ROUTINE:
+      return{
+        ...state,
+        currentRoutine: initialState.currentRoutine,
+        currentRoutineName: ''
       }
     case constants.FETCHING_ROUTINES:
       return {
@@ -36,7 +62,7 @@ const reducer = (state=initialState, action) => {
         ...state,
         crudingRoutine: false,
         userRoutines: action.payload.data,
-        pagination: action.payload.pagination
+        routinePagination: action.payload.routinePagination
       }
     case constants.CREATING_ROUTINE:
       return{
@@ -47,7 +73,11 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingRoutine: false,
-        currentRoutine: action.payload
+        currentRoutineIsSaved: true,
+        unsavedChanges: false,
+        currentRoutine: action.payload,
+        currentRoutineName: action.payload.name,
+        userRoutines: [...state.userRoutines, action.payload]
       }
     case constants.CREATE_ROUTINE_FAIL:
       return {
@@ -64,7 +94,10 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingRoutine: false,
-        currentRoutine: action.payload
+        unsavedChanges: false,
+        currentRoutine: action.payload,
+        currentRoutineName: action.payload.name,
+        userRoutines: state.userRoutines.map(routine => routine._id === action.payload._id ? action.payload : routine)
       }
     case constants.UPDATE_ROUTINE_FAIL:
       return{
@@ -81,7 +114,7 @@ const reducer = (state=initialState, action) => {
         return{
           ...state,
           crudingRoutine: false,
-          currentROUTINE: {}
+          currentRoutine: initialState.currentRoutine
         }
       case constants.DELETE_ROUTINE_FAIL:
         return{
@@ -89,11 +122,6 @@ const reducer = (state=initialState, action) => {
           crudingRoutine: false,
           error_message: action.payload
         }
-    case constants.CLEAR_CURRENT_ROUTINE:
-      return{
-        ...state,
-        currentRoutine: {}
-      }
       case constants.CLEAR_ERROR_MESSAGE: 
       return {
         ...state,

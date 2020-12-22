@@ -10,7 +10,7 @@ export const userWeeksQuery = (queryString) => dispatch => {
   return getWeeks(queryString)
   .then(res=>{
     if(res.success){
-      dispatch({type: constants.FETCH_WEEKS_SUCCESS, payload: {data: res.data, pagination: res.pagination}})
+      dispatch({type: constants.FETCH_WEEKS_SUCCESS, payload: {data: res.data, weeksPagination: res.weeksPagination}})
       return true
     }
     if(res.error_message){
@@ -42,7 +42,7 @@ export const createNewWeek = (newWeek) => dispatch => {
   })
 }
 
-export const editWeek = (updates) => dispatch => {
+export const saveWeekChanges = (updates) => dispatch => {
   dispatch({type: constants.UPDATING_WEEK})
   return updateWeek(updates)
   .then(response => {
