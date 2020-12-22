@@ -26,10 +26,11 @@ const Menu = ({logout}) => {
           <Nav.Link active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">Manage Routines</Nav.Link>
           <Nav.Link active={isActivePath('/routines-dnd')}  active={isActivePath('/routines-dnd')} as={Link} to="/routines-dnd">Routines DnD</Nav.Link>
           <NavDropdown active={isActivePath('dropdown')} title='Workout Routines' aria-labelledby="navbarDropdown">
-            <NavDropdown.Item active={isActivePath('/my-routines')} as={Link} to="/manage-routines">My Saved Routines</NavDropdown.Item>
+            <NavDropdown.Item active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">My Saved Routines</NavDropdown.Item>
             <NavDropdown.Item active={isActivePath('/create-routine')} as={Link} to="/create-routine">Create New Routine</NavDropdown.Item>
             <NavDropdown.Item active={isActivePath('/find-routine')} as={Link} to="/find-routine">Find Routines</NavDropdown.Item>
             <NavDropdown.Item><hr className="dropdown-divider" /></NavDropdown.Item>
+            <NavDropdown.Item active={isActivePath('/manage-exercises')} as={Link} to="/manage-exercises">My Exercises</NavDropdown.Item>
             <NavDropdown.Item active={isActivePath('/browse-exercises')} as={Link} to="/browse-exercises">Browse Exercises</NavDropdown.Item>
           </NavDropdown>
           <Nav.Link as={Link} onClick={logout} className="nav-Nav.link" to="/">Log Out</Nav.Link>

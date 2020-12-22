@@ -6,19 +6,19 @@ const initialState = {
   saveRoutineChangesMode: false,
   unsavedChanges: false,
   error_message: '',
-  pagination: null,
+  routinePagination: null,
   routineSearchResults: [],
   userRoutines: '', // [{}]
   currentRoutineName: '', 
   currentRoutine: {
-    name: '',
-    category: '',
-    muscle_group: '',
-    target_muscle: '',
-    description: '',
-    difficulty_scale: '',
-    start_date: '',
-    end_date: ''
+    name: null,
+    category: null,
+    muscle_group: null,
+    target_muscle: null,
+    description: null,
+    difficulty_scale: null,
+    start_date: null,
+    end_date: null
   }
 }
 
@@ -43,7 +43,8 @@ const reducer = (state=initialState, action) => {
     case constants.CLEAR_CURRENT_ROUTINE:
       return{
         ...state,
-        currentRoutine: {}
+        currentRoutine: initialState.currentRoutine,
+        currentRoutineName: ''
       }
     case constants.FETCHING_ROUTINES:
       return {
@@ -61,7 +62,7 @@ const reducer = (state=initialState, action) => {
         ...state,
         crudingRoutine: false,
         userRoutines: action.payload.data,
-        pagination: action.payload.pagination
+        routinePagination: action.payload.routinePagination
       }
     case constants.CREATING_ROUTINE:
       return{
@@ -75,7 +76,8 @@ const reducer = (state=initialState, action) => {
         currentRoutineIsSaved: true,
         unsavedChanges: false,
         currentRoutine: action.payload,
-        currentRoutineName: action.payload.name
+        currentRoutineName: action.payload.name,
+        userRoutines: [...state.userRoutines, action.payload]
       }
     case constants.CREATE_ROUTINE_FAIL:
       return {
@@ -94,7 +96,8 @@ const reducer = (state=initialState, action) => {
         crudingRoutine: false,
         unsavedChanges: false,
         currentRoutine: action.payload,
-        currentRoutineName: action.payload.name
+        currentRoutineName: action.payload.name,
+        userRoutines: state.userRoutines.map(routine => routine._id === action.payload._id ? action.payload : routine)
       }
     case constants.UPDATE_ROUTINE_FAIL:
       return{

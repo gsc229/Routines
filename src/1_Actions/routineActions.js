@@ -20,7 +20,7 @@ export const userRoutinesQuery = (queryString) => dispatch => {
   return getRoutines(queryString)
   .then(res=>{
     if(res.success){
-      dispatch({type: constants.FETCH_ROUTINES_SUCCESS, payload: {data: res.data, pagination: res.pagination}})
+      dispatch({type: constants.FETCH_ROUTINES_SUCCESS, payload: {data: res.data, routinePagination: res.routinePagination}})
       return true
     } 
     if(res.error_message){

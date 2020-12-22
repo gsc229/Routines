@@ -10,7 +10,7 @@ export const userWeeksQuery = (queryString) => dispatch => {
   return getWeeks(queryString)
   .then(res=>{
     if(res.success){
-      dispatch({type: constants.FETCH_WEEKS_SUCCESS, payload: {data: res.data, pagination: res.pagination}})
+      dispatch({type: constants.FETCH_WEEKS_SUCCESS, payload: {data: res.data, weeksPagination: res.weeksPagination}})
       return true
     }
     if(res.error_message){
