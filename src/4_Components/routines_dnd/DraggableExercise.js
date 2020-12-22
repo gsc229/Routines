@@ -6,9 +6,11 @@ import RoutineExercise from '../routine_exercise/RoutineExercise'
 const draggableExerciseStyles = (snapshot, providedDraggablePropsStyle) => {
 
   const common = {
+    display: 'flex',
+    alignItems: 'center',
     userSelect: 'none',
     cursor: 'grab',
-    padding: 16,
+    padding: 5,
     margin: '0 0 8px 0',
     minHeight: '50px',
     backgroundColor: snapshot.isDragging ? 'lightsalmon' : 'whitesmoke',

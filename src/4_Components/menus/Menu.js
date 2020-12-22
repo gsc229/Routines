@@ -1,5 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
+import NavDropdown from 'react-bootstrap/NavDropdown'
 import {logout} from '../../1_Actions/userActions'
 import {Link, useLocation} from 'react-router-dom'
 
@@ -7,59 +10,33 @@ const Menu = ({logout}) => {
   
   const pathname = useLocation().pathname
   
-  function isActivePath(){
-    if(pathname === "/my-routines" || pathname === "/create-routine" || pathname === "/find-routine" || pathname === "/browse-exercises" ){
-      return "active"
-    }
-
-    return ""
+  function isActivePath(path){
+   return path === pathname || (path === 'dropdown' && (pathname === '/my-routines' || pathname === '/create-routine' || pathname === '/find-routine'))
   }
 
   return (
-    <div className="menu">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/">Routines</Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" aria-current="page" to="/schedule">Schedule</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/goals">Goals</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/manage-routines">Manage Routines</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/manage-exercises">Manage Exercises</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/routines-dnd">Routines DnD</Link>
-              </li>
-              <li className={`${isActivePath()} nav-item dropdown`}>
-                <a
-                className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Workout Routines
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><Link className="dropdown-item" to="/my-routines">My Saved Routines</Link></li>
-                  <li><Link className="dropdown-item" to="/create-routine">Create Ne Routine</Link></li>
-                  <li><Link className="dropdown-item" to="/find-routine">Find Routines</Link></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><Link className="dropdown-item" to="/browse-exercises">Browse Exercises</Link></li>
-                </ul>
-              </li>
-              <li className="nav-item">
-                <Link onClick={logout} className="nav-link" to="/">Log Out</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <div className="menu" style={{marginBottom: '56px'}}>
+      <Navbar fixed='top' expand="lg" bg="dark" variant="dark">
+        <Navbar.Brand as={Link} to="/">Routines</Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarNav" />
+        <Navbar.Collapse id="navbarNav">
+        <Nav>
+          <Nav.Link active={isActivePath('/schedule')} as={Link} to='/schedule'>Schedule</Nav.Link>
+          <Nav.Link active={isActivePath('/goals')} as={Link} to="/goals">Goals</Nav.Link>
+          <Nav.Link active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">Manage Routines</Nav.Link>
+          <Nav.Link active={isActivePath('/routines-dnd')}  active={isActivePath('/routines-dnd')} as={Link} to="/routines-dnd">Routines DnD</Nav.Link>
+          <NavDropdown active={isActivePath('dropdown')} title='Workout Routines' aria-labelledby="navbarDropdown">
+            <NavDropdown.Item active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">My Saved Routines</NavDropdown.Item>
+            <NavDropdown.Item active={isActivePath('/create-routine')} as={Link} to="/create-routine">Create New Routine</NavDropdown.Item>
+            <NavDropdown.Item active={isActivePath('/find-routine')} as={Link} to="/find-routine">Find Routines</NavDropdown.Item>
+            <NavDropdown.Item><hr className="dropdown-divider" /></NavDropdown.Item>
+            <NavDropdown.Item active={isActivePath('/manage-exercises')} as={Link} to="/manage-exercises">My Exercises</NavDropdown.Item>
+            <NavDropdown.Item active={isActivePath('/browse-exercises')} as={Link} to="/browse-exercises">Browse Exercises</NavDropdown.Item>
+          </NavDropdown>
+          <Nav.Link as={Link} onClick={logout} className="nav-Nav.link" to="/">Log Out</Nav.Link>
+        </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </div>
   )
 }

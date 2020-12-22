@@ -1,4 +1,4 @@
-import {} from '../1_Actions'
+import * as constants from '../1_Actions'
 
 
 const initialState = {}

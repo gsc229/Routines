@@ -7,15 +7,47 @@ export const getRoutines = (querString) => {
     console.log({routinesResponse})
     return routinesResponse.data
   })
-  .catch(routinesError => console.log({routinesError}))
+  .catch(routinesError => {
+    console.log({routinesError})
+    if(routinesError.response){
+      return routinesError.response.data
+    }
+    return {succes: false, error_message: "Somthing went wrong. Try again lager"}
+  })
 }
 
-export const getWeeks = (querString) => {
+export const createRoutine = (newRoutine) => {
   return axiosWihAuth()
-  .get(`/routines/weeks?${querString}`)
-  .then(routinesWeeksResponse => {
-    console.log({routinesWeeksResponse})
-    return routinesWeeksResponse.data
+  .post(`/routines`, newRoutine)
+  .then(routinesResponse=>{
+    console.log({routinesResponse})
+    return routinesResponse.data
   })
-  .catch(routinesWeeksError => console.log({routinesWeeksError}))
+  .catch(routinesError => {
+    console.log({routinesError})
+    console.log("error.response: ", routinesError.response)
+    if(routinesError.response){
+      return routinesError.response.data
+    }
+    return {succes: false, error_message: "Somthing went wrong. Try again lager"}
+  })
 }
+
+export const updateRoutine = (routineId, updates) => {
+  
+  return axiosWihAuth()
+  .put(`/routines/routine/${routineId}`, updates)
+  .then(routinesResponse=>{
+    console.log({routinesResponse})
+    return routinesResponse.data
+  })
+  .catch(routinesError => {
+    console.log({routinesError})
+    if(routinesError.response){
+      return routinesError.response.data
+    }
+    return {succes: false, error_message: "Somthing went wrong. Try again lager"}
+  })
+}
+
+

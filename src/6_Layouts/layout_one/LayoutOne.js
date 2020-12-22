@@ -4,7 +4,7 @@ import Menu from '../../4_Components/menus/Menu'
 const LayoutOne = ({children, showTop=false}) => {
 
   return (
-    <div className='layout-one'>
+    <div style={{paddingTop: showTop ? '' : '20px'}} className='container-fluid layout-one'>
       <Menu />
       {showTop &&
       <div className="layout-one-top">

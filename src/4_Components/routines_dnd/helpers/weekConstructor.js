@@ -31,7 +31,7 @@ export const weekConstructor = (weekData) => {
 }
 
   
-  weekData && weekData[0].exercises.map(exercise => {
+  weekData && weekData[0].exercise_sets.map(exercise => {
    return weekExercises[exercise.day].items.push(exercise)
   })
 
