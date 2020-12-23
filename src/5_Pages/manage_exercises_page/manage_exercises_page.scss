@@ -1,3 +1,24 @@
 .manage-exercises{
   border: 2px solid yellow;
+  
+}
+
+.manage-exercises-top{
+  margin-bottom: 20px;
+  h2{
+    @media only screen and (max-width: 400px) {
+      font-size: 8vw;
+    }
+  }
+}
+
+.exercise-bank{
+  border: 2px solid red;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: auto;
+  background-color: whitesmoke;
+  padding: 20px;
+
 }

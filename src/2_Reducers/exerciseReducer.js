@@ -86,7 +86,8 @@ const reducer = (state=initialState, action) => {
         currentExerciseIsSaved: true,
         unsavedChanges: false,
         currentExercise: action.payload,
-        currentExerciseName: action.payload.name
+        currentExerciseName: action.payload.name,
+        userExercises: [...state.userExercises, action.payload]
       }
     case constants.CREATE_EXERCISE_FAIL:
       return {
@@ -105,7 +106,8 @@ const reducer = (state=initialState, action) => {
         crudingExercise: false,
         unsavedChanges: false,
         currentExercise: action.payload,
-        currentExerciseName: action.payload.name
+        currentExerciseName: action.payload.name,
+        userExercises: state.userExercises.map(exercise => exercise._id === action.payload._id ? action.payload : exercise)
       }
     case constants.UPDATE_EXERCISE_FAIL:
       return{

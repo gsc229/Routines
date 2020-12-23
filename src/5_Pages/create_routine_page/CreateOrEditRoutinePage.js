@@ -1,24 +1,42 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
-import RoutineInfoForm from '../../4_Components/create_routine/RoutineInfoForm'
+import RoutineInfoForm from '../../4_Components/form_routine/RoutineInfoForm'
+import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 
-const CreateRoutine = ({currentIsSaved}) => {
+const CreateRoutine = ({currentIsSaved, crudingRoutine}) => {
 
   // TO DO: if current is saved redirect to editing url
+  const [showSpinner, setshowSpinner] = useState(false)
+
+
+  useEffect(() => {
+    if(crudingRoutine === 'updating'){
+      setshowSpinner(true)
+    }
+  }, [crudingRoutine])
+
+ 
+  if(showSpinner){
+    setTimeout(() => {
+      setshowSpinner(false)
+    }, 800)
+  }
 
   return (
     <Layout>
       <Container>
-         <RoutineInfoForm />
+        {!showSpinner && !crudingRoutine && <RoutineInfoForm />}
+        {(showSpinner || crudingRoutine )&& <DarkSpinner />}
       </Container>
     </Layout>
   )
 }
 
 const mapStateToProps = (state) => ({
-  currentIsSaved: state.routineReducer.currentIsSaved,  
+  currentIsSaved: state.routineReducer.currentIsSaved, 
+  crudingRoutine: state.routineReducer.crudingRoutine 
 })
 
 const mapDispatchToProps = {}

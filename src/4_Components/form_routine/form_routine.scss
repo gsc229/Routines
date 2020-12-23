@@ -1,0 +1,37 @@
+form{
+  background-color: $bs-dark;
+  color: white;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  
+  h3{
+    background-color: $routine-red;
+    color: white;
+    font-weight: bolder;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  span{
+    padding-right: 20px;
+  }
+  
+  .difficulty-slider{
+    //background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+  }
+ /*  .save-btn{
+    background-color: $russian-green;
+  } */
+  /* .routine-form-btn{
+   border-color: $bs-dark;
+  } */
+  /* .save-routine-btn{
+    background-color: $russian-green;
+    //border-color: $camel;
+  } */
+  .discard-routine-btn{
+    color: white;
+  }
+}

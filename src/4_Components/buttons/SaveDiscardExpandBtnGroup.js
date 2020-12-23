@@ -13,9 +13,9 @@ const SaveDiscardExpandBtnGroup = ({
 }) => {
   return (
     <div>
-      {showDiscardBtn && <RiArrowGoBackLine className="discard-btn cmd-btn" onClick={discardOnClick} />}
-      {showSaveBtn && <GiCheckMark className='complete-btn cmd-btn' onClick={saveOnClick} />}
-      {showExpandBtn && <GrExpand className='expand-btn cmd-btn' onClick={expandOnclick} />}
+      {showDiscardBtn && <RiArrowGoBackLine className="discard-symbol cmd-btn" onClick={discardOnClick} />}
+      {showSaveBtn && <GiCheckMark className='check-symbol cmd-btn' onClick={saveOnClick} />}
+      {showExpandBtn && <GrExpand className='expand-symbol cmd-btn' onClick={expandOnclick} />}
     </div>
   )
 }
