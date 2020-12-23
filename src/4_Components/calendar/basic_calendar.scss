@@ -4,7 +4,7 @@
   border-bottom: 1px solid black;
   border-radius: 2px;
   .calendar-header{
-    background-color: #212529;
+    background-color: $bs-dark;
     color: white;
   }
   .calendar-header-top{
@@ -45,7 +45,6 @@
   
   .day{
     width: 17%;
-    min-height: 50px;
     border-right: 1px solid black;
     cursor: pointer;
   }

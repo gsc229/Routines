@@ -1,5 +1,5 @@
 .manage-exercises{
-  border: 2px solid yellow;
+  //border: 2px solid yellow;
   
 }
 
@@ -13,12 +13,13 @@
 }
 
 .exercise-bank{
-  border: 2px solid red;
+  //border: 2px solid red;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   margin: auto;
   background-color: whitesmoke;
   padding: 20px;
-
+  border-radius: 4px;
+  
 }

@@ -8,13 +8,31 @@ export const userExercisesQuery = (queryString) => dispatch => {
   return getExercises(queryString)
   .then(res=>{
     if(res.success){
-      dispatch({type: constants.FETCH_EXERCISES_SUCCESS, payload: {data: res.data, exersisesPagination: res.exersisesPagination}})
+      dispatch({type: constants.FETCH_EXERCISES_SUCCESS, payload: {data: res.data, exercisePagination: res.expercisePagination}})
       return true
     } else if(res.error_message){
       dispatch({type: constants.FETCH_EXERCISES_FAIL, payload: res.error_message})
       return false
     } else {
       dispatch({type: constants.FETCH_EXERCISES_FAIL, payload: res.error_message})
+      return false
+    }
+  })
+
+}
+
+export const publicExercisesQuery = (queryString) => dispatch => {
+  dispatch({type: constants.SEARCHING_EXERCISES})
+  return getExercises(queryString)
+  .then(res=>{
+    if(res.success){
+      dispatch({type: constants.SEARCH_EXERCISES_SUCCESS, payload: {data: res.data, exercisePagination: res.expercisePagination}})
+      return true
+    } else if(res.error_message){
+      dispatch({type: constants.SEARCH_EXERCISES_FAIL, payload: res.error_message})
+      return false
+    } else {
+      dispatch({type: constants.SEARCH_EXERCISES_FAIL, payload: res.error_message})
       return false
     }
   })

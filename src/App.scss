@@ -10,6 +10,9 @@
 // Exercises
 @import './5_Pages/manage_exercises_page/manage_exercises_page.scss';
 
+// Browse Exercises
+@import './5_Pages/browse_exercises_page/browse_exercises_page.scss';
+
 // Routines 
 @import './5_Pages/manage_routines_page/manage_routines_page.scss';
 
@@ -28,5 +31,6 @@
 
 // Accordion
 @import './4_Components/accordion_routines/routines_accordion.scss';
+@import './4_Components/accordion_embed_instruction//embed_accordion.scss';
 // Cards
 @import './4_Components/card_exercise/exercise_card.scss';

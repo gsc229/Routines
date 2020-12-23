@@ -1,0 +1,38 @@
+.search-exercises-form{
+  color: white;
+  padding: 20px;
+  .col{
+    .form-label{
+      color: white;
+    }
+
+    .form-check{
+      #Endurance{
+        color: $routine-red;
+        background-color: $routine-red;
+      }
+      input{
+        background-color: $routine-red;
+      }
+    }
+    label{
+      color: white;
+    }  
+  }
+}
+
+.exercise-search-results{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: auto;
+  background-color: whitesmoke;
+  padding: 20px;
+  border-radius: 4px;
+  h5{
+    margin-bottom: 20px;
+  }
+  .card{
+    //margin-right: 2px;
+  }
+}

@@ -74,6 +74,24 @@ const reducer = (state=initialState, action) => {
         userExercises: action.payload.data,
         exercisePagination: action.payload.exercisePagination
       }
+      case constants.SEARCHING_EXERCISES:
+      return {
+        ...state,
+        crudingExercise: "fetching"
+      }
+    case constants.SEARCH_EXERCISES_FAIL:
+      return {
+        ...state,
+        crudingExercise: false,
+        error_message: action.payload
+      }
+    case constants.SEARCH_EXERCISES_SUCCESS:
+      return {
+        ...state,
+        crudingExercise: false,
+        exerciseSearchResults: action.payload.data,
+        searchResultsPaginaion: action.payload.exercisePagination
+      }
     case constants.CREATING_EXERCISE:
       return{
         ...state,
