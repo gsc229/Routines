@@ -1,16 +1,22 @@
 import * as constants from '../1_Actions'
+import {getExercises, updateExercise, createExercise} from "../3_APIs/exerciseApi";
 
 const generalErrorMessage = "Something went wrong with the request."
 
 export const userExercisesQuery = (queryString) => dispatch => {
   dispatch({type: constants.FETCHING_EXERCISES})
-  getExercises(queryString)
+  return getExercises(queryString)
   .then(res=>{
     if(res.success){
-      return dispatch({type: constants.FETCH_EXERCISES_SUCCESS, payload: {data: res.data, exersisesPagination: res.exersisesPagination}})
+      dispatch({type: constants.FETCH_EXERCISES_SUCCESS, payload: {data: res.data, exersisesPagination: res.exersisesPagination}})
+      return true
     } else if(res.error_message){
-      return dispatch({type: constants.FETCH_EXERCISES_FAIL, payload: res.error_message})
-    } else return dispatch({type: constants.FETCH_EXERCISES_FAIL, payload: res.error_message})
+      dispatch({type: constants.FETCH_EXERCISES_FAIL, payload: res.error_message})
+      return false
+    } else {
+      dispatch({type: constants.FETCH_EXERCISES_FAIL, payload: res.error_message})
+      return false
+    }
   })
 
 }

@@ -6,7 +6,7 @@ const SaveBtn = ({onClick, className, text=" Save Changes", Icon=IoSaveOutline, 
 
   return (
     <Button
-    className={className}
+    className={`save-btn ${className}`}
     onClick={onClick}
     style={{...style}} 
     variant={variant}>

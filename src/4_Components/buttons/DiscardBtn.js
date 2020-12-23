@@ -2,11 +2,13 @@ import React from 'react'
 import Button from 'react-bootstrap/Button'
 import {RiArrowGoBackLine} from 'react-icons/ri'
 
-const DiscardBtn = ({onClick, text=" Discard Changes", style, Icon=RiArrowGoBackLine, variant='warning'}) => {
+const DiscardBtn = ({className, onClick, text=" Discard Changes", style, Icon=RiArrowGoBackLine, variant='warning'}) => {
   return (
-    <Button 
+    <Button
+    className={`discard-btn ${className}`}
     onClick={onClick}
-    variant={variant} style={{...style, }} >
+    variant={variant} 
+    style={{...style, }} >
       <Icon/>&nbsp;{text}
     </Button>
   )
