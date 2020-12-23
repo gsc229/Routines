@@ -1,7 +1,29 @@
 .exercise-card{
-    margin: auto;
+    margin: 0 auto;
   .card-header{
     display: flex;
     justify-content: space-between;
+    
+    span{
+      font-weight: bolder;
+    }
+    .card-link{
+      color: $routine-red;
+    }
+  }
+  .card-body{
+    .card-subtitle{
+      span{
+        color: $gold-crayola;
+      }
+    }
+
+    .card-difficulty{
+      margin-top: 20px;
+    }
+
+    .embeded-video{
+      margin-top: 20px;
+    }
   }
 }

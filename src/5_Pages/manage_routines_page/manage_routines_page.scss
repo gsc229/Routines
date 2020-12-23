@@ -15,7 +15,10 @@
   #new-routine{
     display: 'flex';
     //align-items: 'center';
+    background-color: whitesmoke;
     width: 100%;
+    color: $routine-red;
+    font-weight: 600;
   }
 }
 

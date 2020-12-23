@@ -27,7 +27,7 @@ export const ManageRoutinesPage = ({
           <Col lg='8' md='12' className="routines-column">
             <h2>Your Routines:</h2>
             <div className="options-menu">
-                <Button onClick={handleNewClick} variant='primary' id='new-routine' aria-current="page"><FaPlus /> New</Button>
+                <Button onClick={handleNewClick}  id='new-routine' aria-current="page"><FaPlus /> New</Button>
             </div> 
             <RoutinesAccordion />
           </Col>
