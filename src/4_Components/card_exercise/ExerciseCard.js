@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import {setCurrentExercise} from '../../1_Actions/exerciseActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed'
 import {Link} from 'react-router-dom'
+import IFrame from '../iframe/IFrame'
+
 
 export const ExerciseCard = ({
   exercise,
@@ -37,11 +38,9 @@ export const ExerciseCard = ({
         {exercise.target_muscle && <Card.Text><span>Target Muscle: </span>{exercise.target_muscle}</Card.Text>}
         <Card.Subtitle className="card-difficulty">
           Difficulty: {exercise.difficulty_scale}
-          <ProgressBar variant="primary" now={exercise.difficulty_scale * 10} />  
+          <ProgressBar className='progress-bar-outer' variant="primary" now={exercise.difficulty_scale * 10} />  
         </Card.Subtitle>
-        <ResponsiveEmbed className="embeded-video" aspectRatio="16by9">
-          <div dangerouslySetInnerHTML={{__html: exercise.video_url}} />
-        </ResponsiveEmbed>
+        <IFrame iframeString={exercise.video_url} />
       </Card.Body>
     </Card>
   )

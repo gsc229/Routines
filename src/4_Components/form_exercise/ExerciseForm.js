@@ -13,7 +13,7 @@ import SaveBtn from '../buttons/SaveBtn'
 import DiscardBtn from '../buttons/DiscardBtn'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import EmbedAccordion from '../accordion_embed_instruction/EmbedAccordion'
-
+import IFramePreview from './IFramePreview'
 
 export const ExerciseForm = ({ 
   currentExercise,
@@ -34,11 +34,20 @@ export const ExerciseForm = ({
   goToExerciseBank=true
 }) => {
 
-
+   /* 
+  <img src="https://images.ctfassets.net/cnu0m8re1exe/1GxSYi0mQSp9xJ5svaWkVO/d151a93af61918c234c3049e0d6393e1/93347270_cat-1151519_1280.jpg?w=650&h=433&fit=fill" />
+  */
+ /* 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vthMCtgVtFw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+*/
   const {name, category, muscle_group, target_muscle, description, difficulty_scale, video_url} = currentExercise
+  
   const history = useHistory()
+
   const handleChange = e => {
-    writingExercise(e.target.name, e.target.value)
+    const trimmeddValue = e.target.value.trim()
+    //trimmeddValue.trim()
+    writingExercise(e.target.name, trimmeddValue)
   }
 
   useEffect(()=> {
@@ -85,8 +94,8 @@ export const ExerciseForm = ({
   }
 
   const getHeader = () => {
-  if(currentExercise._id ) return <h2>Currently Editing: {currentExerciseName}</h2> 
-  if(!currentExercise._id) return <h2>Basic Exercise Info:</h2>
+    if(currentExercise._id ) return <h2>Currently Editing: {currentExerciseName}</h2> 
+    if(!currentExercise._id) return <h2>Basic Exercise Info:</h2>
   }
 
 
@@ -153,28 +162,38 @@ export const ExerciseForm = ({
       </Form.Group>
 
       <Form.Group controlId="completeExerciseForm.VideoUrl">
-        <Form.Label>Embed YouTube or other Video with iframe:</Form.Label>
+          <Form.Label>
+            Embed YouTube or other Video with iframe: 
+          </Form.Label>
         <Form.Control onChange={handleChange} name="video_url" value={video_url} as="textarea" placeholder={video_url_placeholder} rows={4} />
+        <IFramePreview width='30%' iframeString={video_url} />
+        <EmbedAccordion />
       </Form.Group>
 
-      <EmbedAccordion />
-
+      
 
       <ButtonToolbar>
         <ButtonGroup className="mr-2 mt-2">
-          {disguardBtn && <DiscardBtn onClick={handleDisguard} styles={{fontWeight: "600", color: 'white'}}/>}
+          {disguardBtn && 
+          <DiscardBtn onClick={handleDisguard} styles={{fontWeight: "600", color: 'white'}}/>}
         </ButtonGroup>
+
         <ButtonGroup className="mt-2">
-          {saveBtn && <SaveBtn style={{textAlign: 'center'}} className='mr-1'  onClick={() => handleCreateOrEdit('manageExercises')} text=" Save"/>}
-          
-          
+          {saveBtn && 
+          <SaveBtn style={{textAlign: 'center'}} className='mr-1'  onClick={() => handleCreateOrEdit('manageExercises')} text=" Save"/>}
         </ButtonGroup>
+        
         <p>TODO: Turn these into a modal that pops up after save</p>
+        
         <ButtonGroup className="mt-2">
-          {finishLaterBtn && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('manageExercises')} text=" Save and Finish Later" Icon="" />}
-          {!unsavedChanges && goToWeekBtn && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Go to Weeks" Icon="" />}
-          {!unsavedChanges && goToExerciseBank && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Exercise Bank" Icon="" />}
-          {!unsavedChanges && continueEditingBtn && <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Continue Editing" Icon="" />}
+          {finishLaterBtn && 
+          <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('manageExercises')} text=" Save and Finish Later" Icon="" />}
+          {!unsavedChanges && goToWeekBtn && 
+          <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Go to Weeks" Icon="" />}
+          {!unsavedChanges && goToExerciseBank && 
+          <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Exercise Bank" Icon="" />}
+          {!unsavedChanges && continueEditingBtn && 
+          <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Continue Editing" Icon="" />}
         </ButtonGroup>
       </ButtonToolbar>
       <br></br>
