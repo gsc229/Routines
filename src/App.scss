@@ -1,0 +1,38 @@
+// Variables
+@import './variables';
+// bootstrap
+@import "./custom_bs.scss";
+
+// Auth
+@import './7_Auth/auth.scss';
+@import './5_Pages/user_dashboard_page/user_dashboard_page.scss';
+
+// Exercises
+@import './5_Pages/manage_exercises_page/manage_exercises_page.scss';
+
+// Browse Exercises
+@import './5_Pages/browse_exercises_page/browse_exercises_page.scss';
+
+// Routines 
+@import './5_Pages/manage_routines_page/manage_routines_page.scss';
+
+// Layouts 
+@import './6_Layouts/layout_one/layout_one.scss';
+
+
+// Calendar
+@import './4_Components/calendar/basic_calendar.scss';
+
+
+// Routine Form 
+@import './4_Components/form_routine/form_routine.scss';
+
+// Exercise Form 
+@import './4_Components/iframe/iframe.scss';
+
+
+// Accordion
+@import './4_Components/accordion_routines/routines_accordion.scss';
+@import './4_Components/accordion_embed_instruction//embed_accordion.scss';
+// Cards
+@import './4_Components/card_exercise/exercise_card.scss';

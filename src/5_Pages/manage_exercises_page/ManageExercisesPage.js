@@ -1,0 +1,61 @@
+import React, {useEffect, useState} from 'react'
+import { connect } from 'react-redux'
+import {Link} from 'react-router-dom'
+import {userExercisesQuery, createNewExercise, clearCurrentExercise} from '../../1_Actions/exerciseActions'
+import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
+import Container from 'react-bootstrap/Container'
+import Button from 'react-bootstrap/Button'
+import ExerciseAccordion from '../../4_Components/accordion_exercise/ExerciseAccordion'
+import ExerciseCard from '../../4_Components/card_exercise/ExerciseCard'
+import {FaRegHandPointLeft} from 'react-icons/fa'
+
+export const ManageExercisesPage = ({
+  userExercises,
+  userExercisesQuery,
+  userId,
+  clearCurrentExercise
+}) => {
+
+  const [bankType, setBankType] = useState("card")
+
+
+  useEffect(() => {
+    !userExercises.length && userExercisesQuery(`original_creator=${userId}`)
+    .then(res => console.log({res}))
+  }, [])
+
+  const handleCreateNew = () => {
+    clearCurrentExercise()
+  }
+
+  return (
+    <LayoutOne>
+      <Container className="container manage-exercises">
+        <div className='manage-exercises-top'>
+          <h2>Your Exercises: </h2>
+          <Link to='/create-exercise'>
+            <Button onClick={handleCreateNew} variant='primary'>Create New Exercise</Button>
+          </Link>
+        </div>
+        <Link to='/browse-exercises'>Search for more exercises form other members <FaRegHandPointLeft /> </Link>
+        <div className="exercise-bank">
+          {bankType === "accordion" && <ExerciseAccordion />}
+          {!userExercises.length && <p>You currently don't have any exercises. Browse Exercises or Create Your Own</p>}
+          {userExercises.length > 0 && userExercises.map(exercise => <ExerciseCard key={exercise._id} exercise={exercise} />)}
+        </div>
+      </Container>  
+    </LayoutOne>
+  )
+}
+
+const mapStateToProps = (state) => ({
+  userExercises: state.exerciseReducer.userExercises,
+  userId: state.userReducer.user._id
+})
+
+const mapDispatchToProps = {
+  userExercisesQuery,
+  clearCurrentExercise
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageExercisesPage)

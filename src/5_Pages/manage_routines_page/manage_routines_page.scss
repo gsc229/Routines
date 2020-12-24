@@ -1,0 +1,43 @@
+.manage-routines{
+  //border: 1px solid yellow;
+  height: 100%;
+  .row{
+    .routines-column{
+      margin: auto;
+      h2{
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+.options-menu{
+  #new-routine{
+    display: 'flex';
+    //align-items: 'center';
+    background-color: whitesmoke;
+    width: 100%;
+    color: $routine-red;
+    font-weight: 600;
+  }
+}
+
+#manage-routines-calendar{
+  //background-color: green;
+  font-size: 15px;
+  //border-bottom: 1px solid black;
+
+  .live-week:hover{
+    border: 1px solid red;
+  }
+
+  .day{
+    font-size: 10px;
+    min-height: 100px;
+  }
+
+
+
+
+
+}
