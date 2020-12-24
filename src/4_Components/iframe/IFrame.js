@@ -1,40 +1,40 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useState, useEffect} from 'react'
 import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed'
 import {purifyIframe} from '../../utils/sanitizeHTML'
+import Spinner from 'react-bootstrap/Spinner'
 
 const IFrame = ({
   iframeString, 
   forFormValidation=false,
   heading,
-  validatoin_error_message=<h4>Sorry, only allows iframe elements from YouTube</h4>,
-  render_error_message=<h4>"!Sorry, something went wrong when trying to display the asset"</h4>,
+  validation_error_message=<h4>Sorry, only allows iframe elements from YouTube</h4>,
+  default_error_message=<h4>"!Sorry, something went wrong when trying to display the asset"</h4>,
   show_default_error_message=true
 }) => {
   
+  
+  const purifiedResults = purifyIframe(iframeString) 
+  const purifiedIframe = purifiedResults.purifiedIframe
 
-  const purifyResults = purifyIframe(iframeString)
-  const purifiedIframe = purifyResults.purifiedIframe
-  const removed = purifyResults.removed
-  const error_message = purifyResults.error_message
+  const removed = purifiedResults.removed
+  const error_message = purifiedResults.error_message
 
-  console.log({purifyResults, purifiedIframe, removed})
+  console.log({purifiedResults, purifiedIframe, removed})
 
   const getEmbed = () => {
-    return purifiedIframe && 
-    <div className='responsive-embed-container'>
-      {heading}
-      <ResponsiveEmbed>
+    return purifiedIframe &&
+      <ResponsiveEmbed className="embeded-video" aspectRatio="16by9">
         <div dangerouslySetInnerHTML={{__html: purifiedIframe}} />
       </ResponsiveEmbed>
-    </div> 
+
   }
-  
+
   const formValidationErrorMessage = () => {
-    return !purifiedIframe && forFormValidation && show_default_error_message && validatoin_error_message || error_message
+    return !purifiedIframe && forFormValidation && show_default_error_message && validation_error_message || error_message
   }
 
   const nonFormValidationMethod = () => {
-    return!purifiedIframe && !forFormValidation && show_default_error_message && render_error_message
+    return!purifiedIframe && !forFormValidation && show_default_error_message && default_error_message
   }
 
   const removedItemsMessage = () => {
@@ -62,6 +62,7 @@ const IFrame = ({
       {formValidationErrorMessage()}
       {nonFormValidationMethod()}
       {removedItemsMessage()}
+     
     </Fragment>
   )
 }
