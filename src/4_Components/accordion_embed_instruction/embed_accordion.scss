@@ -1,6 +1,7 @@
 .embed-accordion{
   //border: 2px solid red;
-  margin-top: 0;
+  margin: 0;
+  padding: 0;
   background-color: black;
   .btn-link{
     color: $routine-red;
@@ -15,11 +16,18 @@
   }
   .card{
     background-color: $bs-dark;
+    margin: auto;
+    .card-header{
+      padding: 0;
+      .btn{
+        padding: 0;
+      }
+    }
     .card-body{
       background-color: $bs-dark;
       //border: 2px solid lime;
       height: fit-content;
-      
+      margin: auto;
       .step{
         //border: 2px solid red;
         min-width: 75%;

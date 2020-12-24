@@ -5,6 +5,8 @@ import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed'
 import {Link} from 'react-router-dom'
+import DOMpurify from 'dompurify'
+
 
 export const ExerciseCard = ({
   exercise,
@@ -14,6 +16,9 @@ export const ExerciseCard = ({
   const handleEditClick = () => {
     setCurrentExercise(exercise)
   }
+
+  const purifiedIframe = DOMpurify.sanitize(exercise.video_url, {ALLOWED_TAGS: ['iframe', 'img']})
+  
 
   return (
     <Card
@@ -37,10 +42,10 @@ export const ExerciseCard = ({
         {exercise.target_muscle && <Card.Text><span>Target Muscle: </span>{exercise.target_muscle}</Card.Text>}
         <Card.Subtitle className="card-difficulty">
           Difficulty: {exercise.difficulty_scale}
-          <ProgressBar variant="primary" now={exercise.difficulty_scale * 10} />  
+          <ProgressBar className='progress-bar-outer' variant="primary" now={exercise.difficulty_scale * 10} />  
         </Card.Subtitle>
         <ResponsiveEmbed className="embeded-video" aspectRatio="16by9">
-          <div dangerouslySetInnerHTML={{__html: exercise.video_url}} />
+          <div dangerouslySetInnerHTML={{__html: purifiedIframe}} />
         </ResponsiveEmbed>
       </Card.Body>
     </Card>
