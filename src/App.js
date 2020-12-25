@@ -60,15 +60,18 @@ function App({loggedIn}) {
           <PublicLandingPage />
         </Route>  
       }
-      <Route exact path="/schedule">
-        <Schedule />
-      </Route>
-      <Route exact path="/manage-routines" component={ManageRoutinesPage} />
-      <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
-      <Route exact path="/create-exercise" component={CreateOrEditExercisePage} />
-      <Route exact path="/editing-routine/:routineId/create-week" component={CreateOrEditWeekPage} />
-      <Route exact path="/manage-exercises" component={ManageExercisesPage} />
-      <Route exact path="/browse-exercises" component={BrowseExercisesPage} />
+
+        <Route exact path="/schedule">
+          <Schedule />
+        </Route>
+        <Route exact path="/manage-routines" component={ManageRoutinesPage} />
+        <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
+        <Route exact path="/create-exercise" component={CreateOrEditExercisePage} />
+        <Route exact path="/editing-routine/:routineId/create-week" component={CreateOrEditWeekPage} />
+        <Route exact path="/manage-exercises" component={ManageExercisesPage} />
+        <Route exact path="/browse-exercises" component={BrowseExercisesPage} />
+
+      
 
 
         {/* Experimental */}

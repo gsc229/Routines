@@ -25,16 +25,17 @@ export const RoutineInfoForm = ({
   saveRoutineChanges,
   userId,
   showHeader=true,
-  disguardBtn=true,
-  saveBtn=true,
-  goToWeekBtn=true,
-  finishLaterBtn=true,
-  continueEditingBtn=true,
-  goToExerciseBank=true
+  showDiscardBtn=true,
+  discardCallback,
+  showSaveBtn=true,
+  showGoToWeekBtn=true,
+  showGoToRoutinesBtn=true,
+  showGoToExerciseBank=true
 }) => {
 
 
   const {name, category, muscle_group, target_muscle, description, difficulty_scale, start_date, end_date} = currentRoutine
+  
   const history = useHistory()
   const handleChange = e => {
     writingRoutine(e.target.name, e.target.value)
@@ -50,11 +51,11 @@ export const RoutineInfoForm = ({
   // What distinguishes an unsaved-on-the-backend-routine from a saved one will be the _id (or lack thereof)
   const handleCreateOrEdit = async (path) => {
     // after the update or save, redirect will depend on whether eiditing old or createing new routine and user input. 
-    const getRedirect = (userId) => {
+    const getRedirect = () => {
       const redirects = {
         manageRoutines: '/manage-routines',
-        createContinue: `/editing-routine/${userId}/create-week`,
-        updateContinue: `/editing-routine/${userId}/weeks`
+        createContinueWeek: `/editing-routine/${currentRoutine.slug}/create-week`,
+        updateContinueWeek: `/editing-routine/${currentRoutine.slug}/weeks`
       }
 
       return redirects[path]
@@ -79,7 +80,7 @@ export const RoutineInfoForm = ({
     }
   }
 
-  const handleDisguard = () => {
+  const handleDiscard = () => {
     clearCurrentRoutine()
     history.push('/manage-routines')
   }
@@ -112,8 +113,7 @@ export const RoutineInfoForm = ({
           <Row>
             <Col style={{paddingLeft: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} md='4'>Difficulty Range 
               <span style={{textAlign: 'right' , fontSize: '20px', fontWeight: 'bold'}}>{difficulty_scale ? difficulty_scale : 0}</span>
-            </Col>                
-            
+            </Col>     
           </Row>
         </Container>
         </Form.Label>
@@ -152,7 +152,7 @@ export const RoutineInfoForm = ({
 
       <Form.Group controlId="completeRoutineForm.StartDate">
         <Form.Label>Start Date</Form.Label>
-        <Form.Control onChange={handleChange} name="start_date" value={start_date} type="date" placeholder="Any particular muscle?" />
+        <Form.Control onChange={handleChange} name="start_date" value={start_date} type="date"/>
       </Form.Group>
 
       
@@ -163,16 +163,23 @@ export const RoutineInfoForm = ({
 
 
       <ButtonToolbar>
+
         <ButtonGroup className="mr-2 mt-2">
-          {disguardBtn && <DiscardBtn className='routine-form-btn discard-routine-btn' onClick={handleDisguard} styles={{fontWeight: "600"}} />}
+          {showDiscardBtn && 
+          <DiscardBtn className='routine-form-btn discard-routine-btn' onClick={discardCallback ? discardCallback : handleDiscard} styles={{fontWeight: "600"}} />}
         </ButtonGroup>
         
         <ButtonGroup className="mt-2">
-          {saveBtn && <SaveBtn style={{textAlign: 'center'}} className=' routine-form-btn save-routine-btn'  onClick={() => handleCreateOrEdit()} text=" Save"/>}
-          {finishLaterBtn && <SaveBtn className=' routine-form-btn' onClick={() => handleCreateOrEdit('manageRoutines')} text=" Save and Finish Later" />}
-          {!unsavedChanges && goToWeekBtn && <SaveBtn className=' routine-form-btn' onClick={() => handleCreateOrEdit('')} text=" Go to Weeks" />}
-          {!unsavedChanges && goToExerciseBank && <SaveBtn className=' routine-form-btn' onClick={() => handleCreateOrEdit('')} text="Go Exercise Bank" />}
+          {showSaveBtn && 
+          <SaveBtn style={{textAlign: 'center'}} className=' routine-form-btn save-routine-btn'  onClick={() => handleCreateOrEdit()} text=" Save"/>}
+          {showGoToRoutinesBtn && 
+          <SaveBtn className=' routine-form-btn' onClick={() => handleCreateOrEdit('manageRoutines')} text=" Go to Routines" />}
+          {showGoToWeekBtn && 
+          <SaveBtn className=' routine-form-btn' onClick={() => handleCreateOrEdit('createContinueWeek')} text=" Go to Weeks" />}
+          {!unsavedChanges && showGoToExerciseBank && 
+          <SaveBtn className=' routine-form-btn' onClick={() => handleCreateOrEdit('')} text="Go Exercise Bank" />}
         </ButtonGroup>
+
       </ButtonToolbar>
         {/* <br></br>
         <br/>

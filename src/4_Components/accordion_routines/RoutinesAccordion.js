@@ -7,7 +7,6 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import ToolTip from 'react-bootstrap/Tooltip'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Spinner from 'react-bootstrap/Spinner'
 import {TiEdit} from 'react-icons/ti'
 import Calendar from '../calendar/Calendar'
 import SaveDiscardExpandBtnGroup from '../buttons/SaveDiscardExpandBtnGroup'
@@ -136,17 +135,16 @@ export const RoutinesAccordion = ({
 
               {editingMode && currentRoutine._id === routine._id && !crudingRoutine &&
               <CreateRoutineForm 
-              disguardBtn={false}
-              saveBtn={false}
-              finishLaterBtn={false}
-              goToExerciseBank={false}
-              continueEditingBtn={false}
-              goToWeekBtn={false}
+              discardBtn={true}
+              discardCallback={() => setEditingMode(false)}
+              showFinishLaterBtn={false}
               showHeader={false} />}
 
 
             </div>
-            {!editingMode && <Calendar calendarId='manage-routines-calendar' />   }     
+            {!editingMode && 
+            <Calendar 
+            calendarId='manage-routines-calendar' />   }     
             </Card.Body>
           </Accordion.Collapse>
         </Card>)})}

@@ -22,8 +22,6 @@ const draggableExerciseStyles = (snapshot, providedDraggablePropsStyle) => {
   return {...common}
 }
 
-
-
 const DraggableWorkout = ({item, index, width}) => {
   return (
     <Draggable

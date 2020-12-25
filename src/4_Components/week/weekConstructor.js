@@ -1,15 +1,4 @@
 export const weekConstructor = (weekData) => {
-
-  const convertFormat = {
-    M: "Mo",
-    T: "Tu",
-    W: "We",
-    R: "Th",
-    F: "Fr",
-    S: "Sa",
-    U: "Su"
-  }
-
   let weekExercises = {
     
     "Su": {
@@ -42,16 +31,11 @@ export const weekConstructor = (weekData) => {
     },
 }
 
-  console.log({weekData})
+  
   weekData && weekData[0].exercise_sets.map(exercise => {
-    console.log("BEFORE: ",exercise.day ,exercise)
-    exercise = {...exercise, day: convertFormat[exercise.day]} 
-    console.log("AFTER: ",exercise.day ,exercise)
-   return exercise.day && weekExercises[exercise.day].items.push(exercise)
+   return weekExercises[exercise.day].items.push(exercise)
   })
 
-  console.log({weekData})
-  console.log(weekExercises)
   return weekExercises
 
 }

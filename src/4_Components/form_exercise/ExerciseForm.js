@@ -26,7 +26,7 @@ export const ExerciseForm = ({
   saveExerciseChanges,
   userId,
   showHeader=true,
-  disguardBtn=true,
+  discardBtn=true,
   saveBtn=true,
   goToWeekBtn=true,
   finishLaterBtn=true,
@@ -88,7 +88,7 @@ export const ExerciseForm = ({
   const video_url_placeholder = `Want to have a video handy for how to perform an exercise correctly? Embed a YouTube video with an iframe.
   Click red dropdown link below for detailed instructions.`
    
-  const handleDisguard = () => {
+  const handleDiscard = () => {
     clearCurrentExercise()
     history.push('/manage-exercises')
   }
@@ -174,8 +174,8 @@ export const ExerciseForm = ({
 
       <ButtonToolbar>
         <ButtonGroup className="mr-2 mt-2">
-          {disguardBtn && 
-          <DiscardBtn onClick={handleDisguard} styles={{fontWeight: "600", color: 'white'}}/>}
+          {discardBtn && 
+          <DiscardBtn onClick={handleDiscard} styles={{fontWeight: "600", color: 'white'}}/>}
         </ButtonGroup>
 
         <ButtonGroup className="mt-2">
