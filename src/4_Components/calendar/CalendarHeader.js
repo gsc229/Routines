@@ -1,7 +1,10 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import Navbar from 'react-bootstrap/Navbar'
+import {Link} from 'react-router-dom'
+import {setCurrentRoutine} from '../../1_Actions/routineActions'
 
-const CalendarHeader = ({value, setValue}) => {
+const CalendarHeader = ({value, setValue, routine, setCurrentRoutine}) => {
 
   function currMonthName(){
     return value.format("MMMM")
@@ -23,6 +26,15 @@ const CalendarHeader = ({value, setValue}) => {
   
   return (
     <div style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} className='calendar-header'>
+      
+      {routine && 
+      <div className='view-routine-link-container'>
+        <Link 
+        onClick={() => setCurrentRoutine(routine)}
+        className='view-routine-link' to={`/view-routine/${routine._id}/${routine.slug || routine.name}`} >
+          View or Edit
+        </Link>
+      </div>}
       <Navbar style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} value='dark' bg='dark'>
         <div className="calendar-header-top">
           <h6
@@ -45,4 +57,13 @@ const CalendarHeader = ({value, setValue}) => {
   )
 }
 
-export default CalendarHeader
+const mapStateToProps = (state) => ({
+
+})
+
+
+const mapDispatchToProps = {
+  setCurrentRoutine
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarHeader)

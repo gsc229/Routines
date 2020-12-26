@@ -7,7 +7,7 @@ export const CreateOrEditExerciseSet = (props) => {
   return (
     <Layout>
       <Container>
-        <h1>Create Or Edit Exercise Set</h1>
+        <h1>Create Or Edit Set Group Page</h1>
       </Container>
     </Layout>
   )

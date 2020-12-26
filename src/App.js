@@ -12,9 +12,10 @@ import UserDashBoard from './5_Pages/user_dashboard_page/UserDashBoardPage'
 import Schedule from './4_Components/calendar/Calendar'
 import ManageRoutinesPage from './5_Pages/manage_routines_page/ManageRoutinesPage'
 import CreateOrEditRoutinePage from './5_Pages/create_routine_page/CreateOrEditRoutinePage'
+import ViewRoutinePage from './5_Pages/view_routine_page/ViewRoutinePage'
 import CreateOrEditWeekPage from './5_Pages/create_week_page/CreateOrEditWeekPage'
 import CreateOrEditExercisePage from './5_Pages/create_exercise_page/CreateOrEditExercisePage'
-import CreateOrEditSetGroupPage from './5_Pages/create_exercise_set_page/CreateOrEditSetGroup'
+import CreateOrEditSetGroupPage from './5_Pages/create_exercise_set_page/CreateOrEditSetGroupPage'
 import ManageExercisesPage from './5_Pages/manage_exercises_page/ManageExercisesPage'
 import BrowseExercisesPage from './5_Pages/browse_exercises_page/BrowseExercisesPage'
 // experimental
@@ -69,6 +70,9 @@ function App({loggedIn}) {
         </Route>
         <Route exact path="/manage-routines" component={ManageRoutinesPage} />
         <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
+        <Route exact path="/view-routine/:routineId/:routineName" component={ViewRoutinePage} />
+
+        
         <Route exact path="/create-exercise" component={CreateOrEditExercisePage} />
         <Route exact path="/editing-routine/:routineId/create-week" component={CreateOrEditWeekPage} />
         <Route exact path="/manage-exercises" component={ManageExercisesPage} />

@@ -156,7 +156,9 @@ const reducer = (state=initialState, action) => {
         error_message: ''
       }
 
-
+      case constants.LOG_OUT:
+        return initialState
+      
 
     default: 
       return state

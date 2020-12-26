@@ -143,8 +143,9 @@ export const RoutinesAccordion = ({
 
             </div>
             {!editingMode && 
-            <Calendar 
-            calendarId='manage-routines-calendar' />   }     
+            <Calendar
+            routine={routine}
+            className='manage-routines-calendar' />   }     
             </Card.Body>
           </Accordion.Collapse>
         </Card>)})}

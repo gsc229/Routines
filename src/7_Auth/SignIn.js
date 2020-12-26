@@ -30,7 +30,7 @@ export const SignIn = ({
     console.log(user._id)
     if(loggedIn){
       history.push('/')
-      userRoutinesQuery(`user=${user._id}&populate_one=weeks&populate_two=exercises&populate_three=excercise`)
+      userRoutinesQuery(`user=${user._id}&populate_one=weeks&populate_two=set_groups&populate_three=exercise_sets&populate_four=exercise`)
     }
 
     if(error_message){

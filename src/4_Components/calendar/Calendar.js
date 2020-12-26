@@ -4,7 +4,7 @@ import buildCalendar from './build'
 import {dayStyles, beforeToday, weekStyles} from './styles'
 import CalendarHeader from './CalendarHeader'
 
-const Calendar = ({calendarId}) => {
+const Calendar = ({calendarId, className, routine}) => {
 
   const [calendar, setCalendar] = useState([])
   const [value, setValue] = useState(moment())
@@ -15,8 +15,8 @@ const Calendar = ({calendarId}) => {
 
 
   return (
-    <div className="main-calendar" id={calendarId}>
-      <CalendarHeader value={value} setValue={setValue} />      
+    <div className={`main-calendar ${className}`}>
+      <CalendarHeader value={value} setValue={setValue} routine={routine} />      
       {
       calendar.map((week, index) => 
         <div key={index} className={weekStyles(week) + " week" }>

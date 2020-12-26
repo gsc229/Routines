@@ -6,6 +6,14 @@
   .calendar-header{
     background-color: $bs-dark;
     color: white;
+    .view-routine-link-container{
+      display: flex;
+      justify-content: center;
+      .view-routine-link{
+        margin-right: 20px;
+        padding: 5px;
+      }
+    }
   }
   .calendar-header-top{
     border: 1px dashed $routine-red;

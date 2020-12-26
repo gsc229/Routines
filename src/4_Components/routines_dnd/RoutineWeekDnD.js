@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import {DragDropContext,  Droppable} from 'react-beautiful-dnd'
+import {Link} from 'react-router-dom'
 import {weekConstructor} from './helpers/weekConstructor'
 import {onSetGroupDragEnd} from './helpers/routineWeekHelpers'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
+import Container from 'react-bootstrap/Container'
 import DraggableSetGroup from '../set_group/DraggableSetGroup'
+
 
 const RoutinesWeekDnD = ({setGroups}) => {
   
@@ -88,7 +91,7 @@ const RoutinesWeekDnD = ({setGroups}) => {
 
   return (
     <LayoutOne>
-      <div className='container-fluid'>
+      <Container>
         <p>height: {height} width: {width}</p>
         <div className='row week-droppable-row' style={getWeekDroppableRowStyles()}>
           <DragDropContext
@@ -98,7 +101,10 @@ const RoutinesWeekDnD = ({setGroups}) => {
               
               return(
                 <div key={id} className='day-droppable-container' style={getDayDroppableContainerStyles()}>                
-                    <h4 style={{fontSize:"18px"}}>{day.name}</h4>
+                      <div>
+                        <h4 style={{fontSize:"18px"}}>{day.name}</h4>
+                        <Link to='/create-set-group'>Add Set Group</Link>
+                      </div>
                     
                       <Droppable
                         key={id}
@@ -126,7 +132,7 @@ const RoutinesWeekDnD = ({setGroups}) => {
             })}
           </DragDropContext>
         </div>
-      </div>
+        </Container>
     </LayoutOne>
   )
 }
