@@ -1,9 +1,9 @@
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
-import RoutineExercise from '../routine_exercise/RoutineExercise'
+import SetGroup   from './SetGroup'
 
 // styles
-const draggableExerciseStyles = (snapshot, providedDraggablePropsStyle) => {
+const draggableSetGroupStyles = (snapshot, providedDraggablePropsStyle) => {
 
   const common = {
     display: 'flex',
@@ -22,11 +22,12 @@ const draggableExerciseStyles = (snapshot, providedDraggablePropsStyle) => {
   return {...common}
 }
 
-const DraggableWorkout = ({item, index, width}) => {
+const DraggableSetGroup = ({set_group, index, width}) => {
+  console.log("DraggaleSetGroup: ", {set_group})
   return (
     <Draggable
-      key={item._id}
-      draggableId={item._id}
+      key={set_group._id}
+      draggableId={set_group._id}
       index={index}
     >
       {(provided, snapshot) => {
@@ -35,9 +36,9 @@ const DraggableWorkout = ({item, index, width}) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          style={draggableExerciseStyles(snapshot, provided.draggableProps.style)}
-          >
-            <RoutineExercise routine_exercise={item} width={width} />
+          style={draggableSetGroupStyles(snapshot, provided.draggableProps.style)}
+          > 
+            <SetGroup set_group={set_group} width={width} />
           </div>
         )
       }}
@@ -45,4 +46,4 @@ const DraggableWorkout = ({item, index, width}) => {
   )
 }
 
-export default DraggableWorkout
+export default DraggableSetGroup

@@ -8,6 +8,7 @@ const initialState = {
     user: "",
     routine: ""
   },
+  allWeeks: [],
   currentWeek: {}
 }
 

@@ -2,10 +2,10 @@ import React from 'react'
 import {VscGripper} from 'react-icons/vsc'
 
 
-const RoutineExercise = ({routine_exercise, width}) => {
+const ExerciseSet = ({exercise_set, width}) => {
 
-  const {exercise} = routine_exercise
-
+  const {exercise} = exercise_set
+  console.log({exercise_set})
   const getExerciseHeadingStyles = () => {
 
     return {
@@ -22,4 +22,4 @@ const RoutineExercise = ({routine_exercise, width}) => {
   )
 }
 
-export default RoutineExercise
+export default ExerciseSet

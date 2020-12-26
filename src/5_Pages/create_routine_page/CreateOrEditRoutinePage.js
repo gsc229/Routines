@@ -27,8 +27,10 @@ const CreateRoutine = ({currentIsSaved, crudingRoutine}) => {
   return (
     <Layout>
       <Container>
-        {!showSpinner && !crudingRoutine && <RoutineInfoForm />}
-        {(showSpinner || crudingRoutine )&& <DarkSpinner />}
+        {!showSpinner && !crudingRoutine && 
+        <RoutineInfoForm />}
+        {(showSpinner || crudingRoutine )&& 
+        <DarkSpinner />}
       </Container>
     </Layout>
   )

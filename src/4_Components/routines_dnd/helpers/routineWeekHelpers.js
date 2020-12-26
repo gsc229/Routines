@@ -1,18 +1,16 @@
 import axiosWithAuth from '../../../utils/axiosWithAuth'
 
-export const upadateRoutineExercise = (routine_exercise_id, updates) => {
+export const upadateSetGroup = (set_group_id, updates) => {
 
     return axiosWithAuth()
-    .put(`exercise-sets/${routine_exercise_id}`, updates)
-    .then(upadateRoutineExerciseResponse => {
-      return upadateRoutineExerciseResponse.data
+    .put(`set-groups/${set_group_id}`, updates)
+    .then(upadateSetGroupResponse => {
+      return upadateSetGroupResponse.data
     })
-    .catch(upadateRoutineExerciseError => {
-      console.log({upadateRoutineExerciseError})
-      return upadateRoutineExerciseError.response.data
+    .catch(upadateSetGroupError => {
+      console.log({upadateSetGroupError})
+      return upadateSetGroupError.response.data
     })
-
-
 }
 
 
@@ -30,7 +28,7 @@ export const getWeek = (weekId, queryStr) => {
     })
 }
 
-export const onDragEnd = async (result, columns, setColumns) => {
+export const onSetGroupDragEnd = async (result, weekDays, setWeekDays) => {
 
   const {destination, source} = result
 
@@ -45,28 +43,28 @@ export const onDragEnd = async (result, columns, setColumns) => {
 
   if(source.droppableId !== destination.droppableId){
     // Move the item from the source to the destination in the proper place in the destination
-    // items array --- dropabableIds are 'U', 'M', 'T', 'W', 'R', 'F'
-    const sourceColumn = columns[source.droppableId] 
-    const destinationColumn = columns[destination.droppableId]
-    const sourceItems = [...sourceColumn.items]
-    const destinationItems = [...destinationColumn.items]
+    // set_groups array --- dropabableIds are 'U', 'M', 'T', 'W', 'R', 'F'
+    const sourceDay = weekDays[source.droppableId] 
+    const destinationDay = weekDays[destination.droppableId]
+    const sourceItems = [...sourceDay.set_groups]
+    const destinationItems = [...destinationDay.set_groups]
     let [removed] = sourceItems.splice(source.index, 1)
 
     removed.day = destination.droppableId
     destinationItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
+    setWeekDays({
+      ...weekDays,
       [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems
+        ...sourceDay,
+        set_groups: sourceItems
       },
       [destination.droppableId]: {
-        ...destinationColumn,
-        items: destinationItems
+        ...destinationDay,
+        set_groups: destinationItems
       }
     })
     
-    upadateRoutineExercise(removed._id, {day: removed.day})
+    upadateSetGroup(removed._id, {day: removed.day})
     .then(response => {
       if(!response.success){
         // if api call fails, take the item back out of the destination and put back in the source
@@ -77,15 +75,15 @@ export const onDragEnd = async (result, columns, setColumns) => {
         const [removed] = destinationItems.splice(destination.index, 1)
         removed.day = source.droppableId
         sourceItems.splice(source.index, 0, removed)
-         setColumns({
-          ...columns,
+         setWeekDays({
+          ...weekDays,
           [source.droppableId]:{
-            ...sourceColumn,
-            items: sourceItems
+            ...sourceDay,
+            set_groups: sourceItems
           },
           [destination.droppableId]:{
-            ...destinationColumn,
-            items: destinationItems
+            ...destinationDay,
+            set_groups: destinationItems
           }
         })
       }
@@ -93,15 +91,15 @@ export const onDragEnd = async (result, columns, setColumns) => {
     
   } else{
     // Move the item to the new index in the array
-    const column = columns[source.droppableId]
-    const copiedItems = [...column.items]
+    const column = weekDays[source.droppableId]
+    const copiedItems = [...column.set_groups]
     const [removed] = copiedItems.splice(source.index, 1)
     copiedItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
+    setWeekDays({
+      ...weekDays,
       [source.droppableId]: {
         ...column,
-        items: copiedItems
+        set_groups: copiedItems
       }
     })
   }

@@ -14,6 +14,7 @@ import ManageRoutinesPage from './5_Pages/manage_routines_page/ManageRoutinesPag
 import CreateOrEditRoutinePage from './5_Pages/create_routine_page/CreateOrEditRoutinePage'
 import CreateOrEditWeekPage from './5_Pages/create_week_page/CreateOrEditWeekPage'
 import CreateOrEditExercisePage from './5_Pages/create_exercise_page/CreateOrEditExercisePage'
+import CreateOrEditSetGroupPage from './5_Pages/create_exercise_set_page/CreateOrEditSetGroup'
 import ManageExercisesPage from './5_Pages/manage_exercises_page/ManageExercisesPage'
 import BrowseExercisesPage from './5_Pages/browse_exercises_page/BrowseExercisesPage'
 // experimental
@@ -22,18 +23,20 @@ import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'
 function App({loggedIn}) {
 
   const testWeekId = '5fd6eb71b0321644dc6bf08a'
+  const testSetGroupId = '5fdec248c6933030d82e359a'
   const testWeekQueryStr = 'populate_one=exercise_sets&populate_two=exercise'
   const query = `/routines/weeks/${testWeekId}?populate_one=exercise_sets&populate_two=exercise`
+  const query2 = `/set-groups/${testSetGroupId}?populate_one=exercise_sets&populate_two=exercise`
   // /routines/weeks/5fd6eb71b0321644dc6bf08a?populate_one=exercises
-  const [weekData, setWeekData] = useState()
+  const [setGroups, setSetGroups] = useState()
   
   useEffect(()=>{
     /* getWeek(testWeekId, testWeekQueryStr) */
-    getQuery(query)
+    getQuery(query2)
     .then(AppJsQueryResponse => {
       console.log({AppJsQueryResponse})
       if(AppJsQueryResponse.success){
-        setWeekData(AppJsQueryResponse.data)
+        setSetGroups(AppJsQueryResponse.data)
       } else{
         console.log({AppJsQueryResponse})
       }
@@ -70,13 +73,13 @@ function App({loggedIn}) {
         <Route exact path="/editing-routine/:routineId/create-week" component={CreateOrEditWeekPage} />
         <Route exact path="/manage-exercises" component={ManageExercisesPage} />
         <Route exact path="/browse-exercises" component={BrowseExercisesPage} />
-
+        <Route exact path="/create-set-group" component={CreateOrEditSetGroupPage} />
       
 
 
         {/* Experimental */}
         <Route exact path="/routines-dnd">
-          <RoutineWeekDnD weekData={weekData} setWeekData={setWeekData}/>
+          <RoutineWeekDnD setGroups={setGroups} setSetGroups={setSetGroups}/>
         </Route>
       </Switch>
     </div>

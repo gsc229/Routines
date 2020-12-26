@@ -1,4 +1,4 @@
-export const weekConstructor = (weekData) => {
+export const weekConstructor = (setGroups) => {
 
   const convertFormat = {
     M: "Mo",
@@ -10,48 +10,51 @@ export const weekConstructor = (weekData) => {
     U: "Su"
   }
 
-  let weekExercises = {
+  let weekWithSetGroups = {
     
     "Su": {
       name: "Sunday",
-      items: []
+      set_groups: []
     },
     "Mo": {
       name: "Monday",
-      items: []
+      set_groups: []
     },
     "Tu": {
       name: "Tuesday",
-      items: []
+      set_groups: []
     },
     "We": {
       name: "Wednesday",
-      items: []
+      set_groups: []
     },
     "Th": {
       name: "Thursday",
-      items: []
+      set_groups: []
     },
     "Fr": {
       name: "Friday",
-      items: []
+      set_groups: []
     },
     "Sa": {
       name: "Saturday",
-      items: []
+      set_groups: []
     },
 }
 
-  console.log({weekData})
-  weekData && weekData[0].exercise_sets.map(exercise => {
-    console.log("BEFORE: ",exercise.day ,exercise)
-    exercise = {...exercise, day: convertFormat[exercise.day]} 
-    console.log("AFTER: ",exercise.day ,exercise)
-   return exercise.day && weekExercises[exercise.day].items.push(exercise)
+  console.log({setGroups})
+  setGroups && setGroups.map(set_group => {
+    console.log("BEFORE: ",set_group.day ,set_group)
+    if(convertFormat[set_group.day]){
+      set_group = {...set_group, day: convertFormat[set_group.day]} 
+    }
+    
+    console.log("AFTER: ",set_group.day ,set_group)
+   return set_group.day && weekWithSetGroups[set_group.day].set_groups.push(set_group)
   })
 
-  console.log({weekData})
-  console.log(weekExercises)
-  return weekExercises
+  console.log("weekConstructor: ",{setGroups})
+  console.log("weekConstructor: ",{weekWithSetGroups})
+  return weekWithSetGroups
 
 }
