@@ -64,6 +64,24 @@ const reducer = (state=initialState, action) => {
         userRoutines: action.payload.data,
         routinePagination: action.payload.routinePagination
       }
+      case constants.FETCHING_ROUTINE:
+        return {
+          ...state,
+          crudingRoutine: "fetching"
+        }
+      case constants.FETCH_ROUTINE_FAIL:
+        return {
+          ...state,
+          crudingRoutine: false,
+          error_message: action.payload
+        }
+      case constants.FETCH_ROUTINE_SUCCESS:
+        return {
+          ...state,
+          crudingRoutine: false,
+          currentRoutine: action.payload.data
+        }
+    
     case constants.CREATING_ROUTINE:
       return{
         ...state,

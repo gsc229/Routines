@@ -32,7 +32,7 @@ const CalendarHeader = ({value, setValue, routine, setCurrentRoutine}) => {
         <Link 
         onClick={() => setCurrentRoutine(routine)}
         className='view-routine-link' to={`/view-routine/${routine._id}/${routine.slug || routine.name}`} >
-          View or Edit
+          Edit Schedule
         </Link>
       </div>}
       <Navbar style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} value='dark' bg='dark'>

@@ -8,12 +8,19 @@ const initialState = {
     user: "",
     routine: ""
   },
-  allWeeks: [],
+  currentRoutineWeeks: [],
   currentWeek: {}
 }
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
+
+    case constants.SET_CURRENT_ROUTINE:
+      return{
+        ...state,
+        currentRoutineWeeks: action.payload.weeks
+      }
+      
     case  constants.WRITING_WEEK:
       return{
         ...state,

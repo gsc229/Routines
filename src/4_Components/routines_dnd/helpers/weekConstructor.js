@@ -44,12 +44,7 @@ export const weekConstructor = (setGroups) => {
 
   console.log({setGroups})
   setGroups && setGroups.map(set_group => {
-    console.log("BEFORE: ",set_group.day ,set_group)
-    if(convertFormat[set_group.day]){
-      set_group = {...set_group, day: convertFormat[set_group.day]} 
-    }
     
-    console.log("AFTER: ",set_group.day ,set_group)
    return set_group.day && weekWithSetGroups[set_group.day].set_groups.push(set_group)
   })
 

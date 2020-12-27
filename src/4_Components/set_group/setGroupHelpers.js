@@ -1,8 +1,7 @@
 export const getExSetTarget = (exercise_set) => {
-
+  console.log({exercise_set})
   const possibleTargets = Object.keys(exercise_set).filter(key=> key.includes('target'))
-  console.log(Object.keys(exercise_set))
-  console.log({possibleTargets})
+  
 
   let foundTargets = []
 
@@ -13,7 +12,9 @@ export const getExSetTarget = (exercise_set) => {
     }
   })
 
-  if(foundTargets.length > 0){
+  console.log({possibleTargets, foundTargets})
+
+  if(!foundTargets.length){
     return "no targets set"
   } 
 
