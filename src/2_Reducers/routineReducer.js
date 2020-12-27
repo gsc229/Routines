@@ -8,9 +8,11 @@ const initialState = {
   error_message: '',
   routinePagination: null,
   routineSearchResults: [],
-  userRoutines: '', // [{}]
+  userRoutines: [], // [{}]
   currentRoutineName: '', 
   currentRoutine: {
+    _id: null,
+    user: null,
     name: null,
     category: null,
     muscle_group: null,
@@ -18,7 +20,8 @@ const initialState = {
     description: null,
     difficulty_scale: null,
     start_date: null,
-    end_date: null
+    end_date: null,
+    weeks: []
   }
 }
 
@@ -49,7 +52,7 @@ const reducer = (state=initialState, action) => {
     case constants.FETCHING_ROUTINES:
       return {
         ...state,
-        crudingRoutine: "fetching"
+        crudingRoutine: "fetching-routines"
       }
     case constants.FETCH_ROUTINES_FAIL:
       return {
@@ -64,24 +67,23 @@ const reducer = (state=initialState, action) => {
         userRoutines: action.payload.data,
         routinePagination: action.payload.routinePagination
       }
-      case constants.FETCHING_ROUTINE:
-        return {
-          ...state,
-          crudingRoutine: "fetching"
-        }
-      case constants.FETCH_ROUTINE_FAIL:
-        return {
-          ...state,
-          crudingRoutine: false,
-          error_message: action.payload
-        }
-      case constants.FETCH_ROUTINE_SUCCESS:
-        return {
-          ...state,
-          crudingRoutine: false,
-          currentRoutine: action.payload.data
-        }
-    
+    case constants.FETCHING_ROUTINE:
+      return {
+        ...state,
+        crudingRoutine: "fetching-routine"
+      }
+    case constants.FETCH_ROUTINE_FAIL:
+      return {
+        ...state,
+        crudingRoutine: false,
+        error_message: action.payload
+      }
+    case constants.FETCH_ROUTINE_SUCCESS:
+      return {
+        ...state,
+        crudingRoutine: false,
+        currentRoutine: action.payload
+      }
     case constants.CREATING_ROUTINE:
       return{
         ...state,
@@ -123,30 +125,100 @@ const reducer = (state=initialState, action) => {
         crudingRoutine: false,
         error_message: action.payload
       }
-      case constants.DELETING_ROUTINE:
-        return{
-          ...state,
-          crudingRoutine: "deleting"
-        }
-      case constants.DELETE_ROUTINE_SUCCESS:
-        return{
-          ...state,
-          crudingRoutine: false,
-          currentRoutine: initialState.currentRoutine
-        }
-      case constants.DELETE_ROUTINE_FAIL:
-        return{
-          ...state,
-          crudingRoutine: false,
-          error_message: action.payload
-        }
-      case constants.CLEAR_ERROR_MESSAGE: 
-      return {
+    case constants.DELETING_ROUTINE:
+      return{
         ...state,
-        error_message: ''
+        crudingRoutine: "deleting"
       }
-      case constants.LOG_OUT:
-        return {...initialState}
+    case constants.DELETE_ROUTINE_SUCCESS:
+      return{
+        ...state,
+        crudingRoutine: false,
+        currentRoutine: initialState.currentRoutine
+      }
+    case constants.DELETE_ROUTINE_FAIL:
+      return{
+        ...state,
+        crudingRoutine: false,
+        error_message: action.payload
+      }
+    case constants.CLEAR_ERROR_MESSAGE: 
+    return {
+      ...state,
+      error_message: ''
+    }
+    /* ================================  WEEK ACTIONS =============================== */
+    /* ================================  WEEK ACTIONS =============================== */
+    /* ================================  WEEK ACTIONS =============================== */
+    case constants.CREATING_WEEK:
+      return{
+        ...state,
+        crudingRoutine: "creating-week"
+      }
+    case constants.CREATE_WEEK_SUCCESS:
+      return{
+        ...state,
+        crudingRoutine: false,
+        currentWeek: action.payload,
+        currentRoutine: {
+          ...state.currentRoutine,
+          weeks: [...state.currentRoutine.weeks, action.payload]
+        }
+      }
+    case constants.CREATE_WEEK_FAIL:
+      return{
+        ...state,
+        crudingRoutine: false,
+        error_message: action.payload
+      }
+    case constants.UPDATING_WEEK:
+      return{
+        ...state,
+        crudingRoutine: "updating-week"
+      }
+    case constants.UPDATE_WEEK_SUCCESS:
+      return{
+        ...state,
+        crudingRoutine: false,
+        currentWeek: action.payload,
+        currentRoutine:{
+          ...state.currentRoutine,
+          weeks: [...state.currentRoutine.weeks.map(week => week._id = action.payload._id ? action.payload._id : week)]
+        } 
+      }
+    case constants.UPDATE_WEEK_FAIL:
+      return{
+        ...state,
+        crudingRoutine: false,
+        error_message: action.payload
+      }
+    case constants.DELETING_WEEK:
+      return{
+        ...state,
+        crudingRoutine: "deleting-week"
+      }
+    case constants.DELETE_WEEK_SUCCESS:
+      return{
+        ...state,
+        crudingRoutine: false,
+        currentWeek: initialState.currentWeek,
+        currentRoutine: {
+          ...state.currentRoutine,
+          weeks: [...state.currentRoutine.weeks.filter(week => {
+            return week._id !== action.payload._id
+          })]
+        }
+      }
+    case constants.DELETE_WEEK_FAIL:
+      return{
+        ...state,
+        crudingRoutine: false,
+        error_message: action.payload
+      }
+
+
+    case constants.LOG_OUT:
+      return {...initialState}
 
     default: 
       return state

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges} from '../../1_Actions/routineActions'
+import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges, fetchRoutines} from '../../1_Actions/routineActions'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -8,17 +8,26 @@ import Button from 'react-bootstrap/Button'
 import {FaPlus} from 'react-icons/fa'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import RoutinesAccordion from '../../4_Components/accordion_routines/RoutinesAccordion'
-
+import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 
 export const ManageRoutinesPage = ({
   history, 
-  clearCurrentRoutine, 
+  clearCurrentRoutine,
+  fetchRoutines,
+  userId,
+  crudingRoutine,
+  userRoutines
 }) => {
 
   const handleNewClick = () => {
      clearCurrentRoutine()
      history.push('/create-routine')
   }
+
+  useEffect(() => {
+    alert('Fetchting all routines')
+    fetchRoutines(`?user=${userId}&populate_one=weeks&populate_two=set_groups&populate_three=exercise_sets&populate_four=exercise`)
+  }, [])
 
   return (
     <LayoutOne showTop={false}>
@@ -29,7 +38,10 @@ export const ManageRoutinesPage = ({
             <div className="options-menu">
                 <Button onClick={handleNewClick}  id='new-routine' aria-current="page"><FaPlus /> New</Button>
             </div> 
-            <RoutinesAccordion />
+            {crudingRoutine !== 'fetching' && userRoutines.length > 0 && 
+            <RoutinesAccordion />}
+            {crudingRoutine === 'fetching' && 
+            <DarkSpinner />}
           </Col>
         </Row>
       </Container>
@@ -38,10 +50,14 @@ export const ManageRoutinesPage = ({
 }
 
 const mapStateToProps = (state) => ({
+  userId: state.userReducer.user._id,
+  crudingRoutine: state.routineReducer.crudingRoutine,
+  userRoutines: state.routineReducer.userRoutines
 })
 
 const mapDispatchToProps = {
-  clearCurrentRoutine
+  clearCurrentRoutine,
+  fetchRoutines
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageRoutinesPage)

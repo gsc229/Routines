@@ -4,7 +4,8 @@ import axiosWihAuth from '../utils/axiosWithAuth';
 /* =================================== WEEKS ================================================= */
 /* =================================== WEEKS ================================================= */
 
-export const createWeek = (weekId, newWeek) => {
+export const createWeek = (newWeek) => {
+  console.log(newWeek)
   return axiosWihAuth()
   .post(`/routines/weeks`, newWeek)
   .then(weekResponse=>{

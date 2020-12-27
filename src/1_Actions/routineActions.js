@@ -41,7 +41,7 @@ export const fetchRoutineById = (routineId, queryString) => dispatch => {
   return getRoutineById(routineId, queryString)
   .then(res=> {
     if(res.success){
-      dispatch({type: constants.SET_CURRENT_ROUTINE, payload: queryString ? res.data[0] : res.data})
+      dispatch({type: constants.FETCH_ROUTINE_SUCCESS, payload: queryString ? res.data[0] : res.data})
       return true
     } 
     if(res.error_message){
