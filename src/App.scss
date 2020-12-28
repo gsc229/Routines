@@ -10,6 +10,8 @@
 // Exercises
 @import './5_Pages/manage_exercises_page/manage_exercises_page.scss';
 
+@import './5_Pages/create_set_group_page/create_or_edit_set_group_page.scss';
+
 // Browse Exercises
 @import './5_Pages/browse_exercises_page/browse_exercises_page.scss';
 
@@ -38,6 +40,7 @@
 @import './4_Components/accordion_embed_instruction//embed_accordion.scss';
 // Cards
 @import './4_Components/card_exercise/exercise_card.scss';
+@import './4_Components/card_set_group/attach_exercise_to_sg_card.scss';
 
 //DND
 @import './4_Components/dnd_routine_schedule/dnd_routine_schedule.scss';

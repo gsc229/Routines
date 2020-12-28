@@ -51,7 +51,7 @@ function App({loggedIn}) {
         <Route exact path="/editing-routine/:routineId/create-week" component={CreateOrEditWeekPage} />
         <Route exact path="/manage-exercises" component={ManageExercisesPage} />
         <Route exact path="/browse-exercises" component={BrowseExercisesPage} />
-        <Route exact path="/create-set-group/:routineName/:weekNumber" component={CreateOrEditSetGroupPage} />
+        <Route exact path="/create-set-group/:routineName/:weekNumber/:dayNumber" component={CreateOrEditSetGroupPage} />
         
       </Switch>
     </div>

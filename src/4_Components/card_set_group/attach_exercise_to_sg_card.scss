@@ -1,0 +1,33 @@
+.attach-exercise-to-set-card{
+  width: 18rem;
+  margin: 20px auto;
+  .card-header{
+    display: flex;
+    justify-content: space-between;
+    
+    span{
+      font-weight: bolder;
+    }
+    .card-link{
+      color: $routine-red;
+    }
+  }
+  .card-body{
+    .card-subtitle{
+      span{
+        color: $gold-crayola;
+      }
+    }
+
+    .card-difficulty{
+      margin-top: 20px;
+      .progress-bar-outer{
+        margin-top: 5px;
+      }
+    }
+
+    .embeded-video{
+      margin-top: 20px;
+    }
+  }
+}

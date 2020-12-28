@@ -22,7 +22,7 @@ export const BrowseExercises = ({
         <div className='exercise-search-results'>
           {/* {JSON.stringify(exerciseSearchResults, "", 2)} */}
           {exerciseSearchResults.map(exercise => {return(
-          <ExerciseCard exercise={exercise}/>
+          <ExerciseCard key={exercise._id} exercise={exercise}/>
           )})}
         </div>}
       </Container>

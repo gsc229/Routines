@@ -9,8 +9,12 @@ import Col from 'react-bootstrap/Col'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import ExerciseForm from '../../4_Components/form_exercise/ExerciseForm'
+import AttachExerciseToSetGroupCard from '../../4_Components/card_set_group/AttachExerciseToSetGroupCard'
 
-export const CreateOrEditExerciseSet = (props) => {
+
+export const CreateOrEditExerciseSet = ({
+  exerciseSearchResults
+}) => {
 
   const [searchMode, setSearchMode] = useState("exercise")
 
@@ -32,6 +36,12 @@ export const CreateOrEditExerciseSet = (props) => {
           onSelect={(mode) => setSearchMode(mode)}>
           <Tab eventKey="exercise" title="Search Exercise">
             <SearchExercisesFrom />
+            <div className='attach-exercise-to-set-group-search-results'>
+              {exerciseSearchResults.map(exercise=>{ 
+                return(
+                  <AttachExerciseToSetGroupCard exercise={exercise} />
+                )})}
+            </div>
           </Tab>
           <Tab eventKey="set" title="My Saved Sets">
             Find a set
@@ -47,7 +57,8 @@ export const CreateOrEditExerciseSet = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  set_groups: state.weekReducer.set_groups
+  set_groups: state.weekReducer.set_groups,
+  exerciseSearchResults: state.exerciseReducer.exerciseSearchResults
 })
 
 const mapDispatchToProps = {

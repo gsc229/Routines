@@ -5,12 +5,10 @@ import {destroyWeek, setCurrentWeek} from '../../1_Actions/weekActions'
 import {routineScheduleConstructor} from './routineScheduleConstructor'
 import {onSetGroupDragEnd} from './scheduleHelpers'
 import {Link} from 'react-router-dom'
-import SetGroupScheduleCard from '../set_group/SetGroupScheduleCard'
+import SetGroupScheduleCard from '../card_set_group/SetGroupScheduleCard'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 
 import Button from 'react-bootstrap/Button'
@@ -59,6 +57,7 @@ export const RoutineWeeksBank = ({
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
         return(
           <Container
+          key={`week-${weekNumber}`}
           className='week-container'>
             <div
             className='week-container-header'>
@@ -89,7 +88,7 @@ export const RoutineWeeksBank = ({
                               <Link 
                               onClick={() => setCurrentWeek(routineSchedule[weekNumber])}
                               to={
-                                `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${routineSchedule[weekNumber].week_number}`}>
+                                `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${routineSchedule[weekNumber].week_number}/day-${dayNumber}-${dayKey[dayNumber]}`}>
                                 Add Sets
                               </Link>
                             </div>

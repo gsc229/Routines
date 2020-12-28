@@ -48,7 +48,7 @@ export const ViewRoutinePage = ({
     if(currentRoutine.weeks.length){
       return (
         <div>
-          <FiRefreshCcw style={{color: 'limegreen'}} onClick={handleRefresh} />
+          <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
           <RoutineWeeksBank />
         </div>
       )

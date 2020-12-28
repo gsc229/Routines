@@ -49,6 +49,7 @@ export const SetGroupForm = (props) => {
       activeKey={selectedSetType}>
         {setTypes.map(type=>
         <Tab
+        key={type}
         title={type}
         eventKey={type}>
           <SetTypeData type={type} />
