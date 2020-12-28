@@ -1,15 +1,9 @@
 import {updateSetGroup} from '../../3_APIs/setGroupApi'
-import {fetchRoutineById} from '../../1_Actions/routineActions'
 
 export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSchedule) => {
 
-
-  console.log({result})
-  console.log({routineSchedule})
-  
-
   const {destination, source} = result
-  console.log("DESTINATION INDEX: ", destination.index, "SOURCE INDEX: ", source.index)
+
   const destinationCodes = destination.droppableId.split("-")
   const sourceCodes = source.droppableId.split("-")
   let destinationWeek
@@ -22,11 +16,6 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
   let sourceWeekId
   let sourceDayName
   [sourceWeek, sourceDay, sourceWeekId, sourceDayName] = sourceCodes
-
-
-  console.log({destinationCodes, sourceCodes})
-  console.log({destinationWeek, destinationDay, destinationWeekId})
-  console.log({sourceWeek, sourceDay, sourceWeekId})
 
   if(!destination) return
 
@@ -45,35 +34,29 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
   removed.day = destinationDayName
   destinationItems.splice(destination.index, 0, removed)
 
-  const updateBackend = await updateSetGroup(removed._id, removed)
+  setRoutineSchedule({
+      ...routineSchedule,
+      [sourceWeek]: {
+        ...routineSchedule[sourceWeek],
+        [sourceDay]: {
+        ...routineSchedule[sourceWeek][sourceDay],
+        set_groups: sourceItems
+      }
+      },
+      [destinationWeek]: {
+        ...routineSchedule[destinationWeek],
+        [destinationDay]: {
+          ...routineSchedule[destinationWeek][destinationDay],
+          set_groups: destinationItems
+        }
+        
+      }
+    })
+    
 
-  if(updateBackend.success){
-      console.log("SUCCESS: ",{updateBackend})
-     setRoutineSchedule({
-        ...routineSchedule,
-        [sourceWeek]: {
-          ...routineSchedule[sourceWeek],
-          [sourceDay]: {
-          ...routineSchedule[sourceWeek][sourceDay],
-          set_groups: sourceItems
-        }
-        },
-        [destinationWeek]: {
-          ...routineSchedule[destinationWeek],
-          [destinationDay]: {
-            ...routineSchedule[destinationWeek][destinationDay],
-            set_groups: destinationItems
-          }
-          
-        }
-      })
-      console.log("NEW SCHEDULE SET")
-      return 
-      
-  } else{
-    console.log("ERROR UPDATING SCHEDULE",{updateBackend})
+    updateSetGroup(removed._id, removed)
     return 
-  }
+ 
 } else if(sourceWeek === destinationWeek && (sourceDay !== destinationDay)){
 
 
@@ -81,14 +64,8 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
   const sameWeekDesitnationLocation = routineSchedule[destinationWeek][destinationDay]
   const copyOfSourceDaySetGroups = [...sameWeekSourceLocation.set_groups]
 
-  console.log({sameWeekDesitnationLocation, sameWeekSourceLocation})
-  console.log("BEFORE: ",{copyOfSourceDaySetGroups})
-
   const copyOfDestinationDaySetGroups = [...sameWeekDesitnationLocation.set_groups]
   const [removed] = copyOfSourceDaySetGroups.splice(source.index, 1)
-
-  console.log("AFTER: ", copyOfSourceDaySetGroups)
-  console.log({removed})
 
   removed.day_number = destinationDay
   removed.order = destination.index
@@ -96,30 +73,45 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
   removed.day = destinationDayName
 
   copyOfDestinationDaySetGroups.splice(destination.index, 0, removed)
-  console.log({copyOfDestinationDaySetGroups})
+  setRoutineSchedule({
+    ...routineSchedule,
+    [destinationWeek]:{
+      ...routineSchedule[destinationWeek],
+      [destinationDay]:{
+        ...routineSchedule[destinationWeek][destinationDay],
+          set_groups: copyOfDestinationDaySetGroups
+      },
+      [sourceDay]:{
+        ...routineSchedule[destinationWeek][sourceDay],
+          set_groups: copyOfSourceDaySetGroups
+      }
+    }
+  })
 
-  const updateBackend = await updateSetGroup(removed._id, removed)
-  
+  updateSetGroup(removed._id, removed)
+  return
+   
+} else if(sourceWeek === destinationWeek && sourceDay === destinationDay){
+    const sameDaySourceAndDestinationLocation = routineSchedule[sourceWeek][sourceDay]
+    const copyOfSetGroups = [...sameDaySourceAndDestinationLocation.set_groups]
+    const [removed] = copyOfSetGroups.splice(source.index, 1)
+    removed.order = destination.index
+    copyOfSetGroups.splice(destination.index, 0, removed)
 
-  if(updateBackend.success){
     setRoutineSchedule({
       ...routineSchedule,
       [destinationWeek]:{
         ...routineSchedule[destinationWeek],
-        [destinationDay]:{
+        [destinationDay]: {
           ...routineSchedule[destinationWeek][destinationDay],
-            set_groups: copyOfDestinationDaySetGroups
-        },
-        [sourceDay]:{
-          ...routineSchedule[destinationWeek][sourceDay],
-            set_groups: copyOfSourceDaySetGroups
+          set_groups: copyOfSetGroups
         }
       }
     })
-  } else{
-    //To Do: handle the case where a routine order is changed within the same day
+
+    updateSetGroup(removed._id, removed)
+    return
   }
-}
 
 }
 
