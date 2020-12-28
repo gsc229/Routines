@@ -4,16 +4,15 @@ import {getExSetTarget} from './setGroupHelpers'
 import Card from 'react-bootstrap/Card'
 import {BsGrid3X3Gap} from 'react-icons/bs'
 
-export const SetGroup = ({set_group}) => {
-
+export const SetGroup = ({set_group, isDragging}) => {
   const exercise_sets = set_group.exercise_sets
 
   return (
     <Card
-    bg='dark'
-    text='white'
+    bg={!isDragging &&  'dark'}
+    text={!isDragging && 'white'}
     style={{margin: '5px auto', cursor: 'grab'}}
-    className='set-group-schedule-card'>
+    className={`set-group-schedule-card`}>
     <div 
     style={{
       display: 'flex', 

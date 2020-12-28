@@ -1,8 +1,5 @@
-import {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {Switch, Route} from 'react-router-dom'
-import {getWeek} from './3_APIs/routineWeekHelpers'
-import {getQuery} from './3_APIs/queryApi'
 import './App.scss'
 import PrivateRoute from './7_Auth/PrivateRoute'
 import PublicLandingPage from './5_Pages/landing_page/LandingPage'
@@ -18,31 +15,8 @@ import CreateOrEditExercisePage from './5_Pages/create_exercise_page/CreateOrEdi
 import CreateOrEditSetGroupPage from './5_Pages/create_set_group_page/CreateOrEditSetGroupPage'
 import ManageExercisesPage from './5_Pages/manage_exercises_page/ManageExercisesPage'
 import BrowseExercisesPage from './5_Pages/browse_exercises_page/BrowseExercisesPage'
-// experimental
-import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'
 
 function App({loggedIn}) {
-
-  const testWeekId = '5fd6eb71b0321644dc6bf08a'
-  const testSetGroupId = '5fdec248c6933030d82e359a'
-  const testWeekQueryStr = 'populate_one=exercise_sets&populate_two=exercise'
-  const query = `/routines/weeks/${testWeekId}?populate_one=exercise_sets&populate_two=exercise`
-  const query2 = `/set-groups/${testSetGroupId}?populate_one=exercise_sets&populate_two=exercise`
-  // /routines/weeks/5fd6eb71b0321644dc6bf08a?populate_one=exercises
-  const [setGroups, setSetGroups] = useState()
-  
-  useEffect(()=>{
-    /* getWeek(testWeekId, testWeekQueryStr) */
-    getQuery(query2)
-    .then(AppJsQueryResponse => {
-      console.log({AppJsQueryResponse})
-      if(AppJsQueryResponse.success){
-        setSetGroups(AppJsQueryResponse.data)
-      } else{
-        console.log({AppJsQueryResponse})
-      }
-    })
-  }, [])
 
   console.log({loggedIn})
 
@@ -78,13 +52,7 @@ function App({loggedIn}) {
         <Route exact path="/manage-exercises" component={ManageExercisesPage} />
         <Route exact path="/browse-exercises" component={BrowseExercisesPage} />
         <Route exact path="/create-set-group/:routineName/:weekNumber" component={CreateOrEditSetGroupPage} />
-      
-
-
-        {/* Experimental */}
-        <Route exact path="/routines-dnd">
-          <RoutineWeekDnD setGroups={setGroups} setSetGroups={setSetGroups}/>
-        </Route>
+        
       </Switch>
     </div>
   );

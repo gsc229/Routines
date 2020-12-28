@@ -1,0 +1,77 @@
+.routine-schedule-dnd{
+  //border: 1px solid blue;
+  .set-group-draggable-container-dragging{
+    .set-group-schedule-card{
+      //background-color: rgb(124, 122, 122);
+      background-color: $routine-red;
+      color: whitesmoke;
+    }
+  }
+}
+
+.week-container{
+  padding: 0;
+  .week-container-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $routine-red;
+    padding: 10px;
+    color: white;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  .week-container-row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 10px auto;
+    min-height: 100px;
+    margin-bottom: 20px;
+    .day-container-card{
+      //border: 1px solid red;
+      margin: 10px auto;
+      width: 50%;
+      min-height: 200px;
+      min-width: 300px;
+      padding: 5px;
+      @media only screen and (max-width: 770px) {
+        width: 100%;
+        min-width: 0;
+      }
+      .day-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .card-header{
+        background-color: $spanish-gray;
+        color: whitesmoke;
+        a{
+          color: whitesmoke;
+          background-color: $routine-red;
+          border-radius: 50px;
+          padding: 0px 10px 0px 10px;
+        }
+      }
+      .card-body{
+        background-color: whitesmoke;
+      }
+
+    }
+    .day-container-card-hovering{
+      //background-color: $routine-red;
+      background-color: $bs-dark;
+      .card-header{
+        background-color: $bs-dark;
+        color: whitesmoke;
+        
+      }
+      .card-body{
+        background-color: $spanish-gray;
+      }
+    }
+  }
+}
