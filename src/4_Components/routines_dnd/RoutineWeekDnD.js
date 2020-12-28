@@ -98,7 +98,7 @@ const RoutinesWeekDnD = ({setGroups}) => {
             onDragEnd={ result=> onSetGroupDragEnd(result, weekDays, setWeekDays)}
           >
             {Object.entries(weekDays).map(([id, day]) => {
-              
+              console.log({id, day})
               return(
                 <div key={id} className='day-droppable-container' style={getDayDroppableContainerStyles()}>                
                       <div>

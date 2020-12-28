@@ -1,6 +1,6 @@
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
-import SetGroup   from './SetGroup'
+import SetGroup   from './SetGroupScheduleCard'
 
 // styles
 const draggableSetGroupStyles = (snapshot, providedDraggablePropsStyle) => {

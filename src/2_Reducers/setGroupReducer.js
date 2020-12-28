@@ -1,7 +1,8 @@
 import * as constants from '../1_Actions'
 
 
- const setGroupTypes = ["Straight",
+ const setGroupTypes = [
+  "Straight",
   "Super",
   "Super - Antagonist", 
   "Super - Compound", 
@@ -38,6 +39,12 @@ const initialState = {
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
+
+  case  constants.WRITING_SET_GROUP: 
+    return{
+      ...state,
+      [action.payload.key]: action.payload.value
+    }
   
   case constants.SET_CURRENT_SET_GROUP:
     return{

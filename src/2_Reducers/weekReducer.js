@@ -8,6 +8,7 @@ const initialState = {
     user: "",
     routine: ""
   },
+  currentRoutineWeeks: [],
   currentWeek: {
     routine: null,
     user: null,
@@ -21,6 +22,12 @@ const initialState = {
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
+
+    case constants.SET_CURRENT_ROUTINE:
+      return {
+        ...state,
+        currentRoutineWeeks: action.payload.weeks
+      }
 
     case constants.SET_CURRENT_WEEK:
       return{
@@ -40,6 +47,8 @@ const reducer = (state=initialState, action) => {
         ...state,
         error_message: ''
       }
+
+
     case constants.LOG_OUT:
       return initialState
     

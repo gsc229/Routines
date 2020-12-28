@@ -1,7 +1,7 @@
-import SetGroup from '../set_group/SetGroup'
 
-export const routineScheduleConstructor = (routineSetGroups, numberOfWeeks) => {
 
+export const routineScheduleConstructor = (routineSetGroups, weeks) => {
+  console.log('weeks.length: ', weeks.length)
   const dayKey = {
     1: "Su",
     2: "Mo",
@@ -13,19 +13,33 @@ export const routineScheduleConstructor = (routineSetGroups, numberOfWeeks) => {
   }
 
   let routineSchedule = {}
+  /* 
+    {
+      1: {
 
-  for(let i = 1; i <= numberOfWeeks; i++){
+      }
+    }
+  */
+
+  for(let i = 1; i <= weeks.length; i++){
     routineSchedule[i] = {}
-    for(let j=1; j<=7; j++){
+    for(let j = 1; j <= 7; j++ ){
       routineSchedule[i][j] = {
         day_name: dayKey[j],
+        day_number: j,
         set_groups: []
       }
     }
+    
   }
 
-  routineSetGroups.map(set_group => 
-    routineSchedule[set_group.week_number][set_group.day_number].push(<SetGroup set_group={set_group} />))
+  console.log({routineSchedule})
+
+  routineSetGroups.map(set_group => {
+    console.log({set_group})
+    routineSchedule[set_group.week_number][set_group.day_number].set_groups.push(set_group)
+  })
+
   return routineSchedule
 }
 

@@ -70,7 +70,6 @@ export const ViewRoutinePage = ({
         <Button 
         onClick={addWeek}
         variant='primary'>Add Week</Button>
-        {JSON.stringify(currentRoutine,'', 2)}
       </Container>
     </Layout>
   )
