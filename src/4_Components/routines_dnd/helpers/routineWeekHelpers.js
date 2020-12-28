@@ -34,12 +34,7 @@ export const onSetGroupDragEnd = async (result, weekDays, setWeekDays) => {
 
   if(!destination) return
 
-  if(
-    destination.droppableId === source.droppableId &&
-    destination.index === source.index
-  ){
-    return
-  }
+  if(destination.droppableId === source.droppableId && destination.index === source.index) return
 
   if(source.droppableId !== destination.droppableId){
     // Move the item from the source to the destination in the proper place in the destination

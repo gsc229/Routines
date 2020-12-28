@@ -46,3 +46,22 @@ export const fetchSetGroupById = ( setGroupId, query) => dispatch => {
   })
 }
 
+export const saveSetGroupChanges = (setGroupId, updates) => dispatch => {
+  dispatch({type: constants.UPDATING_SET_GROUP})
+  return updateSetGroup(routineId, updates)
+  .then(response => {
+    if(response.success){
+     dispatch({type: constants.UPDATE_SET_GROUP_SUCCESS, payload: response.data})
+     return true
+    } 
+    if(response.error_message){
+      dispatch({type: constants.UPDATE_SET_GROUP_FAIL, payload: response.error_message})
+      return false
+    } 
+    
+    dispatch({type: constants.UPDATE_SET_GROUP_FAIL, payload: generalErrorMessage})
+    return false
+  })
+
+}
+
