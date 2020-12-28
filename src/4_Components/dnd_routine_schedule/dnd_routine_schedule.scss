@@ -1,0 +1,31 @@
+.routine-schedule-dnd{
+  border: 1px solid blue;
+}
+
+.week-container{
+  padding: 0;
+  .week-container-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .week-container-row{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px auto;
+    min-height: 100px;
+    margin-bottom: 20px;
+    .day-container{
+      border: 1px solid red;
+      margin: 10px auto;
+      min-height: 200px;
+      padding: 5px;
+      .day-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+  }
+}

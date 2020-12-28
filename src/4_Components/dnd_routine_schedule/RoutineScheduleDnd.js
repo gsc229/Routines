@@ -11,6 +11,7 @@ import DarkSpinner from '../spinners/DarkSpinner'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Card from 'react-bootstrap/Card'
 
 import Button from 'react-bootstrap/Button'
 
@@ -50,8 +51,7 @@ export const RoutineWeeksBank = ({
 
   return (
       <div 
-      style={{height: 'fit-content', border: '1px solid green'}} 
-      className='routine-weeks-bank'>
+      className='routine-schedule-dnd'>
       <h6>Weeks go here</h6>
       {!set_groups && <DarkSpinner />}
       {set_groups && 
@@ -60,10 +60,8 @@ export const RoutineWeeksBank = ({
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
         return(
           <Container
-          style={{padding: 0}}
           className='week-container'>
-            <div 
-            style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: '10px'}}
+            <div
             className='week-container-header'>
               <h6>Week: {weekNumber}</h6>
               <Button 
@@ -72,8 +70,7 @@ export const RoutineWeeksBank = ({
               </Button>
             </div>
                 <Row
-                style={{display: 'flex', justifyContent: 'flex-start', width: '100%', margin: '10px auto', minHeight: '100px', marginBottom: '20px'}}
-                className='weeek-container-row'>
+                className='week-container-row'>
                 {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
                   return dayNumber !== "_id" && dayNumber !== "week_number" && (
                     <Droppable 
@@ -84,43 +81,46 @@ export const RoutineWeeksBank = ({
                         <Col
                         {...provided.droppableProps}
                         ref={provided.innerRef}
-                        xl='4'
-                        style={{border: '1px solid red', width: '100%', minHeight: '200px', padding: '5px'}}
+                        md='3'                        
                         className='day-container'>
-                    
-                        <div 
-                        style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}
-                        className='day-header'>
-                          <h6>{dayKey[dayNumber]}</h6>
-                          <Link 
-                          onClick={() => setCurrentWeek(routineSchedule[weekNumber])}
-                          to={
-                            `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${routineSchedule[weekNumber].week_number}`}>
-                            Add Sets
-                          </Link>
-                        </div>
-                          {routineSchedule[weekNumber][dayNumber].set_groups.map((set_group, index) => {
-                            return (
-                            <Draggable
-                            key={set_group._id}
-                            draggableId={set_group._id}
-                            index={index}>
-                            {(provided, snapshot)=>{
-                              return(
-                                <div
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                ref={provided.innerRef}
-                                >
-                                  <SetGroupScheduleCard set_group={set_group} />
-                                  {provided.placeholder}
-                                </div>
-                              )
-                            }}
-                              
-                            </Draggable>)
-                          })}
-                      {provided.placeholder}
+                        <Card>
+                          <Card.Header>
+                            <div
+                            className='day-header'>
+                              <h6>{dayKey[dayNumber]}</h6>
+                              <Link 
+                              onClick={() => setCurrentWeek(routineSchedule[weekNumber])}
+                              to={
+                                `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${routineSchedule[weekNumber].week_number}`}>
+                                Add Sets
+                              </Link>
+                            </div>
+                          </Card.Header>
+                            <Card.Body>
+                              {routineSchedule[weekNumber][dayNumber].set_groups.map((set_group, index) => {
+                                return (
+                                <Draggable
+                                key={set_group._id}
+                                draggableId={set_group._id}
+                                index={index}>
+                                {(provided, snapshot)=>{
+                                  return(
+                                    <div
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    ref={provided.innerRef}
+                                    >
+                                      <SetGroupScheduleCard set_group={set_group} />
+                                      {provided.placeholder}
+                                    </div>
+                                  )
+                                }}
+                                  
+                                </Draggable>)
+                              })}
+                          {provided.placeholder}
+                            </Card.Body>
+                        </Card>
                       </Col>)
                     }}
                     </Droppable>
