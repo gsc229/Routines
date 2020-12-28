@@ -1,10 +1,14 @@
-import * as constants from '../1_Actions'
-import {getWeeks, createWeek, updateWeek} from '../3_APIs/routinesApi'
+import * as constants from '.'
+import {createWeek, getWeeks, updateWeek, getWeekById, deleteWeek } from '../3_APIs/routineWeekApi'
+const generalErrorMessage = "Something went wrong with the request."
 
-/* ====================================== WEEKS ========================================= */
-/* ====================================== WEEKS ========================================= */
-/* ====================================== WEEKS ========================================= */
-/* ====================================== WEEKS ========================================= */
+
+export const setCurrentWeek = (week) => dispatch => {
+  dispatch({type: constants.SET_CURRENT_WEEK, payload: week})
+}
+
+
+/* ASYNC */
 export const userWeeksQuery = (queryString) => dispatch => {
   dispatch({type: constants.FETCHING_WEEKS})
   return getWeeks(queryString)
@@ -24,12 +28,14 @@ export const userWeeksQuery = (queryString) => dispatch => {
 
 }
 
+
+// actions handled in routinesReducer
 export const createNewWeek = (newWeek) => dispatch => {
   dispatch({type: constants.CREATING_WEEK})
   return createWeek(newWeek)
   .then(response => {
     if(response.success){
-     dispatch({type: constants.CREATE_WEEK_SUCCESS})
+     dispatch({type: constants.CREATE_WEEK_SUCCESS, payload: response.data})
      return true
     } 
     if(response.error_message){
@@ -48,6 +54,25 @@ export const saveWeekChanges = (updates) => dispatch => {
   .then(response => {
     if(response.success){
     dispatch({type: constants.UPDATE_WEEK_SUCCESS})
+    return true
+    } 
+    if(response.error_message){
+      dispatch({type: constants.UPDATE_WEEK_FAIL, payload: response.error_message})
+      return false
+    } 
+    dispatch({type: constants.UPDATE_WEEK_FAIL, payload: generalErrorMessage})
+    return false
+  })
+
+}
+
+// actions handled in routinesReducer
+export const destroyWeek = (weekId) => dispatch => {
+  dispatch({type: constants.DELETING_WEEK})
+  return deleteWeek(weekId)
+  .then(response => {
+    if(response.success){
+    dispatch({type: constants.DELETE_WEEK_SUCCESS, payload: response.data})
     return true
     } 
     if(response.error_message){

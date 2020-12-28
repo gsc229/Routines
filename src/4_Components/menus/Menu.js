@@ -24,7 +24,7 @@ const Menu = ({logout}) => {
           <Nav.Link active={isActivePath('/schedule')} as={Link} to='/schedule'>Schedule</Nav.Link>
           <Nav.Link active={isActivePath('/goals')} as={Link} to="/goals">Goals</Nav.Link>
           <Nav.Link active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">Manage Routines</Nav.Link>
-          <Nav.Link active={isActivePath('/routines-dnd')}  active={isActivePath('/routines-dnd')} as={Link} to="/routines-dnd">Routines DnD</Nav.Link>
+          <Nav.Link active={isActivePath('/routines-dnd')} as={Link} to="/routines-dnd">Routines DnD</Nav.Link>
           <NavDropdown active={isActivePath('dropdown')} title='Workout Routines' aria-labelledby="navbarDropdown">
             <NavDropdown.Item active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">My Saved Routines</NavDropdown.Item>
             <NavDropdown.Item active={isActivePath('/create-routine')} as={Link} to="/create-routine">Create New Routine</NavDropdown.Item>

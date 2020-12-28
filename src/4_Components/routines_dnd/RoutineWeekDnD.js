@@ -1,31 +1,36 @@
 import React, {useState, useEffect} from 'react'
 import {DragDropContext,  Droppable} from 'react-beautiful-dnd'
+import {Link} from 'react-router-dom'
 import {weekConstructor} from './helpers/weekConstructor'
-import {onDragEnd} from './helpers/routineWeekHelpers'
+import {onSetGroupDragEnd} from './helpers/routineWeekHelpers'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
-import DraggableExercise from './DraggableExercise'
+import Container from 'react-bootstrap/Container'
+import DraggableSetGroup from '../set_group/DraggableSetGroup'
 
-const RoutinesWeekDnD = ({weekData}) => {
+
+const RoutinesWeekDnD = ({setGroups}) => {
   
   const {height, width} = useWindowSize()
 
-  const [columns, setColumns] = useState(weekConstructor(weekData))
+  const [weekDays, setWeekDays] = useState(weekConstructor(setGroups))
 
-  console.log({weekData})
+  console.log({setGroups})
   useEffect(() => {  
-    setColumns(weekConstructor(weekData))
-  }, [weekData])
+    setWeekDays(weekConstructor(setGroups))
+  }, [setGroups])
 
 
   // styles 
   const getWeekDroppableRowStyles = () => {
 
     const commom = {
-      border: '1px solid greenyellow',
+      border: '3px solid pink',
+      backgroundColor: 'blue',
       display: 'flex',
+      flexDirection: 'column',
       minHeight: '300px',
-      width: 'fit-content',
+      width: '100%',
       margin: 'auto',
       padding:'0px'
     }
@@ -40,10 +45,11 @@ const RoutinesWeekDnD = ({weekData}) => {
 
   const getDayDroppableContainerStyles = (saturday=false) => {
     const commom = {
-      //backgroundColor: 'orangered',
+      backgroundColor: 'orangered',
+      border: '1px solid yellow',
+      width: '100%',
       minHeight: '100%',
       marginBottom: '20px',
-      maxWidth: '60%',
       margin: 'auto'
     }
 
@@ -65,14 +71,7 @@ const RoutinesWeekDnD = ({weekData}) => {
       border: snapshot.isDraggingOver ? `lightsalmon 5px solid` : '',
       borderRadius: '4px',
       padding: '8px',
-      height: '100%',
-      minHeight: '100px',
-      minWidth: '200px',
-      margin: '20px auto',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      marginRight: '20px'
+      minHeight: '200px',
     
     }
 
@@ -92,17 +91,20 @@ const RoutinesWeekDnD = ({weekData}) => {
 
   return (
     <LayoutOne>
-      <div className='container-fluid'>
+      <Container>
         <p>height: {height} width: {width}</p>
         <div className='row week-droppable-row' style={getWeekDroppableRowStyles()}>
           <DragDropContext
-            onDragEnd={ result=> onDragEnd(result, columns, setColumns)}
+            onDragEnd={ result=> onSetGroupDragEnd(result, weekDays, setWeekDays)}
           >
-            {Object.entries(columns).map(([id, column]) => {
-              
+            {Object.entries(weekDays).map(([id, day]) => {
+              console.log({id, day})
               return(
                 <div key={id} className='day-droppable-container' style={getDayDroppableContainerStyles()}>                
-                    <h4 style={{fontSize:"18px"}}>{column.name}</h4>
+                      <div>
+                        <h4 style={{fontSize:"18px"}}>{day.name}</h4>
+                        <Link to='/create-set-group'>Add Set Group</Link>
+                      </div>
                     
                       <Droppable
                         key={id}
@@ -115,9 +117,9 @@ const RoutinesWeekDnD = ({weekData}) => {
                             ref={provided.innerRef}
                             style={getDayDroppableStyles(snapshot, id)}
                           >
-                            {column.items.map((item, index) => {
+                            {day.set_groups.map((set_group, index) => {
                               return(
-                                <DraggableExercise key={index} item={item} index={index} width={width} />
+                                <DraggableSetGroup key={index} set_group={set_group} index={index} width={width} />
                               )
                             })}
           
@@ -130,7 +132,7 @@ const RoutinesWeekDnD = ({weekData}) => {
             })}
           </DragDropContext>
         </div>
-      </div>
+        </Container>
     </LayoutOne>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
-import RoutineExercise from '../routine_exercise/RoutineExercise'
+import ExerciseSet from '../exercise_set/ExerciseSet'
 
 // styles
 const draggableExerciseStyles = (snapshot, providedDraggablePropsStyle) => {
@@ -22,9 +22,7 @@ const draggableExerciseStyles = (snapshot, providedDraggablePropsStyle) => {
   return {...common}
 }
 
-
-
-const DraggableWorkout = ({item, index, width}) => {
+const DraggableExSet = ({item, index, width}) => {
   return (
     <Draggable
       key={item._id}
@@ -38,8 +36,8 @@ const DraggableWorkout = ({item, index, width}) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           style={draggableExerciseStyles(snapshot, provided.draggableProps.style)}
-          >
-            <RoutineExercise routine_exercise={item} width={width} />
+          > 
+            <ExerciseSet routine_exercise={item} width={width} />
           </div>
         )
       }}
@@ -47,4 +45,4 @@ const DraggableWorkout = ({item, index, width}) => {
   )
 }
 
-export default DraggableWorkout
+export default DraggableExSet

@@ -1,5 +1,5 @@
 import * as constants from '../1_Actions'
-import {updateRoutine, createRoutine, getRoutines} from '../3_APIs/routinesApi'
+import {updateRoutine, createRoutine, getRoutines, getRoutineById} from '../3_APIs/routinesApi'
 
 const generalErrorMessage = "Something went wrong with the request."
 
@@ -15,7 +15,9 @@ export const clearCurrentRoutine = () => dispatch => {
   dispatch({type: constants.CLEAR_CURRENT_ROUTINE})
 }
 
-export const userRoutinesQuery = (queryString) => dispatch => {
+// ASYNC 
+
+export const fetchRoutines = (queryString) => dispatch => {
   dispatch({type: constants.FETCHING_ROUTINES})
   return getRoutines(queryString)
   .then(res=>{
@@ -31,6 +33,23 @@ export const userRoutinesQuery = (queryString) => dispatch => {
       return false
 
    
+  })
+}
+
+export const fetchRoutineById = (routineId, queryString) => dispatch => {
+  dispatch({type: constants.FETCHING_ROUTINE})
+  return getRoutineById(routineId, queryString)
+  .then(res=> {
+    if(res.success){
+      dispatch({type: constants.FETCH_ROUTINE_SUCCESS, payload: queryString ? res.data[0] : res.data})
+      return true
+    } 
+    if(res.error_message){
+      dispatch({type: constants.FETCH_ROUTINE_FAIL, payload: res.error_message})
+      return false
+    } 
+      dispatch({type: constants.FETCH_ROUTINE_FAIL, payload: generalErrorMessage })
+      return false
   })
 }
 

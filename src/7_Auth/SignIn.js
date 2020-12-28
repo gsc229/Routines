@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import LandingPageLayout from '../6_Layouts/layout_two/LandingPageLayout.js'
 import {logInUser, clearErrorMessage} from '../1_Actions/userActions'
-import {userRoutinesQuery} from '../1_Actions/routineActions'
+import {fetchRoutines} from '../1_Actions/routineActions'
 
 export const SignIn = ({
   logInUser, 
   clearErrorMessage,
-  userRoutinesQuery,
+  fetchRoutines,
   user,  
   loggedIn, 
   error_message, 
@@ -30,7 +30,7 @@ export const SignIn = ({
     console.log(user._id)
     if(loggedIn){
       history.push('/')
-      userRoutinesQuery(`user=${user._id}&populate_one=weeks&populate_two=exercises&populate_three=excercise`)
+      
     }
 
     if(error_message){
@@ -100,7 +100,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   logInUser,
   clearErrorMessage,
-  userRoutinesQuery
+  fetchRoutines
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn)

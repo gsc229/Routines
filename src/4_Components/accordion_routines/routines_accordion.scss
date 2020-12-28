@@ -46,4 +46,22 @@
       }
     }
   }
+
+  
+  // CALENDAR
+  .manage-routines-calendar{
+    //background-color: green;
+    font-size: 15px;
+    //border-bottom: 1px solid black;
+
+    .live-week:hover{
+      border: 1px solid red;
+    }
+
+    .day{
+      font-size: 10px;
+      height: 8vmin;
+    }
+
+  }
 }

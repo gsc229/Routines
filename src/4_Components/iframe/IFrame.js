@@ -30,7 +30,7 @@ const IFrame = ({
   }
 
   const formValidationErrorMessage = () => {
-    return !purifiedIframe && forFormValidation && show_default_error_message && validation_error_message || error_message
+    return !purifiedIframe && iframeString && forFormValidation && show_default_error_message && validation_error_message || error_message
   }
 
   const nonFormValidationMethod = () => {

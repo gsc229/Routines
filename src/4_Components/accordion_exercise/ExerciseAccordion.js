@@ -132,7 +132,7 @@ export const ExercisesAccordion = ({
 
             {editingMode && currentExercise._id === exercise._id && !crudingExercise &&
             <CreateExerciseForm 
-            disguardBtn={false}
+            discardBtn={false}
             saveBtn={false}
             finishLaterBtn={false}
             goToExerciseBank={false}
