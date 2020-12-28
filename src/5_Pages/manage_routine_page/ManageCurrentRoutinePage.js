@@ -21,10 +21,10 @@ export const ViewRoutinePage = ({
     fetchRoutineById(currentRoutine._id, currentRoutineRefreshQuery)
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     alert('Fetching routine by id')
     fetchRoutineById(currentRoutine._id, currentRoutineRefreshQuery)
-  }, [createNewWeek])
+  }, [createNewWeek]) */
 
   const addWeek = async () => {
     const credentials = {

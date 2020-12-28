@@ -23,10 +23,10 @@ export const ManageRoutinesPage = ({
      clearCurrentRoutine()
      history.push('/create-routine')
   }
-
+  /* old query ?user=${userId}&populate_one=weeks&populate_two=set_groups&populate_three=exercise_sets&populate_four=exercise */
   useEffect(() => {
     alert('Fetchting all routines')
-    fetchRoutines(`?user=${userId}&populate_one=weeks&populate_two=set_groups&populate_three=exercise_sets&populate_four=exercise`)
+    fetchRoutines(`?user=${userId}&populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`)
   }, [])
 
   return (

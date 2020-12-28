@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {destroyWeek, setCurrentWeek} from '../../1_Actions/weekActions'
 import {Link} from 'react-router-dom'
@@ -11,6 +11,18 @@ export const RoutineWeeksBank = ({
   destroyWeek,
   setCurrentWeek
 }) => {
+
+
+  const days = {
+    1: "Su",
+    2: "Mo",
+    3: "Tu",
+    4: "We",
+    5: "Th",
+    6: "Fr",
+    7: "Sa"
+  }
+
 
   return (
     <div className='routine-weeks-bank'>
