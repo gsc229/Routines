@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {fetchRoutineById} from '../../1_Actions/routineActions'
 import {destroyWeek, setCurrentWeek} from '../../1_Actions/weekActions'
 import {routineScheduleConstructor} from './routineScheduleConstructor'
-import {onSetGroupDragEnd} from '../set_group/scheduleHelpers'
+import {onSetGroupDragEnd} from './scheduleHelpers'
 import {Link} from 'react-router-dom'
 import SetGroupScheduleCard from '../set_group/SetGroupScheduleCard'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
@@ -36,7 +36,6 @@ export const RoutineWeeksBank = ({
   
 
   const [routineSchedule, setRoutineSchedule] = useState({})
-  console.log('RoutineWeeksBank newRouinteSchedule: ',{routineSchedule})
 
   const currentPopulateQuery = `?populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`
   useEffect(async () => {
@@ -59,7 +58,6 @@ export const RoutineWeeksBank = ({
       <DragDropContext 
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, setRoutineSchedule)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
-        console.log({weekNumber})
         return(
           <Container
           style={{padding: 0}}
@@ -77,7 +75,6 @@ export const RoutineWeeksBank = ({
                 style={{display: 'flex', justifyContent: 'flex-start', width: '100%', margin: '10px auto', minHeight: '100px', marginBottom: '20px'}}
                 className='weeek-container-row'>
                 {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
-                  console.log({weekNumber, days,dayNumber,name})
                   return dayNumber !== "_id" && dayNumber !== "week_number" && (
                     <Droppable 
                     key={`${weekNumber}-${dayNumber}-${routineSchedule[weekNumber]._id}-${name.day_name}`}
