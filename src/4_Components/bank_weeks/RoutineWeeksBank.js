@@ -1,11 +1,13 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
+import {fetchRoutineById} from '../../1_Actions/routineActions'
 import {destroyWeek, setCurrentWeek} from '../../1_Actions/weekActions'
 import {routineScheduleConstructor} from './routineScheduleConstructor'
 import {onSetGroupDragEnd} from '../set_group/scheduleHelpers'
 import {Link} from 'react-router-dom'
 import SetGroupScheduleCard from '../set_group/SetGroupScheduleCard'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
+import DarkSpinner from '../spinners/DarkSpinner'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -17,6 +19,7 @@ export const RoutineWeeksBank = ({
   currentRoutine,
   destroyWeek,
   setCurrentWeek,
+  fetchRoutineById,
   set_groups
 }) => {
 
@@ -32,22 +35,32 @@ export const RoutineWeeksBank = ({
 
   
 
-  const [routineSchedule, setRoutineSchedule] = useState(routineScheduleConstructor(set_groups, weeks))
-
+  const [routineSchedule, setRoutineSchedule] = useState({})
   console.log('RoutineWeeksBank newRouinteSchedule: ',{routineSchedule})
+
+  const currentPopulateQuery = `?populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`
+  useEffect(async () => {
+    fetchRoutineById(currentRoutine._id, currentPopulateQuery)
+  }, [])
+
+  useEffect(async () => {
+    setRoutineSchedule(routineScheduleConstructor(set_groups, weeks))
+  }, [set_groups, weeks])
+
+  
 
   return (
       <div 
       style={{height: 'fit-content', border: '1px solid green'}} 
       className='routine-weeks-bank'>
       <h6>Weeks go here</h6>
+      {!set_groups && <DarkSpinner />}
+      {set_groups && 
       <DragDropContext 
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, setRoutineSchedule)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
         console.log({weekNumber})
         return(
-          
-          
           <Container
           style={{padding: 0}}
           className='week-container'>
@@ -117,13 +130,10 @@ export const RoutineWeeksBank = ({
                   )
                 })}
               </Row>
-            
-
-
           </Container>
         
         )})}
-        </DragDropContext>
+        </DragDropContext>}
       </div>
   )
 }
@@ -136,7 +146,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   destroyWeek,
-  setCurrentWeek
+  setCurrentWeek,
+  fetchRoutineById
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineWeeksBank)

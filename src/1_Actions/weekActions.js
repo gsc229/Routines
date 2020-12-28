@@ -7,6 +7,8 @@ export const setCurrentWeek = (week) => dispatch => {
   dispatch({type: constants.SET_CURRENT_WEEK, payload: week})
 }
 
+
+/* ASYNC */
 export const userWeeksQuery = (queryString) => dispatch => {
   dispatch({type: constants.FETCHING_WEEKS})
   return getWeeks(queryString)
@@ -25,6 +27,7 @@ export const userWeeksQuery = (queryString) => dispatch => {
   })
 
 }
+
 
 // actions handled in routinesReducer
 export const createNewWeek = (newWeek) => dispatch => {
@@ -62,6 +65,7 @@ export const saveWeekChanges = (updates) => dispatch => {
   })
 
 }
+
 // actions handled in routinesReducer
 export const destroyWeek = (weekId) => dispatch => {
   dispatch({type: constants.DELETING_WEEK})

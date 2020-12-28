@@ -1,4 +1,5 @@
 import {updateSetGroup} from '../../3_APIs/setGroupApi'
+import {fetchRoutineById} from '../../1_Actions/routineActions'
 
 export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSchedule) => {
 
@@ -32,11 +33,6 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
   if(destination.droppableId === source.droppableId && destination.index === source.index) return
 
   if(sourceWeek !== destinationWeek){
-  // To Do:
-  // Do the async stuff
-  // remove the set_group from the array in the source location
-  // add the set_group to the array in the destication location
-  // spread into new state
   const locatedSource = routineSchedule[sourceWeek][sourceDay]
   const locatedDestination = routineSchedule[destinationWeek][destinationDay]
   const sourceItems = [...locatedSource.set_groups]
@@ -71,27 +67,40 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
           
         }
       })
-      return 
       console.log("NEW SCHEDULE SET")
+      return 
+      
   } else{
     console.log("ERROR UPDATING SCHEDULE",{updateBackend})
     return 
   }
 } else if(sourceWeek === destinationWeek && (sourceDay !== destinationDay)){
-  const sameWeekSource = routineSchedule[sourceWeek][sourceDay]
-  const sameWeekDesitnation = routineSchedule[destinationWeek][destinationDay]
-  const copyOfSourceDayItems = [...sameWeekSource.set_groups]
-  console.log("BEFORE: ",{copyOfSourceDayItems})
-  const copyOfDestinationDayItems = [...sameWeekDesitnation.set_groups]
-  const [removed] = copyOfSourceDayItems.splice(source.index, 1)
-  console.log("AFTER: ", copyOfSourceDayItems)
+
+
+  const sameWeekSourceLocation = routineSchedule[sourceWeek][sourceDay]
+  const sameWeekDesitnationLocation = routineSchedule[destinationWeek][destinationDay]
+  const copyOfSourceDaySetGroups = [...sameWeekSourceLocation.set_groups]
+
+  console.log({sameWeekDesitnationLocation, sameWeekSourceLocation})
+  console.log("BEFORE: ",{copyOfSourceDaySetGroups})
+
+  const copyOfDestinationDaySetGroups = [...sameWeekDesitnationLocation.set_groups]
+  const [removed] = copyOfSourceDaySetGroups.splice(source.index, 1)
+
+  console.log("AFTER: ", copyOfSourceDaySetGroups)
+  console.log({removed})
+
   removed.day_number = destinationDay
   removed.order = destination.index
   removed.week = destinationWeekId
   removed.day = destinationDayName
-  copyOfDestinationDayItems.splice(destination.index, removed, 0)
+
+  copyOfDestinationDaySetGroups.splice(destination.index, 0, removed)
+  console.log({copyOfDestinationDaySetGroups})
 
   const updateBackend = await updateSetGroup(removed._id, removed)
+  
+
   if(updateBackend.success){
     setRoutineSchedule({
       ...routineSchedule,
@@ -99,119 +108,22 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
         ...routineSchedule[destinationWeek],
         [destinationDay]:{
           ...routineSchedule[destinationWeek][destinationDay],
-            set_groups: copyOfDestinationDayItems
+            set_groups: copyOfDestinationDaySetGroups
         },
         [sourceDay]:{
           ...routineSchedule[destinationWeek][sourceDay],
-            set_groups: copyOfSourceDayItems
+            set_groups: copyOfSourceDaySetGroups
         }
-          
-        
-        
       }
     })
   } else{
-
+    //To Do: handle the case where a routine order is changed within the same day
   }
 }
 
-/* else{
-  // Move the item to the new index in the array
-  const movedWithinWeekSetGroup = routineSchedule[sourceWeek][sourceDay]
-  const copiedItems = [...movedWithinWeekSetGroup.set_groups]
-  const [removed] = copiedItems.splice(source.index, 1)
-  copiedItems.splice(destination.index, 0, removed)
-  setWeekDays({
-    ...weekDays,
-    [source.droppableId]: {
-      ...column,
-      set_groups: copiedItems
-    }
-  })
-} */
-
-
-
-
-
-
-
-
 }
 
 
-
-
-
-
-
-/* 
-if(source.droppableId !== destination.droppableId){
-  // Move the item from the source to the destination in the proper place in the destination
-  // set_groups array --- dropabableIds are 'U', 'M', 'T', 'W', 'R', 'F'
-  const sourceDay = weekDays[source.droppableId] 
-  const destinationDay = weekDays[destination.droppableId]
-  const sourceItems = [...sourceDay.set_groups]
-  const destinationItems = [...destinationDay.set_groups]
-  let [removed] = sourceItems.splice(source.index, 1)
-
-  removed.day = destination.droppableId
-  destinationItems.splice(destination.index, 0, removed)
-  setRoutineSchedule({
-    ...weekDays,
-    [source.droppableId]: {
-      ...sourceDay,
-      set_groups: sourceItems
-    },
-    [destination.droppableId]: {
-      ...destinationDay,
-      set_groups: destinationItems
-    }
-  })
-  
-  updateSetGroup(removed._id, {day: removed.day})
-  .then(response => {
-    if(!response.success){
-      // if api call fails, take the item back out of the destination and put back in the source
-      alert(`Sorry there was a problem with the server. We couldn't save your changes at this time.\nerror_message: ${response.error_message}`)
-     
-      // ↓↓↓↓↓↓↓ reverse the logic from above reset local state ↓↓↓↓↓↓↓
-      
-      const [removed] = destinationItems.splice(destination.index, 1)
-      removed.day = source.droppableId
-      sourceItems.splice(source.index, 0, removed)
-       setRoutineSchedule({
-        ...weekDays,
-        [source.droppableId]:{
-          ...sourceDay,
-          set_groups: sourceItems
-        },
-        [destination.droppableId]:{
-          ...destinationDay,
-          set_groups: destinationItems
-        }
-      })
-    }
-  })
-  
-} else{
-  // Move the item to the new index in the array
-  const column = weekDays[source.droppableId]
-  const copiedItems = [...column.set_groups]
-  const [removed] = copiedItems.splice(source.index, 1)
-  copiedItems.splice(destination.index, 0, removed)
-  setRoutineSchedule({
-    ...weekDays,
-    [source.droppableId]: {
-      ...column,
-      set_groups: copiedItems
-    }
-  })
-}
-
-
-
-*/
 
 
 

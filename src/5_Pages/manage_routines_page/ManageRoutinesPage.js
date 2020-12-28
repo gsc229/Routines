@@ -26,7 +26,7 @@ export const ManageRoutinesPage = ({
   /* old query ?user=${userId}&populate_one=weeks&populate_two=set_groups&populate_three=exercise_sets&populate_four=exercise */
   useEffect(() => {
     alert('Fetchting all routines')
-    fetchRoutines(`?user=${userId}&populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`)
+    fetchRoutines(`?user=${userId}&populate_weeks=true`)
   }, [])
 
   return (

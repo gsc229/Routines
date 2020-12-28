@@ -1,6 +1,7 @@
-export const routineScheduleConstructor = (routineSetGroups, weeks) => {
+export const routineScheduleConstructor = (set_groups, weeks) => {
   console.log('weeks.length: ', weeks.length)
   console.log("weekConstructor: ",{weeks})
+  console.log("weekContructor: ", {set_groups})
   const dayKey = {
     1: "Su",
     2: "Mo",
@@ -12,7 +13,8 @@ export const routineScheduleConstructor = (routineSetGroups, weeks) => {
   }
 
   let routineSchedule = {}
-  
+
+  if(set_groups){
   
   console.log(Object.entries(weeks))
 
@@ -33,13 +35,15 @@ export const routineScheduleConstructor = (routineSetGroups, weeks) => {
     }
   })
 
-  routineSetGroups.map(set_group => {
+  set_groups.map(set_group => {
     console.log({set_group})
     routineSchedule[set_group.week_number][set_group.day_number].set_groups.push(set_group)
   }) 
 
   console.log({routineSchedule})
 
+  
+}
   return routineSchedule
 }
 

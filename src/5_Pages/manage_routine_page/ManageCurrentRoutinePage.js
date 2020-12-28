@@ -15,16 +15,11 @@ export const ViewRoutinePage = ({
   userId
 }) => {
 
-  const currentRoutineRefreshQuery = `?populate_one=weeks&populate_two=set_groups&populate_three=exercise_sets&populate_four=exercise`
+  const currentRoutineRefreshQuery = `?populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`
   
   const handleRefresh = () => {
     fetchRoutineById(currentRoutine._id, currentRoutineRefreshQuery)
   }
-
-  /* useEffect(() => {
-    alert('Fetching routine by id')
-    fetchRoutineById(currentRoutine._id, currentRoutineRefreshQuery)
-  }, [createNewWeek]) */
 
   const addWeek = async () => {
     const credentials = {
