@@ -52,7 +52,6 @@ export const RoutineWeeksBank = ({
   return (
       <div 
       className='routine-schedule-dnd'>
-      <h6>Weeks go here</h6>
       {!set_groups && <DarkSpinner />}
       {set_groups && 
       <DragDropContext 
@@ -69,21 +68,20 @@ export const RoutineWeeksBank = ({
                 variant='danger'>Delete Week
               </Button>
             </div>
-                <Row
+                <div
                 className='week-container-row'>
                 {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
                   return dayNumber !== "_id" && dayNumber !== "week_number" && (
+           
                     <Droppable 
                     key={`${weekNumber}-${dayNumber}-${routineSchedule[weekNumber]._id}-${name.day_name}`}
                     droppableId={`${weekNumber}-${dayNumber}-${routineSchedule[weekNumber]._id}-${name.day_name}`}>
                     {(provided, snapshot) => {
                       return(
-                        <Col
+                        <Card
                         {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        md='3'                        
-                        className='day-container'>
-                        <Card>
+                        ref={provided.innerRef}                       
+                        className={`day-container-card ${snapshot.isDraggingOver && 'day-container-card-hovering'}`}>
                           <Card.Header>
                             <div
                             className='day-header'>
@@ -106,11 +104,14 @@ export const RoutineWeeksBank = ({
                                 {(provided, snapshot)=>{
                                   return(
                                     <div
+                                    className={`set-group-draggable-container ${snapshot.isDragging && 'set-group-draggable-container-dragging'}`}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     ref={provided.innerRef}
                                     >
-                                      <SetGroupScheduleCard set_group={set_group} />
+                                      <SetGroupScheduleCard 
+                                      set_group={set_group} 
+                                      isDragging={snapshot.isDragging} />
                                       {provided.placeholder}
                                     </div>
                                   )
@@ -120,13 +121,13 @@ export const RoutineWeeksBank = ({
                               })}
                           {provided.placeholder}
                             </Card.Body>
-                        </Card>
-                      </Col>)
+                        
+                      </Card>)
                     }}
                     </Droppable>
                   )
                 })}
-              </Row>
+              </div>
           </Container>
         
         )})}
