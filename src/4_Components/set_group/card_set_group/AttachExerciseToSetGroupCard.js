@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
-import {setCurrentExercise} from '../../1_Actions/exerciseActions'
+import {setCurrentExercise} from '../../../1_Actions/exerciseActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import IFrame from '../iframe/IFrame'
+import IFrame from '../../iframe/IFrame'
 
 export const AttachExerciseToSetGroupCard = ({
   exercise

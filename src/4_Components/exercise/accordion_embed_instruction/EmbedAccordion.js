@@ -3,9 +3,9 @@ import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
-import share from '../../images/share-button.png'
-import embed from '../../images/embed-button.png'
-import copy from '../../images/copy-button.png'
+import share from '../../../images/share-button.png'
+import embed from '../../../images/embed-button.png'
+import copy from '../../../images/copy-button.png'
 
 const EmbedAccordion = () => {
   return (

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
-import ExerciseForm from '../../4_Components/form_exercise/ExerciseForm'
+import ExerciseForm from '../../4_Components/exercise/form_exercise/ExerciseForm'
 
 export const CreateOrEditExercisePage = (props) => {
   return (

@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges} from '../../1_Actions/routineActions'
+import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges} from '../../../1_Actions/routineActions'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import ToolTip from 'react-bootstrap/Tooltip'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import {TiEdit} from 'react-icons/ti'
-import Calendar from '../calendar/Calendar'
-import SaveDiscardExpandBtnGroup from '../buttons/SaveDiscardExpandBtnGroup'
-import CreateRoutineForm from '../routine/form_routine/RoutineInfoForm'
-import DarkSpinner from '../spinners/DarkSpinner'
+import Calendar from '../../calendar/Calendar'
+import SaveDiscardExpandBtnGroup from '../../buttons/SaveDiscardExpandBtnGroup'
+import CreateRoutineForm from '../form_routine/RoutineInfoForm'
+import DarkSpinner from '../../spinners/DarkSpinner'
 
 export const RoutinesAccordion = ({
   userRoutines,

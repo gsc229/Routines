@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {writingSetGroup } from '../../1_Actions/setGroupActions'
+import {writingSetGroup } from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Nav from 'react-bootstrap/Nav'

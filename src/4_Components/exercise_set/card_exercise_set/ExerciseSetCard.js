@@ -1,20 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {setCurrentExercise} from '../../1_Actions/exerciseActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import {Link} from 'react-router-dom'
-import IFrame from '../iframe/IFrame'
+import IFrame from '../../iframe/IFrame'
 
-
-export const ExerciseCard = ({
-  exercise,
-  setCurrentExercise
-}) => {
-
-  const handleEditClick = () => {
-    setCurrentExercise(exercise)
-  }
+export const ExerciseSetCard = ({exercise}) => {
 
   return (
     <Card
@@ -24,7 +14,6 @@ export const ExerciseCard = ({
     style={{ width: '18rem' }}>
       <Card.Header>
         <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
-        <Card.Link onClick={handleEditClick} as={Link} to='/create-exercise'>Edit</Card.Link>
       </Card.Header>
       <Card.Body>
         <Card.Title>
@@ -51,7 +40,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  setCurrentExercise
+  
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExerciseCard)
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseSetCard)

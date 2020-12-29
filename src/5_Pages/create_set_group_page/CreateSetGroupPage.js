@@ -4,8 +4,8 @@ import Container from 'react-bootstrap/Container'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import CreateSetGroup from '../../4_Components/create_set_group/CreateSetGroup'
-import SetGroupChosenExercises from '../../4_Components/create_set_group/SetGroupChosenExercises'
+import CreateSetGroup from '../../4_Components/set_group/create_set_group/CreateSetGroup'
+import SetGroupChosenExercises from '../../4_Components/set_group/create_set_group/SetGroupChosenExercises'
 
 export const CreateOrEditExerciseSet = ({
   exerciseSearchResults

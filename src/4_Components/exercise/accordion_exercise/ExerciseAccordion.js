@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {clearCurrentExercise, setCurrentExercise, saveExerciseChanges} from '../../1_Actions/exerciseActions'
+import {clearCurrentExercise, setCurrentExercise, saveExerciseChanges} from '../../../1_Actions/exerciseActions'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
@@ -8,10 +8,10 @@ import ToolTip from 'react-bootstrap/Tooltip'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Spinner from 'react-bootstrap/Spinner'
 import {TiEdit} from 'react-icons/ti'
-import Calendar from '../calendar/Calendar'
-import SaveDiscardExpandBtnGroup from '../buttons/SaveDiscardExpandBtnGroup'
+import Calendar from '../../calendar/Calendar'
+import SaveDiscardExpandBtnGroup from '../../buttons/SaveDiscardExpandBtnGroup'
 import CreateExerciseForm from '../form_exercise/ExerciseForm'
-import DarkSpinner from '../spinners/DarkSpinner'
+import DarkSpinner from '../../spinners/DarkSpinner'
 
 export const ExercisesAccordion = ({
   userExercises, 

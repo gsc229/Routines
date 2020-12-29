@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import {FaPlus} from 'react-icons/fa'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
-import RoutinesAccordion from '../../4_Components/accordion_routines/RoutinesAccordion'
+import RoutinesAccordion from '../../4_Components/routine/accordion_routines/RoutinesAccordion'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 
 export const ManageRoutinesPage = ({

@@ -1,5 +1,5 @@
 import React from 'react'
-import IFrame from '../iframe/IFrame'
+import IFrame from '../../iframe/IFrame'
 
 const IFramePreview = ({iframeString, height, width, style}) => {
   return (

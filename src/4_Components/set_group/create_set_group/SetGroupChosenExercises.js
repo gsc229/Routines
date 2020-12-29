@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ExerciseSetCard from '../card_exercise_set/ExerciseSetCard'
+import ExerciseSetCard from '../../exercise_set/card_exercise_set/ExerciseSetCard'
 
 export const SetGroupChosenExercises = ({
   chosenExercises

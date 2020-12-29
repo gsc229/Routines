@@ -4,7 +4,7 @@ import {publicExercisesQuery} from '../../1_Actions/exerciseActions'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import SearchExercisesForm from '../../4_Components/form_search_exercises/SearchExercisesForm'
-import ExerciseCard from '../../4_Components/card_exercise/ExerciseCard'
+import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard'
 
 
 export const BrowseExercises = ({
