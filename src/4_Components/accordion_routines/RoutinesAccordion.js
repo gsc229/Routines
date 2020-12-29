@@ -10,7 +10,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import {TiEdit} from 'react-icons/ti'
 import Calendar from '../calendar/Calendar'
 import SaveDiscardExpandBtnGroup from '../buttons/SaveDiscardExpandBtnGroup'
-import CreateRoutineForm from '../form_routine/RoutineInfoForm'
+import CreateRoutineForm from '../routine/form_routine/RoutineInfoForm'
 import DarkSpinner from '../spinners/DarkSpinner'
 
 export const RoutinesAccordion = ({

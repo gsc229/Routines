@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
-import RoutineInfoForm from '../../4_Components/form_routine/RoutineInfoForm'
+import RoutineInfoForm from '../../4_Components/routine/form_routine/RoutineInfoForm'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 
 const CreateRoutine = ({currentIsSaved, crudingRoutine}) => {

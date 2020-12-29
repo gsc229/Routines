@@ -1,27 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {Link} from 'react-router-dom'
-import {setCurrentExercise} from '../../1_Actions/exerciseActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../iframe/IFrame'
 
-export const AttachExerciseToSetGroupCard = ({
-  exercise
-}) => {
-
-  const handleEditClick = () => {
-    setCurrentExercise(exercise)
-  }
+export const ExerciseSetCard = ({exercise}) => {
 
   return (
-    <Card 
+    <Card
+    className="mb-2 exercise-card"
     bg="dark"
     text='white'
-    className='attach-exercise-to-set-card'>
+    style={{ width: '18rem' }}>
       <Card.Header>
         <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
-        <Link className='add-to-set-link'>Add to Set Group</Link>
       </Card.Header>
       <Card.Body>
         <Card.Title>
@@ -51,4 +43,4 @@ const mapDispatchToProps = {
   
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AttachExerciseToSetGroupCard)
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseSetCard)

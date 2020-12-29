@@ -4,6 +4,10 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
 
   const {destination, source} = result
 
+  if(!destination) return
+
+  if(destination.droppableId === source.droppableId && destination.index === source.index) return
+
   const destinationCodes = destination.droppableId.split("-")
   const sourceCodes = source.droppableId.split("-")
   let destinationWeek
@@ -16,10 +20,6 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
   let sourceWeekId
   let sourceDayName
   [sourceWeek, sourceDay, sourceWeekId, sourceDayName] = sourceCodes
-
-  if(!destination) return
-
-  if(destination.droppableId === source.droppableId && destination.index === source.index) return
 
   if(sourceWeek !== destinationWeek){
   const locatedSource = routineSchedule[sourceWeek][sourceDay]

@@ -2,15 +2,10 @@ import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import Container from 'react-bootstrap/Container'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
-import SetGroupForm from '../../4_Components/form_set_group/SetGroupForm'
-import SearchExercisesFrom from '../../4_Components/form_search_exercises/SearchExercisesForm'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import ExerciseForm from '../../4_Components/form_exercise/ExerciseForm'
-import AttachExerciseToSetGroupCard from '../../4_Components/card_set_group/AttachExerciseToSetGroupCard'
-
+import CreateSetGroup from '../../4_Components/create_set_group/CreateSetGroup'
+import SetGroupChosenExercises from '../../4_Components/create_set_group/SetGroupChosenExercises'
 
 export const CreateOrEditExerciseSet = ({
   exerciseSearchResults
@@ -29,25 +24,16 @@ export const CreateOrEditExerciseSet = ({
           <li>Create Actions for Creating Set Group AFTER first excercise is chosen</li>
           <li>Retrun to ManageCurrentRoutinePage</li>
         </ul>
-        <SetGroupForm />
+        <SetGroupChosenExercises />
         <Tabs
           id="controlled-tab-example"
           activeKey={searchMode}
           onSelect={(mode) => setSearchMode(mode)}>
-          <Tab eventKey="exercise" title="Search Exercise">
-            <SearchExercisesFrom />
-            <div className='attach-exercise-to-set-group-search-results'>
-              {exerciseSearchResults.map(exercise=>{ 
-                return(
-                  <AttachExerciseToSetGroupCard exercise={exercise} />
-                )})}
-            </div>
+          <Tab eventKey="exercise" title="Create A New Set Group">
+            <CreateSetGroup />
           </Tab>
-          <Tab eventKey="set" title="My Saved Sets">
+          <Tab eventKey="set" title="Use A Saved Set Group">
             Find a set
-          </Tab>
-          <Tab eventKey="new-exercise" title="Create New Exercise">
-            <ExerciseForm />
           </Tab>
         </Tabs>
 

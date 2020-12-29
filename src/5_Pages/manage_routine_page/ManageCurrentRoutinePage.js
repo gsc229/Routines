@@ -4,7 +4,7 @@ import {fetchRoutineById, fetchRoutines} from '../../1_Actions/routineActions'
 import {createNewWeek} from '../../1_Actions/weekActions'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
-import RoutineWeeksBank from '../../4_Components/dnd_routine_schedule/RoutineScheduleDnd'
+import RoutineScheduleDnd from '../../4_Components/dnd_routine_schedule/RoutineScheduleDnd'
 import Button from 'react-bootstrap/Button'
 import {FiRefreshCcw} from 'react-icons/fi'
 
@@ -49,7 +49,7 @@ export const ViewRoutinePage = ({
       return (
         <div>
           <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
-          <RoutineWeeksBank />
+          <RoutineScheduleDnd />
         </div>
       )
     } 

@@ -3,7 +3,7 @@
   .set-group-draggable-container-dragging{
     .set-group-schedule-card{
       //background-color: rgb(124, 122, 122);
-      background-color: $routine-red;
+      background-color: $russian-green;
       color: whitesmoke;
     }
   }
@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: $routine-red;
+    background-color: $russian-green;
     padding: 10px;
     color: white;
     border-radius: 4px;
@@ -51,7 +51,7 @@
       }
 
       .card-header{
-        background-color: $spanish-gray;
+        background-color: $bs-dark;
         color: whitesmoke;
         a{
           color: whitesmoke;
@@ -66,15 +66,16 @@
 
     }
     .day-container-card-hovering{
-      //background-color: $routine-red;
-      background-color: $bs-dark;
+      background-color: $routine-red;
+      //background-color: $spanish-gray;
       .card-header{
-        background-color: $bs-dark;
-        color: whitesmoke;
+        background-color: $russian-green;
+        color: white;
+        font-weight: bolder;
         
       }
       .card-body{
-        background-color: $spanish-gray;
+        background-color: whitesmoke;
       }
     }
   }

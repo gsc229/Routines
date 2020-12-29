@@ -1,15 +1,28 @@
 import * as constants from './index'
-import { getSetGroupById, getSetGroups } from '../3_APIs/setGroupApi'
+import { getSetGroupById, getSetGroups, updateSetGroup } from '../3_APIs/setGroupApi'
 const generalErrorMessage = "Something went wrong with the request."
 
-export const setCurrentSetGroup = (setGroup) => dispatcch => {
-  dispatcch({type: constants.SET_CURRENT_SET_GROUP, payload: setGroup})
+export const setCurrentSetGroup = (setGroup) => dispatch => {
+  dispatch({type: constants.SET_CURRENT_SET_GROUP, payload: setGroup})
 }
 
-export const writingSetGroup = (field, data) => dispatch => {
-  dispatch({type: constants.WRITING_SET_GROUP, payload: {field, data}})
+export const writingSetGroup = (key, value) => dispatch => {
+  dispatch({type: constants.WRITING_SET_GROUP, payload: {key, value}})
 }
 
+export const lockInType = (setGroupType) => dispatch => {
+  dispatch({type: constants.LOCK_IN_TYPE, payload: setGroupType})
+}
+
+export const addDisplayExercise= (exercise) => dispatch => {
+  dispatch({type: constants.ADD_DISPLAY_EXERCISE, payload: exercise})
+}
+
+export const removeDisplayExercise = (exerciseId) => dispatch => {
+ dispatch({type: constants.REMOVE_DISPLAY_EXERCISE, payload: exerciseId})
+}
+
+// Async
 export const fetchSetGroups = (query) => dispatch => {
   dispatch({type: constants.FETCHING_SET_GROUPS})
   return getSetGroups(query)
@@ -30,7 +43,7 @@ export const fetchSetGroups = (query) => dispatch => {
 
 export const fetchSetGroupById = ( setGroupId, query) => dispatch => {
   dispatch({type: constants.FETCHING_SET_GROUP})
-  return getSetGroupById(setGroupId, qu)
+  return getSetGroupById(setGroupId, query)
   .then(res => {
     if(res.success){
       dispatch({type: constants.FETCH_SET_GROUP_SUCCESS, payload: res.data})
@@ -48,7 +61,7 @@ export const fetchSetGroupById = ( setGroupId, query) => dispatch => {
 
 export const saveSetGroupChanges = (setGroupId, updates) => dispatch => {
   dispatch({type: constants.UPDATING_SET_GROUP})
-  return updateSetGroup(routineId, updates)
+  return updateSetGroup(setGroupId, updates)
   .then(response => {
     if(response.success){
      dispatch({type: constants.UPDATE_SET_GROUP_SUCCESS, payload: response.data})

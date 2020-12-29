@@ -61,7 +61,7 @@ export const RoutineWeeksBank = ({
           className='week-container'>
             <div
             className='week-container-header'>
-              <h6>Week: {weekNumber}</h6>
+              <h6>{currentRoutine.name} - Week: {weekNumber}</h6>
               <Button 
                 onClick={() => destroyWeek(routineSchedule[weekNumber])}
                 variant='danger'>Delete Week

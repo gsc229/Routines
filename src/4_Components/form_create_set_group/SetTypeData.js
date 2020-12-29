@@ -1,5 +1,6 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container'
+import Form from 'react-bootstrap/Form'
 
 const SetTypeData = ({type}) => {
 
@@ -7,7 +8,7 @@ const SetTypeData = ({type}) => {
   const typeDetail = {
     "Straight": "Straight seta (or sets system) means doing exercises in the old fashion way, performing all sets of each exercise one after another with rest in between. This system is used to apply maximum adaptive response for the trained muscles.",
     "Super": "In super sets you perform exercise set immediately after another exercise set, with no rest in between, only that required for taking the position of the second exercise. Super sets allow you to perform more work in less time, they are especially useful if you have short time to spend in training, plus they can be used as a mean to increase training intensity due to less rest time.",
-    "Super - Antagonist": " in this you alternate opposing (antagonist) muscle group exercises (such as leg curls and leg extension, or biceps curl and triceps extension for example)", 
+    "Super - Antagonist": "In this set type, you alternate opposing (antagonist) muscle group exercises (such as leg curls and leg extension, or biceps curl and triceps extension for example)", 
     "Super - Compound": "In this type of set you alternate between two exercises for the same muscle group (such as seated dips and triceps extension)", 
     "Super - Tri": "Using this type of sets, you do three exercises for the same muscle group with little rest in between.", 
     "Super - Giant": "If you perform 4 or more exercises of one muscle group this is called giant set.", 
@@ -24,6 +25,10 @@ const SetTypeData = ({type}) => {
   return (
     <Container>
       {typeDetail[type]}
+      <Form.Group controlId="formBasicCheckbox">
+        <Form.Check
+        type="checkbox" label="Use this type" />
+      </Form.Group>
     </Container>
   )
 }
