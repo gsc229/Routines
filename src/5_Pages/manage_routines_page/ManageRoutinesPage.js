@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react'
-import { connect } from 'react-redux'
-import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges, fetchRoutines} from '../../1_Actions/routineActions'
+import React, { useEffect } from 'react'
+import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
-import {FaPlus} from 'react-icons/fa'
-import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
+import { FaPlus } from 'react-icons/fa'
+import { connect } from 'react-redux'
+import { clearCurrentRoutine, fetchRoutines } from '../../1_Actions/routineActions'
 import RoutinesAccordion from '../../4_Components/routine/accordion_routines/RoutinesAccordion'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
+import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 
 export const ManageRoutinesPage = ({
   history, 

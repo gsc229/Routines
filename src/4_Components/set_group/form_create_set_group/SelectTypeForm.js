@@ -1,13 +1,13 @@
-import React, {useState} from 'react'
-import { connect } from 'react-redux'
-import {writingSetGroup } from '../../../1_Actions/setGroupActions'
+import React from 'react'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
-import SetTypeData from './SetTypeData';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
 import Tooltip from 'react-bootstrap/Tooltip'
+import { connect } from 'react-redux'
+import { writingSetGroup } from '../../../1_Actions/setGroupActions'
+import SetTypeData from './SetTypeData'
 
 export const SetGroupForm = ({
   currentSetGroup,

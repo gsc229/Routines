@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {getExSetTarget} from './setGroupHelpers'
 import Card from 'react-bootstrap/Card'
 import {BsGrid3X3Gap} from 'react-icons/bs'
 import {IoDuplicateOutline} from 'react-icons/io5'
@@ -12,21 +11,12 @@ export const SetGroup = ({set_group, isDragging}) => {
 
   return (
     <Card
-    bg={!isDragging &&  'primary'}
     text={!isDragging && 'white'}
     style={{margin: '5px auto', cursor: 'grab'}}
-    className={`set-group-schedule-card`}>
-    <div 
-    style={{
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'space-between',  
-      width: '95%', 
-      margin: 'auto',
-      }}>
-      <p style={{position: 'relative', top: '7px' }} >{set_group.name ? set_group.name : 'no name'} --- TO DO: Add the number of sets</p>
-
-      <div>
+    className="set-group-schedule-card">
+      <Card.Header
+      className='set-group-schedule-card-header'>
+        <div className='set-group-schedule-card-btns-container'>
         <OverlayTrigger overlay={<ToolTip>View full details</ToolTip>}>
           <BsEye
           onClick={() => alert(JSON.stringify(set_group, null, 2))} 
@@ -42,9 +32,12 @@ export const SetGroup = ({set_group, isDragging}) => {
   
         <BsGrid3X3Gap />
       </div>
-    </div>
-
-      
+      </Card.Header>
+      <Card.Body
+        className='set-group-schedule-card-body'
+      >
+        <Card.Subtitle>{set_group.name ? set_group.name : 'no name'}</Card.Subtitle>
+      </Card.Body>
     </Card>
   )
 }

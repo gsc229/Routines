@@ -59,10 +59,11 @@ export const ViewRoutinePage = ({
   return (
     <Layout>
       <Container className='view-routine-container'>
-        <h5>Managing Routine: {currentRoutine.name || 'id' + currentRoutine._id}</h5>
+        <h2>Managing Routine: {currentRoutine.name || 'id' + currentRoutine._id}</h2>
         {showWeeks()}
         {noWeeksMessage()}
-        <Button 
+        <Button
+        className='add-week-btn' 
         onClick={addWeek}
         variant='primary'>Add Week</Button>
       </Container>

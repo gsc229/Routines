@@ -1,18 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
-import AttachExerciseToSetGroupCard from '../card_set_group/AttachExerciseToSetGroupCard'
+import { writingCreateSetGroupData } from '../../../1_Actions/setGroupActions'
 import SearchExercisesForm from '../../exercise/form_search_exercises/SearchExercisesForm'
-import {FiArrowLeft} from 'react-icons/fi'
-import Button from 'react-bootstrap/Button'
 import DarkSpinner from '../../spinners/DarkSpinner'
-import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../form_create_set_group/shared_btns_and_inputs/SetGroupBtnsAndInputs'
+import AttachExerciseToSetGroupCard from '../card_set_group/AttachExerciseToSetGroupCard'
+import { ConnectedPreviousStepButton } from '../form_create_set_group/shared_btns_and_inputs/SetGroupBtnsAndInputs'
 
 
 export const SetGroupSearchExercise = ({
   exerciseSearchResults,
   writingCreateSetGroupData,
-  crudingExercise
+  crudingExercise,
+  currentSetGroup
 }) => {
 
   return (
@@ -42,7 +41,8 @@ export const SetGroupSearchExercise = ({
 
 const mapStateToProps = (state) => ({
   exerciseSearchResults: state.exerciseReducer.exerciseSearchResults,
-  crudingExercise: state.exerciseReducer.crudingExercise
+  crudingExercise: state.exerciseReducer.crudingExercise,
+  currentSetGroup: state.setGroupReducer.currentSetGroup
 })
 
 const mapDispatchToProps = {

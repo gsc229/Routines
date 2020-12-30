@@ -5,7 +5,7 @@ import {destroyWeek, setCurrentWeek} from '../../1_Actions/weekActions'
 import {routineScheduleConstructor} from './routineScheduleConstructor'
 import {onSetGroupDragEnd} from './scheduleHelpers'
 import {Link} from 'react-router-dom'
-import SetGroupScheduleCard from '../set_group/card_set_group/SetGroupScheduleCard'
+import SetGroupScheduleCard from './SetGroupScheduleCard'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
 import Container from 'react-bootstrap/Container'
@@ -61,7 +61,7 @@ export const RoutineWeeksBank = ({
           className='week-container'>
             <div
             className='week-container-header'>
-              <h6>{currentRoutine.name} - Week: {weekNumber}</h6>
+              <h5>{currentRoutine.name} - Week: {weekNumber}</h5>
               <Button 
                 onClick={() => destroyWeek(routineSchedule[weekNumber])}
                 variant='danger'>Delete Week

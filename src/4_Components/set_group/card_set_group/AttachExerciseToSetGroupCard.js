@@ -6,6 +6,7 @@ import {addChosenExercise, removeChosenExercise} from '../../../1_Actions/setGro
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
+import AddRemoveButtons from '../set_group_search_exercise/AddRemoveBtnConfigs'
 
 export const AttachExerciseToSetGroupCard = ({
   exercise,
@@ -49,8 +50,7 @@ export const AttachExerciseToSetGroupCard = ({
         <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
       </Card.Header>
       <Card.Body>
-        {removeButton()}
-        {addButton()}
+        <AddRemoveButtons exercise={exercise} />
         <Card.Title>
           <Card.Text>{exercise.name}</Card.Text>
         </Card.Title>

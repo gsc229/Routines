@@ -1,6 +1,6 @@
 import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
-import SetGroup   from './SetGroupScheduleCard'
+import SetGroupScheduleCard   from './SetGroupScheduleCard'
 
 // styles
 const draggableSetGroupStyles = (snapshot, providedDraggablePropsStyle) => {
@@ -38,7 +38,7 @@ const DraggableSetGroup = ({set_group, index, width}) => {
           {...provided.dragHandleProps}
           style={draggableSetGroupStyles(snapshot, provided.draggableProps.style)}
           > 
-            <SetGroup set_group={set_group} width={width} />
+            <SetGroupScheduleCard set_group={set_group} width={width} />
           </div>
         )
       }}
