@@ -17,13 +17,6 @@ export const CreateOrEditExerciseSet = ({
     <Layout>
       <Container>
         <h1>Create Or Edit Set Group Page</h1>
-        <ul>
-          TO DO:
-          <li>Deterine if the Set Group already has a set group id...if not</li>
-          <li>Initiate Set Group in State with routine, week, user ids and week_number and day_number</li>
-          <li>Create Actions for Creating Set Group AFTER first excercise is chosen</li>
-          <li>Retrun to ManageCurrentRoutinePage</li>
-        </ul>
         <SetGroupChosenExercises />
         <Tabs
           id="controlled-tab-example"

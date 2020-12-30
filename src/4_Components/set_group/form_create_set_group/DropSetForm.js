@@ -13,6 +13,7 @@ import {
   ConnectedTotalSetsInput,
   ConnectedNextStepButton
 } from './shared_btns_and_inputs/SetGroupBtnsAndInputs'
+import Container  from 'react-bootstrap/Container'
 
 
 
@@ -35,13 +36,13 @@ export const DropSetForm = ({
 
 
   return (
-   <Form className='drop-set-form'>
+   <Container className='drop-set-form'>
      <Row>
 
        <Col sm='12' className='input-column'><h6>Step 1: Details</h6></Col>
 
        <Col sm='12' className='input-column'>
-        <Link>Rep Max Calculator</Link>
+        <Link to='#'>Rep Max Calculator</Link>
         
        </Col>
 
@@ -82,12 +83,14 @@ export const DropSetForm = ({
         <ConnectedNextStepButton
          disabled={!allowAddExercixe}
          text={'Proceed to add exercise'}
+         writeDataKey='currentStep'
+         writeDataValue='choose-exercise'
          />
        </Col>
      </Row>
 
     
-   </Form>
+   </Container>
   )
 }
 

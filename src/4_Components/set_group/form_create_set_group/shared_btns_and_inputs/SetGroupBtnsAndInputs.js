@@ -102,12 +102,14 @@ const NextStepButton = ({
   disabled,
   text,
   writingCreateSetGroupData,
+  writeDataKey,
+  writeDataValue
 }) => {
 
   return (
     <Button
       className={`step-btn next-step-btn ${disabled && 'disabled-next-step-btn'}`}
-      onClick={() => writingCreateSetGroupData('currentStep', 'choose-exercise')} 
+      onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
       disabled={disabled}>
         {text} &nbsp;
         <FiArrowRight style={{color:'white'}} className='next-link' />
@@ -119,12 +121,14 @@ const PreviousStepButton = ({
   disabled,
   text,
   writingCreateSetGroupData,
+  writeDataKey,
+  writeDataValue
 }) => {
 
   return (
     <Button
       className={`step-btn previous-step-btn ${disabled && 'disabled-previous-step-btn'}`}
-      onClick={() => writingCreateSetGroupData('currentStep', 'choose-exercise')} 
+      onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
       disabled={disabled}>
         <FiArrowLeft style={{color:'white'}} className='previous-link' />
         &nbsp;   

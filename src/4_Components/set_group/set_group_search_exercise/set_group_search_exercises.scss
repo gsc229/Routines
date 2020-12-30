@@ -5,13 +5,17 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    width: 95%;
+    width: fit-content;
+    max-width: 95%;
     margin: auto;
     background-color: whitesmoke;
     padding: 20px;
     border-radius: 4px;
     h5{
       margin-bottom: 20px;
+    }
+    .attach-exercise-to-set-card{
+      margin: 5px;
     }
   }
 

@@ -3,13 +3,11 @@ import { connect } from 'react-redux'
 import {writingSetGroup } from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
-import Nav from 'react-bootstrap/Nav'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import SetTypeData from './SetTypeData';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import {GrLinkNext} from 'react-icons/gr'
 
 export const SetGroupForm = ({
   currentSetGroup,
@@ -36,6 +34,7 @@ export const SetGroupForm = ({
           </InputGroup>
       </Form.Group>
       <Form.Group>
+      <h6>Quick Build: </h6>
       <Tabs
       variant= 'pills'
       onSelect={(type) => writingSetGroup('set_group_type',type)}

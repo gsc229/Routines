@@ -3,6 +3,7 @@ import * as constants from '../1_Actions'
 
 
  const setGroupTypes = [
+  "Manual",
   "Straight",
   "Super",
   "Super - Antagonist", 
@@ -82,15 +83,15 @@ const reducer = (state=initialState, action) => {
       currentSetGroup: action.payload
     }
 
-  case constants.ADD_DISPLAY_EXERCISE:
+  case constants.ADD_TO_CHOSEN_EXERCISES:
     return{
       ...state,
-      displayExercises: [...state.displayExercises, action.payload]
+      chosenExercises: [...state.chosenExercises, action.payload]
     }
-  case constants.REMOVE_DISPLAY_EXERCISE:
+  case constants.REMOVE_FROM_CHOSEN_EXERCISES:
     return{
       ...state,
-      displayExercises: [...state.displayExercises.filter(exercise => exercise._id !== action.payload)]
+      chosenExercises: [...state.chosenExercises.filter(exercise => exercise._id !== action.payload)]
     }
   case constants.LOG_OUT:
     return initialState

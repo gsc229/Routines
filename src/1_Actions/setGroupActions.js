@@ -18,12 +18,12 @@ export const lockInType = (setGroupType) => dispatch => {
   dispatch({type: constants.LOCK_IN_TYPE, payload: setGroupType})
 }
 
-export const addDisplayExercise= (exercise) => dispatch => {
-  dispatch({type: constants.ADD_DISPLAY_EXERCISE, payload: exercise})
+export const addChosenExercise = (exercise) => dispatch => {
+  dispatch({type: constants.ADD_TO_CHOSEN_EXERCISES, payload: exercise})
 }
 
-export const removeDisplayExercise = (exerciseId) => dispatch => {
- dispatch({type: constants.REMOVE_DISPLAY_EXERCISE, payload: exerciseId})
+export const removeChosenExercise = (exerciseId) => dispatch => {
+ dispatch({type: constants.REMOVE_FROM_CHOSEN_EXERCISES, payload: exerciseId})
 }
 
 // Async

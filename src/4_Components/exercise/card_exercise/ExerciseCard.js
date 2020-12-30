@@ -34,7 +34,7 @@ export const ExerciseCard = ({
           <span className={`${exercise.category}-color`}>{exercise.category}</span>
         </Card.Subtitle>
         {exercise.description && <Card.Text><span>Description:</span> {exercise.description}</Card.Text>}
-        {exercise.equipment && <Card.Text><spand>Equipment: </spand>{exercise.equipment}</Card.Text>}
+        {exercise.equipment && <Card.Text><span>Equipment: </span>{exercise.equipment}</Card.Text>}
         {exercise.target_muscle && <Card.Text><span>Target Muscle: </span>{exercise.target_muscle}</Card.Text>}
         <Card.Subtitle className="card-difficulty">
           Difficulty: {exercise.difficulty_scale}
