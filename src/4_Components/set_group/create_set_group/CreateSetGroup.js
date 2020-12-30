@@ -1,29 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ExerciseForm from '../../exercise/form_exercise/ExerciseForm'
 import SelectTypeForm from '../form_create_set_group/SelectTypeForm'
-import SearchExercisesFrom from '../../form_search_exercises/SearchExercisesForm'
-import AttachExerciseToSetGroupCard from '../card_set_group/AttachExerciseToSetGroupCard'
+import SetGroupSearchExercise from '../set_group_search_exercise/SetGroupSearchExercise'
 
 export const CreateSetGroup = ({
-  exerciseSearchResults
+  currentStep
 }) => {
   return (
     <div>
-      <SelectTypeForm />
-      <SearchExercisesFrom />
-      <div className='attach-exercise-to-set-group-search-results'>
-        {exerciseSearchResults.map(exercise=>{ 
-          return(
-            <AttachExerciseToSetGroupCard exercise={exercise} />
-          )})}
-      </div>
+      {currentStep === 'choose-type' && <SelectTypeForm />}
+      {currentStep === 'choose-exercise' && <SetGroupSearchExercise />}
     </div>
   )
 }
 
 const mapStateToProps = (state) => ({
-  exerciseSearchResults: state.exerciseReducer.exerciseSearchResults
+  currentStep: state.setGroupReducer.createSetGroupData.currentStep
 })
 
 const mapDispatchToProps = {

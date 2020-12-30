@@ -1,0 +1,19 @@
+.set-group-exercise-search{
+  background-color: $bs-dark;
+  padding: 10px;
+  .set-group-exercise-search-results{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 95%;
+    margin: auto;
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 4px;
+    h5{
+      margin-bottom: 20px;
+    }
+  }
+
+}
+

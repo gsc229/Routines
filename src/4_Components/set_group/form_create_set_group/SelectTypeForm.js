@@ -9,7 +9,8 @@ import Tab from 'react-bootstrap/Tab'
 import SetTypeData from './SetTypeData';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import FormCheckInput from 'react-bootstrap/FormCheckInput'
+import {GrLinkNext} from 'react-icons/gr'
+
 export const SetGroupForm = ({
   currentSetGroup,
   setGroupTypes,
@@ -36,7 +37,7 @@ export const SetGroupForm = ({
       </Form.Group>
       <Form.Group>
       <Tabs
-      variant="pills" 
+      variant= 'pills'
       onSelect={(type) => writingSetGroup('set_group_type',type)}
       activeKey={set_group_type}>
         {setGroupTypes.map(type=>

@@ -21,9 +21,16 @@ import * as constants from '../1_Actions'
 const initialState = {
   set_group_types: setGroupTypes,
   chosenExercises: [],
-  currentStep: "choose-type",
   mulipleExercises: false,
   lockedInType: "",
+  createSetGroupData: {
+    currentStep: "choose-type",
+    rep_max: "",
+    weight: "",
+    percent_decrease: "",
+    total_sets: "",
+    rest_time: 0
+  },
   currentSetGroup: {
     routine: null, //required
     week: null, //required
@@ -45,7 +52,7 @@ const initialState = {
 const reducer = (state=initialState, action) => {
   switch(action.type){
 
-  case  constants.WRITING_SET_GROUP: 
+  case  constants.WRITING_CURRENT_SET_GROUP: 
     return{
       ...state,
       currentSetGroup:{
@@ -53,6 +60,15 @@ const reducer = (state=initialState, action) => {
         [action.payload.key]: action.payload.value
       }
       
+    }
+
+  case constants.WRITING_CREATE_SET_GROUP_DATA:
+    return {
+      ...state,
+      createSetGroupData: {
+        ...state.createSetGroupData,
+        [action.payload.key]: action.payload.value
+      }
     }
   case constants.LOCK_IN_TYPE: 
     return{

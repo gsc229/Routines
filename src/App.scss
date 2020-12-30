@@ -32,6 +32,11 @@
 // Exercise Form 
 @import './4_Components/iframe/iframe.scss';
 
+// Set Group
+@import './4_Components/set_group/form_create_set_group/set_group_forms.scss';
+@import './4_Components/set_group/set_group_search_exercise/set_group_search_exercises.scss';
+@import './4_Components/set_group/card_set_group/attach_exercise_to_sg_card.scss';
+
 // Week 
 @import './4_Components/week/week_template.scss';
 

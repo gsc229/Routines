@@ -1,0 +1,16 @@
+.drop-set-form{
+  .row{
+    //border: 1px solid yellow;
+    .input-column{
+      //border: 1px solid pink;
+      padding-left: 0 !important;
+      margin-bottom: 10px;
+    }
+
+    .disabled-allow-exercise-btn{
+      background-color: whitesmoke;
+      border: whitesmoke;
+      color: rgba(155,157,160, .4);
+    }
+  }
+}

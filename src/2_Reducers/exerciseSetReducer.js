@@ -17,15 +17,15 @@ const initialState = {
     scheduled_time: null,
     completed_time: null,
     target_reps: null,
-    target_weight_kg: null,
+    target_weight: null,
     rest_time: null,
     target_time: null,
-    target_distance_km: null,
+    target_distance: null,
     target_laps: null,
     actual_reps: null,
-    actual_weight_kg: null,
+    actual_weight: null,
     actual_time: null,
-    actual_distance_km: null,
+    actual_distance: null,
     actual_laps: null
   }
 }

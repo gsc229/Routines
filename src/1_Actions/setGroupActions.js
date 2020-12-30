@@ -7,7 +7,11 @@ export const setCurrentSetGroup = (setGroup) => dispatch => {
 }
 
 export const writingSetGroup = (key, value) => dispatch => {
-  dispatch({type: constants.WRITING_SET_GROUP, payload: {key, value}})
+  dispatch({type: constants.WRITING_CURRENT_SET_GROUP, payload: {key, value}})
+}
+
+export const writingCreateSetGroupData = (key, value) => dispatch => {
+  dispatch({type: constants.WRITING_CREATE_SET_GROUP_DATA, payload: {key, value}})
 }
 
 export const lockInType = (setGroupType) => dispatch => {
