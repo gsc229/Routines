@@ -7,7 +7,13 @@
       margin-bottom: 10px;
     }
 
-    .disabled-allow-exercise-btn{
+    .disabled-next-step-btn{
+      background-color: whitesmoke;
+      border: whitesmoke;
+      color: rgba(155,157,160, .4);
+    }
+
+    .disabled-previous-step-btn{
       background-color: whitesmoke;
       border: whitesmoke;
       color: rgba(155,157,160, .4);
