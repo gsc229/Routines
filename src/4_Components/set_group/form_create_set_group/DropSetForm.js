@@ -8,11 +8,12 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import {
   ConnectedRepMaxInput, 
-  ConnectedRestSecondsInput, 
+  ConnectedRestSecondsInput,
+  ConnectedRepsPerSetInput,
   ConnectedWeightInput, 
   ConnectedTotalSetsInput,
   ConnectedNextStepButton
-} from './shared_btns_and_inputs/SetGroupBtnsAndInputs'
+} from './SetGroupBtnsAndInputs'
 import Container  from 'react-bootstrap/Container'
 
 
@@ -28,10 +29,10 @@ export const DropSetForm = ({
 
   const {rep_max, weight, percent_decrease, total_sets} = createSetGroupData
 
-  const [allowAddExercixe, setAllowedExercise] = useState(rep_max !== "" && percent_decrease !== "" && total_sets !=="" && weight !== "")
+  const [allowAddExercixe, setAllowedExercise] = useState(rep_max !== "" && total_sets !=="" && weight !== "")
 
   useEffect(()=>{
-    setAllowedExercise(rep_max !== "" && percent_decrease !== "" && total_sets !=="" && weight !== "")
+    setAllowedExercise(rep_max !== "" && total_sets !=="" && weight !== "")
   },[createSetGroupData])
 
 
@@ -47,11 +48,11 @@ export const DropSetForm = ({
        </Col>
 
        <Col className='input-column' lg='4' sm='12'>
-         <ConnectedRepMaxInput />
+         <ConnectedRepMaxInput required={true} placeholder='required' />
        </Col>
 
        <Col className='input-column' lg='3' sm='12'>
-        <ConnectedWeightInput />
+        <ConnectedWeightInput required={true}  placeholder='required' />
        </Col>
 
        <Col className='input-column' lg='4' sm='12'>
@@ -60,8 +61,10 @@ export const DropSetForm = ({
             <InputGroup.Text>Drop</InputGroup.Text>
           </InputGroup.Prepend>
           <Form.Control 
-          onChange={handleChange} 
+          onChange={handleChange}
+          defaultValue={10}
           value={percent_decrease} 
+          placeholder='10% default'
           name='percent_decrease' 
           max={99}
           min={1} type='number' />
@@ -72,11 +75,15 @@ export const DropSetForm = ({
        </Col>
 
        <Col className='input-column' lg='3' sm='12'>
-         <ConnectedTotalSetsInput />
+         <ConnectedTotalSetsInput required={true}  placeholder='required' />
        </Col>
 
        <Col className='input-column' lg='3' sm='12'>
-         <ConnectedRestSecondsInput />
+         <ConnectedRepsPerSetInput placeholder='optional' />
+       </Col>
+
+       <Col className='input-column' lg='3' sm='12'>
+         <ConnectedRestSecondsInput placeholder='optional' />
        </Col>
 
        <Col className='input-column'  sm='12'>

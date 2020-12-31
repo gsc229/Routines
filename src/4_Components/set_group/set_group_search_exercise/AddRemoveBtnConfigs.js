@@ -1,15 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {addChosenExercise, removeChosenExercise} from '../../../1_Actions/setGroupActions'
-import {Link} from 'react-router-dom'
+import {addChosenExercise, removeChosenExercise, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {FaRegHandPointRight} from 'react-icons/fa'
+import Button from 'react-bootstrap/Button'
 
 export const AddRemoveBtnConfigs = ({
   chosenExercises,
-  createSetGroupData,
   currentSetGroup,
   exercise,
   addChosenExercise, 
-  removeChosenExercise
+  removeChosenExercise,
+  writingCreateSetGroupData
 }) => {
 
   const {set_group_type} = currentSetGroup
@@ -40,33 +41,54 @@ export const AddRemoveBtnConfigs = ({
     }
   }
 
+  const showPreviewSetGroiupBtn = {
+    "Drop": function(){
+      return chosenExercises.find(inChosen => inChosen._id === exercise._id)
+    }
+  }
+
 
   const removeButton = () => {
     return showRemoveButton[set_group_type]() && 
     <div className='card-link-container'>
-      <Link
+      <Button
       to='#'
       onClick={() => handleRemoveClick[set_group_type]()}
       className='card-link remove-from-set-link'
-      >Remove from {set_group_type} Set</Link>
+      >Remove from {set_group_type} Set</Button>
     </div>
   }
 
   const addButton = () => {
     return showAddButton[set_group_type]() && 
     <div className='card-link-container'>
-      <Link
-      to='#'
+      <Button
+      variant='success'
       onClick={() => handleAddClick[set_group_type]()}
-      className='card-link add-to-set-link'>Use in this {set_group_type} Set</Link>
+      className='card-link add-to-set-link'>Use in {set_group_type} Set</Button>
     </div>
   }
+
+  const previewSetGroiupBtn = () => {
+    return showPreviewSetGroiupBtn[set_group_type]() &&
+    <div className='card-link-container'>
+      <Button
+      variant='success'
+      to='#'
+      onClick={() => writingCreateSetGroupData('currentStep', 'preview-set-group')}
+      className='card-link preview-set-link'>
+        Preview Set Group&nbsp;
+        <FaRegHandPointRight />
+      </Button>
+    </div>
+  } 
 
 
   return (
     <div>
       {removeButton()}
       {addButton()}
+      {previewSetGroiupBtn()}
     </div>
   )
 }
@@ -79,7 +101,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   addChosenExercise,
-  removeChosenExercise
+  removeChosenExercise,
+  writingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddRemoveBtnConfigs)

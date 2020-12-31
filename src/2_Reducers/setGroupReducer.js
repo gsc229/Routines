@@ -30,7 +30,8 @@ const initialState = {
     weight: "",
     percent_decrease: "",
     total_sets: "",
-    rest_time: 0
+    reps_per_set: "",
+    rest_time: ""
   },
   currentSetGroup: {
     routine: null, //required

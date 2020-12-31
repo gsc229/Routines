@@ -4,14 +4,14 @@ import { writingCreateSetGroupData } from '../../../1_Actions/setGroupActions'
 import SearchExercisesForm from '../../exercise/form_search_exercises/SearchExercisesForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
 import AttachExerciseToSetGroupCard from '../card_set_group/AttachExerciseToSetGroupCard'
-import { ConnectedPreviousStepButton } from '../form_create_set_group/shared_btns_and_inputs/SetGroupBtnsAndInputs'
+import ChosenExercisesBank from './ChosenExercisesBank'
+import { ConnectedPreviousStepButton } from '../form_create_set_group/SetGroupBtnsAndInputs'
 
 
 export const SetGroupSearchExercise = ({
   exerciseSearchResults,
-  writingCreateSetGroupData,
   crudingExercise,
-  currentSetGroup
+  chosenExercises
 }) => {
 
   return (
@@ -20,9 +20,9 @@ export const SetGroupSearchExercise = ({
         text='Back to set group type'
         writeDataKey='currentStep'
         writeDataValue='choose-type'/>
-
       <SearchExercisesForm/>
-
+      {chosenExercises.length > 0 &&
+       <ChosenExercisesBank />}
       {crudingExercise === 'fetching' &&
       <DarkSpinner />}
 
@@ -42,7 +42,8 @@ export const SetGroupSearchExercise = ({
 const mapStateToProps = (state) => ({
   exerciseSearchResults: state.exerciseReducer.exerciseSearchResults,
   crudingExercise: state.exerciseReducer.crudingExercise,
-  currentSetGroup: state.setGroupReducer.currentSetGroup
+  currentSetGroup: state.setGroupReducer.currentSetGroup,
+  chosenExercises: state.setGroupReducer.chosenExercises
 })
 
 const mapDispatchToProps = {
