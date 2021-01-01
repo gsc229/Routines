@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import DropDown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import {FiArrowRight, FiArrowLeft} from 'react-icons/fi'
 
@@ -41,21 +42,21 @@ const WeightInput = ({
   createSetGroupData,
   writingCreateSetGroupData
 }) => {
-  const {weight} = createSetGroupData
+  const {starting_weight} = createSetGroupData
 
   return (
     <InputGroup>
       <InputGroup.Prepend>
         <InputGroup.Text>
-          @
+          Weight
         </InputGroup.Text>
       </InputGroup.Prepend>
         <Form.Control
         placeholder={placeholder}
-        className={`${required ? !weight ? 'requirement-not-met' : 'requirment-met' : ""}`} 
+        className={`${required ? !starting_weight ? 'requirement-not-met' : 'requirment-met' : ""}`} 
         onChange={(e) => writingCreateSetGroupData(e.target.name, e.target.value)} 
-        value={weight} 
-        name='weight' 
+        value={starting_weight} 
+        name='starting_weight' 
         type='number'
         min={1}/>
       <InputGroup.Append>
@@ -77,7 +78,7 @@ const RepsPerSetInput = ({
     <InputGroup>
       <InputGroup.Prepend>
         <InputGroup.Text>
-          Reps
+          Reps/set
         </InputGroup.Text>
       </InputGroup.Prepend>
         <Form.Control

@@ -51,6 +51,10 @@ export const clearCurrentExercise = () => dispatch => {
   dispatch({type: constants.CLEAR_CURRENT_EXERCISE})
 }
 
+export const clearExerciseSearchResults = () => dispatch => {
+  dispatch({type: constants.CLEAR_EXERCISE_SEARCH_RESULTS})
+}
+
 export const createNewExercise = (newExercise) => dispatch => {
   console.log("exerciseActoins create new", {newExercise})
   dispatch({type: constants.CREATING_EXERCISE})

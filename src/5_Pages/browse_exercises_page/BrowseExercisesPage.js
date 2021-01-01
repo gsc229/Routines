@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import {publicExercisesQuery} from '../../1_Actions/exerciseActions'
+import {clearExerciseSearchResults} from '../../1_Actions/exerciseActions'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import SearchExercisesForm from '../../4_Components/exercise/form_search_exercises/SearchExercisesForm'
@@ -9,7 +9,12 @@ import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard
 
 export const BrowseExercises = ({
   exerciseSearchResults,
+  clearExerciseSearchResults
 }) => {
+
+  useEffect(() => {
+    clearExerciseSearchResults()
+  },[])
  
   return (
     <Layout>
@@ -38,6 +43,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
+  clearExerciseSearchResults
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BrowseExercises)

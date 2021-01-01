@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {addChosenExercise, removeChosenExercise, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {FaRegHandPointRight} from 'react-icons/fa'
 import Button from 'react-bootstrap/Button'
+import {FiMinusSquare} from 'react-icons/fi'
 
 export const AddRemoveBtnConfigs = ({
   chosenExercises,
@@ -55,7 +56,10 @@ export const AddRemoveBtnConfigs = ({
       to='#'
       onClick={() => handleRemoveClick[set_group_type]()}
       className='card-link remove-from-set-link'
-      >Remove from {set_group_type} Set</Button>
+      >
+        <FiMinusSquare />&nbsp;
+        Remove from {set_group_type} Set
+      </Button>
     </div>
   }
 

@@ -14,6 +14,10 @@ export const writingCreateSetGroupData = (key, value) => dispatch => {
   dispatch({type: constants.WRITING_CREATE_SET_GROUP_DATA, payload: {key, value}})
 }
 
+export const clearCreateSetGroupData = () => dispatch => {
+  dispatch({type: constants.CLEAR_CREATE_SET_GROUP_DATA})
+}
+
 export const lockInType = (setGroupType) => dispatch => {
   dispatch({type: constants.LOCK_IN_TYPE, payload: setGroupType})
 }

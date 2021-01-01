@@ -10,7 +10,6 @@ import Schedule from './4_Components/calendar/Calendar'
 import ManageRoutinesPage from './5_Pages/manage_routines_page/ManageRoutinesPage'
 import CreateOrEditRoutinePage from './5_Pages/create_routine_page/CreateOrEditRoutinePage'
 import ManageCurrentRoutinePage from './5_Pages/manage_routine_page/ManageCurrentRoutinePage'
-import CreateOrEditWeekPage from './5_Pages/create_week_page/CreateOrEditWeekPage'
 import CreateOrEditExercisePage from './5_Pages/create_exercise_page/CreateOrEditExercisePage'
 import CreateSetGroupPage from './5_Pages/create_set_group_page/CreateSetGroupPage'
 import ManageExercisesPage from './5_Pages/manage_exercises_page/ManageExercisesPage'
@@ -48,7 +47,6 @@ function App({loggedIn}) {
 
         
         <Route exact path="/create-exercise" component={CreateOrEditExercisePage} />
-        <Route exact path="/editing-routine/:routineId/create-week" component={CreateOrEditWeekPage} />
         <Route exact path="/manage-exercises" component={ManageExercisesPage} />
         <Route exact path="/browse-exercises" component={BrowseExercisesPage} />
         <Route exact path="/create-set-group/:routineName/:weekNumber/:dayNumber" component={CreateSetGroupPage} />

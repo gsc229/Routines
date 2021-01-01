@@ -1,46 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {Link} from 'react-router-dom'
-import {setCurrentExercise} from '../../../1_Actions/exerciseActions'
 import {addChosenExercise, removeChosenExercise} from '../../../1_Actions/setGroupActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
-import AddRemoveButtons from '../set_group_search_exercise/AddRemoveBtnConfigs'
+import AddRemoveButtons from './AddRemoveBtnConfigs'
 
 export const AttachExerciseToSetGroupCard = ({
-  exercise,
-  currentSetGroup,
-  addChosenExercise,
-  chosenExercises,
-  removeChosenExercise
+  exercise
 }) => {
-
-  const handleEditClick = () => {
-    setCurrentExercise(exercise)
-  }
-
-  const removeButton = () => {
-    return chosenExercises.find(inChosen => inChosen._id === exercise._id) && 
-    <div className='card-link-container'>
-      <Link
-      to='#'
-      onClick={() => removeChosenExercise(exercise._id)}
-      className='card-link remove-from-set-link'
-      >Remove from {currentSetGroup.set_group_type} Set</Link>
-    </div>
-  }
-
-  const addButton = () => {
-    return !chosenExercises.find(inChosen => inChosen._id === exercise._id ) && 
-    <div className='card-link-container'>
-      <Link
-      to='#'
-      onClick={() => addChosenExercise(exercise)}
-      className='card-link add-to-set-link'>Add to {currentSetGroup.set_group_type} Set</Link>
-    </div>
-  }
-
+  
   return (
     <Card 
     bg="dark"

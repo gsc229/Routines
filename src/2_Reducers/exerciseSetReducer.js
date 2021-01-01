@@ -3,6 +3,8 @@ import * as constants from '../1_Actions'
 
 const initialState = {
 
+  currenSetGroupSets: [],
+
   currentExerciseSet: {
     exercise: null, // required
     routine: null, // required
@@ -46,7 +48,7 @@ const reducer = (state=initialState, action) => {
         }
       }
     }
-    case constants.CREATE_SET_GROUP_SUCCESS: {
+    case constants.CREATE_SET_GROUP_SUCCESS: {  
       return{
         ...state,
         currentExerciseSet: {

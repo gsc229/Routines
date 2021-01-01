@@ -1,4 +1,3 @@
-import { act } from 'react-dom/test-utils'
 import * as constants from '../1_Actions'
 
 
@@ -26,13 +25,32 @@ const initialState = {
   lockedInType: "",
   createSetGroupData: {
     currentStep: "choose-type",
-    rep_max: "",
-    weight: "",
-    percent_decrease: "",
+    is_compound: false,
     total_sets: "",
+    rep_max: "",
     reps_per_set: "",
-    rest_time: ""
+    starting_weight: "",
+    starting_time: "",
+    starting_distance: "",
+    reps_increase: "",
+    reps_decrease: "",
+    percent_weight_decrease: "",
+    percent_weight_increase: "",
+    percent_time_decrease: "",
+    percent_time_increase: "",
+    percent_distance_decrease: "",
+    percent_distance_increase: "",
+    weight_decrease: "",
+    weight_increase: "",
+    time_decrease: "",
+    time_increase: "",
+    distance_decrease: "",
+    distance_increase: "",
+    rest_time: "",
+    rest_time_increase: "",
+    rest_time_decrease: ""
   },
+
   currentSetGroup: {
     routine: null, //required
     week: null, //required
@@ -46,7 +64,7 @@ const initialState = {
     completed_time: null,
     order: null,
     target_sets: null,
-    actual_sets: null
+    actual_sets: null,
   }
   
 }
@@ -63,7 +81,6 @@ const reducer = (state=initialState, action) => {
       }
       
     }
-
   case constants.WRITING_CREATE_SET_GROUP_DATA:
     return {
       ...state,
@@ -71,6 +88,11 @@ const reducer = (state=initialState, action) => {
         ...state.createSetGroupData,
         [action.payload.key]: action.payload.value
       }
+    }
+  case constants.CLEAR_CREATE_SET_GROUP_DATA:
+    return{
+      ...state,
+      createSetGroupData: initialState.createSetGroupData
     }
   case constants.LOCK_IN_TYPE: 
     return{

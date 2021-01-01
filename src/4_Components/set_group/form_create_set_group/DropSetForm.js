@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {writingCreateSetGroupData, clearCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import DropDown from 'react-bootstrap/Dropdown'
+import DropDownButton from 'react-bootstrap/DropdownButton'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import {
@@ -20,20 +22,44 @@ import Container  from 'react-bootstrap/Container'
 
 export const DropSetForm = ({
   writingCreateSetGroupData,
-  createSetGroupData
+  createSetGroupData,
+  clearCreateSetGroupData,
+  chosenExercises
 }) => {
 
   const handleChange = e => {
     writingCreateSetGroupData(e.target.name, e.target.value)
   }
 
-  const {rep_max, weight, percent_decrease, total_sets} = createSetGroupData
+  const {rep_max, starting_weight, percent_weight_decrease, weight_decrease, total_sets} = createSetGroupData
 
-  const [allowAddExercixe, setAllowedExercise] = useState(rep_max !== "" && total_sets !=="" && weight !== "")
+  const [allowAddExercixe, setAllowedExercise] = useState(total_sets !=="" && starting_weight !== "")
+  const [decreaseMethod, setDecreaseMethod] = useState({key: 'percent_weight_decrease', value: 10})
+  console.log({decreaseMethod})
+  useEffect(() => {
+    if(!chosenExercises.length){clearCreateSetGroupData()}
+    writingCreateSetGroupData('percent_weight_decrease', 10)
+  }, [])
+
 
   useEffect(()=>{
-    setAllowedExercise(rep_max !== "" && total_sets !=="" && weight !== "")
-  },[createSetGroupData])
+    setAllowedExercise(total_sets !=="" && starting_weight !== "")
+    if(!percent_weight_decrease && !weight_decrease){
+      writingCreateSetGroupData('percent_weight_decrease', 10)
+    }
+
+    if(decreaseMethod.key === 'percent_weight_decrease'){
+      writingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
+      writingCreateSetGroupData('weight_decrease', 0)
+    } else{
+      writingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
+      writingCreateSetGroupData('percent_weight_decrease', 0) 
+    }
+
+    
+
+
+  },[decreaseMethod])
 
 
   return (
@@ -44,11 +70,6 @@ export const DropSetForm = ({
 
        <Col sm='12' className='input-column'>
         <Link to='#'>Rep Max Calculator</Link>
-        
-       </Col>
-
-       <Col className='input-column' lg='4' sm='12'>
-         <ConnectedRepMaxInput required={true} placeholder='required' />
        </Col>
 
        <Col className='input-column' lg='3' sm='12'>
@@ -60,17 +81,24 @@ export const DropSetForm = ({
           <InputGroup.Prepend>
             <InputGroup.Text>Drop</InputGroup.Text>
           </InputGroup.Prepend>
-          <Form.Control 
-          onChange={handleChange}
+          <Form.Control
+          onChange={(e)=> setDecreaseMethod({...decreaseMethod, value: e.target.value})}
           defaultValue={10}
-          value={percent_decrease} 
+          value={decreaseMethod.value} 
           placeholder='10% default'
-          name='percent_decrease' 
+          name={decreaseMethod.key} 
           max={99}
           min={1} type='number' />
+          <DropDownButton
+            as={InputGroup.Append}
+            title={decreaseMethod.key === 'percent_weight_decrease' ? "%" : "lbs/kgs"}>
+            <DropDown.Item onClick={() => setDecreaseMethod({...decreaseMethod, key: 'percent_weight_decrease'})}>%</DropDown.Item>
+            <DropDown.Item onClick={() => setDecreaseMethod({...decreaseMethod, key: 'weight_decrease'})}>lbs/kgs</DropDown.Item>
+          </DropDownButton>
           <InputGroup.Append>
-            <InputGroup.Text>% each set</InputGroup.Text>
+            <InputGroup.Text>each set</InputGroup.Text>
           </InputGroup.Append>
+            
          </InputGroup>
        </Col>
 
@@ -103,11 +131,13 @@ export const DropSetForm = ({
 
 const mapStateToProps = (state) => ({
   createSetGroupData: state.setGroupReducer.createSetGroupData,
-  currentSetGroup: state.setGroupReducer.currentSetGroup
+  currentSetGroup: state.setGroupReducer.currentSetGroup,
+  chosenExercises: state.setGroupReducer.chosenExercises
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  writingCreateSetGroupData,
+  clearCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropSetForm)
