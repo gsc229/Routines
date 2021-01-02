@@ -9,6 +9,7 @@
 
 // Exercises
 @import './5_Pages/manage_exercises_page/manage_exercises_page.scss';
+@import './5_Pages/create_set_group_page/create_or_edit_set_group_page.scss';
 
 // Browse Exercises
 @import './5_Pages/browse_exercises_page/browse_exercises_page.scss';
@@ -25,19 +26,27 @@
 
 
 // Routine Form 
-@import './4_Components/form_routine/form_routine.scss';
+@import './4_Components/routine/form_routine/form_routine.scss';
 
 // Exercise Form 
 @import './4_Components/iframe/iframe.scss';
+
+// Set Group
+@import './4_Components/set_group/form_create_set_group/set_group_forms.scss';
+@import './4_Components/set_group/set_group_search_exercise/set_group_search_exercises.scss';
+@import './4_Components/set_group/card_set_group/attach_exercise_to_sg_card.scss';
+@import './4_Components/set_group/preview_set_group/preview_set_group.scss';
+
 
 // Week 
 @import './4_Components/week/week_template.scss';
 
 // Accordion
-@import './4_Components/accordion_routines/routines_accordion.scss';
-@import './4_Components/accordion_embed_instruction//embed_accordion.scss';
+@import './4_Components/routine/accordion_routines/routines_accordion.scss';
+@import './4_Components/exercise/accordion_embed_instruction/embed_accordion.scss';
 // Cards
-@import './4_Components/card_exercise/exercise_card.scss';
-
+@import './4_Components/exercise/card_exercise/exercise_card.scss';
+@import './4_Components/set_group/card_set_group/attach_exercise_to_sg_card.scss';
+@import './4_Components/exercise_set/card_exercise_set/exercise_set_card.scss';
 //DND
 @import './4_Components/dnd_routine_schedule/dnd_routine_schedule.scss';

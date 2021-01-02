@@ -2,6 +2,9 @@ import * as constants from '../1_Actions'
 
 
 const initialState = {
+  crudingExerciseSets: false,
+  error_message: '',
+  currentSetGroupSets: [],
 
   currentExerciseSet: {
     exercise: null, // required
@@ -17,28 +20,39 @@ const initialState = {
     scheduled_time: null,
     completed_time: null,
     target_reps: null,
-    target_weight_kg: null,
+    target_weight: null,
     rest_time: null,
     target_time: null,
-    target_distance_km: null,
+    target_distance: null,
     target_laps: null,
     actual_reps: null,
-    actual_weight_kg: null,
+    actual_weight: null,
     actual_time: null,
-    actual_distance_km: null,
+    actual_distance: null,
     actual_laps: null
   }
 }
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
-
+    // every time a set group is set or created, initialize the required fields for
+    // creating / updating an exercise set
     case constants.SET_CURRENT_SET_GROUP:{
       return{
         ...state,
         currentExerciseSet: {
           ...state.currentExerciseSet,
-          exercise: action.payload.exercise,
+          routine: action.payload.routine,
+          week: action.payload.week,
+          set_group: action.payload._id,
+          user: action.payload.user
+        }
+      }
+    } // same comment as above
+    case constants.CREATE_SET_GROUP_SUCCESS: {  
+      return{
+        ...state,
+        currentExerciseSet: {
           routine: action.payload.routine,
           week: action.payload.week,
           set_group: action.payload._id,
@@ -46,14 +60,55 @@ const reducer = (state=initialState, action) => {
         }
       }
     }
-    case constants.CREATE_SET_GROUP_SUCCESS: {
+    case constants.CREATING_EXERCISE_SETS:
       return{
         ...state,
-        currentExerciseSet: {
-          set_group: action.payload._id
+        crudingExerciseSet: 'creating-exercise-sets'
+      }
+    case constants.CREATE_EXERCISE_SETS_SUCCESS:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        currentSetGroupSets: action.payload
+      }
+    case constants.CREATE_EXERCISE_SETS_FAIL:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        error_message: action.payload
+      }
+
+    case constants.SET_CURRENT_SET_GROUP_SETS:
+      return{
+        ...state,
+        currentSetGroupSets: [...action.payload]
+      }
+    case constants.SET_CURRENT_EXERCISE_SET:
+      return{
+        ...state,
+        currentExerciseSet: action.payload
+      }
+    case constants.WRITING_EXERCISE_SET:
+      return{
+        ...state,
+        currentExerciseSet:{
+          ...state.currentExerciseSet,
+          [action.payload.key]: action.payload.value
         }
       }
-    }
+
+    case constants.CLEAR_CURRENT_EXERCISE_SET: 
+      return{
+        ...state,
+        currentExerciseSet: initialState.currentExerciseSet
+      }
+
+    case constants.CLEAR_CURRENT_SET_GROUP_SETS:
+      return{
+        ...state,
+        currentSetGroupSets: initialState.currenSetGroupSets
+      }
+    
 
     case constants.LOG_OUT:
       return initialState

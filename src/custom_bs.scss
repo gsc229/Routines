@@ -1,5 +1,6 @@
 $theme-colors:(
-  "primary": #A00E0E
+  "primary": $routine-red,
+  "success": $russian-green
 );
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss"

@@ -5,8 +5,8 @@ import {userExercisesQuery, createNewExercise, clearCurrentExercise} from '../..
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-import ExerciseAccordion from '../../4_Components/accordion_exercise/ExerciseAccordion'
-import ExerciseCard from '../../4_Components/card_exercise/ExerciseCard'
+import ExerciseAccordion from '../../4_Components/exercise/accordion_exercise/ExerciseAccordion'
+import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard'
 import {FaRegHandPointLeft} from 'react-icons/fa'
 
 export const ManageExercisesPage = ({

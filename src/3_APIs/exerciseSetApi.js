@@ -1,4 +1,5 @@
 import axiosWihAuth from '../utils/axiosWithAuth'
+import axios from 'axios'
 
 export const getExerciseSets = (querString) => {
   return axiosWihAuth()
@@ -47,6 +48,24 @@ export const createExerciseSet = (newExerciseSet) => {
     }
     return {succes: false, error_message: "Somthing went wrong. Try again lager"}
   })
+}
+
+export const createMultipleExerciseSets = (newSetsPackage) => {
+  console.log({newSetsPackage})
+  return axiosWihAuth()
+  .post('/exercise-sets/create-many', newSetsPackage)
+  .then(createMultipleExerciseSetsResponse => {
+    console.log({createMultipleExerciseSetsResponse})
+    return createMultipleExerciseSetsResponse.data 
+  })
+  .catch(createMultipleExerciseSetsERROR => {
+    console.log({createMultipleExerciseSetsERROR})
+    if(createMultipleExerciseSetsERROR.response){
+      return createMultipleExerciseSetsERROR.response.data
+    }
+    return {succes: false, error_message: "Somthing went wrong. Try again lager"}
+  })
+
 }
 
 export const updateExerciseSet = (exerciseSetId, updates) => {

@@ -23,11 +23,6 @@ const initialState = {
 const reducer = (state=initialState, action) => {
   switch(action.type){
 
-    case constants.SET_CURRENT_ROUTINE:
-      return {
-        ...state,
-        currentRoutineWeeks: action.payload.weeks
-      }
 
     case constants.SET_CURRENT_WEEK:
       return{
@@ -48,6 +43,41 @@ const reducer = (state=initialState, action) => {
         error_message: ''
       }
 
+    case constants.FETCHING_WEEKS:
+      return{
+        ...state,
+        crudingWeek: 'fetching-weeks'
+      }
+    case constants.FETCH_WEEKS_FAIL:
+      return{
+        ...state,
+        crudingWeek: false,
+        error_message: action.payload
+      }
+    case constants.FETCH_WEEKS_SUCCESS:
+      return{
+        ...state,
+        crudingWeek: false,
+        currentRoutineWeeks: action.payload
+      }
+
+    case constants.FETCHING_WEEK:
+      return{
+        ...state,
+        crudingWeek: 'fetching-week'
+      }
+    case constants.FETCH_WEEK_FAIL:
+      return{
+        ...state,
+        crudingWeek: false,
+        error_message: action.payload
+      }
+    case constants.FETCH_WEEK_SUCCESS:
+      return{
+        ...state,
+        crudingWeek: false,
+        currentWeek: action.payload
+      }
 
     case constants.LOG_OUT:
       return initialState

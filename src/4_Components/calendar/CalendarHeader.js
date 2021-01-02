@@ -2,9 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Navbar from 'react-bootstrap/Navbar'
 import {Link} from 'react-router-dom'
-import {setCurrentRoutine} from '../../1_Actions/routineActions'
+import {setCurrentRoutine, fetchRoutineById} from '../../1_Actions/routineActions'
 
-const CalendarHeader = ({value, setValue, routine, setCurrentRoutine}) => {
+const CalendarHeader = ({value, setValue, routine, fetchRoutineById}) => {
 
   function currMonthName(){
     return value.format("MMMM")
@@ -22,6 +22,12 @@ const CalendarHeader = ({value, setValue, routine, setCurrentRoutine}) => {
    return value.clone().add(1, "month").startOf('month')
   }
 
+
+  const handleEditScheduleClick = () => {
+    const currentPopulateQuery = `?populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`
+    fetchRoutineById(routine._id, currentPopulateQuery)
+  }
+
   const dayOfWeek = ["Su","Mo","Tu","We","Th","Fr","Sa"] 
   
   return (
@@ -30,7 +36,7 @@ const CalendarHeader = ({value, setValue, routine, setCurrentRoutine}) => {
       {routine && 
       <div className='view-routine-link-container'>
         <Link 
-        onClick={() => setCurrentRoutine(routine)}
+        onClick={handleEditScheduleClick}
         className='view-routine-link' to={`/view-routine/${routine._id}/${routine.slug || routine.name}`} >
           Edit Schedule
         </Link>
@@ -63,7 +69,8 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = {
-  setCurrentRoutine
+  setCurrentRoutine,
+  fetchRoutineById
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarHeader)

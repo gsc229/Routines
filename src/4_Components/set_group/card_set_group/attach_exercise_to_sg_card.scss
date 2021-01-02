@@ -1,0 +1,51 @@
+.attach-exercise-to-set-card{
+  width: 20rem;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+  button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .card-header{
+    display: flex;
+    justify-content: space-between;
+    
+    span{
+      font-weight: bolder;
+    }
+
+    
+  }
+  .card-body{
+
+    .card-link-container{
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .card-link{
+      color: white;
+    }
+
+    .card-subtitle{
+      span{
+        color: $gold-crayola;
+      }
+    }
+
+    .card-difficulty{
+      margin-top: 20px;
+      .progress-bar-outer{
+        margin-top: 5px;
+      }
+    }
+
+    .embeded-video{
+      margin-top: 20px;
+    }
+  }
+}

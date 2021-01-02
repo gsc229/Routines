@@ -1,20 +1,22 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import {fetchRoutineById, fetchRoutines} from '../../1_Actions/routineActions'
+import {fetchRoutineById} from '../../1_Actions/routineActions'
 import {createNewWeek} from '../../1_Actions/weekActions'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
-import RoutineWeeksBank from '../../4_Components/dnd_routine_schedule/RoutineScheduleDnd'
+import RoutineScheduleDnd from '../../4_Components/dnd_routine_schedule/RoutineScheduleDnd'
 import Button from 'react-bootstrap/Button'
 import {FiRefreshCcw} from 'react-icons/fi'
+import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 
 export const ViewRoutinePage = ({
   currentRoutine, 
+  crudingRoutine,
   fetchRoutineById, 
   createNewWeek,
   userId
+  
 }) => {
-
   const currentRoutineRefreshQuery = `?populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`
   
   const handleRefresh = () => {
@@ -33,36 +35,31 @@ export const ViewRoutinePage = ({
   }
 
   const noWeeksMessage = () => {
-
-    if(!currentRoutine.weeks.length){
-      return(
-        <div className='no-weeks-message'>
-          <p>You don't currently have any weeks for this routine.<br/>Start by adding a week: </p>
-          <p> </p>
-        </div>
-      )
-    }    
+    return currentRoutine.weeks && !currentRoutine.weeks.length > 0 && !crudingRoutine &&
+      <div className='no-weeks-message'>
+        <p>You don't currently have anything scheduled for this routine.<br/>Start by adding a week: </p>
+        <p> </p>
+      </div>
   }
 
   const showWeeks = () => {
-    if(currentRoutine.weeks.length){
-      return (
-        <div>
-          <FiRefreshCcw style={{color: 'limegreen'}} onClick={handleRefresh} />
-          <RoutineWeeksBank />
-        </div>
-      )
-    } 
+    return currentRoutine.weeks && currentRoutine.weeks.length > 0 && !crudingRoutine &&
+      <div>
+        <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
+        <RoutineScheduleDnd />
+      </div>
   }
 
 
   return (
     <Layout>
       <Container className='view-routine-container'>
-        <h5>Managing Routine: {currentRoutine.name || 'id' + currentRoutine._id}</h5>
+        <h2>Managing Routine: {currentRoutine.name || 'id' + currentRoutine._id}</h2>
         {showWeeks()}
         {noWeeksMessage()}
-        <Button 
+        {crudingRoutine && <DarkSpinner text='Loading schedule...' />}
+        <Button
+        className='add-week-btn' 
         onClick={addWeek}
         variant='primary'>Add Week</Button>
       </Container>
@@ -71,6 +68,7 @@ export const ViewRoutinePage = ({
 }
 
 const mapStateToProps = (state) => ({
+  crudingRoutine: state.routineReducer.crudingRoutine,
   currentRoutine: state.routineReducer.currentRoutine,
   userId: state.userReducer.user._id
 })

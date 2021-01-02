@@ -1,0 +1,74 @@
+.set-group-exercise-search{
+  background-color: $bs-dark;
+  padding: 10px;
+  .set-group-exercise-search-btns-container{
+
+    .btn-row{
+      display: flex;
+    }
+    .btn-column{
+    margin: 5px auto;
+      button{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    
+  }
+  
+  
+  .chosen-exercises-bank{
+    color: white;
+    max-width: 95%;
+    margin-bottom: 20px;
+    .chosen-exerciese-bank-header{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      p{
+        color: $russian-green;
+        cursor: pointer;
+      }
+    }
+
+    ul{
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      list-style: none;
+      li{
+        margin-right: 20px;
+        padding-left: 0;
+      }
+    }
+    
+    .remove-icon{
+      color: $routine-red;
+      cursor: pointer;
+    }
+
+  }
+
+  .set-group-exercise-search-results{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: fit-content;
+    max-width: 95%;
+    margin: auto;
+    background-color: whitesmoke;
+    //padding: 20px;
+    border-radius: 4px;
+    h5{
+      margin-bottom: 20px;
+    }
+    .attach-exercise-to-set-card{
+      margin: 5px;
+    }
+
+  }
+
+}
+

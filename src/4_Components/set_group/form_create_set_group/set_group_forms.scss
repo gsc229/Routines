@@ -1,0 +1,34 @@
+.drop-set-form{
+  .row{
+    //border: 1px solid yellow;
+    .input-column{
+      //border: 1px solid pink;
+      padding-left: 0 !important;
+      margin-bottom: 10px;
+      .requirement-not-met{
+        font-weight: bolder;
+      }
+      .requirement-not-met::placeholder{
+        color: $routine-red;
+      }
+
+      .requirment-met{
+        font-weight: bolder;
+        color: $russian-green;
+        
+      }
+    }
+
+    .disabled-next-step-btn{
+      background-color: whitesmoke;
+      border: whitesmoke;
+      color: rgba(155,157,160, .4);
+    }
+
+    .disabled-previous-step-btn{
+      background-color: whitesmoke;
+      border: whitesmoke;
+      color: rgba(155,157,160, .4);
+    }
+  }
+}
