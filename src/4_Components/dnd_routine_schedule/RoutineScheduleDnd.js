@@ -10,6 +10,7 @@ import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
 import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
+import DroppableDay from './DroppableDay'
 
 import Button from 'react-bootstrap/Button'
 
@@ -22,15 +23,7 @@ export const RoutineWeeksBank = ({
   set_groups
 }) => {
 
-  const dayKey = {
-    1: "Su",
-    2: "Mo",
-    3: "Tu",
-    4: "We",
-    5: "Th",
-    6: "Fr",
-    7: "Sa"
-  }
+ 
 
   
 
@@ -71,59 +64,14 @@ export const RoutineWeeksBank = ({
                 className='week-container-row'>
                 {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
                   return dayNumber !== "_id" && dayNumber !== "week_number" && (
-           
-                    <Droppable 
-                    key={`${weekNumber}-${dayNumber}-${routineSchedule[weekNumber]._id}-${name.day_name}`}
-                    droppableId={`${weekNumber}-${dayNumber}-${routineSchedule[weekNumber]._id}-${name.day_name}`}>
-                    {(provided, snapshot) => {
-                      return(
-                        <Card
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}                       
-                        className={`day-container-card ${snapshot.isDraggingOver && 'day-container-card-hovering'}`}>
-                          <Card.Header>
-                            <div
-                            className='day-header'>
-                              <h6>{dayKey[dayNumber]}</h6>
-                              <Link 
-                              onClick={() => setCurrentWeek(routineSchedule[weekNumber])}
-                              to={
-                                `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${routineSchedule[weekNumber].week_number}/day-${dayNumber}-${dayKey[dayNumber]}`}>
-                                Add Sets
-                              </Link>
-                            </div>
-                          </Card.Header>
-                            <Card.Body>
-                              {routineSchedule[weekNumber][dayNumber].set_groups.map((set_group, index) => {
-                                return (
-                                <Draggable
-                                key={set_group._id}
-                                draggableId={set_group._id}
-                                index={index}>
-                                {(provided, snapshot)=>{
-                                  return(
-                                    <div
-                                    className={`set-group-draggable-container ${snapshot.isDragging && 'set-group-draggable-container-dragging'}`}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    ref={provided.innerRef}
-                                    >
-                                      <SetGroupScheduleCard 
-                                      set_group={set_group} 
-                                      isDragging={snapshot.isDragging} />
-                                      {provided.placeholder}
-                                    </div>
-                                  )
-                                }}
-                                  
-                                </Draggable>)
-                              })}
-                          {provided.placeholder}
-                            </Card.Body>
-                        
-                      </Card>)
-                    }}
-                    </Droppable>
+                    <DroppableDay 
+                    key={weekNumber+dayNumber}
+                    routineSchedule={routineSchedule}
+                    setCurrentWeek={setCurrentWeek}
+                    currentRoutine={currentRoutine}
+                    name={name}
+                    weekNumber={weekNumber}
+                    dayNumber={dayNumber}/>
                   )
                 })}
               </div>
