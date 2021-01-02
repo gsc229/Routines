@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {writingSetGroup} from '../../1_Actions/setGroupActions'
+import {writingSetGroup, clearCreateSetGroupData, clearCurrentSetGroup} from '../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import {FaRegHandPointLeft, FaRegCalendarAlt} from 'react-icons/fa'
 import Container from 'react-bootstrap/Container'
@@ -13,24 +13,33 @@ export const CreateOrEditExerciseSet = ({
   currentRoutine,
   writingSetGroup,
   userId,
-  currentWeek
+  currentWeek,
+  clearCreateSetGroupData,
+  clearCurrentSetGroup
 }) => {
 
   const [searchMode, setSearchMode] = useState("exercise")
 
-  useEffect(() => {
+  /* useEffect(() => {
     writingSetGroup('routine', currentRoutine._id)
     writingSetGroup('user', userId)
     writingSetGroup('week', currentWeek._id)
     writingSetGroup('week_number', currentWeek.week_number)
-  }, [])
+  }, []) */
+
+  const handleReturnToScheduleClick = () => {
+    clearCreateSetGroupData()
+    clearCurrentSetGroup()
+  }
 
   return (
     <Layout>
       <Container>
         <div className='create-set-group-page-header'>
           <h2>Create Set Group for {currentRoutine.name}</h2>
-          <Link to={`/view-routine/${currentRoutine._id}/${currentRoutine.name}`}>
+          <Link 
+          onClick={handleReturnToScheduleClick}
+          to={`/view-routine/${currentRoutine._id}/${currentRoutine.name}`}>
             <FaRegCalendarAlt /><FaRegHandPointLeft /> return to schedule
           </Link>
         </div>
@@ -61,7 +70,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingSetGroup
+  writingSetGroup,
+  clearCreateSetGroupData,
+  clearCurrentSetGroup
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateOrEditExerciseSet)

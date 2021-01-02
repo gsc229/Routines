@@ -50,25 +50,6 @@ export const createSetGroup = (newSetGroup) => {
   })
 }
 
-export const createSetGroupWithSets = async (newSetGroup, newSets=["setOne", "setTwo", "setThree"]) => {  
-  let newSetGroupRequests = []
-  newSetGroupRequests.push(axiosWihAuth().post(`/set-groups`, newSetGroup))
-  newSets.forEach(set => {
-    newSetGroupRequests.push(axiosWihAuth().post(`/exercise-sets`, set))
-  });
-  
-
-  console.log({newSetGroupRequests})
-  axios.all(newSetGroupRequests)
-  .then(axios.spread((...responses) => {
-    console.log({responses})
-  }))
-  .catch(errors=>{
-    console.log({errors})
-  })
-  return newSetGroupRequests
-}
-
 export const updateSetGroup = (setGroupId, updates) => {
   
   return axiosWihAuth()

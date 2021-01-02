@@ -1,16 +1,17 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import {createSetGroup} from './previewSetGroupHelpers'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {createSetGroupLocal} from './previewSetGroupHelpers'
+import {clearErrorMessage} from '../../../1_Actions/userActions'
+import {writingCreateSetGroupData, createNewSetGroup} from '../../../1_Actions/setGroupActions'
+import {createNewExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import {setCurrentSetGroupSets} from '../../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
-import {FaRegHandPointLeft} from 'react-icons/fa'
 import {GiBiceps} from 'react-icons/gi'
 import ExerciseSetCard from '../../exercise_set/card_exercise_set/ExerciseSetCard'
-import { ConnectedPreviousStepButton } from '../form_create_set_group/SetGroupBtnsAndInputs';
+import { ConnectedPreviousStepButton, ConnectedTotalSetsInput } from '../form_create_set_group/SetGroupBtnsAndInputs';
 
 export const PreviewSetGroup = ({
   writingCreateSetGroupData,
@@ -19,12 +20,16 @@ export const PreviewSetGroup = ({
   createSetGroupData,
   currentExerciseSet,
   currentSetGroupSets,
-  setCurrentSetGroupSets
+  setCurrentSetGroupSets,
+  createNewSetGroup,
+  createNewExerciseSets,
+  set_group_error_message,
+  exercise_set_error_message,
+  clearErrorMessage
 }) => {
 
   useEffect(() => {
-
-    setCurrentSetGroupSets(createSetGroup(
+    setCurrentSetGroupSets(createSetGroupLocal(
       chosenExercises,
       currentSetGroup, 
       createSetGroupData,
@@ -32,11 +37,37 @@ export const PreviewSetGroup = ({
 
   }, [])
 
+  useEffect(() => {
+    if(set_group_error_message || exercise_set_error_message){
+      alert(set_group_error_message, exercise_set_error_message)
+      setTimeout(() => {
+        clearErrorMessage()
+      }, 3000);
+    }
+  },[set_group_error_message, exercise_set_error_message])
+
   console.log({currentSetGroupSets})
 
-  const handleCreateSetGroup = () => {
-    //
-    return 
+  const handleCreateSetGroup = async () => {
+    console.log("CREATE NEW SET GROUP")
+    const newSetGroupResponse = await createNewSetGroup(currentSetGroup)
+    console.log({newSetGroupResponse})
+    if(newSetGroupResponse.success){
+      const setsWithSetGroupAndExerciseIds = currentSetGroupSets.map(set=>{
+        return{
+          ...set,
+          exercise: set.exercise._id,
+          set_group: newSetGroupResponse.data._id
+        }
+      })
+      console.log({setsWithSetGroupAndExerciseIds})
+      const {routine, week} = currentSetGroup
+      createNewExerciseSets({
+        routine, 
+        week, 
+        set_group: newSetGroupResponse.data._id, 
+        newSetsArray: setsWithSetGroupAndExerciseIds})
+    }
   }
 
   return (
@@ -76,12 +107,17 @@ const mapStateToProps = (state) => ({
   currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
   chosenExercises: state.setGroupReducer.chosenExercises,
   createSetGroupData: state.setGroupReducer.createSetGroupData,
-  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet
+  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
+  set_group_error_message: state.setGroupReducer.error_message,
+  exercise_set_error_message: state.exerciseSetReducer.error_message
 })
 
 const mapDispatchToProps = {
   writingCreateSetGroupData,
-  setCurrentSetGroupSets
+  setCurrentSetGroupSets,
+  createNewSetGroup,
+  createNewExerciseSets,
+  clearErrorMessage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreviewSetGroup)

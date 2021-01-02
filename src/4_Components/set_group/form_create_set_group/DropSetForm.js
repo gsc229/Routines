@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData, clearCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -21,9 +21,7 @@ import Container  from 'react-bootstrap/Container'
 
 export const DropSetForm = ({
   writingCreateSetGroupData,
-  createSetGroupData,
-  clearCreateSetGroupData,
-  chosenExercises
+  createSetGroupData
 }) => {
 
   const {rep_max, starting_weight, percent_weight_decrease, weight_decrease, total_sets} = createSetGroupData
@@ -32,8 +30,6 @@ export const DropSetForm = ({
   const [decreaseMethod, setDecreaseMethod] = useState({key: 'percent_weight_decrease', value: 10})
 
   useEffect(() => {
-      console.log('DROPSET FORM')
-    if(!chosenExercises.length){clearCreateSetGroupData()}
 
     writingCreateSetGroupData('percent_weight_decrease', 10)
   }, [])
@@ -126,13 +122,11 @@ export const DropSetForm = ({
 
 const mapStateToProps = (state) => ({
   createSetGroupData: state.setGroupReducer.createSetGroupData,
-  currentSetGroup: state.setGroupReducer.currentSetGroup,
-  chosenExercises: state.setGroupReducer.chosenExercises
+  currentSetGroup: state.setGroupReducer.currentSetGroup
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData,
-  clearCreateSetGroupData
+  writingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropSetForm)

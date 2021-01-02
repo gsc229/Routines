@@ -2,7 +2,8 @@ import * as constants from '../1_Actions'
 
 
 const initialState = {
-
+  crudingExerciseSets: false,
+  error_message: '',
   currentSetGroupSets: [],
 
   currentExerciseSet: {
@@ -59,6 +60,24 @@ const reducer = (state=initialState, action) => {
         }
       }
     }
+    case constants.CREATING_EXERCISE_SETS:
+      return{
+        ...state,
+        crudingExerciseSet: 'creating-exercise-sets'
+      }
+    case constants.CREATE_EXERCISE_SETS_SUCCESS:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        currentSetGroupSets: action.payload
+      }
+    case constants.CREATE_EXERCISE_SETS_FAIL:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        error_message: action.payload
+      }
+
     case constants.SET_CURRENT_SET_GROUP_SETS:
       return{
         ...state,
@@ -68,6 +87,14 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         currentExerciseSet: action.payload
+      }
+    case constants.WRITING_EXERCISE_SET:
+      return{
+        ...state,
+        currentExerciseSet:{
+          ...state.currentExerciseSet,
+          [action.payload.key]: action.payload.value
+        }
       }
 
     case constants.CLEAR_CURRENT_EXERCISE_SET: 

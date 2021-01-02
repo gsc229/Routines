@@ -20,6 +20,8 @@ import * as constants from '../1_Actions'
 
 const initialState = {
   set_group_types: setGroupTypes,
+  crudingSetGroup: false,
+  error_message: '',
   chosenExercises: [],
   mulipleExercises: false,
   lockedInType: "",
@@ -71,7 +73,12 @@ const initialState = {
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
-
+  
+  case constants.SET_CURRENT_SET_GROUP:
+    return{
+      ...state,
+      currentSetGroup: action.payload
+    }
   case  constants.WRITING_CURRENT_SET_GROUP: 
     return{
       ...state,
@@ -79,7 +86,6 @@ const reducer = (state=initialState, action) => {
         ...state.currentSetGroup,
         [action.payload.key]: action.payload.value
       }
-      
     }
   case constants.WRITING_CREATE_SET_GROUP_DATA:
     return {
@@ -88,6 +94,11 @@ const reducer = (state=initialState, action) => {
         ...state.createSetGroupData,
         [action.payload.key]: action.payload.value
       }
+    }
+  case constants.CLEAR_CURRENT_SET_GROUP:
+    return{
+      ...state,
+      currentSetGroup: initialState.currentSetGroup
     }
   case constants.CLEAR_CREATE_SET_GROUP_DATA:
     return{
@@ -99,13 +110,6 @@ const reducer = (state=initialState, action) => {
       ...state,
       lockedInType: action.payload
     }
-  
-  case constants.SET_CURRENT_SET_GROUP:
-    return{
-      ...state,
-      currentSetGroup: action.payload
-    }
-
   case constants.ADD_TO_CHOSEN_EXERCISES:
     return{
       ...state,
@@ -115,6 +119,29 @@ const reducer = (state=initialState, action) => {
     return{
       ...state,
       chosenExercises: [...state.chosenExercises.filter(exercise => exercise._id !== action.payload)]
+    }
+  case constants.CREATING_SET_GROUP:
+    return{
+      ...state,
+      crudingSetGroup: 'creating-set-group'
+    }
+  case constants.CREATE_SET_GROUP_SUCCESS:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      currentSetGroup: action.payload
+    }
+  case constants.CREATE_SET_GROUP_FAIL: 
+    return{
+      ...state,
+      crudingSetGroup: false,
+      error_message: action.payload
+    }
+
+  case constants.CLEAR_ERROR_MESSAGE:
+    return{
+      ...state,
+      error_message: ''
     }
   case constants.LOG_OUT:
     return initialState

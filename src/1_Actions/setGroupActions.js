@@ -1,5 +1,5 @@
 import * as constants from './index'
-import { getSetGroupById, getSetGroups, updateSetGroup } from '../3_APIs/setGroupApi'
+import { getSetGroupById, getSetGroups, updateSetGroup, createSetGroup } from '../3_APIs/setGroupApi'
 const generalErrorMessage = "Something went wrong with the request."
 
 export const setCurrentSetGroup = (setGroup) => dispatch => {
@@ -16,6 +16,10 @@ export const writingCreateSetGroupData = (key, value) => dispatch => {
 
 export const clearCreateSetGroupData = () => dispatch => {
   dispatch({type: constants.CLEAR_CREATE_SET_GROUP_DATA})
+}
+
+export const clearCurrentSetGroup = () =>  dispatch => {
+  dispatch({type: constants.CLEAR_CURRENT_SET_GROUP})
 }
 
 export const lockInType = (setGroupType) => dispatch => {
@@ -86,3 +90,20 @@ export const saveSetGroupChanges = (setGroupId, updates) => dispatch => {
 
 }
 
+export const createNewSetGroup = (newSetGroup) => dispatch => {
+  dispatch({type: constants.CREATING_SET_GROUP})
+  return createSetGroup(newSetGroup)
+  .then(response=>{
+    if(response.success){
+      dispatch({type: constants.CREATE_SET_GROUP_SUCCESS, payload: response.data})
+      return response
+    }
+    if(response.error_message){
+      dispatch({type: constants.CREATE_SET_GROUP_FAIL, payload: response.error_message})
+      return false
+    }
+    dispatch({type: constants.CREATE_SET_GROUP_FAIL, payload: generalErrorMessage})
+      return false
+
+  })
+}

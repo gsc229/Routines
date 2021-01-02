@@ -1,4 +1,4 @@
-export const createSetGroup = (chosenExercises, currentSetGroup, setGroupData, exerciseSetTemplate) => {
+export const createSetGroupLocal = (chosenExercises, currentSetGroup, setGroupData, exerciseSetTemplate) => {
   
   const exerciseSets = []
   

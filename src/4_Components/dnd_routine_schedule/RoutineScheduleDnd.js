@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {fetchRoutineById} from '../../1_Actions/routineActions'
 import {destroyWeek, setCurrentWeek} from '../../1_Actions/weekActions'
 import {routineScheduleConstructor} from './routineScheduleConstructor'
 import {onSetGroupDragEnd} from './scheduleHelpers'
@@ -16,13 +15,8 @@ export const RoutineWeeksBank = ({
   currentRoutine,
   destroyWeek,
   setCurrentWeek,
-  fetchRoutineById,
   set_groups
 }) => {
-
- 
-
-  
 
   const [routineSchedule, setRoutineSchedule] = useState({})
 
@@ -83,8 +77,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   destroyWeek,
-  setCurrentWeek,
-  fetchRoutineById
+  setCurrentWeek
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineWeeksBank)
