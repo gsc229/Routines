@@ -1,4 +1,3 @@
-import { VscActivateBreakpoints } from 'react-icons/vsc'
 import * as constants from '../1_Actions'
 
 const initialState = {

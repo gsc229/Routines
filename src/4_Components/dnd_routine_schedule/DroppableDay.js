@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import {clearCreateSetGroupData} from '../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import {Droppable} from 'react-beautiful-dnd'
 import Card from 'react-bootstrap/Card'
@@ -10,19 +12,27 @@ export const DroppableDay = ({
   name, 
   routineSchedule, 
   setCurrentWeek,
-  currentRoutine
+  currentRoutine,
+  clearCreateSetGroupData
   }) => {
 
 
-    const dayKey = {
-      1: "Su",
-      2: "Mo",
-      3: "Tu",
-      4: "We",
-      5: "Th",
-      6: "Fr",
-      7: "Sa"
-    }
+  const dayKey = {
+    1: "Su",
+    2: "Mo",
+    3: "Tu",
+    4: "We",
+    5: "Th",
+    6: "Fr",
+    7: "Sa"
+  }
+
+  const handleAddSetsClick = () => {
+    clearCreateSetGroupData()
+    setCurrentWeek(routineSchedule[weekNumber])
+  }
+
+
 
   return (
     <Droppable 
@@ -39,7 +49,7 @@ export const DroppableDay = ({
             className='day-header'>
               <h6>{dayKey[dayNumber]}</h6>
               <Link 
-              onClick={() => setCurrentWeek(routineSchedule[weekNumber])}
+              onClick={handleAddSetsClick}
               to={
                 `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${routineSchedule[weekNumber].week_number}/day-${dayNumber}-${dayKey[dayNumber]}`}>
                 Add Sets
@@ -63,6 +73,12 @@ export const DroppableDay = ({
   )
 }
 
+const mapStateToProps = (state) => ({
+  
+})
 
+const mapDispatchToProps = {
+  clearCreateSetGroupData
+}
 
-export default DroppableDay
+export default connect(mapStateToProps, mapDispatchToProps)(DroppableDay)

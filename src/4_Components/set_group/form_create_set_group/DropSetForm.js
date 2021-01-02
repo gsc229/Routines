@@ -32,6 +32,7 @@ export const DropSetForm = ({
   const [decreaseMethod, setDecreaseMethod] = useState({key: 'percent_weight_decrease', value: 10})
 
   useEffect(() => {
+      console.log('DROPSET FORM')
     if(!chosenExercises.length){clearCreateSetGroupData()}
 
     writingCreateSetGroupData('percent_weight_decrease', 10)
@@ -39,7 +40,7 @@ export const DropSetForm = ({
 
 
   useEffect(()=>{
-
+    console.log('DROPSET FORM')
     if(!percent_weight_decrease && !weight_decrease){
       writingCreateSetGroupData('percent_weight_decrease', 10)
     }

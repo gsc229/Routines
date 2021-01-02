@@ -9,7 +9,7 @@ export const setCurrentWeek = (week) => dispatch => {
 
 
 /* ASYNC */
-export const userWeeksQuery = (queryString) => dispatch => {
+export const weeksQuery = (queryString) => dispatch => {
   dispatch({type: constants.FETCHING_WEEKS})
   return getWeeks(queryString)
   .then(res=>{

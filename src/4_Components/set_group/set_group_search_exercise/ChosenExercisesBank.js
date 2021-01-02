@@ -23,7 +23,7 @@ export const ChosenExercisesBank = ({
       </div>
       <ul>
         {chosenExercises.map(exercise=> 
-        <li>
+        <li key={`chosen-exercise-bank-${exercise._id}`}>
           {exercise.name}&nbsp;
           <OverlayTrigger overlay={<ToolTip>Remove {exercise.name}</ToolTip>}>
             <FiMinusSquare className='remove-icon' onClick={() => removeChosenExercise(exercise._id)} />

@@ -4,12 +4,9 @@ import {fetchRoutineById} from '../../1_Actions/routineActions'
 import {destroyWeek, setCurrentWeek} from '../../1_Actions/weekActions'
 import {routineScheduleConstructor} from './routineScheduleConstructor'
 import {onSetGroupDragEnd} from './scheduleHelpers'
-import {Link} from 'react-router-dom'
-import SetGroupScheduleCard from './SetGroupScheduleCard'
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
+import {DragDropContext} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
 import Container from 'react-bootstrap/Container'
-import Card from 'react-bootstrap/Card'
 import DroppableDay from './DroppableDay'
 
 import Button from 'react-bootstrap/Button'
@@ -28,11 +25,6 @@ export const RoutineWeeksBank = ({
   
 
   const [routineSchedule, setRoutineSchedule] = useState({})
-
-  const currentPopulateQuery = `?populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`
-  useEffect(async () => {
-    fetchRoutineById(currentRoutine._id, currentPopulateQuery)
-  }, [])
 
   useEffect(async () => {
     setRoutineSchedule(routineScheduleConstructor(set_groups, weeks))

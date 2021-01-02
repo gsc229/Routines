@@ -22,7 +22,7 @@ export const CreateOrEditExerciseSet = ({
     writingSetGroup('routine', currentRoutine._id)
     writingSetGroup('user', userId)
     writingSetGroup('week', currentWeek._id)
-    writingSetGroup('week_number', currentWeek.number)
+    writingSetGroup('week_number', currentWeek.week_number)
   }, [])
 
   return (
