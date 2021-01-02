@@ -57,7 +57,7 @@ export const createSetGroup = (chosenExercises, currentSetGroup, setGroupData, e
       newSet.user = currentSetGroup.user
       newSet.routine = currentSetGroup.routine
       newSet.week = currentSetGroup.week
-      newSet.exercise = exercise._id
+      newSet.exercise = exercise
       newSet.target_weight = previousWeight
       newSet.target_reps = previousRepsPerSet
       newSet.rest_time = previousRestTime
@@ -85,7 +85,7 @@ export const createSetGroup = (chosenExercises, currentSetGroup, setGroupData, e
       previousRepsPerSet = Math.round(previousRepsPerSet - repsDecrease)
       previousRepsPerSet = Math.round(previousRepsPerSet - repsIncrease)
 
-      
+
       exerciseSets.push(newSet)
     }
   })
@@ -99,7 +99,6 @@ export const createSetGroup = (chosenExercises, currentSetGroup, setGroupData, e
       newSet.week = currentSetGroup.week
       newSet.exercise = exercise._id
       newSet.target_weight = previousWeight
-      console.log(percentWeightDecrease)
       previousWeight = Math.round(previousWeight - (previousWeight * percentWeightDecrease))
       exerciseSets.push(newSet)
       

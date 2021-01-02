@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {addChosenExercise, removeChosenExercise, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {FaRegHandPointRight} from 'react-icons/fa'
+import {ConnectedNextStepButton} from '../form_create_set_group/SetGroupBtnsAndInputs'
 import Button from 'react-bootstrap/Button'
 import {FiMinusSquare} from 'react-icons/fi'
 
@@ -76,14 +77,12 @@ export const AddRemoveBtnConfigs = ({
   const previewSetGroiupBtn = () => {
     return showPreviewSetGroiupBtn[set_group_type]() &&
     <div className='card-link-container'>
-      <Button
+      <ConnectedNextStepButton 
       variant='success'
-      to='#'
-      onClick={() => writingCreateSetGroupData('currentStep', 'preview-set-group')}
-      className='card-link preview-set-link'>
-        Preview Set Group&nbsp;
-        <FaRegHandPointRight />
-      </Button>
+      text='Preview Set Group'
+      writeDataKey='currentStep'
+      writeDataValue='preview-set-group'
+      />
     </div>
   } 
 

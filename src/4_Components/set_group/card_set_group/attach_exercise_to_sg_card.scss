@@ -1,4 +1,10 @@
 .attach-exercise-to-set-card{
+  button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
   width: 18rem;
   margin: 20px auto;
   .card-header{

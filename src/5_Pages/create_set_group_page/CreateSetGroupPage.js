@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData, writingSetGroup} from '../../1_Actions/setGroupActions'
+import {writingSetGroup} from '../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import {FaRegHandPointLeft, FaRegCalendarAlt} from 'react-icons/fa'
 import Container from 'react-bootstrap/Container'

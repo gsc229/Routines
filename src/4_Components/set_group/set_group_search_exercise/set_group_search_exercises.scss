@@ -1,7 +1,24 @@
 .set-group-exercise-search{
   background-color: $bs-dark;
   padding: 10px;
+  .set-group-exercise-search-btns-container{
 
+    .btn-row{
+      display: flex;
+    }
+    .btn-column{
+    margin: 5px auto;
+      button{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    
+  }
+  
+  
   .chosen-exercises-bank{
     color: white;
     max-width: 95%;

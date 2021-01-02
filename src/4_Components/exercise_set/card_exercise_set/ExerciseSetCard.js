@@ -4,33 +4,53 @@ import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
 
-export const ExerciseSetCard = ({exercise}) => {
+export const ExerciseSetCard = ({exerciseSet, setNumber}) => {
+
+  console.log(Object.keys(exerciseSet))
+
 
   return (
     <Card
-    className="mb-2 exercise-card"
+    className="mb-2 exercise-set-card"
     bg="dark"
-    text='white'
-    style={{ width: '18rem' }}>
-      <Card.Header>
-        <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
-      </Card.Header>
-      <Card.Body>
-        <Card.Title>
-          <Card.Text>{exercise.name}</Card.Text>
-        </Card.Title>
-        <Card.Subtitle>
-          <span className={`${exercise.category}-color`}>{exercise.category}</span>
-        </Card.Subtitle>
-        {exercise.description && <Card.Text><span>Description:</span> {exercise.description}</Card.Text>}
-        {exercise.equipment && <Card.Text><span>Equipment: </span>{exercise.equipment}</Card.Text>}
-        {exercise.target_muscle && <Card.Text><span>Target Muscle: </span>{exercise.target_muscle}</Card.Text>}
-        <Card.Subtitle className="card-difficulty">
-          Difficulty: {exercise.difficulty_scale}
-          <ProgressBar className='progress-bar-outer' variant="primary" now={exercise.difficulty_scale * 10} />  
-        </Card.Subtitle>
-        <IFrame iframeString={exercise.video_url} />
-      </Card.Body>
+    text='white'>
+    <Card.Header>
+    <Card.Title>
+      <div className='card-title-container'>
+        <div className='exercise-name'>{exerciseSet.exercise.name}</div>
+        <div className="set-number"><i>Set: {setNumber}</i></div>
+      </div>
+    </Card.Title>
+    </Card.Header>
+    <Card.Body>
+      <Card.Subtitle>
+      <div className='target-and-actual-container'>
+        <ul style={{listStyle: 'none', padding: 0}}>
+          {Object.keys(exerciseSet).map(key=> {
+          if(key.includes('target') && exerciseSet[key]){
+            return (
+            <li>
+              {key.split("_").join(" ").toUpperCase()}: {exerciseSet[key]} <br/>
+            </li>)
+          }})}
+        </ul>
+        <ul style={{listStyle: 'none', padding: 0}}>
+          {Object.keys(exerciseSet).map(key=> {
+          if(key.includes('target') && exerciseSet[key]){
+            const actual_result = key.replace('target', 'actual')
+            return (
+            <li>
+              {actual_result.split("_").join(" ").toUpperCase()}:&nbsp;
+              {exerciseSet[actual_result] ? exerciseSet[actual_result] : <i>not recorded</i>}
+            </li>)
+          }})}
+        </ul>
+
+      </div>
+      </Card.Subtitle>
+      
+    
+    </Card.Body>
     </Card>
   )
 }

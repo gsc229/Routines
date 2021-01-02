@@ -5,8 +5,10 @@ import SearchExercisesForm from '../../exercise/form_search_exercises/SearchExer
 import DarkSpinner from '../../spinners/DarkSpinner'
 import AttachExerciseToSetGroupCard from '../card_set_group/AttachExerciseToSetGroupCard'
 import ChosenExercisesBank from './ChosenExercisesBank'
-import { ConnectedPreviousStepButton } from '../form_create_set_group/SetGroupBtnsAndInputs'
-
+import { ConnectedPreviousStepButton, ConnectedNextStepButton } from '../form_create_set_group/SetGroupBtnsAndInputs'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 export const SetGroupSearchExercise = ({
   exerciseSearchResults,
@@ -16,10 +18,28 @@ export const SetGroupSearchExercise = ({
 
   return (
     <div className='set-group-exercise-search'>
-      <ConnectedPreviousStepButton 
-        text='Back to set group type'
-        writeDataKey='currentStep'
-        writeDataValue='choose-type'/>
+      <Container className='set-group-exercise-search-btns-container'>
+
+        <Row className='btn-row'>
+          <Col className='btn-column'  sm='12' md='6'>
+            <ConnectedPreviousStepButton 
+              text='Back to set group type'
+              writeDataKey='currentStep'
+              writeDataValue='choose-type'/>
+          </Col>
+
+          <Col className='btn-column'  sm='12' md='6'>
+            {chosenExercises.length > 0 &&
+            <ConnectedNextStepButton
+              variant='success'
+              writeDataKey='currentStep'
+              writeDataValue='preview-set-group'
+              text='Preview Set Group'/>}
+          </Col>
+
+        </Row>
+        
+      </Container>
       <SearchExercisesForm/>
       {chosenExercises.length > 0 &&
        <ChosenExercisesBank />}

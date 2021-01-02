@@ -8,8 +8,7 @@ import DropDown from 'react-bootstrap/Dropdown'
 import DropDownButton from 'react-bootstrap/DropdownButton'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import {
-  ConnectedRepMaxInput, 
+import { 
   ConnectedRestSecondsInput,
   ConnectedRepsPerSetInput,
   ConnectedWeightInput, 
@@ -27,23 +26,20 @@ export const DropSetForm = ({
   chosenExercises
 }) => {
 
-  const handleChange = e => {
-    writingCreateSetGroupData(e.target.name, e.target.value)
-  }
-
   const {rep_max, starting_weight, percent_weight_decrease, weight_decrease, total_sets} = createSetGroupData
 
-  const [allowAddExercixe, setAllowedExercise] = useState(total_sets !=="" && starting_weight !== "")
+  const allowAddExercise = total_sets !=="" && starting_weight !== ""
   const [decreaseMethod, setDecreaseMethod] = useState({key: 'percent_weight_decrease', value: 10})
-  console.log({decreaseMethod})
+
   useEffect(() => {
     if(!chosenExercises.length){clearCreateSetGroupData()}
+
     writingCreateSetGroupData('percent_weight_decrease', 10)
   }, [])
 
 
   useEffect(()=>{
-    setAllowedExercise(total_sets !=="" && starting_weight !== "")
+
     if(!percent_weight_decrease && !weight_decrease){
       writingCreateSetGroupData('percent_weight_decrease', 10)
     }
@@ -55,9 +51,6 @@ export const DropSetForm = ({
       writingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
       writingCreateSetGroupData('percent_weight_decrease', 0) 
     }
-
-    
-
 
   },[decreaseMethod])
 
@@ -116,7 +109,8 @@ export const DropSetForm = ({
 
        <Col className='input-column'  sm='12'>
         <ConnectedNextStepButton
-         disabled={!allowAddExercixe}
+         variant='success'
+         disabled={!allowAddExercise}
          text={'Proceed to add exercise'}
          writeDataKey='currentStep'
          writeDataValue='choose-exercise'

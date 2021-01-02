@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import DropDown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
-import {FiArrowRight, FiArrowLeft} from 'react-icons/fi'
+import {FaHandPointRight, FaHandPointLeft} from 'react-icons/fa'
 
 const RepMaxInput = ({
   placeholder,
@@ -143,6 +143,7 @@ const RestSecondsInput = ({
 }
 
 const NextStepButton = ({
+  variant,
   disabled,
   text,
   writingCreateSetGroupData,
@@ -152,16 +153,18 @@ const NextStepButton = ({
 
   return (
     <Button
+      variant={variant}
       className={`step-btn next-step-btn ${disabled && 'disabled-next-step-btn'}`}
       onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
       disabled={disabled}>
         {text} &nbsp;
-        <FiArrowRight style={{color:'white'}} className='next-link' />
+        <FaHandPointRight style={{color:'white'}} className='next-link' />
     </Button>
   )
 }
 
 const PreviousStepButton = ({
+  variant,
   disabled,
   text,
   writingCreateSetGroupData,
@@ -171,10 +174,11 @@ const PreviousStepButton = ({
 
   return (
     <Button
+      variant={variant}
       className={`step-btn previous-step-btn ${disabled && 'disabled-previous-step-btn'}`}
       onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
       disabled={disabled}>
-        <FiArrowLeft style={{color:'white'}} className='previous-link' />
+        <FaHandPointLeft style={{color:'white'}} className='previous-link' />
         &nbsp;   
         {text}
     </Button>
