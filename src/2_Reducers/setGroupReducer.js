@@ -150,6 +150,23 @@ const reducer = (state=initialState, action) => {
   case constants.LOG_OUT:
     return initialState
 
+  case constants.DELETING_SET_GROUP:
+    return{
+      ...state,
+      crudingSetGroup: 'deleting-set-group'
+    }
+  case constants.DELETE_SET_GROUP_FAIL:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      error_message: action.payload
+    }
+  case constants.DELETE_SET_GROUP_SUCCESS:
+    return{
+      ...state,
+      crudingSetGroup: false
+    }
+
   default: 
     return state
 

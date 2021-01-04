@@ -1,5 +1,5 @@
 import * as constants from './index'
-import { getSetGroupById, getSetGroups, updateSetGroup, createSetGroup } from '../3_APIs/setGroupApi'
+import { getSetGroupById, getSetGroups, updateSetGroup, createSetGroup, deleteSetGroup } from '../3_APIs/setGroupApi'
 const generalErrorMessage = "Something went wrong with the request."
 
 export const setCurrentSetGroup = (setGroup) => dispatch => {
@@ -120,3 +120,24 @@ export const createNewSetGroup = (newSetGroup) => dispatch => {
 
   })
 }
+
+export const destroySetGroup = (setGroupId) => dispatch => {
+  dispatch({type: constants.DELETING_SET_GROUP})
+  deleteSetGroup(setGroupId)
+  .then(response => {
+    if(response.success){
+      dispatch({type: constants.DELETE_SET_GROUP_SUCCESS})
+      return true
+    }
+
+    if(response.error_message){
+      dispatch({type: constants.DELETE_SET_GROUP_FAIL, payload: response.error_message})
+      return false
+    }
+
+    dispatch({type: constants.DELETE_SET_GROUP_FAIL, payload: response.error_message})
+      return false
+
+  })
+}
+

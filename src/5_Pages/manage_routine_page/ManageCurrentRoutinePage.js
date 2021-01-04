@@ -22,7 +22,7 @@ export const ViewRoutinePage = ({
   const handleRefresh = () => {
     fetchRoutineById(currentRoutine._id, currentRoutineRefreshWkSgEsEx)
   }
-
+  
   const addWeek = async () => {
     const credentials = {
       user: userId,

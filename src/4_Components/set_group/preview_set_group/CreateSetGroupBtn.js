@@ -29,6 +29,7 @@ export const CreateSetGroupBtn = ({
     const newSetGroupResponse = await createNewSetGroup(currentSetGroup)
     console.log({newSetGroupResponse})
     if(newSetGroupResponse.success){
+
       const setsWithSetGroupAndExerciseIds = currentSetGroupSets.map(set=>{
         return{
           ...set,
@@ -37,14 +38,15 @@ export const CreateSetGroupBtn = ({
         }
       })
       console.log({setsWithSetGroupAndExerciseIds})
-      const {routine, week} = currentSetGroup
+      const {routine, week} = newSetGroupResponse.data
       const newExerciseSetsResponse = await createNewExerciseSets({
         routine, 
         week, 
         set_group: newSetGroupResponse.data._id, 
         newSetsArray: setsWithSetGroupAndExerciseIds})
 
-      
+      // Want to manually update the weeks, set_groups and exercise_sets on the current routine
+      // will need to populate the newly created exercise_sets with their exercises. 
       if(newExerciseSetsResponse.success){
         const {_id, name, slug} = currentRoutine
         fetchRoutineById(_id, currentRoutineRefreshWkSgEsEx)
