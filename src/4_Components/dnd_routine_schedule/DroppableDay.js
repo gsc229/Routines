@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {clearCreateSetGroupData, writingSetGroup} from '../../1_Actions/setGroupActions'
+import {fullResetCreateSetGroup, writingSetGroup} from '../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import {Droppable} from 'react-beautiful-dnd'
 import Card from 'react-bootstrap/Card'
@@ -13,7 +13,7 @@ export const DroppableDay = ({
   routineSchedule, 
   setCurrentWeek,
   currentRoutine,
-  clearCreateSetGroupData,
+  fullResetCreateSetGroup,
   writingSetGroup,
   userId
   }) => {
@@ -32,7 +32,7 @@ export const DroppableDay = ({
   console.log({weekNumber, dayNumber, name, routineSchedule, currentRoutine})
 
   const handleAddSetsClick = () => {
-    clearCreateSetGroupData()
+    fullResetCreateSetGroup()
     setCurrentWeek(routineSchedule[weekNumber])
     writingSetGroup('routine', currentRoutine._id)
     writingSetGroup('user', userId)
@@ -42,8 +42,6 @@ export const DroppableDay = ({
     writingSetGroup('day', name.day_name)
   }
 
-
-
   return (
     <Droppable 
     key={`${weekNumber}-${dayNumber}-${routineSchedule[weekNumber]._id}-${name.day_name}`}
@@ -51,13 +49,12 @@ export const DroppableDay = ({
     {(provided, snapshot) => {
       return(
         <Card
-        {...provided.droppableProps}
-        ref={provided.innerRef}                       
+                             
         className={`day-container-card ${snapshot.isDraggingOver && 'day-container-card-hovering'}`}>
           <Card.Header>
             <div
             className='day-header'>
-              <h6>{dayKey[dayNumber]}</h6>
+              <h6>{dayKey[dayNumber]} - Week: {weekNumber}</h6>
               <Link 
               onClick={handleAddSetsClick}
               to={
@@ -66,7 +63,10 @@ export const DroppableDay = ({
               </Link>
             </div>
           </Card.Header>
-            <Card.Body>
+            <Card.Body
+            {...provided.droppableProps}
+            ref={provided.innerRef}  
+            >
               {routineSchedule[weekNumber][dayNumber].set_groups.map((set_group, index) => {
                 return (
                 <DraggableSetGroup 
@@ -88,7 +88,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  clearCreateSetGroupData,
+  fullResetCreateSetGroup,
   writingSetGroup
 }
 

@@ -1,13 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import {destroySetGroup} from '../../1_Actions/setGroupActions'
 import Card from 'react-bootstrap/Card'
 import {BsGrid3X3Gap} from 'react-icons/bs'
 import {IoDuplicateOutline} from 'react-icons/io5'
 import {BsEye} from 'react-icons/bs'
+import {RiDeleteBin5Line} from 'react-icons/ri'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
 
-export const SetGroup = ({set_group, isDragging}) => {
+export const SetGroup = ({
+  set_group, 
+  isDragging,
+  destroySetGroup
+}) => {
 
   return (
     <Card
@@ -16,7 +22,7 @@ export const SetGroup = ({set_group, isDragging}) => {
     className="set-group-schedule-card">
       <Card.Header
       className='set-group-schedule-card-header'>
-        <div className='set-group-schedule-card-btns-container'>
+        <div className='view-copy-move-btns-conainer'>
         <OverlayTrigger overlay={<ToolTip>View full details</ToolTip>}>
           <BsEye
           onClick={() => alert(JSON.stringify(set_group, null, 2))} 
@@ -24,13 +30,19 @@ export const SetGroup = ({set_group, isDragging}) => {
           />
         </OverlayTrigger>
 
-        <OverlayTrigger overlay={<ToolTip>Duplicate this set group</ToolTip>}>
+        <OverlayTrigger overlay={<ToolTip>Duplicate set group</ToolTip>}>
           <IoDuplicateOutline
             style={{cursor: 'pointer', marginRight: '10px'}}
           />
         </OverlayTrigger>
   
         <BsGrid3X3Gap />
+      </div>
+      <div className="delete-btn-container">
+        <OverlayTrigger overlay={<ToolTip>Delete set group</ToolTip>}>
+          <RiDeleteBin5Line className='delete-icon'/>
+        </OverlayTrigger>
+
       </div>
       </Card.Header>
       <Card.Body
@@ -47,7 +59,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  
+  destroySetGroup
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetGroup)

@@ -6,14 +6,14 @@
     .set-group-btn-column{
 
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
 
       button{
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 10px;
-        width: 80%;
+        margin: 10px auto;
+        width: 100%;
         text-align: center;
       }
     }
@@ -21,11 +21,18 @@
   }
   .set-groups{
     //border: 1px solid pink;
-    width: fit-content;
+    width: 100%;
     margin: 20px auto;
     display: flex;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .exercise-set-card{
+      margin: 10px auto;
+      min-width: 200px;
+      max-width: 400px;
+      .card-body{
+        padding: 20px;
+      }
+    }
   }
 }

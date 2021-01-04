@@ -46,6 +46,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .card-header{
@@ -64,8 +65,14 @@
 
   .set-group-schedule-card{
     .set-group-schedule-card-header{
+      display: flex;
+      justify-content: space-between;
       background-color: $routine-red;
-
+      .delete-btn-container{
+        .delete-icon{
+          cursor: pointer;
+        }
+      }
     }
     .set-group-schedule-card-body{
       color: $bs-dark;

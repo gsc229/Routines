@@ -3,7 +3,7 @@ import {updateSetGroup} from '../../3_APIs/setGroupApi'
 export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSchedule) => {
 
   const {destination, source} = result
-
+  console.log({destination, source})
   if(!destination) return
 
   if(destination.droppableId === source.droppableId && destination.index === source.index) return

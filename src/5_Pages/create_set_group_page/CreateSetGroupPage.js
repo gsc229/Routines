@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {writingSetGroup, clearCreateSetGroupData, clearCurrentSetGroup} from '../../1_Actions/setGroupActions'
+import {fullResetCreateSetGroup} from '../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import {FaRegHandPointLeft, FaRegCalendarAlt} from 'react-icons/fa'
 import Container from 'react-bootstrap/Container'
@@ -11,25 +11,13 @@ import CreateSetGroup from '../../4_Components/set_group/create_set_group/Create
 
 export const CreateOrEditExerciseSet = ({
   currentRoutine,
-  writingSetGroup,
-  userId,
-  currentWeek,
-  clearCreateSetGroupData,
-  clearCurrentSetGroup
+  fullResetCreateSetGroup
 }) => {
 
   const [searchMode, setSearchMode] = useState("exercise")
 
-  /* useEffect(() => {
-    writingSetGroup('routine', currentRoutine._id)
-    writingSetGroup('user', userId)
-    writingSetGroup('week', currentWeek._id)
-    writingSetGroup('week_number', currentWeek.week_number)
-  }, []) */
-
   const handleReturnToScheduleClick = () => {
-    clearCreateSetGroupData()
-    clearCurrentSetGroup()
+    fullResetCreateSetGroup()
   }
 
   return (
@@ -65,14 +53,10 @@ const mapStateToProps = (state) => ({
   exerciseSearchResults: state.exerciseReducer.exerciseSearchResults,
   currentRoutine: state.routineReducer.currentRoutine,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  userId: state.userReducer.user._id,
-  currentWeek: state.weekReducer.currentWeek
 })
 
 const mapDispatchToProps = {
-  writingSetGroup,
-  clearCreateSetGroupData,
-  clearCurrentSetGroup
+  fullResetCreateSetGroup
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateOrEditExerciseSet)

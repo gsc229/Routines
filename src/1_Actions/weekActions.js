@@ -7,6 +7,10 @@ export const setCurrentWeek = (week) => dispatch => {
   dispatch({type: constants.SET_CURRENT_WEEK, payload: week})
 }
 
+export const clearCurrentWeek = () => dispatch => {
+  dispatch({type: constants.CLEAR_CURRENT_WEEK})
+}
+
 
 /* ASYNC */
 export const weeksQuery = (queryString) => dispatch => {
@@ -72,14 +76,14 @@ export const destroyWeek = (weekId) => dispatch => {
   return deleteWeek(weekId)
   .then(response => {
     if(response.success){
-    dispatch({type: constants.DELETE_WEEK_SUCCESS, payload: response.data})
+    dispatch({type: constants.DELETE_WEEK_SUCCESS, payload: weekId})
     return true
     } 
     if(response.error_message){
-      dispatch({type: constants.UPDATE_WEEK_FAIL, payload: response.error_message})
+      dispatch({type: constants.DELETE_WEEK_FAIL, payload: response.error_message})
       return false
     } 
-    dispatch({type: constants.UPDATE_WEEK_FAIL, payload: generalErrorMessage})
+    dispatch({type: constants.DELETE_WEEK_FAIL, payload: generalErrorMessage})
     return false
   })
 
