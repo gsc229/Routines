@@ -8,7 +8,7 @@ const initialState = {
     user: "",
     routine: ""
   },
-  currentRoutineWeeks: [],
+  currentWeeks: [],
   currentWeek: {
     routine: null,
     user: null,
@@ -22,8 +22,6 @@ const initialState = {
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
-
-
     case constants.SET_CURRENT_WEEK:
       return{
         ...state,
@@ -47,7 +45,23 @@ const reducer = (state=initialState, action) => {
         ...state,
         error_message: ''
       }
-
+    case constants.FETCHING_FLATTENED_ROUTINE:
+      return{
+        ...state,
+        crudingWeek: 'fetching-weeks'
+      }
+    case constants.FETCH_FLATTENED_ROUTINE_SUCCESS:
+      return{
+        ...state,
+        crudingWeek: false,
+        currentWeeks: action.payload.weeks
+      }
+    case constants.FETCH_FLATTENED_ROUTINE_FAIL:
+      return{
+        ...state,
+        crudingWeek: false,
+        error_message: action.payload
+      }
     case constants.FETCHING_WEEKS:
       return{
         ...state,
@@ -65,7 +79,6 @@ const reducer = (state=initialState, action) => {
         crudingWeek: false,
         currentRoutineWeeks: action.payload
       }
-
     case constants.FETCHING_WEEK:
       return{
         ...state,
@@ -83,7 +96,6 @@ const reducer = (state=initialState, action) => {
         crudingWeek: false,
         currentWeek: action.payload
       }
-
     case constants.DELETING_WEEK: 
       return{
         ...state,

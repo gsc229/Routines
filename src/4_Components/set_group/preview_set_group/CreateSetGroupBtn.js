@@ -13,7 +13,7 @@ export const CreateSetGroupBtn = ({
   fetchRoutineById,
   currentRoutine,
   currentSetGroup,
-  currentSetGroupSets,
+  currentExerciseSets,
   createNewSetGroup,
   createNewExerciseSets,
   fullResetCreateSetGroup,
@@ -30,7 +30,7 @@ export const CreateSetGroupBtn = ({
     console.log({newSetGroupResponse})
     if(newSetGroupResponse.success){
 
-      const setsWithSetGroupAndExerciseIds = currentSetGroupSets.map(set=>{
+      const setsWithSetGroupAndExerciseIds = currentExerciseSets.map(set=>{
         return{
           ...set,
           exercise: set.exercise._id,
@@ -73,7 +73,7 @@ export const CreateSetGroupBtn = ({
 const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
   createSetGroupData: state.setGroupReducer.createSetGroupData,
   currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
   set_group_error_message: state.setGroupReducer.error_message,

@@ -16,7 +16,7 @@ export const clearCurrentExerciseSet = () => dispatch => {
 }
 
 export const clearCurrentSetGroupSets = () => dispatch => {
-  dispatch({type: constants.CLEAR_CURRENT_SET_GROUP_SETS})
+  dispatch({type: constants.CLEAR_CURRENT_EXERCISE_SETS})
 }
 
 export const setCurrentSetGroupSets = (sets) => dispatch => {
@@ -71,4 +71,3 @@ export const createNewExerciseSets = (newSetsPackage) => dispatch => {
       return false
   })
 }
-

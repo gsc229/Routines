@@ -25,6 +25,7 @@ const initialState = {
   chosenExercises: [],
   mulipleExercises: false,
   lockedInType: "",
+  currentSetGroups: [],
   createSetGroupData: {
     currentStep: "choose-type",
     is_compound: false,
@@ -114,6 +115,23 @@ const reducer = (state=initialState, action) => {
     return{
       ...state,
       lockedInType: action.payload
+    }
+  case constants.FETCHING_FLATTENED_ROUTINE:
+    return{
+      ...state,
+      crudingSetGroup: 'fetching-set-groups'
+    }
+  case constants.FETCH_FLATTENED_ROUTINE_SUCCESS:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      currentSetGroups: action.payload.set_groups
+    }
+  case constants.FETCH_FLATTENED_ROUTINE_FAIL:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      error_message: action.payload
     }
   case constants.ADD_TO_CHOSEN_EXERCISES:
     return{

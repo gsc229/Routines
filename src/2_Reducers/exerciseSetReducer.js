@@ -4,7 +4,7 @@ import * as constants from '../1_Actions'
 const initialState = {
   crudingExerciseSets: false,
   error_message: '',
-  currentSetGroupSets: [],
+  currentExerciseSets: [],
 
   currentExerciseSet: {
     exercise: null, // required
@@ -48,7 +48,7 @@ const reducer = (state=initialState, action) => {
           user: action.payload.user
         }
       }
-    } // same comment as above
+      } // same comment as above
     case constants.CREATE_SET_GROUP_SUCCESS: {  
       return{
         ...state,
@@ -59,7 +59,24 @@ const reducer = (state=initialState, action) => {
           user: action.payload.user
         }
       }
-    }
+      }
+    case constants.FETCHING_FLATTENED_ROUTINE:
+      return{
+        ...state,
+        crudingExerciseSet: 'fetching-exercise-sets'
+      }
+    case constants.FETCH_FLATTENED_ROUTINE_SUCCESS:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        currentExerciseSets: action.payload.exercis_sets
+      }
+    case constants.FETCH_FLATTENED_ROUTINE_FAIL:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        error_message: action.payload
+      }
     case constants.CREATING_EXERCISE_SETS:
       return{
         ...state,
@@ -69,7 +86,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingExerciseSet: false,
-        currentSetGroupSets: action.payload
+        currentExerciseSets: action.payload
       }
     case constants.CREATE_EXERCISE_SETS_FAIL:
       return{
@@ -77,11 +94,10 @@ const reducer = (state=initialState, action) => {
         crudingExerciseSet: false,
         error_message: action.payload
       }
-
     case constants.SET_CURRENT_SET_GROUP_SETS:
       return{
         ...state,
-        currentSetGroupSets: [...action.payload]
+        currentExerciseSets: [...action.payload]
       }
     case constants.SET_CURRENT_EXERCISE_SET:
       return{
@@ -96,25 +112,21 @@ const reducer = (state=initialState, action) => {
           [action.payload.key]: action.payload.value
         }
       }
-
     case constants.CLEAR_CURRENT_EXERCISE_SET: 
       return{
         ...state,
         currentExerciseSet: initialState.currentExerciseSet
       }
-
-    case constants.CLEAR_CURRENT_SET_GROUP_SETS:
+    case constants.CLEAR_CURRENT_EXERCISE_SETS:
       return{
         ...state,
-        currentSetGroupSets: initialState.currenSetGroupSets
+        currentExerciseSets: initialState.currenSetGroupSets
       }
-    
     case constants.CLEAR_ERROR_MESSAGE:
       return{
         ...state,
         error_message: ''
       }
-
     case constants.LOG_OUT:
       return initialState
     default: 
