@@ -33,6 +33,11 @@ const reducer = (state=initialState, action) => {
         currentRoutineName: action.payload.name,
         unsavedChanges: false
       }
+    case constants.CLEAR_ROUTINE_SEARCH_RESULTS:
+      return{
+        ...state,
+        routineSearchResults: initialState.routineSearchResults
+      }
     case  constants.WRITING_ROUTINE:
       return{
         ...state,
@@ -214,7 +219,10 @@ const reducer = (state=initialState, action) => {
         crudingRoutine: false,
         error_message: action.payload
       }
-
+    /* ================================  SET GROUP ACTIONS =============================== */
+    /* ================================  SET GROUP ACTIONS =============================== */
+    /* ================================  SET GROUP ACTIONS =============================== */
+    
 
     case constants.LOG_OUT:
       return {...initialState}
