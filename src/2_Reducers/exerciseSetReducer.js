@@ -109,6 +109,11 @@ const reducer = (state=initialState, action) => {
         currentSetGroupSets: initialState.currenSetGroupSets
       }
     
+    case constants.CLEAR_ERROR_MESSAGE:
+      return{
+        ...state,
+        error_message: ''
+      }
 
     case constants.LOG_OUT:
       return initialState

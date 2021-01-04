@@ -15,6 +15,10 @@ export const clearCurrentRoutine = () => dispatch => {
   dispatch({type: constants.CLEAR_CURRENT_ROUTINE})
 }
 
+export const clearRoutineSearchResults = () => dispatch => {
+  dispatch({type: constants.CLEAR_ROUTINE_SEARCH_RESULTS})
+}
+
 // ASYNC 
 
 export const fetchRoutines = (queryString) => dispatch => {

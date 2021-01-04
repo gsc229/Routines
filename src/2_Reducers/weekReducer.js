@@ -29,6 +29,11 @@ const reducer = (state=initialState, action) => {
         ...state,
         currentWeek: action.payload
       }
+    case constants.CLEAR_CURRENT_WEEK:
+      return{
+        ...state,
+        currentWeek: initialState.currentWeek
+      }
     case  constants.WRITING_WEEK:
       return{
         ...state,
@@ -79,6 +84,27 @@ const reducer = (state=initialState, action) => {
         currentWeek: action.payload
       }
 
+    case constants.DELETING_WEEK: 
+      return{
+        ...state,
+        crudingWeek: 'deleting-week'
+      }
+    case constants.DELETE_WEEK_FAIL:
+      return{
+        ...state,
+        crudingWeek: false,
+        error_message: action.payload
+      }
+    case constants.DELETE_WEEK_SUCCESS:
+      return{
+        ...state,
+        crudingWeek: false
+      }
+    case constants.CLEAR_ERROR_MESSAGE:
+      return{
+        ...state,
+        error_message: ''
+      }
     case constants.LOG_OUT:
       return initialState
     

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Navbar from 'react-bootstrap/Navbar'
 import {Link} from 'react-router-dom'
 import {setCurrentRoutine, fetchRoutineById} from '../../1_Actions/routineActions'
+import {currentRoutineRefreshWkSgEsEx} from '../../3_APIs/queryStrings'
 
 const CalendarHeader = ({value, setValue, routine, fetchRoutineById}) => {
 
@@ -24,8 +25,7 @@ const CalendarHeader = ({value, setValue, routine, fetchRoutineById}) => {
 
 
   const handleEditScheduleClick = () => {
-    const currentPopulateQuery = `?populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`
-    fetchRoutineById(routine._id, currentPopulateQuery)
+    fetchRoutineById(routine._id, currentRoutineRefreshWkSgEsEx)
   }
 
   const dayOfWeek = ["Su","Mo","Tu","We","Th","Fr","Sa"] 

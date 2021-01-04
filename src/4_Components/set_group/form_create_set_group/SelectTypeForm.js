@@ -24,7 +24,12 @@ export const SetGroupForm = ({
           Add Set Group
         </Form.Label>
           <InputGroup>
-          <Form.Control type='text' placeholder='Set Group Name' />
+          <Form.Control 
+          name='name'
+          value={currentSetGroup.name}
+          onChange={(e)=> writingSetGroup(e.target.name, e.target.value)}
+          type='text' 
+          placeholder='Set Group Name' />
           <InputGroup.Append>
             <OverlayTrigger overlay={<Tooltip>If multiple exercieses, the first one will be used</Tooltip>}>
             <InputGroup.Checkbox />

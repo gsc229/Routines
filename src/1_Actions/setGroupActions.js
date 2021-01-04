@@ -22,6 +22,19 @@ export const clearCurrentSetGroup = () =>  dispatch => {
   dispatch({type: constants.CLEAR_CURRENT_SET_GROUP})
 }
 
+export const clearChosenExercises = () => dispatch => {
+  dispatch({type: constants.CLEAR_CHOSEN_EXERCISES})
+}
+
+export const fullResetCreateSetGroup = () => dispatch => {
+  dispatch({type: constants.CLEAR_CREATE_SET_GROUP_DATA})
+  dispatch({type: constants.CLEAR_CHOSEN_EXERCISES})
+  dispatch({type: constants.CLEAR_CURRENT_SET_GROUP})
+  dispatch({type: constants.CLEAR_EXERCISE_SEARCH_RESULTS})
+  dispatch({type: constants.CLEAR_CURRENT_WEEK})
+
+}
+
 export const lockInType = (setGroupType) => dispatch => {
   dispatch({type: constants.LOCK_IN_TYPE, payload: setGroupType})
 }

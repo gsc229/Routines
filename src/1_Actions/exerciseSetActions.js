@@ -58,13 +58,13 @@ export const createNewExerciseSets = (newSetsPackage) => dispatch => {
   // required ids are user, routine, set_group, week
   dispatch({type: constants.CREATING_EXERCISE_SETS})
   return createMultipleExerciseSets(newSetsPackage)
-  .then(createNewExerciseSetsResonse => {
-    if(createNewExerciseSetsResonse.success){
-      dispatch({type: constants.CREATE_EXERCISE_SETS_SUCCESS, payload: createNewExerciseSetsResonse.data})
-      return true
+  .then(createNewExerciseSetsResponse => {
+    if(createNewExerciseSetsResponse.success){
+      dispatch({type: constants.CREATE_EXERCISE_SETS_SUCCESS, payload: createNewExerciseSetsResponse.data})
+      return createNewExerciseSetsResponse
     }
-    if(createNewExerciseSetsResonse.error_message){
-      dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: createNewExerciseSetsResonse.error_message})
+    if(createNewExerciseSetsResponse.error_message){
+      dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: createNewExerciseSetsResponse.error_message})
       return false
     }
     dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: generalErrorMessage})

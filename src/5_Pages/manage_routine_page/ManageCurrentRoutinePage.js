@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {fetchRoutineById} from '../../1_Actions/routineActions'
 import {createNewWeek} from '../../1_Actions/weekActions'
+import {currentRoutineRefreshWkSgEsEx} from '../../3_APIs/queryStrings'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import RoutineScheduleDnd from '../../4_Components/dnd_routine_schedule/RoutineScheduleDnd'
@@ -17,10 +18,9 @@ export const ViewRoutinePage = ({
   userId
   
 }) => {
-  const currentRoutineRefreshQuery = `?populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`
   
   const handleRefresh = () => {
-    fetchRoutineById(currentRoutine._id, currentRoutineRefreshQuery)
+    fetchRoutineById(currentRoutine._id, currentRoutineRefreshWkSgEsEx)
   }
 
   const addWeek = async () => {

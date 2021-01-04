@@ -105,6 +105,11 @@ const reducer = (state=initialState, action) => {
       ...state,
       createSetGroupData: initialState.createSetGroupData
     }
+  case constants.CLEAR_CHOSEN_EXERCISES:
+    return{
+      ...state,
+      chosenExercises: initialState.chosenExercises
+    }
   case constants.LOCK_IN_TYPE: 
     return{
       ...state,
@@ -137,7 +142,6 @@ const reducer = (state=initialState, action) => {
       crudingSetGroup: false,
       error_message: action.payload
     }
-
   case constants.CLEAR_ERROR_MESSAGE:
     return{
       ...state,

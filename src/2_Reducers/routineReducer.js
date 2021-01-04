@@ -33,6 +33,11 @@ const reducer = (state=initialState, action) => {
         currentRoutineName: action.payload.name,
         unsavedChanges: false
       }
+    case constants.CLEAR_ROUTINE_SEARCH_RESULTS:
+      return{
+        ...state,
+        routineSearchResults: initialState.routineSearchResults
+      }
     case  constants.WRITING_ROUTINE:
       return{
         ...state,
