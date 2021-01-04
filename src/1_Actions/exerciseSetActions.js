@@ -61,7 +61,7 @@ export const createNewExerciseSets = (newSetsPackage) => dispatch => {
   .then(createNewExerciseSetsResponse => {
     if(createNewExerciseSetsResponse.success){
       dispatch({type: constants.CREATE_EXERCISE_SETS_SUCCESS, payload: createNewExerciseSetsResponse.data})
-      return createNewExerciseSetsResponse.data
+      return createNewExerciseSetsResponse
     }
     if(createNewExerciseSetsResponse.error_message){
       dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: createNewExerciseSetsResponse.error_message})

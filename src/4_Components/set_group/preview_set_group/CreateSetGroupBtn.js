@@ -47,6 +47,7 @@ export const CreateSetGroupBtn = ({
 
       // Want to manually update the weeks, set_groups and exercise_sets on the current routine
       // will need to populate the newly created exercise_sets with their exercises. 
+      alert(newExerciseSetsResponse.success)
       if(newExerciseSetsResponse.success){
         const {_id, name, slug} = currentRoutine
         fetchRoutineById(_id, currentRoutineRefreshWkSgEsEx)
