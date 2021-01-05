@@ -1,4 +1,4 @@
-export const routineScheduleConstructor = (currentSetGroups, currentWeeks, currentExerciseSets) => {
+export const routineScheduleConstructor = (currentSetGroups, currentWeeks, currentSetGroupSets) => {
   
   const dayKey = {
     1: "Su",
@@ -20,7 +20,7 @@ export const routineScheduleConstructor = (currentSetGroups, currentWeeks, curre
     })
 
     const mergedSetsIntoSetGroups =  currentSetGroups.map(set_group => {
-      set_group.exercise_sets = currentExerciseSets.filter(exSet => exSet.set_group === set_group._id)
+      set_group.exercise_sets = currentSetGroupSets.filter(exSet => exSet.set_group === set_group._id)
       return set_group
     }) 
     console.log({routineSchedule, mergedSetsIntoSetGroups})

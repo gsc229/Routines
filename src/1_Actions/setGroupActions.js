@@ -30,6 +30,7 @@ export const fullResetCreateSetGroup = () => dispatch => {
   dispatch({type: constants.CLEAR_CREATE_SET_GROUP_DATA})
   dispatch({type: constants.CLEAR_CHOSEN_EXERCISES})
   dispatch({type: constants.CLEAR_CURRENT_SET_GROUP})
+  dispatch({type: constants.CLEAR_CURRENT_EXERCISE_SETS})
   dispatch({type: constants.CLEAR_EXERCISE_SEARCH_RESULTS})
   dispatch({type: constants.CLEAR_CURRENT_WEEK})
 

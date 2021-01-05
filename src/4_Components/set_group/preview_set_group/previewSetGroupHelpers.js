@@ -97,6 +97,7 @@ export const createSetGroupLocal = (chosenExercises, currentSetGroup, setGroupDa
       newSet.user = currentSetGroup.user
       newSet.routine = currentSetGroup.routine
       newSet.week = currentSetGroup.week
+      
       newSet.exercise = exercise._id
       newSet.target_weight = previousWeight
       previousWeight = Math.round(previousWeight - (previousWeight * percentWeightDecrease))

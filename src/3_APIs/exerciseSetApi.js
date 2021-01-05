@@ -50,10 +50,10 @@ export const createExerciseSet = (newExerciseSet) => {
   })
 }
 
-export const createMultipleExerciseSets = (newSetsPackage) => {
-  console.log({newSetsPackage})
+export const createMultipleExerciseSets = (newSetsArray) => {
+  console.log({newSetsArray})
   return axiosWihAuth()
-  .post('/exercise-sets/create-many', newSetsPackage)
+  .post('/exercise-sets/create-many', newSetsArray)
   .then(createMultipleExerciseSetsResponse => {
     console.log({createMultipleExerciseSetsResponse})
     return createMultipleExerciseSetsResponse.data 

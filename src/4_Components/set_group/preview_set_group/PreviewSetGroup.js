@@ -15,7 +15,7 @@ export const PreviewSetGroup = ({
   currentSetGroup,
   createSetGroupData,
   currentExerciseSet,
-  currentExerciseSets,
+  currentSetGroupSets,
   setCurrentSetGroupSets,
   set_group_error_message,
   exercise_set_error_message,
@@ -39,8 +39,6 @@ export const PreviewSetGroup = ({
       }, 3000);
     }
   },[set_group_error_message, exercise_set_error_message])
-
-  console.log({currentExerciseSets})
   
   return (
     <div className='preview-set-group-container'>
@@ -64,8 +62,8 @@ export const PreviewSetGroup = ({
       
       </Container>
       <div className="set-groups">
-        {currentExerciseSets.length > 0 && 
-        currentExerciseSets.map((set, index) => 
+        {currentSetGroupSets.length > 0 && 
+        currentSetGroupSets.map((set, index) => 
         <ExerciseSetCard key={index} setNumber={index + 1}  exerciseSet={set} /> 
         )}
       </div>
@@ -75,7 +73,7 @@ export const PreviewSetGroup = ({
 
 const mapStateToProps = (state) => ({
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
+  currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
   chosenExercises: state.setGroupReducer.chosenExercises,
   createSetGroupData: state.setGroupReducer.createSetGroupData,
   currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,

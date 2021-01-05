@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 import {destroySetGroup} from '../../1_Actions/setGroupActions'
 import Card from 'react-bootstrap/Card'
 import {BsGrid3X3Gap} from 'react-icons/bs'
-import {IoDuplicateOutline} from 'react-icons/io5'
 import {BsEye} from 'react-icons/bs'
 import {RiDeleteBin5Line} from 'react-icons/ri'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
+import DuplicateHereBtn from './DuplicateHereBtn'
+
 
 export const SetGroup = ({
   set_group, 
@@ -33,12 +34,8 @@ export const SetGroup = ({
           style={{marginRight: '10px', cursor: 'pointer'}} 
           />
         </OverlayTrigger>
-
-        <OverlayTrigger overlay={<ToolTip>Duplicate set group</ToolTip>}>
-          <IoDuplicateOutline
-            style={{cursor: 'pointer', marginRight: '10px'}}
-          />
-        </OverlayTrigger>
+        <DuplicateHereBtn 
+        set_group={set_group}/>
   
         <BsGrid3X3Gap />
       </div>

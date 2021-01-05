@@ -16,7 +16,7 @@ export const RoutineScheduleDnd = ({
   currentRoutine,
   currentWeeks,
   currentSetGroups,
-  currentExerciseSets,
+  currentSetGroupSets,
   destroyWeek,
   setCurrentWeek,
   saveSetGroupChanges,
@@ -28,8 +28,8 @@ export const RoutineScheduleDnd = ({
   const [routineSchedule, setRoutineSchedule] = useState({})
 
   useEffect(async () => {
-    setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentExerciseSets))
-  }, [currentSetGroups, currentWeeks, currentExerciseSets, currentWeeks])
+    setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentSetGroupSets))
+  }, [currentSetGroups, currentWeeks, currentSetGroupSets, currentWeeks])
 
   const handleDestroyWeek  = async (weekNumber) => {
     const weekId = routineSchedule[weekNumber]._id
@@ -41,9 +41,6 @@ export const RoutineScheduleDnd = ({
       }, 3000)
     }
   }
-
-
-    console.log({routineSchedule})
 
 
   return (
@@ -94,7 +91,7 @@ const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
   currentSetGroups: state.setGroupReducer.currentSetGroups,
-  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
+  currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
   error_message: state.weekReducer.error_message,
   crudingWeek: state.weekReducer.crudingWeek
 })
