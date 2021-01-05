@@ -1,5 +1,5 @@
 import * as constants from './index'
-import { getSetGroupById, getSetGroups, updateSetGroup, createSetGroup } from '../3_APIs/setGroupApi'
+import { getSetGroupById, getSetGroups, updateSetGroup, createSetGroup, deleteSetGroup } from '../3_APIs/setGroupApi'
 const generalErrorMessage = "Something went wrong with the request."
 
 export const setCurrentSetGroup = (setGroup) => dispatch => {
@@ -20,6 +20,19 @@ export const clearCreateSetGroupData = () => dispatch => {
 
 export const clearCurrentSetGroup = () =>  dispatch => {
   dispatch({type: constants.CLEAR_CURRENT_SET_GROUP})
+}
+
+export const clearChosenExercises = () => dispatch => {
+  dispatch({type: constants.CLEAR_CHOSEN_EXERCISES})
+}
+
+export const fullResetCreateSetGroup = () => dispatch => {
+  dispatch({type: constants.CLEAR_CREATE_SET_GROUP_DATA})
+  dispatch({type: constants.CLEAR_CHOSEN_EXERCISES})
+  dispatch({type: constants.CLEAR_CURRENT_SET_GROUP})
+  dispatch({type: constants.CLEAR_EXERCISE_SEARCH_RESULTS})
+  dispatch({type: constants.CLEAR_CURRENT_WEEK})
+
 }
 
 export const lockInType = (setGroupType) => dispatch => {
@@ -107,3 +120,24 @@ export const createNewSetGroup = (newSetGroup) => dispatch => {
 
   })
 }
+
+export const destroySetGroup = (setGroupId) => dispatch => {
+  dispatch({type: constants.DELETING_SET_GROUP})
+  deleteSetGroup(setGroupId)
+  .then(response => {
+    if(response.success){
+      dispatch({type: constants.DELETE_SET_GROUP_SUCCESS})
+      return true
+    }
+
+    if(response.error_message){
+      dispatch({type: constants.DELETE_SET_GROUP_FAIL, payload: response.error_message})
+      return false
+    }
+
+    dispatch({type: constants.DELETE_SET_GROUP_FAIL, payload: response.error_message})
+      return false
+
+  })
+}
+

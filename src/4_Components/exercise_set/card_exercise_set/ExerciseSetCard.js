@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Card from 'react-bootstrap/Card'
-import ProgressBar from 'react-bootstrap/ProgressBar'
-import IFrame from '../../iframe/IFrame'
 
-export const ExerciseSetCard = ({exerciseSet, setNumber}) => {
+export const ExerciseSetCard = ({
+  exerciseSet, 
+  setNumber
+}) => {
 
   console.log(Object.keys(exerciseSet))
 
@@ -56,7 +57,7 @@ export const ExerciseSetCard = ({exerciseSet, setNumber}) => {
 }
 
 const mapStateToProps = (state) => ({
-  
+
 })
 
 const mapDispatchToProps = {
