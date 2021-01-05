@@ -2,18 +2,17 @@ import React from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
-import {fetchRoutineById} from '../../../1_Actions/routineActions'
-import {currentRoutineRefreshWkSgEsEx} from '../../../3_APIs/queryStrings'
+import {fetchFlattenedRoutine} from '../../../1_Actions/routineActions'
 import {createNewSetGroup, fullResetCreateSetGroup} from '../../../1_Actions/setGroupActions'
 import {createNewExerciseSets, setCurrentSetGroupSets} from '../../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
 import {GiBiceps} from 'react-icons/gi'
 
 export const CreateSetGroupBtn = ({
-  fetchRoutineById,
+  fetchFlattenedRoutine,
   currentRoutine,
   currentSetGroup,
-  currentSetGroupSets,
+  currentExerciseSets,
   createNewSetGroup,
   createNewExerciseSets,
   fullResetCreateSetGroup,
@@ -30,7 +29,7 @@ export const CreateSetGroupBtn = ({
     console.log({newSetGroupResponse})
     if(newSetGroupResponse.success){
 
-      const setsWithSetGroupAndExerciseIds = currentSetGroupSets.map(set=>{
+      const setsWithSetGroupAndExerciseIds = currentExerciseSets.map(set=>{
         return{
           ...set,
           exercise: set.exercise._id,
@@ -47,9 +46,10 @@ export const CreateSetGroupBtn = ({
 
       // Want to manually update the weeks, set_groups and exercise_sets on the current routine
       // will need to populate the newly created exercise_sets with their exercises. 
+      alert(newExerciseSetsResponse.success)
       if(newExerciseSetsResponse.success){
         const {_id, name, slug} = currentRoutine
-        fetchRoutineById(_id, currentRoutineRefreshWkSgEsEx)
+        fetchFlattenedRoutine(_id)
         hisotry.push(`/view-routine/${_id}/${slug ? slug : name}`)
         fullResetCreateSetGroup()
       }
@@ -72,7 +72,7 @@ export const CreateSetGroupBtn = ({
 const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
   createSetGroupData: state.setGroupReducer.createSetGroupData,
   currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
   set_group_error_message: state.setGroupReducer.error_message,
@@ -80,7 +80,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  fetchRoutineById,
+  fetchFlattenedRoutine,
   setCurrentSetGroupSets,
   createNewSetGroup,
   createNewExerciseSets,

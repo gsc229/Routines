@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {destroyWeek, setCurrentWeek} from '../../1_Actions/weekActions'
-import {fetchRoutineById} from '../../1_Actions/routineActions'
+import {saveSetGroupChanges} from '../../1_Actions/setGroupActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
-import {currentRoutineRefreshWkSgEsEx} from '../../3_APIs/queryStrings'
 import {routineScheduleConstructor} from './routineScheduleConstructor'
 import {onSetGroupDragEnd} from './scheduleHelpers'
 import {DragDropContext} from 'react-beautiful-dnd'
@@ -14,11 +13,13 @@ import DroppableDay from './DroppableDay'
 import Button from 'react-bootstrap/Button'
 
 export const RoutineScheduleDnd = ({
-  weeks, 
   currentRoutine,
+  currentWeeks,
+  currentSetGroups,
+  currentExerciseSets,
   destroyWeek,
   setCurrentWeek,
-  set_groups,
+  saveSetGroupChanges,
   error_message,
   crudingWeek,
   clearErrorMessage
@@ -27,31 +28,32 @@ export const RoutineScheduleDnd = ({
   const [routineSchedule, setRoutineSchedule] = useState({})
 
   useEffect(async () => {
-    setRoutineSchedule(routineScheduleConstructor(set_groups, weeks))
-  }, [set_groups, weeks])
+    setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentExerciseSets))
+  }, [currentSetGroups, currentWeeks, currentExerciseSets, currentWeeks])
 
   const handleDestroyWeek  = async (weekNumber) => {
-    const destroySuccess = await destroyWeek(routineSchedule[weekNumber])
-    if(destroySuccess){
-      fetchRoutineById(currentRoutine._id, currentRoutineRefreshWkSgEsEx)
-    } else{ 
+    const weekId = routineSchedule[weekNumber]._id
+    const destroyedWeekResponse = await destroyWeek(weekId)
+    if(!destroyedWeekResponse.success){ 
       alert(error_message)
       setTimeout(() => {
         clearErrorMessage()
       }, 3000)
     }
   }
+
+
     
 
 
   return (
       <div 
       className='routine-schedule-dnd'>
-      {!set_groups && <DarkSpinner />}
+      {!currentSetGroups && <DarkSpinner />}
       {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
-      {set_groups && !crudingWeek && 
+      {currentSetGroups && !crudingWeek && 
       <DragDropContext 
-       onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, setRoutineSchedule)}>
+       onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
         return(
           <Container
@@ -89,9 +91,10 @@ export const RoutineScheduleDnd = ({
 }
 
 const mapStateToProps = (state) => ({
-  weeks: state.routineReducer.currentRoutine.weeks,
   currentRoutine: state.routineReducer.currentRoutine,
-  set_groups: state.routineReducer.currentRoutine.set_groups,
+  currentWeeks: state.weekReducer.currentWeeks,
+  currentSetGroups: state.setGroupReducer.currentSetGroups,
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
   error_message: state.weekReducer.error_message,
   crudingWeek: state.weekReducer.crudingWeek
 })
@@ -99,6 +102,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   destroyWeek,
   setCurrentWeek,
+  saveSetGroupChanges,
   clearErrorMessage
 }
 

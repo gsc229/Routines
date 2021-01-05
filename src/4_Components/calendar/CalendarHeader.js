@@ -2,10 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Navbar from 'react-bootstrap/Navbar'
 import {Link} from 'react-router-dom'
-import {setCurrentRoutine, fetchRoutineById} from '../../1_Actions/routineActions'
-import {currentRoutineRefreshWkSgEsEx} from '../../3_APIs/queryStrings'
+import {setCurrentRoutine, fetchFlattenedRoutine} from '../../1_Actions/routineActions'
 
-const CalendarHeader = ({value, setValue, routine, fetchRoutineById}) => {
+const CalendarHeader = ({value, setValue, routine, fetchFlattenedRoutine}) => {
 
   function currMonthName(){
     return value.format("MMMM")
@@ -25,7 +24,7 @@ const CalendarHeader = ({value, setValue, routine, fetchRoutineById}) => {
 
 
   const handleEditScheduleClick = () => {
-    fetchRoutineById(routine._id, currentRoutineRefreshWkSgEsEx)
+    fetchFlattenedRoutine(routine._id)
   }
 
   const dayOfWeek = ["Su","Mo","Tu","We","Th","Fr","Sa"] 
@@ -70,7 +69,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setCurrentRoutine,
-  fetchRoutineById
+  fetchFlattenedRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarHeader)

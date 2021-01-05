@@ -1,5 +1,5 @@
 import * as constants from '../1_Actions'
-import {updateRoutine, createRoutine, getRoutines, getRoutineById} from '../3_APIs/routinesApi'
+import {updateRoutine, createRoutine, getRoutines, getRoutineById, getFlattenedRoutine, deleteRoutine} from '../3_APIs/routinesApi'
 
 const generalErrorMessage = "Something went wrong with the request."
 
@@ -39,6 +39,24 @@ export const fetchRoutines = (queryString) => dispatch => {
    
   })
 }
+
+export const fetchFlattenedRoutine = (routineId) => dispatch => {
+  dispatch({type: constants.FETCHING_FLATTENED_ROUTINE})
+  return getFlattenedRoutine(routineId)
+  .then(response=> {
+    if(response.success){
+      dispatch({type: constants.FETCH_FLATTENED_ROUTINE_SUCCESS, payload: response.data})
+      return response
+    } 
+    if(response.error_message){
+      dispatch({type: constants.FETCH_FLATTENED_ROUTINE_FAIL, payload: response.error_message})
+      return false
+    } 
+      dispatch({type: constants.FETCH_FLATTENED_ROUTINE_FAIL, payload: generalErrorMessage })
+      return false
+  })
+}
+
 
 export const fetchRoutineById = (routineId, queryString) => dispatch => {
   dispatch({type: constants.FETCHING_ROUTINE})
@@ -94,4 +112,26 @@ export const saveRoutineChanges = (routineId, updates) => dispatch => {
   })
 
 }
+
+export const destroyRoutine = (routineId) => dispatch => {
+  dispatch({type: constants.DELETING_ROUTINE})
+  return deleteRoutine(routineId)
+  .then(response => {
+    if(response.success){
+      const payload = response.data._id ? response.data : routineId
+      dispatch({type: constants.DELETE_ROUTINE_SUCCESS, payload})
+      return response
+    }
+    if(response.error_message){
+      dispatch({type: constants.DELETE_ROUTINE_FAIL, payload: response.error_message})
+      return false
+    }
+
+    dispatch({type: constants.DELETE_ROUTINE_FAIL, payload: generalErrorMessage})
+    return false
+
+  })
+}
+
+
 

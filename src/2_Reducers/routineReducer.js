@@ -71,6 +71,23 @@ const reducer = (state=initialState, action) => {
         userRoutines: action.payload.data,
         routinePagination: action.payload.routinePagination
       }
+    case constants.FETCHING_FLATTENED_ROUTINE:
+      return{
+        ...state,
+        crudingRoutine: 'fetching-routine'
+      }
+    case constants.FETCH_FLATTENED_ROUTINE_SUCCESS:
+      return{
+        ...state,
+        crudingRoutine: false,
+        currentRoutine: action.payload.routine
+      }
+    case constants.FETCH_FLATTENED_ROUTINE_FAIL:
+      return{
+        ...state,
+        crudingRoutine: false,
+        error_message: action.payload
+      }
     case constants.FETCHING_ROUTINE:
       return {
         ...state,
@@ -151,79 +168,6 @@ const reducer = (state=initialState, action) => {
       ...state,
       error_message: ''
     }
-    /* ================================  WEEK ACTIONS =============================== */
-    /* ================================  WEEK ACTIONS =============================== */
-    /* ================================  WEEK ACTIONS =============================== */
-    case constants.CREATING_WEEK:
-      return{
-        ...state,
-        crudingRoutine: "creating-week"
-      }
-    case constants.CREATE_WEEK_SUCCESS:
-      return{
-        ...state,
-        crudingRoutine: false,
-        currentWeek: action.payload,
-        currentRoutine: {
-          ...state.currentRoutine,
-          weeks: [...state.currentRoutine.weeks, action.payload]
-        }
-      }
-    case constants.CREATE_WEEK_FAIL:
-      return{
-        ...state,
-        crudingRoutine: false,
-        error_message: action.payload
-      }
-    case constants.UPDATING_WEEK:
-      return{
-        ...state,
-        crudingRoutine: "updating-week"
-      }
-    case constants.UPDATE_WEEK_SUCCESS:
-      return{
-        ...state,
-        crudingRoutine: false,
-        currentWeek: action.payload,
-        currentRoutine:{
-          ...state.currentRoutine,
-          weeks: [...state.currentRoutine.weeks.map(week => week._id = action.payload._id ? action.payload._id : week)]
-        } 
-      }
-    case constants.UPDATE_WEEK_FAIL:
-      return{
-        ...state,
-        crudingRoutine: false,
-        error_message: action.payload
-      }
-    case constants.DELETING_WEEK:
-      return{
-        ...state,
-        crudingRoutine: "deleting-week"
-      }
-    case constants.DELETE_WEEK_SUCCESS:
-      return{
-        ...state,
-        crudingRoutine: false,
-        currentWeek: initialState.currentWeek,
-        currentRoutine: {
-          ...state.currentRoutine,
-          weeks: [...state.currentRoutine.weeks.filter(week => {
-            return week._id !== action.payload._id
-          })]
-        }
-      }
-    case constants.DELETE_WEEK_FAIL:
-      return{
-        ...state,
-        crudingRoutine: false,
-        error_message: action.payload
-      }
-    /* ================================  SET GROUP ACTIONS =============================== */
-    /* ================================  SET GROUP ACTIONS =============================== */
-    /* ================================  SET GROUP ACTIONS =============================== */
-    
-
     case constants.LOG_OUT:
       return {...initialState}
 

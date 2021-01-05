@@ -1,9 +1,6 @@
-import {updateSetGroup} from '../../3_APIs/setGroupApi'
-
-export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSchedule) => {
+export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupChanges, setRoutineSchedule) => {
 
   const {destination, source} = result
-  console.log({destination, source})
   if(!destination) return
 
   if(destination.droppableId === source.droppableId && destination.index === source.index) return
@@ -54,8 +51,8 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
     })
     
 
-    updateSetGroup(removed._id, removed)
-    return 
+    
+  return saveSetGroupChanges(removed._id, removed) 
  
 } else if(sourceWeek === destinationWeek && (sourceDay !== destinationDay)){
 
@@ -88,8 +85,8 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
     }
   })
 
-  updateSetGroup(removed._id, removed)
-  return
+  
+  return saveSetGroupChanges(removed._id, removed)
    
 } else if(sourceWeek === destinationWeek && sourceDay === destinationDay){
     const sameDaySourceAndDestinationLocation = routineSchedule[sourceWeek][sourceDay]
@@ -109,8 +106,8 @@ export const onSetGroupDragEnd = async (result, routineSchedule, setRoutineSched
       }
     })
 
-    updateSetGroup(removed._id, removed)
-    return
+    
+    return saveSetGroupChanges(removed._id, removed)
   }
 
 }

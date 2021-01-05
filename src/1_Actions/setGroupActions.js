@@ -126,17 +126,17 @@ export const destroySetGroup = (setGroupId) => dispatch => {
   deleteSetGroup(setGroupId)
   .then(response => {
     if(response.success){
-      dispatch({type: constants.DELETE_SET_GROUP_SUCCESS})
-      return true
+      const payload = response.data._id ? response.data : setGroupId
+      dispatch({type: constants.DELETE_SET_GROUP_SUCCESS, payload})
+      return response
     }
-
     if(response.error_message){
       dispatch({type: constants.DELETE_SET_GROUP_FAIL, payload: response.error_message})
       return false
     }
 
-    dispatch({type: constants.DELETE_SET_GROUP_FAIL, payload: response.error_message})
-      return false
+    dispatch({type: constants.DELETE_SET_GROUP_FAIL, payload: generalErrorMessage})
+    return false
 
   })
 }
