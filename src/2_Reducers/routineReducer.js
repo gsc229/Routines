@@ -152,10 +152,12 @@ const reducer = (state=initialState, action) => {
         crudingRoutine: "deleting"
       }
     case constants.DELETE_ROUTINE_SUCCESS:
+      const routineId = action.payload._id ? action.payload._id : action.payload
       return{
         ...state,
         crudingRoutine: false,
-        currentRoutine: initialState.currentRoutine
+        currentRoutine: initialState.currentRoutine,
+        userRoutines: [...state.userRoutines.filter(routine => routine._id !== routineId)]
       }
     case constants.DELETE_ROUTINE_FAIL:
       return{

@@ -43,7 +43,7 @@ export const RoutineScheduleDnd = ({
   }
 
 
-    
+    console.log({routineSchedule})
 
 
   return (
@@ -61,7 +61,7 @@ export const RoutineScheduleDnd = ({
           className='week-container'>
             <div
             className='week-container-header'>
-              <h5>{currentRoutine.name} - Week: {weekNumber}</h5>
+              <h5>{currentRoutine.name} - Week: {weekNumber} {routineSchedule[weekNumber]._id}</h5>
               <Button 
                 onClick={() => handleDestroyWeek(weekNumber)}
                 variant='danger'>Delete Week

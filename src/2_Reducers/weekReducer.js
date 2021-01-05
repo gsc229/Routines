@@ -57,7 +57,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingWeek: false,
-        currentWeeks: action.payload.weeks
+        currentWeeks: action.payload.weeks.sort((a, b) => new Date(a.created_at).getSeconds() - new Date(b.created_at).getSeconds())
       }
     case constants.FETCH_FLATTENED_ROUTINE_FAIL:
       return{
@@ -81,7 +81,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingWeek: false,
-        currentRoutineWeeks: action.payload
+        currentRoutineWeeks: action.payload.sort((a, b) => b.created_at - a.created_at)
       }
     case constants.FETCHING_WEEK:
       return{
@@ -110,7 +110,9 @@ const reducer = (state=initialState, action) => {
         ...state,
         crudingWeek: false,
         currentWeek: action.payload,
-        currentWeeks: [...state.currentWeeks, action.payload]
+        currentWeeks: [
+          ...state.currentWeeks, action.payload
+        ]
       }
     case constants.CREATE_WEEK_FAIL:
       return{
@@ -128,7 +130,9 @@ const reducer = (state=initialState, action) => {
         ...state,
         crudingWeek: false,
         currentWeek: action.payload,
-        currentRoutine: [...state.currentWeeks.map(week => week._id = action.payload._id ? action.payload._id : week)]
+        currentRoutine: [
+          ...state.currentWeeks.map(week => week._id = action.payload._id ? action.payload._id : week)
+        ]
       }
     case constants.UPDATE_WEEK_FAIL:
       return{

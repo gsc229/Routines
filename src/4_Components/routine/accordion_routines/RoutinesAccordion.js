@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges} from '../../../1_Actions/routineActions'
+import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges, destroyRoutine} from '../../../1_Actions/routineActions'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
@@ -13,10 +13,12 @@ import SaveDiscardExpandBtnGroup from '../../buttons/SaveDiscardExpandBtnGroup'
 import CreateRoutineForm from '../form_routine/RoutineInfoForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
 
+
 export const RoutinesAccordion = ({
   userRoutines,
   currentRoutine,
   clearCurrentRoutine, 
+  destroyRoutine,
   setCurrentRoutine,
   saveRoutineChanges,
   crudingRoutine
@@ -71,6 +73,7 @@ export const RoutinesAccordion = ({
   const showDetails = (routine) => {
     return (
       <ul className='list-group'>
+        <Button onClick={() => destroyRoutine(routine._id)}>DELETE ROUTINE</Button>
         <li><strong>Category:</strong> {routine.category ? routine.category : 'none chosen'}</li>
         <li><strong>Difficulty: </strong>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</li>
         <li><strong>Muscle Group: </strong>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</li>
@@ -129,8 +132,8 @@ export const RoutinesAccordion = ({
               />}
 
               </div>
-
-              {!editingMode && !showSpinner &&  showDetails(routine)}
+              {!editingMode && !showSpinner &&  
+              showDetails(routine)}
               {showSpinner && <DarkSpinner style={{marginBottom: '50px', height: '300px'}} />}
 
               {editingMode && currentRoutine._id === routine._id && !crudingRoutine &&
@@ -162,7 +165,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   clearCurrentRoutine,
   setCurrentRoutine,
-  saveRoutineChanges
+  saveRoutineChanges,
+  destroyRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutinesAccordion)
