@@ -15,6 +15,10 @@ export const SetGroup = ({
   destroySetGroup
 }) => {
 
+  const handleDeleteSetGroup = () => {
+    destroySetGroup(set_group._id)
+  }
+
   return (
     <Card
     text={!isDragging && 'white'}
@@ -40,7 +44,9 @@ export const SetGroup = ({
       </div>
       <div className="delete-btn-container">
         <OverlayTrigger overlay={<ToolTip>Delete set group</ToolTip>}>
-          <RiDeleteBin5Line className='delete-icon'/>
+          <RiDeleteBin5Line 
+          onClick={handleDeleteSetGroup}
+          className='delete-icon'/>
         </OverlayTrigger>
 
       </div>

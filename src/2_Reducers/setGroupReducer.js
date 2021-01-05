@@ -1,3 +1,4 @@
+import { act } from 'react-dom/test-utils'
 import * as constants from '../1_Actions'
 
 
@@ -96,6 +97,16 @@ const reducer = (state=initialState, action) => {
         [action.payload.key]: action.payload.value
       }
     }
+  case constants.ADD_TO_CHOSEN_EXERCISES:
+    return{
+      ...state,
+      chosenExercises: [...state.chosenExercises, action.payload]
+    }
+  case constants.REMOVE_FROM_CHOSEN_EXERCISES:
+    return{
+      ...state,
+      chosenExercises: [...state.chosenExercises.filter(exercise => exercise._id !== action.payload)]
+    }
   case constants.CLEAR_CURRENT_SET_GROUP:
     return{
       ...state,
@@ -116,6 +127,68 @@ const reducer = (state=initialState, action) => {
       ...state,
       lockedInType: action.payload
     }
+  /* ASYNC ACTIONS */
+  case constants.CREATING_SET_GROUP:
+    return{
+      ...state,
+      crudingSetGroup: 'creating-set-group'
+    }
+  case constants.CREATE_SET_GROUP_SUCCESS:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      currentSetGroup: action.payload,
+      currentSetGroups: [...state.currentSetGroups, action.payload]
+    }
+  case constants.CREATE_SET_GROUP_FAIL: 
+    return{
+      ...state,
+      crudingSetGroup: false,
+      error_message: action.payload
+    }
+  case constants.UPDATING_SET_GROUP:
+    return{
+      ...state,
+      crudingSetGroup: 'updating-set-group'
+    }
+  case constants.UPDATE_SET_GROUP_SUCCESS:
+    return{
+      ...state,
+      currentSetGroup: action.payload,
+      currentSetGroups: [
+        ...state.currentSetGroups.map(setGroup => setGroup._id === action.payload._id ? action.payload : setGroup)
+      ]
+    }
+  case constants.UPDATE_SET_GROUP_FAIL:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      error_message: action.payload
+    }
+  case constants.DELETING_SET_GROUP:
+    return{
+      ...state,
+      crudingSetGroup: 'deleting-set-group'
+    }
+  case constants.DELETE_SET_GROUP_FAIL:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      error_message: action.payload
+    }
+  case constants.DELETE_SET_GROUP_SUCCESS:
+    const setGroupId = action.payload._id ? action.payload._id : action.payload
+    return{
+      ...state,
+      crudingSetGroup: false,
+      currentSetGroups: [
+        ...state.currentSetGroups
+        .filter(setGroup => setGroup._id !== setGroupId)
+      ]
+    }
+  
+
+  // interdependant actions
   case constants.FETCHING_FLATTENED_ROUTINE:
     return{
       ...state,
@@ -133,33 +206,18 @@ const reducer = (state=initialState, action) => {
       crudingSetGroup: false,
       error_message: action.payload
     }
-  case constants.ADD_TO_CHOSEN_EXERCISES:
+  case constants.DELETE_WEEK_SUCCESS:
+    const weekId = action.payload._id ? action.payload._id : action.payload
     return{
       ...state,
-      chosenExercises: [...state.chosenExercises, action.payload]
+      currentSetGroups: [
+        ...state.currentSetGroups
+        .filter(setGroup => setGroup.week !== weekId)
+      ]
     }
-  case constants.REMOVE_FROM_CHOSEN_EXERCISES:
-    return{
-      ...state,
-      chosenExercises: [...state.chosenExercises.filter(exercise => exercise._id !== action.payload)]
-    }
-  case constants.CREATING_SET_GROUP:
-    return{
-      ...state,
-      crudingSetGroup: 'creating-set-group'
-    }
-  case constants.CREATE_SET_GROUP_SUCCESS:
-    return{
-      ...state,
-      crudingSetGroup: false,
-      currentSetGroup: action.payload
-    }
-  case constants.CREATE_SET_GROUP_FAIL: 
-    return{
-      ...state,
-      crudingSetGroup: false,
-      error_message: action.payload
-    }
+
+
+
   case constants.CLEAR_ERROR_MESSAGE:
     return{
       ...state,
@@ -167,23 +225,6 @@ const reducer = (state=initialState, action) => {
     }
   case constants.LOG_OUT:
     return initialState
-
-  case constants.DELETING_SET_GROUP:
-    return{
-      ...state,
-      crudingSetGroup: 'deleting-set-group'
-    }
-  case constants.DELETE_SET_GROUP_FAIL:
-    return{
-      ...state,
-      crudingSetGroup: false,
-      error_message: action.payload
-    }
-  case constants.DELETE_SET_GROUP_SUCCESS:
-    return{
-      ...state,
-      crudingSetGroup: false
-    }
 
   default: 
     return state

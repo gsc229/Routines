@@ -29,8 +29,6 @@ export const DroppableDay = ({
     7: "Sa"
   }
 
-  console.log({weekNumber, dayNumber, name, routineSchedule, currentRoutine})
-
   const handleAddSetsClick = () => {
     fullResetCreateSetGroup()
     setCurrentWeek(routineSchedule[weekNumber])

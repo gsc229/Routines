@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {fetchRoutineById} from '../../1_Actions/routineActions'
+import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
 import {createNewWeek} from '../../1_Actions/weekActions'
-import {currentRoutineRefreshWkSgEsEx} from '../../3_APIs/queryStrings'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import RoutineScheduleDnd from '../../4_Components/dnd_routine_schedule/RoutineScheduleDnd'
@@ -12,22 +11,23 @@ import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 
 export const ViewRoutinePage = ({
   currentRoutine, 
+  currentWeeks,
   crudingRoutine,
-  fetchRoutineById, 
+  fetchFlattenedRoutine, 
   createNewWeek,
   userId
   
 }) => {
   
   const handleRefresh = () => {
-    fetchRoutineById(currentRoutine._id, currentRoutineRefreshWkSgEsEx)
+    fetchFlattenedRoutine(currentRoutine._id)
   }
   
   const addWeek = async () => {
     const credentials = {
       user: userId,
       routine: currentRoutine._id,
-      week_number: currentRoutine.weeks.length + 1
+      week_number: currentWeeks.length + 1
     }
     console.log({credentials})
     createNewWeek(credentials)
@@ -35,7 +35,7 @@ export const ViewRoutinePage = ({
   }
 
   const noWeeksMessage = () => {
-    return currentRoutine.weeks && !currentRoutine.weeks.length > 0 && !crudingRoutine &&
+    return currentWeeks && !currentWeeks.length > 0 && !crudingRoutine &&
       <div className='no-weeks-message'>
         <p>You don't currently have anything scheduled for this routine.<br/>Start by adding a week: </p>
         <p> </p>
@@ -43,7 +43,7 @@ export const ViewRoutinePage = ({
   }
 
   const showWeeks = () => {
-    return currentRoutine.weeks && currentRoutine.weeks.length > 0 && !crudingRoutine &&
+    return currentWeeks && currentWeeks.length > 0 && !crudingRoutine &&
       <div>
         <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
         <RoutineScheduleDnd />
@@ -70,11 +70,12 @@ export const ViewRoutinePage = ({
 const mapStateToProps = (state) => ({
   crudingRoutine: state.routineReducer.crudingRoutine,
   currentRoutine: state.routineReducer.currentRoutine,
+  currentWeeks: state.weekReducer.currentWeeks,
   userId: state.userReducer.user._id
 })
 
 const mapDispatchToProps = {
-  fetchRoutineById,
+  fetchFlattenedRoutine,
   createNewWeek
 }
 

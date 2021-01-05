@@ -19,7 +19,7 @@ export const getRoutines = (querString) => {
 
 export const getFlattenedRoutine = (routineId) => {
   return axiosWihAuth()
-  .get(`/routines/full-routine/${routineId}`)
+  .get(`/routines/flattened-routine/${routineId}`)
   .then(getFlattenedRoutineResponse => {
     console.log({getFlattenedRoutineResponse})
     return getFlattenedRoutineResponse.data

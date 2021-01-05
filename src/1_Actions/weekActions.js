@@ -76,15 +76,16 @@ export const destroyWeek = (weekId) => dispatch => {
   return deleteWeek(weekId)
   .then(response => {
     if(response.success){
-    dispatch({type: constants.DELETE_WEEK_SUCCESS, payload: weekId})
-    return true
+    const payload = response.data._id ? response.data : weekId
+    dispatch({type: constants.DELETE_WEEK_SUCCESS, payload})
+    return response
     } 
     if(response.error_message){
       dispatch({type: constants.DELETE_WEEK_FAIL, payload: response.error_message})
       return false
     } 
     dispatch({type: constants.DELETE_WEEK_FAIL, payload: generalErrorMessage})
-    return false
+      return false
   })
 
 }

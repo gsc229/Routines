@@ -2,15 +2,14 @@ import React from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
-import {fetchRoutineById} from '../../../1_Actions/routineActions'
-import {currentRoutineRefreshWkSgEsEx} from '../../../3_APIs/queryStrings'
+import {fetchFlattenedRoutine} from '../../../1_Actions/routineActions'
 import {createNewSetGroup, fullResetCreateSetGroup} from '../../../1_Actions/setGroupActions'
 import {createNewExerciseSets, setCurrentSetGroupSets} from '../../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
 import {GiBiceps} from 'react-icons/gi'
 
 export const CreateSetGroupBtn = ({
-  fetchRoutineById,
+  fetchFlattenedRoutine,
   currentRoutine,
   currentSetGroup,
   currentExerciseSets,
@@ -50,7 +49,7 @@ export const CreateSetGroupBtn = ({
       alert(newExerciseSetsResponse.success)
       if(newExerciseSetsResponse.success){
         const {_id, name, slug} = currentRoutine
-        fetchRoutineById(_id, currentRoutineRefreshWkSgEsEx)
+        fetchFlattenedRoutine(_id)
         hisotry.push(`/view-routine/${_id}/${slug ? slug : name}`)
         fullResetCreateSetGroup()
       }
@@ -81,7 +80,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  fetchRoutineById,
+  fetchFlattenedRoutine,
   setCurrentSetGroupSets,
   createNewSetGroup,
   createNewExerciseSets,

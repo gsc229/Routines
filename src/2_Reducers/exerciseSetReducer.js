@@ -2,7 +2,7 @@ import * as constants from '../1_Actions'
 
 
 const initialState = {
-  crudingExerciseSets: false,
+  crudingExerciseSet: false,
   error_message: '',
   currentExerciseSets: [],
 
@@ -60,45 +60,6 @@ const reducer = (state=initialState, action) => {
         }
       }
       }
-    case constants.FETCHING_FLATTENED_ROUTINE:
-      return{
-        ...state,
-        crudingExerciseSet: 'fetching-exercise-sets'
-      }
-    case constants.FETCH_FLATTENED_ROUTINE_SUCCESS:
-      return{
-        ...state,
-        crudingExerciseSet: false,
-        currentExerciseSets: action.payload.exercis_sets
-      }
-    case constants.FETCH_FLATTENED_ROUTINE_FAIL:
-      return{
-        ...state,
-        crudingExerciseSet: false,
-        error_message: action.payload
-      }
-    case constants.CREATING_EXERCISE_SETS:
-      return{
-        ...state,
-        crudingExerciseSet: 'creating-exercise-sets'
-      }
-    case constants.CREATE_EXERCISE_SETS_SUCCESS:
-      return{
-        ...state,
-        crudingExerciseSet: false,
-        currentExerciseSets: action.payload
-      }
-    case constants.CREATE_EXERCISE_SETS_FAIL:
-      return{
-        ...state,
-        crudingExerciseSet: false,
-        error_message: action.payload
-      }
-    case constants.SET_CURRENT_SET_GROUP_SETS:
-      return{
-        ...state,
-        currentExerciseSets: [...action.payload]
-      }
     case constants.SET_CURRENT_EXERCISE_SET:
       return{
         ...state,
@@ -120,8 +81,91 @@ const reducer = (state=initialState, action) => {
     case constants.CLEAR_CURRENT_EXERCISE_SETS:
       return{
         ...state,
-        currentExerciseSets: initialState.currenSetGroupSets
+        currentExerciseSets: initialState.currentExerciseSets
       }
+
+    /* ASYNC   */
+    case constants.CREATING_EXERCISE_SETS:
+      return{
+        ...state,
+        crudingExerciseSet: 'creating-exercise-sets'
+      }
+    case constants.CREATE_EXERCISE_SETS_SUCCESS:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        currentExerciseSets: [...state.currentExerciseSets, action.payload]
+      }
+    case constants.CREATE_EXERCISE_SETS_FAIL:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        error_message: action.payload
+      }
+    case constants.UPDATING_EXERCISE_SET:
+      return{
+        ...state,
+        crudingExerciseSet: 'updating-exercise-set'
+      }
+    case constants.UPDATE_EXERCISE_SET_SUCCESS:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        currentExerciseSet: action.payload,
+        currentExerciseSets: [
+          ...state.currentExerciseSets.map(exSet => exSet._id === action.payload._id ? action.payload._id : exSet)
+        ]
+      }
+    case constants.UPDATE_EXERCISE_SET_FAIL:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        error_message: action.payload
+      }
+    
+    // interdependant
+    case constants.FETCHING_FLATTENED_ROUTINE:
+      return{
+        ...state,
+        crudingExerciseSet: 'fetching-exercise-sets'
+      }
+    case constants.FETCH_FLATTENED_ROUTINE_SUCCESS:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        currentExerciseSets: action.payload.exercise_sets
+      }
+    case constants.FETCH_FLATTENED_ROUTINE_FAIL:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        error_message: action.payload
+      }
+    case constants.DELETE_ROUTINE_SUCCESS:
+      return{
+        ...state,
+        currentExerciseSets: initialState.currentExerciseSets
+      }
+    case constants.DELETE_WEEK_SUCCESS:
+      const weekId = action.payload._id ? action.payload._id : action.payload
+      return{
+        ...state,
+        currentExerciseSets: [
+          state.currentExerciseSets.filter(exSet => exSet.week !== weekId)
+        ]
+      }
+    case constants.DELETE_SET_GROUP_SUCCESS:
+      const setGroupId = action.payload._id ? action.payload._id : action.payload
+      return{
+        ...state,
+        currentExerciseSets: [
+          ...state.currentExerciseSets.filter(exSet => exSet.set_group !== setGroupId)
+        ]
+      }
+
+
+
+    
     case constants.CLEAR_ERROR_MESSAGE:
       return{
         ...state,
