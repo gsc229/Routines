@@ -3,7 +3,7 @@ export const syncWeeksAndSetGroups = (currentWeeks, currentSetGroups, saveWeekCh
   currentWeeks.forEach(async (week, index) => {
     if(week.week_number !== (index + 1)){
 
-      alert(week.week_number + ' !== ' + (index + 1))
+      /* alert(week.week_number + ' !== ' + (index + 1)) */
       const updateWeekResponse = await saveWeekChanges(week._id, {week_number: (index + 1)})
 
       if(updateWeekResponse.success){

@@ -26,6 +26,7 @@ export const RoutineScheduleDnd = ({
   saveManySetGroupChanges,
   error_message,
   crudingWeek,
+  crudingSetGroup,
   clearErrorMessage
 }) => {
 
@@ -34,7 +35,7 @@ export const RoutineScheduleDnd = ({
   useEffect( async() => {
     await syncWeeksAndSetGroups(currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges)
     setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
-  }, [currentSetGroups, currentWeeks, currentRoutineSets, currentWeeks])
+  }, [currentWeeks, currentRoutineSets, currentWeeks])
 
   const handleDestroyWeek  = async (weekNumber) => {
     const weekId = routineSchedule[weekNumber]._id
@@ -53,6 +54,8 @@ export const RoutineScheduleDnd = ({
       className='routine-schedule-dnd'>
       {!currentSetGroups && <DarkSpinner />}
       {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
+      {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
+      {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text={'Syncing Schedule...'} />}
       {currentSetGroups && !crudingWeek && 
       <DragDropContext 
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
@@ -99,7 +102,8 @@ const mapStateToProps = (state) => ({
   currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
-  crudingWeek: state.weekReducer.crudingWeek
+  crudingWeek: state.weekReducer.crudingWeek,
+  crudingSetGroup: state.setGroupReducer.crudingSetGroup
 })
 
 const mapDispatchToProps = {
