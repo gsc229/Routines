@@ -149,7 +149,7 @@ const reducer = (state=initialState, action) => {
     case constants.DELETING_ROUTINE:
       return{
         ...state,
-        crudingRoutine: "deleting"
+        crudingRoutine: "deleting-routine"
       }
     case constants.DELETE_ROUTINE_SUCCESS:
       const routineId = action.payload._id ? action.payload._id : action.payload

@@ -55,7 +55,7 @@ export const RoutineScheduleDnd = ({
       {!currentSetGroups && <DarkSpinner />}
       {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
       {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
-      {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text={'Syncing Schedule...'} />}
+      {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
       {currentSetGroups && !crudingWeek && 
       <DragDropContext 
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>

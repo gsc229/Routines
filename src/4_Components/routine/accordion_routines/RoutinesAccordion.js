@@ -12,13 +12,13 @@ import Calendar from '../../calendar/Calendar'
 import SaveDiscardExpandBtnGroup from '../../buttons/SaveDiscardExpandBtnGroup'
 import CreateRoutineForm from '../form_routine/RoutineInfoForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
+import ConfirmDeleteModal from '../ConfirmDeleteModal'
 
 
 export const RoutinesAccordion = ({
   userRoutines,
   currentRoutine,
   clearCurrentRoutine, 
-  destroyRoutine,
   setCurrentRoutine,
   saveRoutineChanges,
   crudingRoutine
@@ -26,7 +26,13 @@ export const RoutinesAccordion = ({
 
   const [editingMode, setEditingMode] = useState(false)
   const [showSpinner, setshowSpinner] = useState(false)
+  const [modalShow, setModalShow] = useState(false)
+  const [routineForDeletion, setRoutineForDeletion] = useState('')
 
+  const spinnerText = {
+    'fetching-routines': 'Loading...',
+    'deleting-routine': 'Deleting Routine...'
+  }
 
   useEffect(() => {
     if(crudingRoutine === 'updating'){
@@ -73,7 +79,11 @@ export const RoutinesAccordion = ({
   const showDetails = (routine) => {
     return (
       <ul className='list-group'>
-        <Button onClick={() => destroyRoutine(routine._id)}>DELETE ROUTINE</Button>
+        <Button 
+        onClick={() => {
+          setModalShow(true)
+          setRoutineForDeletion(routine)
+        }}>DELETE ROUTINE</Button>
         <li><strong>Category:</strong> {routine.category ? routine.category : 'none chosen'}</li>
         <li><strong>Difficulty: </strong>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</li>
         <li><strong>Muscle Group: </strong>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</li>
@@ -87,8 +97,27 @@ export const RoutinesAccordion = ({
       </ul>  
     )
   }
+
+
+  const showConfirmDeleteModal = () => {
+    return(
+      
+      <ConfirmDeleteModal  
+      setModalShow={setModalShow}
+      modalShow={modalShow}
+      routine={routineForDeletion}
+      />
+    )
+  }
+
+
+
   return (
-    <Accordion defaultActiveKey={userRoutines[0]._id} className="routines-bank">
+    <Accordion /* defaultActiveKey={userRoutines[0]._id} */ className="routines-bank">
+
+      {modalShow && 
+      showConfirmDeleteModal()}
+      
       {userRoutines && userRoutines.map(routine=>
         {return (
         <Card bg="dark" key={routine._id}>
@@ -105,11 +134,12 @@ export const RoutinesAccordion = ({
           </Card.Header>
 
           <Accordion.Collapse eventKey={routine._id}>
+            {crudingRoutine ? <DarkSpinner text={spinnerText[crudingRoutine]} /> :
             <Card.Body>
 
             <div className='details-and-btns-container' style={{flexDirection: `${editingMode ? 'column' : 'row-reverse'}`}} >
               
-              {crudingRoutine && <DarkSpinner />}
+              
               <div className='edit-complete-expand-btns'>
               {!editingMode && !showSpinner && 
               <OverlayTrigger
@@ -142,14 +172,12 @@ export const RoutinesAccordion = ({
               discardCallback={() => setEditingMode(false)}
               showFinishLaterBtn={false}
               showHeader={false} />}
-
-
             </div>
             {!editingMode && 
             <Calendar
             routine={routine}
             className='manage-routines-calendar' />   }     
-            </Card.Body>
+            </Card.Body>}
           </Accordion.Collapse>
         </Card>)})}
       </Accordion>
@@ -166,7 +194,6 @@ const mapDispatchToProps = {
   clearCurrentRoutine,
   setCurrentRoutine,
   saveRoutineChanges,
-  destroyRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutinesAccordion)

@@ -1,3 +1,22 @@
+.confirm-delete-modal{
+  background-color: rgba($color: #000000, $alpha: .8);
+  color: white;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  .confirm-delete-inner{
+    background-color: red;
+    margin: auto;
+    position: relative;
+    top: 200px;
+    height: 50%;
+    width: 50%;
+  }
+}
+
 .manage-routines{
   //border: 1px solid yellow;
   height: 100%;
