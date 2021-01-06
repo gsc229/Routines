@@ -12,7 +12,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import SaveBtn from '../../buttons/SaveBtn'
 import DiscardBtn from '../../buttons/DiscardBtn'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
-
+import Alert from 'react-bootstrap/Alert'
 
 export const RoutineInfoForm = ({ 
   currentRoutine,
@@ -97,6 +97,7 @@ export const RoutineInfoForm = ({
       <Form.Group controlId="completeRoutineForm.Name">
         <Form.Label>Name</Form.Label>
         <Form.Control onChange={handleChange} name="name" value={name} type="text" placeholder="Required" />
+        {error_message && <Alert style={{marginTop: '10px'}} variant='danger'>{error_message}</Alert>}
       </Form.Group>
       
       <Form.Group controlId="completeRoutineForm.Category">

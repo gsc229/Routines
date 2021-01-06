@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
@@ -19,6 +19,8 @@ export const ManageRoutinesPage = ({
   userRoutines
 }) => {
 
+  
+
   const handleNewClick = () => {
      clearCurrentRoutine()
      history.push('/create-routine')
@@ -27,6 +29,8 @@ export const ManageRoutinesPage = ({
   useEffect(() => {
     fetchRoutines(`?user=${userId}&populate_weeks=true`)
   }, [])
+
+  
 
   return (
     <LayoutOne showTop={false}>
