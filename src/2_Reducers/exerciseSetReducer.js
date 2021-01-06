@@ -4,8 +4,8 @@ import * as constants from '../1_Actions'
 const initialState = {
   crudingExerciseSet: false,
   error_message: '',
-  currentExerciseSets: [],
-
+  currentRoutineSets: [],
+  currentSetGroupSets: [],
   currentExerciseSet: {
     exercise: null, // required
     routine: null, // required
@@ -40,6 +40,7 @@ const reducer = (state=initialState, action) => {
     case constants.SET_CURRENT_SET_GROUP:{
       return{
         ...state,
+        currentSetGroupSets: action.payload.exercise_sets || [],
         currentExerciseSet: {
           ...state.currentExerciseSet,
           routine: action.payload.routine,
@@ -65,6 +66,11 @@ const reducer = (state=initialState, action) => {
         ...state,
         currentExerciseSet: action.payload
       }
+    case constants.SET_CURRENT_SET_GROUP_SETS:
+      return{
+        ...state,
+        currentSetGroupSets: action.payload
+      }
     case constants.WRITING_EXERCISE_SET:
       return{
         ...state,
@@ -81,7 +87,7 @@ const reducer = (state=initialState, action) => {
     case constants.CLEAR_CURRENT_EXERCISE_SETS:
       return{
         ...state,
-        currentExerciseSets: initialState.currentExerciseSets
+        currentSetGroupSets: initialState.currentSetGroupSets
       }
 
     /* ASYNC   */
@@ -94,7 +100,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingExerciseSet: false,
-        currentExerciseSets: [...state.currentExerciseSets, action.payload]
+        currentSetGroupSets: action.payload
       }
     case constants.CREATE_EXERCISE_SETS_FAIL:
       return{
@@ -112,8 +118,8 @@ const reducer = (state=initialState, action) => {
         ...state,
         crudingExerciseSet: false,
         currentExerciseSet: action.payload,
-        currentExerciseSets: [
-          ...state.currentExerciseSets.map(exSet => exSet._id === action.payload._id ? action.payload._id : exSet)
+        currentSetGroupSets: [
+          ...state.currentSetGroupSets.map(exSet => exSet._id === action.payload._id ? action.payload._id : exSet)
         ]
       }
     case constants.UPDATE_EXERCISE_SET_FAIL:
@@ -133,7 +139,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingExerciseSet: false,
-        currentExerciseSets: action.payload.exercise_sets
+        currentRoutineSets: action.payload.exercise_sets
       }
     case constants.FETCH_FLATTENED_ROUTINE_FAIL:
       return{
@@ -144,23 +150,28 @@ const reducer = (state=initialState, action) => {
     case constants.DELETE_ROUTINE_SUCCESS:
       return{
         ...state,
-        currentExerciseSets: initialState.currentExerciseSets
+        currentSetGroupSets: initialState.currentSetGroupSets,
+        currentRoutineSets: initialState.currentRoutineSets
       }
     case constants.DELETE_WEEK_SUCCESS:
       const weekId = action.payload._id ? action.payload._id : action.payload
       return{
         ...state,
-        currentExerciseSets: [
-          state.currentExerciseSets.filter(exSet => exSet.week !== weekId)
+        currentRoutineSets: [
+          state.currentRoutineSets.filter(exSet => exSet.week !== weekId)
+        ],
+        currentSetGroupSets: [
+          state.currentSetGroupSets.filter(exSet => exSet.week !== weekId)
         ]
       }
     case constants.DELETE_SET_GROUP_SUCCESS:
       const setGroupId = action.payload._id ? action.payload._id : action.payload
       return{
         ...state,
-        currentExerciseSets: [
-          ...state.currentExerciseSets.filter(exSet => exSet.set_group !== setGroupId)
-        ]
+        currentRoutineSets: [
+          ...state.currentRoutineSets.filter(exSet => exSet.set_group !== setGroupId)
+        ],
+        currentSetGroupSets: initialState.currentSetGroupSets
       }
 
 

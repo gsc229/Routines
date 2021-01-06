@@ -52,13 +52,13 @@ export const createNewWeek = (newWeek) => dispatch => {
   })
 }
 
-export const saveWeekChanges = (updates) => dispatch => {
+export const saveWeekChanges = (weekId, updates) => dispatch => {
   dispatch({type: constants.UPDATING_WEEK})
-  return updateWeek(updates)
+  return updateWeek(weekId, updates)
   .then(response => {
     if(response.success){
-    dispatch({type: constants.UPDATE_WEEK_SUCCESS})
-    return true
+    dispatch({type: constants.UPDATE_WEEK_SUCCESS, payload: response.data})
+    return response
     } 
     if(response.error_message){
       dispatch({type: constants.UPDATE_WEEK_FAIL, payload: response.error_message})

@@ -54,10 +54,10 @@ export const saveExerciseSetChanges = (exerciseSetId, updates) => dispatch => {
   })
 }
 
-export const createNewExerciseSets = (newSetsPackage) => dispatch => {
-  // required ids are user, routine, set_group, week
+export const createNewExerciseSets = (newSetsArray) => dispatch => {
+  // required on each new set in the array are user, routine, set_group, and week ids 
   dispatch({type: constants.CREATING_EXERCISE_SETS})
-  return createMultipleExerciseSets(newSetsPackage)
+  return createMultipleExerciseSets(newSetsArray)
   .then(createNewExerciseSetsResponse => {
     if(createNewExerciseSetsResponse.success){
       dispatch({type: constants.CREATE_EXERCISE_SETS_SUCCESS, payload: createNewExerciseSetsResponse.data})

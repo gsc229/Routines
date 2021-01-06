@@ -1,5 +1,5 @@
 import * as constants from './index'
-import { getSetGroupById, getSetGroups, updateSetGroup, createSetGroup, deleteSetGroup } from '../3_APIs/setGroupApi'
+import { getSetGroupById, getSetGroups, updateSetGroup, updateManySetGroups, createSetGroup, deleteSetGroup } from '../3_APIs/setGroupApi'
 const generalErrorMessage = "Something went wrong with the request."
 
 export const setCurrentSetGroup = (setGroup) => dispatch => {
@@ -30,6 +30,7 @@ export const fullResetCreateSetGroup = () => dispatch => {
   dispatch({type: constants.CLEAR_CREATE_SET_GROUP_DATA})
   dispatch({type: constants.CLEAR_CHOSEN_EXERCISES})
   dispatch({type: constants.CLEAR_CURRENT_SET_GROUP})
+  dispatch({type: constants.CLEAR_CURRENT_EXERCISE_SETS})
   dispatch({type: constants.CLEAR_EXERCISE_SEARCH_RESULTS})
   dispatch({type: constants.CLEAR_CURRENT_WEEK})
 
@@ -101,6 +102,26 @@ export const saveSetGroupChanges = (setGroupId, updates) => dispatch => {
     return false
   })
 
+}
+
+export const saveManySetGroupChanges = (queryAndChanges) => dispatch => {
+  // {query: {week: 23487deeefaa9}, changes: {week_number: 2}}
+  dispatch({type: constants.UPDATING_MANY_SET_GROUPS})
+  return updateManySetGroups(queryAndChanges)
+  .then(response =>{
+    if(response.success){
+      dispatch({type: constants.UPDATE_MANY_SET_GROUPS_SUCCESS})
+      const queryString = `?week=${queryAndChanges.query.week}`
+      dispatch(fetchSetGroups(queryString))
+      return response
+    }
+    if(response.error_message){
+      dispatch({type: constants.UPDATE_MANY_SET_GROUPS_FAIL, payload: response.error_message})
+      return false
+    }
+    dispatch({type: constants.UPDATE_MANY_SET_GROUPS_FAIL, payload: generalErrorMessage})
+    return false
+  })
 }
 
 export const createNewSetGroup = (newSetGroup) => dispatch => {

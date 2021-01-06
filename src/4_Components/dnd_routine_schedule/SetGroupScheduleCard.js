@@ -1,19 +1,26 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import {destroySetGroup} from '../../1_Actions/setGroupActions'
+import {} from '../../'
 import Card from 'react-bootstrap/Card'
 import {BsGrid3X3Gap} from 'react-icons/bs'
-import {IoDuplicateOutline} from 'react-icons/io5'
 import {BsEye} from 'react-icons/bs'
 import {RiDeleteBin5Line} from 'react-icons/ri'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
+import DuplicateHereBtn from './DuplicateHereBtn'
+
 
 export const SetGroup = ({
   set_group, 
   isDragging,
-  destroySetGroup
+  destroySetGroup,
+  currentWeeks
 }) => {
+
+
+  
+
 
   const handleDeleteSetGroup = () => {
     destroySetGroup(set_group._id)
@@ -33,16 +40,19 @@ export const SetGroup = ({
           style={{marginRight: '10px', cursor: 'pointer'}} 
           />
         </OverlayTrigger>
-
-        <OverlayTrigger overlay={<ToolTip>Duplicate set group</ToolTip>}>
-          <IoDuplicateOutline
-            style={{cursor: 'pointer', marginRight: '10px'}}
-          />
-        </OverlayTrigger>
+        <DuplicateHereBtn 
+        set_group={set_group}/>
   
         <BsGrid3X3Gap />
       </div>
+      <p style={{fontSize: '12px'}}>
+        SG Week#{set_group.week_number} <br/> 
+        weekID: {set_group.week} <br/>
+        weekNumber: {currentWeeks.find(week => week._id === set_group.week).week_number}<br/>
+        weekIndex + 1: {currentWeeks.map(week => week._id).indexOf(set_group.week) + 1}
+      </p>
       <div className="delete-btn-container">
+
         <OverlayTrigger overlay={<ToolTip>Delete set group</ToolTip>}>
           <RiDeleteBin5Line 
           onClick={handleDeleteSetGroup}
@@ -61,7 +71,7 @@ export const SetGroup = ({
 }
 
 const mapStateToProps = (state) => ({
-  
+  currentWeeks: state.weekReducer.currentWeeks
 })
 
 const mapDispatchToProps = {

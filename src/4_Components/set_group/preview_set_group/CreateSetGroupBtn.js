@@ -12,7 +12,7 @@ export const CreateSetGroupBtn = ({
   fetchFlattenedRoutine,
   currentRoutine,
   currentSetGroup,
-  currentExerciseSets,
+  currentSetGroupSets,
   createNewSetGroup,
   createNewExerciseSets,
   fullResetCreateSetGroup,
@@ -24,29 +24,23 @@ export const CreateSetGroupBtn = ({
 
   const hisotry = useHistory()
   const handleCreateSetGroup = async () => {
-    console.log("CREATE NEW SET GROUP")
+
     const newSetGroupResponse = await createNewSetGroup(currentSetGroup)
-    console.log({newSetGroupResponse})
+
     if(newSetGroupResponse.success){
 
-      const setsWithSetGroupAndExerciseIds = currentExerciseSets.map(set=>{
+      const setsWithSetGroupAndExerciseIds = currentSetGroupSets.map(set=>{
         return{
           ...set,
           exercise: set.exercise._id,
           set_group: newSetGroupResponse.data._id
         }
       })
-      console.log({setsWithSetGroupAndExerciseIds})
-      const {routine, week} = newSetGroupResponse.data
-      const newExerciseSetsResponse = await createNewExerciseSets({
-        routine, 
-        week, 
-        set_group: newSetGroupResponse.data._id, 
-        newSetsArray: setsWithSetGroupAndExerciseIds})
+
+      const newExerciseSetsResponse = await createNewExerciseSets(setsWithSetGroupAndExerciseIds)
 
       // Want to manually update the weeks, set_groups and exercise_sets on the current routine
       // will need to populate the newly created exercise_sets with their exercises. 
-      alert(newExerciseSetsResponse.success)
       if(newExerciseSetsResponse.success){
         const {_id, name, slug} = currentRoutine
         fetchFlattenedRoutine(_id)
@@ -72,7 +66,7 @@ export const CreateSetGroupBtn = ({
 const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
+  currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
   createSetGroupData: state.setGroupReducer.createSetGroupData,
   currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
   set_group_error_message: state.setGroupReducer.error_message,
