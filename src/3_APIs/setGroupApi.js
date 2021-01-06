@@ -67,6 +67,23 @@ export const updateSetGroup = (setGroupId, updates) => {
   })
 }
 
+export const updateManySetGroups = (queryAndChanges) => {
+  // queryAndChanges ex. { query: {week: 23dfj22aadf3e}, changes: {week_number: 3} }
+  return axiosWihAuth()
+  .put('/set-groups/update-many', queryAndChanges)
+  .then(updateManySetGroupsResponse => {
+    console.log({updateManySetGroupsResponse})
+    return updateManySetGroupsResponse.data
+  })
+  .catch(updateManySetGroupsErrror => { 
+    console.log({updateManySetGroupsErrror})
+    if(updateManySetGroupsErrror.response){
+      return updateManySetGroupsErrror.response.data
+    }
+    return {succes: false, error_message: "Somthing went wrong. Try again lager"}
+  })
+}
+
 export const deleteSetGroup = (setGroupId) => {
   
   return axiosWihAuth()

@@ -1,4 +1,5 @@
-export const routineScheduleConstructor = (currentSetGroups, currentWeeks, currentSetGroupSets) => {
+export const routineScheduleConstructor = (currentSetGroups, currentWeeks, currentRoutineSets) => {
+  
   
   const dayKey = {
     1: "Su",
@@ -10,19 +11,25 @@ export const routineScheduleConstructor = (currentSetGroups, currentWeeks, curre
     7: "Sa"
   }
 
+  // needs to be in the form of {1: {1: day object, 2: day object, ... 7: day object, _id, week_number: 1}, 2: {1: day object, ...} }
   let routineSchedule = {}
 
   if(currentSetGroups){
   
-    currentWeeks.forEach((week, index) => routineSchedule[index + 1] = {
-      _id: week._id,
-      week_number: index + 1
+    currentWeeks.forEach((week, index) => {
+                
+      return routineSchedule[index + 1] = {
+        _id: week._id,
+        week_number: index + 1
+      }
     })
 
     const mergedSetsIntoSetGroups =  currentSetGroups.map(set_group => {
-      set_group.exercise_sets = currentSetGroupSets.filter(exSet => exSet.set_group === set_group._id)
+        
+      set_group.exercise_sets = currentRoutineSets.filter(exSet => exSet.set_group === set_group._id)
       return set_group
     }) 
+
     console.log({routineSchedule, mergedSetsIntoSetGroups})
     Object.keys(routineSchedule).map(key => {
       for(let j = 1; j <= 7; j++ ){
@@ -33,6 +40,7 @@ export const routineScheduleConstructor = (currentSetGroups, currentWeeks, curre
           .filter(setGroup => setGroup.week === routineSchedule[key]._id && setGroup.day_number === j)
         }
       }
+
     })
 
     

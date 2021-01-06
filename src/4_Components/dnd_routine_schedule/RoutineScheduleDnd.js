@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {destroyWeek, setCurrentWeek} from '../../1_Actions/weekActions'
-import {saveSetGroupChanges} from '../../1_Actions/setGroupActions'
+import {destroyWeek, saveWeekChanges, setCurrentWeek} from '../../1_Actions/weekActions'
+import {saveManySetGroupChanges, saveSetGroupChanges} from '../../1_Actions/setGroupActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
-import {routineScheduleConstructor} from './routineScheduleConstructor'
-import {onSetGroupDragEnd} from './scheduleHelpers'
+import {syncWeeksAndSetGroups} from './schedule_helpers/syncWeeksAndSetGroups'
+import {routineScheduleConstructor} from './schedule_helpers/routineScheduleConstructor'
+import {onSetGroupDragEnd} from './schedule_helpers/onSetGroupDragEnd'
 import {DragDropContext} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
 import Container from 'react-bootstrap/Container'
@@ -17,9 +18,12 @@ export const RoutineScheduleDnd = ({
   currentWeeks,
   currentSetGroups,
   currentSetGroupSets,
+  currentRoutineSets,
   destroyWeek,
   setCurrentWeek,
   saveSetGroupChanges,
+  saveWeekChanges,
+  saveManySetGroupChanges,
   error_message,
   crudingWeek,
   clearErrorMessage
@@ -27,9 +31,10 @@ export const RoutineScheduleDnd = ({
 
   const [routineSchedule, setRoutineSchedule] = useState({})
 
-  useEffect(async () => {
-    setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentSetGroupSets))
-  }, [currentSetGroups, currentWeeks, currentSetGroupSets, currentWeeks])
+  useEffect( async() => {
+    await syncWeeksAndSetGroups(currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges)
+    setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
+  }, [currentSetGroups, currentWeeks, currentRoutineSets, currentWeeks])
 
   const handleDestroyWeek  = async (weekNumber) => {
     const weekId = routineSchedule[weekNumber]._id
@@ -92,6 +97,7 @@ const mapStateToProps = (state) => ({
   currentWeeks: state.weekReducer.currentWeeks,
   currentSetGroups: state.setGroupReducer.currentSetGroups,
   currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
+  currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
   crudingWeek: state.weekReducer.crudingWeek
 })
@@ -100,6 +106,8 @@ const mapDispatchToProps = {
   destroyWeek,
   setCurrentWeek,
   saveSetGroupChanges,
+  saveWeekChanges,
+  saveManySetGroupChanges,
   clearErrorMessage
 }
 

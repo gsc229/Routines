@@ -1,4 +1,5 @@
 import { act } from 'react-dom/test-utils'
+import { ReactReduxContext } from 'react-redux'
 import * as constants from '../1_Actions'
 
 
@@ -128,6 +129,28 @@ const reducer = (state=initialState, action) => {
       lockedInType: action.payload
     }
   /* ASYNC ACTIONS */
+  case constants.FETCHING_SET_GROUPS:
+    return{
+      ...state,
+      crudingSetGroup: 'fetching-set-groups'
+    }
+  case constants.FETCH_SET_GROUPS_SUCCESS:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      currentSetGroups: [
+        ...state.currentSetGroups
+        .map(localSg => {
+          const foundIncomingSg = action.payload.find(sg => sg._id === localSg._id)
+          return foundIncomingSg ? foundIncomingSg : localSg
+        })]
+    }
+  case constants.FETCH_SET_GROUPS_FAIL:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      error_message: action.payload
+    }
   case constants.CREATING_SET_GROUP:
     return{
       ...state,
@@ -160,6 +183,22 @@ const reducer = (state=initialState, action) => {
       ]
     }
   case constants.UPDATE_SET_GROUP_FAIL:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      error_message: action.payload
+    }
+  case constants.UPDATING_MANY_SET_GROUPS:
+    return{
+      ...state,
+      crudingSetGroup: 'updating-many-set-groups'
+    }
+  case constants.UPDATE_MANY_SET_GROUPS_SUCCESS:
+    return{
+      ...state,
+      crudingSetGroup: false
+    }
+  case constants.UPDATE_MANY_SET_GROUPS_FAIL:
     return{
       ...state,
       crudingSetGroup: false,
