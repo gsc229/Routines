@@ -18,7 +18,9 @@ export const ChosenExercisesBank = ({
       <div className='chosen-exerciese-bank-header'>
         <h4>Chosen Exercises:</h4>
         <p 
-        onClick={() => writingCreateSetGroupData('currentStep', 'preview-set-group')}>Preview Set Group <FaRegHandPointRight /></p>
+        onClick={() => writingCreateSetGroupData('currentStep', 'preview-set-group')}>
+          Preview Set Group <FaRegHandPointRight />
+        </p>
         
       </div>
       <ul>

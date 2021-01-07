@@ -17,45 +17,55 @@ export const AddRemoveBtnConfigs = ({
 
   const {set_group_type} = currentSetGroup
 
-  const handleRemoveClick = {
-    "Drop": function(){
-      removeChosenExercise(exercise._id)
-    }
+  const compoud_set_groups = ["Super", "Super - Antagonist", "Super - Compound", "Super - Tri", "Super - Giant", "Circuit"]
 
+  const getSetGroupCategory = () => {
+    return compoud_set_groups.find( type => type === set_group_type) ? "Compound" : "NonCompound"
   }
 
-  const handleAddClick = {
-    "Drop": function(){
-      addChosenExercise(exercise)
-    }
+  const handleRemoveClick = () => {
+    removeChosenExercise(exercise._id)
+  }
+
+  const handleAddClick = () => {
+    addChosenExercise(exercise)
   }
 
 
   const showRemoveButton = {
-    "Drop": function(){
-      return chosenExercises.find(inChosen => inChosen._id === exercise._id)
-    }
+    "NonCompound": function(){
+      return chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
+    },
+    "Compound": function () {
+      return chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
+    } 
   }
 
   const showAddButton = {
-    "Drop": function(){
-      return !chosenExercises.find(inChosen => inChosen._id === exercise._id) && chosenExercises.length === 0
+    "NonCompound": function(){
+      return !chosenExercises.find(chosenEx => chosenEx._id === exercise._id) && chosenExercises.length === 0
+    },
+    "Compound": function(){
+      return !chosenExercises.find(chosenEx => chosenEx._id === exercise._id) && chosenExercises.length === 0
     }
   }
 
-  const showPreviewSetGroiupBtn = {
-    "Drop": function(){
-      return chosenExercises.find(inChosen => inChosen._id === exercise._id)
+  const showPreviewSetGroupBtn = {
+    "NonCompound": function(){
+      return chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
+    },
+    "Compound": function(){
+      return chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
     }
   }
 
 
   const removeButton = () => {
-    return showRemoveButton[set_group_type]() && 
+    return showRemoveButton[getSetGroupCategory()]() && 
     <div className='card-link-container'>
       <Button
       to='#'
-      onClick={() => handleRemoveClick[set_group_type]()}
+      onClick={handleRemoveClick}
       className='card-link remove-from-set-link'
       >
         <FiMinusSquare />&nbsp;
@@ -65,17 +75,17 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const addButton = () => {
-    return showAddButton[set_group_type]() && 
+    return showAddButton[getSetGroupCategory()]() && 
     <div className='card-link-container'>
       <Button
       variant='success'
-      onClick={() => handleAddClick[set_group_type]()}
+      onClick={handleAddClick}
       className='card-link add-to-set-link'>Use in {set_group_type} Set</Button>
     </div>
   }
 
-  const previewSetGroiupBtn = () => {
-    return showPreviewSetGroiupBtn[set_group_type]() &&
+  const previewSetGroupBtn = () => {
+    return showPreviewSetGroupBtn[getSetGroupCategory()]() &&
     <div className='card-link-container'>
       <ConnectedNextStepButton 
       variant='success'
@@ -91,7 +101,7 @@ export const AddRemoveBtnConfigs = ({
     <div>
       {removeButton()}
       {addButton()}
-      {previewSetGroiupBtn()}
+      {previewSetGroupBtn()}
     </div>
   )
 }

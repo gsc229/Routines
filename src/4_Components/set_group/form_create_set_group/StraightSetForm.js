@@ -2,10 +2,6 @@ import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
-import Form from 'react-bootstrap/Form'
-import InputGroup from 'react-bootstrap/InputGroup'
-import DropDown from 'react-bootstrap/Dropdown'
-import DropDownButton from 'react-bootstrap/DropdownButton'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { 
@@ -19,20 +15,22 @@ import Container  from 'react-bootstrap/Container'
 
 
 
-export const DropSetForm = ({
+export const StraightSetForm = ({
   writingCreateSetGroupData,
   createSetGroupData
 }) => {
 
-  const {rep_max, starting_weight, percent_weight_decrease, weight_decrease, total_sets} = createSetGroupData
+  let {starting_weight, percent_weight_decrease, weight_decrease, total_sets, reps_per_set, rest_time} = createSetGroupData
 
-
-
-  const allowAddExercise = total_sets !=="" && starting_weight !== ""
+  // !!!!! temp vars DELETE THESE AFTER FORM IS FINISHED
+  total_sets = 3
+  starting_weight = 100
+  reps_per_set = 10
+  rest_time = 120
+  const allowAddExercise = total_sets !=="" && starting_weight !== "" && reps_per_set !== "" && rest_time !== ""
   const [decreaseMethod, setDecreaseMethod] = useState({key: 'percent_weight_decrease', value: 10})
 
   useEffect(() => {
-
     writingCreateSetGroupData('percent_weight_decrease', 10)
   }, [])
 
@@ -68,48 +66,16 @@ export const DropSetForm = ({
         <ConnectedWeightInput required={true}  placeholder='required' />
        </Col>
 
-       <Col className='input-column' lg='4' sm='12'>
-         <InputGroup>
-          <InputGroup.Prepend>
-            <InputGroup.Text>Drop</InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control
-          onChange={(e)=> setDecreaseMethod({...decreaseMethod, value: e.target.value})}
-          defaultValue={10}
-          value={decreaseMethod.value} 
-          placeholder='10% default'
-          name={decreaseMethod.key} 
-          max={99}
-          min={1} type='number' />
-          <DropDownButton
-            as={InputGroup.Append}
-            title={decreaseMethod.key === 'percent_weight_decrease' ? "lbs/kgs" : "%"}>
-            <DropDown.Item 
-            onClick={() => setDecreaseMethod({...decreaseMethod, key: 'weight_decrease'})}>
-              lbs/kgs
-            </DropDown.Item>
-            <DropDown.Item 
-            onClick={() => setDecreaseMethod({...decreaseMethod, key: 'percent_weight_decrease'})}>
-              %
-            </DropDown.Item>
-          </DropDownButton>
-          <InputGroup.Append>
-            <InputGroup.Text>each set</InputGroup.Text>
-          </InputGroup.Append>
-            
-         </InputGroup>
-       </Col>
-
        <Col className='input-column' lg='3' sm='12'>
          <ConnectedTotalSetsInput required={true}  placeholder='required' />
        </Col>
 
        <Col className='input-column' lg='3' sm='12'>
-         <ConnectedRepsPerSetInput placeholder='optional' />
+         <ConnectedRepsPerSetInput required={true} placeholder='required' />
        </Col>
 
        <Col className='input-column' lg='3' sm='12'>
-         <ConnectedRestSecondsInput placeholder='optional' />
+         <ConnectedRestSecondsInput required={true} placeholder='required' />
        </Col>
 
        <Col className='input-column'  sm='12'>
@@ -137,4 +103,4 @@ const mapDispatchToProps = {
   writingCreateSetGroupData
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DropSetForm)
+export default connect(mapStateToProps, mapDispatchToProps)(StraightSetForm)

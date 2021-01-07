@@ -1,6 +1,7 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container'
-import DropSetForm from '../form_create_set_group/DropSetForm'
+import DropSetForm from './DropSetForm'
+import StraightSetForm from './StraightSetForm'
 
 const SetTypeData = ({type}) => {
 
@@ -23,7 +24,8 @@ const SetTypeData = ({type}) => {
 
 
   const forms = {
-    Drop: <DropSetForm />
+    Drop: <DropSetForm />,
+    Straight: <StraightSetForm />
   }
 
 

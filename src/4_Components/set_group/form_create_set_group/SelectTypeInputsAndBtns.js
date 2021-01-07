@@ -7,7 +7,7 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tooltip from 'react-bootstrap/Tooltip'
 import { connect } from 'react-redux'
 import { writingSetGroup } from '../../../1_Actions/setGroupActions'
-import SetTypeData from './SetTypeData'
+import SetTypeData from './SetTypeFormAndData'
 
 export const SetGroupForm = ({
   currentSetGroup,

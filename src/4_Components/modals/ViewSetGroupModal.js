@@ -40,11 +40,11 @@ export const ViewSetGroupModal = ({
     size='lg'
     aria-labelledby={`set-group-${currentSetGroup._id}`}
     centered>
-      <Modal.Header className='view-set-group-modal-header' closeButton>
+      <Modal.Header className='modal-header view-set-group-modal-header' closeButton>
         <h5><span>Set Name: </span> {currentSetGroup.name}</h5>
 
       </Modal.Header>
-      <Modal.Body className='view-set-group-modal-body'>
+      <Modal.Body className='modal-body view-set-group-modal-body'>
         <h6>Sets:</h6>
        {/*  {JSON.stringify(currentSetGroupSets, '', 2)} */}
        <div className='set-group-modal-sets-container'>

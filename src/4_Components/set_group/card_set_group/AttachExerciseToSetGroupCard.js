@@ -7,14 +7,17 @@ import IFrame from '../../iframe/IFrame'
 import AddRemoveButtons from './AddRemoveBtnConfigs'
 
 export const AttachExerciseToSetGroupCard = ({
-  exercise
+  exercise,
+  chosenExercises
 }) => {
+
+  const selected = chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
   
   return (
     <Card 
     bg="dark"
     text='white'
-    className='attach-exercise-to-set-card'>
+    className={`attach-exercise-to-set-card ${selected && 'selected-card'}`}>
       <Card.Header>
         <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
       </Card.Header>
