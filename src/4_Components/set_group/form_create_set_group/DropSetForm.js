@@ -53,7 +53,7 @@ export const DropSetForm = ({
 
 
   return (
-   <Container className='drop-set-form'>
+   <Container className='info-form drop-set-form'>
      <Row>
 
        <Col sm='12' className='input-column'><h6>Step 1: Details</h6></Col>
@@ -81,9 +81,15 @@ export const DropSetForm = ({
           min={1} type='number' />
           <DropDownButton
             as={InputGroup.Append}
-            title={decreaseMethod.key === 'percent_weight_decrease' ? "%" : "lbs/kgs"}>
-            <DropDown.Item onClick={() => setDecreaseMethod({...decreaseMethod, key: 'percent_weight_decrease'})}>%</DropDown.Item>
-            <DropDown.Item onClick={() => setDecreaseMethod({...decreaseMethod, key: 'weight_decrease'})}>lbs/kgs</DropDown.Item>
+            title={decreaseMethod.key === 'percent_weight_decrease' ? "lbs/kgs" : "%"}>
+            <DropDown.Item 
+            onClick={() => setDecreaseMethod({...decreaseMethod, key: 'weight_decrease'})}>
+              lbs/kgs
+            </DropDown.Item>
+            <DropDown.Item 
+            onClick={() => setDecreaseMethod({...decreaseMethod, key: 'percent_weight_decrease'})}>
+              %
+            </DropDown.Item>
           </DropDownButton>
           <InputGroup.Append>
             <InputGroup.Text>each set</InputGroup.Text>

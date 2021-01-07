@@ -12,7 +12,7 @@ import Calendar from '../../calendar/Calendar'
 import SaveDiscardExpandBtnGroup from '../../buttons/SaveDiscardExpandBtnGroup'
 import CreateRoutineForm from '../form_routine/RoutineInfoForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
-import ConfirmDeleteModal from '../ConfirmDeleteModal'
+import ConfirmDeleteRoutineModal from '../../modals/ConfirmDeleteRoutineModal'
 
 
 export const RoutinesAccordion = ({
@@ -99,10 +99,10 @@ export const RoutinesAccordion = ({
   }
 
 
-  const showConfirmDeleteModal = () => {
+  const showConfirmDeleteRoutineModal = () => {
     return(
       
-      <ConfirmDeleteModal  
+      <ConfirmDeleteRoutineModal  
       setModalShow={setModalShow}
       modalShow={modalShow}
       routine={routineForDeletion}
@@ -116,12 +116,11 @@ export const RoutinesAccordion = ({
     <Accordion /* defaultActiveKey={userRoutines[0]._id} */ className="routines-bank">
 
       {modalShow && 
-      showConfirmDeleteModal()}
+      showConfirmDeleteRoutineModal()}
       
       {userRoutines && userRoutines.map(routine=>
         {return (
         <Card bg="dark" key={routine._id}>
-
           <Card.Header style={{display: 'flex', alignItems: 'center', position: 'relative'}}>
             <Accordion.Toggle
             disabled={editingMode}

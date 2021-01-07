@@ -43,7 +43,6 @@ export const CreateSetGroupBtn = ({
       // will need to populate the newly created exercise_sets with their exercises. 
       if(newExerciseSetsResponse.success){
         const {_id, name, slug} = currentRoutine
-        fetchFlattenedRoutine(_id)
         hisotry.push(`/view-routine/${_id}/${slug ? slug : name}`)
         fullResetCreateSetGroup()
       }

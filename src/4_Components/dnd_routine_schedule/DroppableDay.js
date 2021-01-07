@@ -29,6 +29,16 @@ export const DroppableDay = ({
     7: "Sa"
   }
 
+  const dayKeyLong = {
+    1: "Sunday",
+    2: "Monday",
+    3: "Tuesday",
+    4: "Wednesday",
+    5: "Thursday",
+    6: "Friday",
+    7: "Saturday"
+  }
+
   const handleAddSetsClick = () => {
     fullResetCreateSetGroup()
     setCurrentWeek(routineSchedule[weekNumber])
@@ -46,13 +56,12 @@ export const DroppableDay = ({
     droppableId={`${weekNumber}-${dayNumber}-${routineSchedule[weekNumber]._id}-${name.day_name}`}>
     {(provided, snapshot) => {
       return(
-        <Card
-                             
+        <Card              
         className={`day-container-card ${snapshot.isDraggingOver && 'day-container-card-hovering'}`}>
           <Card.Header>
             <div
             className='day-header'>
-              <h6>{dayKey[dayNumber]} - Week: {weekNumber}</h6>
+              <h6>{dayKeyLong[dayNumber]} &nbsp;&nbsp;W: {weekNumber}</h6>
               <Link 
               onClick={handleAddSetsClick}
               to={

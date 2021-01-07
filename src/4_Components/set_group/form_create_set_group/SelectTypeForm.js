@@ -18,7 +18,7 @@ export const SetGroupForm = ({
   const {set_group_type} = currentSetGroup
 
   return (
-    <Form>
+    <Form className='info-form setgroup-form'>
       <Form.Group>
         <Form.Label>
           Add Set Group
