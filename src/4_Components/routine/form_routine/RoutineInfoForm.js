@@ -86,7 +86,7 @@ export const RoutineInfoForm = ({
   }
 
   return (
-    <Form className='routine-form'>      
+    <Form className='info-form routine-form'>      
       {showHeader && getHeader()}
       {error_message && 
       <Alert

@@ -10,14 +10,13 @@ import {DragDropContext} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
 import Container from 'react-bootstrap/Container'
 import DroppableDay from './DroppableDay'
-
 import Button from 'react-bootstrap/Button'
+import  ConfirmDeleteWeekModal from '../modals/ConfirmDeleteWeekModal'
 
 export const RoutineScheduleDnd = ({
   currentRoutine,
   currentWeeks,
   currentSetGroups,
-  currentSetGroupSets,
   currentRoutineSets,
   destroyWeek,
   setCurrentWeek,
@@ -31,6 +30,8 @@ export const RoutineScheduleDnd = ({
 }) => {
 
   const [routineSchedule, setRoutineSchedule] = useState({})
+  const [weekToDestroy, setWeekToDestroy] = useState('')
+  const [modalShow, setModalShow] = useState(false)
 
   useEffect( async() => {
     await syncWeeksAndSetGroups(currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges)
@@ -48,11 +49,14 @@ export const RoutineScheduleDnd = ({
     }
   }
 
+  //crudingWeek='creating-week'
 
   return (
       <div 
       className='routine-schedule-dnd'>
+      {modalShow && <ConfirmDeleteWeekModal week={weekToDestroy} setModalShow={setModalShow} modalShow={modalShow} />}
       {!currentSetGroups && <DarkSpinner />}
+      {crudingWeek === 'creating-week' && <DarkSpinner text='Creating week...' />}
       {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
       {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
       {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
@@ -66,10 +70,13 @@ export const RoutineScheduleDnd = ({
           className='week-container'>
             <div
             className='week-container-header'>
-              <h5>{currentRoutine.name} - Week: {weekNumber} {routineSchedule[weekNumber]._id}</h5>
+              <h5>{currentRoutine.name} - Week: {weekNumber}</h5>
               <Button 
-                onClick={() => handleDestroyWeek(weekNumber)}
-                variant='danger'>Delete Week
+              onClick={() =>{ 
+              setModalShow(true)
+              setWeekToDestroy(routineSchedule[weekNumber])
+              }}>
+                Delete Week
               </Button>
             </div>
                 <div
@@ -99,7 +106,6 @@ const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
   currentSetGroups: state.setGroupReducer.currentSetGroups,
-  currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
   crudingWeek: state.weekReducer.crudingWeek,

@@ -38,9 +38,11 @@ const reducer = (state=initialState, action) => {
     // every time a set group is set or created, initialize the required fields for
     // creating / updating an exercise set
     case constants.SET_CURRENT_SET_GROUP:{
+      console.log('SET CURRENT SET GROUP action.payload', action.payload)
+  
       return{
         ...state,
-        currentSetGroupSets: action.payload.exercise_sets || [],
+        currentSetGroupSets: [...state.currentRoutineSets.filter(exSet => exSet.set_group  === action.payload._id)],
         currentExerciseSet: {
           ...state.currentExerciseSet,
           routine: action.payload.routine,
@@ -100,7 +102,8 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingExerciseSet: false,
-        currentSetGroupSets: action.payload
+        currentSetGroupSets: action.payload,
+        currentRoutineSets: [...state.currentRoutineSets, ...action.payload]
       }
     case constants.CREATE_EXERCISE_SETS_FAIL:
       return{
@@ -158,10 +161,10 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         currentRoutineSets: [
-          state.currentRoutineSets.filter(exSet => exSet.week !== weekId)
+          ...state.currentRoutineSets.filter(exSet => exSet.week !== weekId)
         ],
         currentSetGroupSets: [
-          state.currentSetGroupSets.filter(exSet => exSet.week !== weekId)
+          ...state.currentSetGroupSets.filter(exSet => exSet.week !== weekId)
         ]
       }
     case constants.DELETE_SET_GROUP_SUCCESS:

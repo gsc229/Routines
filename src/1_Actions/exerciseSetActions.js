@@ -56,6 +56,11 @@ export const saveExerciseSetChanges = (exerciseSetId, updates) => dispatch => {
 
 export const createNewExerciseSets = (newSetsArray) => dispatch => {
   // required on each new set in the array are user, routine, set_group, and week ids 
+  if(newSetsArray.length === 0){
+    dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: "New sets array is empty"})
+      return false
+  }
+
   dispatch({type: constants.CREATING_EXERCISE_SETS})
   return createMultipleExerciseSets(newSetsArray)
   .then(createNewExerciseSetsResponse => {

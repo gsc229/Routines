@@ -27,8 +27,7 @@ export const DuplicateHereBtn = ({
     const newSetGroupResponse = await createNewSetGroup(newSetGroup)
 
     if(newSetGroupResponse.success){
-        const newSets = 
-        currentRoutineSets.filter(set => set.set_group === set_group._id)
+        const newSets = currentRoutineSets.filter(exSet => exSet.set_group === set_group._id)
         .map(set =>  {
           delete set._id
           delete set.id
@@ -38,7 +37,7 @@ export const DuplicateHereBtn = ({
             set_group: newSetGroupResponse.data._id
           }
         })
-
+        console.log('DuplicateHereBtn: ',{newSets})
         const newSetsResponse = await createNewExerciseSets(newSets)
     }
 
@@ -51,8 +50,6 @@ export const DuplicateHereBtn = ({
       alert(`DuplicateHereBtn exercise set error: ${exercise_set_ERROR}`)
       clearErrorMessage()
     }
-
-    
   }
 
   return (
