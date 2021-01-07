@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {majorMuscleGroups, categories} from './routineFormData'
-import {writingRoutine, createNewRoutine, saveRoutineChanges, clearCurrentRoutine} from '../../../1_Actions/routineActions'
+import {writingRoutine, createNewRoutine, saveRoutineChanges, clearCurrentRoutine, fetchFlattenedRoutine} from '../../../1_Actions/routineActions'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
@@ -13,6 +12,7 @@ import SaveBtn from '../../buttons/SaveBtn'
 import DiscardBtn from '../../buttons/DiscardBtn'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import Alert from 'react-bootstrap/Alert'
+import Button from 'react-bootstrap/Button'
 
 export const RoutineInfoForm = ({ 
   currentRoutine,
@@ -30,7 +30,8 @@ export const RoutineInfoForm = ({
   showSaveBtn=true,
   showGoToWeekBtn=true,
   showGoToRoutinesBtn=true,
-  showGoToExerciseBank=true
+  showGoToExerciseBank=true,
+  fetchFlattenedRoutine
 }) => {
 
 
@@ -51,33 +52,20 @@ export const RoutineInfoForm = ({
   // What distinguishes an unsaved-on-the-backend-routine from a saved one will be the _id (or lack thereof)
   const handleCreateOrEdit = async (path) => {
     // after the update or save, redirect will depend on whether eiditing old or createing new routine and user input. 
-    const getRedirect = () => {
-      const redirects = {
-        manageRoutines: '/manage-routines',
-        createContinueWeek: `/editing-routine/${currentRoutine.slug}/create-week`,
-        updateContinueWeek: `/editing-routine/${currentRoutine.slug}/weeks`
-      }
-
-      return redirects[path]
-
-    }
+    let response
 
     if(!currentRoutine.original_creator){
-      const success = await createNewRoutine({...currentRoutine, original_creator: userId, user: userId})
-      if(success){
-       path && history.push(getRedirect(currentRoutine._id))
-      }
+      response = await createNewRoutine({...currentRoutine, original_creator: userId, user: userId})
     }else if(!currentRoutine.user){
-      const success = await createNewRoutine({...currentRoutine, user: userId})
-      if(success){
-       path && history.push(getRedirect(currentRoutine._id))
-      }
+      response = await createNewRoutine({...currentRoutine, user: userId})
     } else{
-      const success = await saveRoutineChanges(currentRoutine._id, currentRoutine)
-      if(success){
-       path && history.push(getRedirect(currentRoutine._id))
-      }
+      response = await saveRoutineChanges(currentRoutine._id, currentRoutine)
     }
+
+    if(response && response.success){
+      fetchFlattenedRoutine(response.data._id)
+    }
+    
   }
 
   const handleDiscard = () => {
@@ -85,106 +73,154 @@ export const RoutineInfoForm = ({
     history.push('/manage-routines')
   }
 
+  const handleMangeScheduleClick = () => {
+    if(currentRoutine._id){
+      fetchFlattenedRoutine(currentRoutine._id)
+      history.push(`/view-routine/${currentRoutine._id}/full-body-strength-training`)
+    }
+  }
+
   const getHeader = () => {
   if(currentRoutine._id ) return <h3>Currently Editing: {currentRoutineName}</h3> 
   if(!currentRoutine._id) return <h3>Basic Routine Info:</h3>
   }
 
-
   return (
-    <Form className='routine-form'>
+    <Form className='routine-form'>      
       {showHeader && getHeader()}
-      <Form.Group controlId="completeRoutineForm.Name">
-        <Form.Label>Name</Form.Label>
-        <Form.Control onChange={handleChange} name="name" value={name} type="text" placeholder="Required" />
-        {error_message && <Alert style={{marginTop: '10px'}} variant='danger'>{error_message}</Alert>}
-      </Form.Group>
-      
-      <Form.Group controlId="completeRoutineForm.Category">
-        <Form.Label>Category</Form.Label>
-        <Form.Control placeholder="- select -" onChange={handleChange} name="category" value={category} as="select">
-          <option value="">- choose -</option>
-          {categories.map( category => <option key={category} value={category}>{category}</option>)}
-        </Form.Control>
-      </Form.Group>
-      
-      <Form.Group controlId="completeRoutineForm.DifficultyScale">
-        <Form.Label style={{width: '100%'}}>
-        <Container>
-          <Row>
-            <Col style={{paddingLeft: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between'}} md='4'>Difficulty Range 
-              <span style={{textAlign: 'right' , fontSize: '20px', fontWeight: 'bold'}}>{difficulty_scale ? difficulty_scale : 0}</span>
-            </Col>     
-          </Row>
-        </Container>
-        </Form.Label>
+      {error_message && 
+      <Alert
+      className='name-alert' 
+      variant='danger'>
+        {error_message}
+      </Alert>}
+      <Row>
+        <Col sm='12' md='6'>
+          <Form.Group controlId="completeRoutineForm.Name">
+            <Form.Label>Name</Form.Label>
+            <Form.Control 
+            onChange={handleChange} 
+            name="name" 
+            value={name} 
+            type="text" 
+            placeholder="Required" />
+          </Form.Group>
+        </Col>
         
-        <Container>
-          <Row>
-            <Col md='4' style={{paddingLeft: 0}}>
-              <Form.Control
-              onChange={handleChange}
-              className='difficulty-slider'
-              name="difficulty_scale" 
-              defaultValue={0} 
-              name="difficulty_scale" 
-              value={difficulty_scale ? difficulty_scale : 0} 
-              type="range"
-              custom
-              min={0} 
-              max={10} />
-            </Col>
-          </Row>
-        </Container>
-      </Form.Group>
+        <Col sm='12' md='6'>
+          <Form.Group controlId="completeRoutineForm.Category">
+            <Form.Label>Category</Form.Label>
+            <Form.Control 
+            placeholder="- select -" 
+            onChange={handleChange} 
+            name="category" 
+            value={category} as="select">
+              <option value="">optional - choose -</option>
+              {categories
+              .map( category => <option key={category} value={category}>{category}</option>)}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
       
-      <Form.Group controlId="completeRoutineForm.MuslceGroup">
-        <Form.Label>Major Muscle Group</Form.Label>
-        <Form.Control placeholder="- select -"onChange={handleChange} name="muscle_group" value={muscle_group} as="select">
-          <option value="">- choose -</option>
-          {majorMuscleGroups.map(group => <option key={group} value={group}>{group}</option>)}
-        </Form.Control>
-      </Form.Group>
+      <Row>
+        <Col sm='12' md='6'>
+          <Form.Group  
+          className='difficulty-slider-label-form-group'
+          controlId="completeRoutineForm.DifficultyScale">
+            <Form.Label 
+            className='difficulty-range-label'>
+              Difficulty Range 
+              <span>
+                {difficulty_scale ? difficulty_scale : 0}
+              </span>
+            </Form.Label>
+            <Form.Control
+            onChange={handleChange}
+            className='difficulty-slider'
+            name="difficulty_scale" 
+            defaultValue={0} 
+            name="difficulty_scale" 
+            value={difficulty_scale ? difficulty_scale : 0} 
+            type="range"
+            custom
+            min={0} 
+            max={10} />
+              
+          </Form.Group>
+        </Col>
+        
+        <Col sm='12' md='6'>
+          <Form.Group controlId="completeRoutineForm.MuslceGroup">
+            <Form.Label>Major Muscle Group</Form.Label>
+            <Form.Control 
+            placeholder="- select -"
+            onChange={handleChange} 
+            name="muscle_group" 
+            value={muscle_group} 
+            as="select">
+              <option value="">optional - choose -</option>
+              {majorMuscleGroups.map(group => <option key={group} value={group}>{group}</option>)}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
 
-      <Form.Group controlId="completeRoutineForm.TargetMuslce">
-        <Form.Label>Target Muscle</Form.Label>
-        <Form.Control onChange={handleChange} name="target_muscle" value={target_muscle} type="text" placeholder="Any particular muscle?" />
-      </Form.Group>
-
-      <Form.Group controlId="completeRoutineForm.StartDate">
-        <Form.Label>Start Date</Form.Label>
-        <Form.Control onChange={handleChange} name="start_date" value={start_date} type="date"/>
-      </Form.Group>
+      <Row>
+        <Col sm='12' md='6'>
+          <Form.Group controlId="completeRoutineForm.TargetMuslce">
+            <Form.Label>Target Muscle</Form.Label>
+            <Form.Control 
+            onChange={handleChange} 
+            name="target_muscle" 
+            value={target_muscle} 
+            type="text" 
+            placeholder="Any particular muscle?" />
+          </Form.Group>
+        </Col>
+  
+        <Col sm='12' md='6'>
+          <Form.Group controlId="completeRoutineForm.StartDate">
+            <Form.Label>Start Date</Form.Label>
+            <Form.Control 
+            onChange={handleChange} 
+            name="start_date" 
+            value={start_date} 
+            type="date"/>
+          </Form.Group>
+        </Col>
+      </Row>
 
       
       <Form.Group controlId="completeRoutineForm.Description">
         <Form.Label>Description</Form.Label>
-        <Form.Control onChange={handleChange} name="description" value={description} as="textarea" placeholder="More about your routine..." rows={3} />
+        <Form.Control 
+        onChange={handleChange} 
+        name="description" 
+        value={description} 
+        as="textarea" 
+        placeholder="More about your routine..." 
+        rows={3} />
       </Form.Group>
 
 
       <ButtonToolbar>
-
         <ButtonGroup className="mr-2 mt-2">
           {showDiscardBtn && 
-          <DiscardBtn className='routine-form-btn discard-routine-btn' onClick={discardCallback ? discardCallback : handleDiscard} styles={{fontWeight: "600"}} />}
-        </ButtonGroup>
-        
-        <ButtonGroup className="mt-2">
+          <DiscardBtn 
+          className='routine-form-btn discard-routine-btn' 
+          onClick={discardCallback ? discardCallback : handleDiscard} />}
           {showSaveBtn && 
-          <SaveBtn style={{textAlign: 'center'}} className=' routine-form-btn save-routine-btn'  onClick={() => handleCreateOrEdit()} text=" Save"/>}
-          {showGoToRoutinesBtn && 
-          <SaveBtn className=' routine-form-btn' onClick={() => handleCreateOrEdit('manageRoutines')} text=" Go to Routines" />}
-          {showGoToWeekBtn && 
-          <SaveBtn className=' routine-form-btn' onClick={() => handleCreateOrEdit('createContinueWeek')} text=" Go to Weeks" />}
-          {!unsavedChanges && showGoToExerciseBank && 
-          <SaveBtn className=' routine-form-btn' onClick={() => handleCreateOrEdit('')} text="Go Exercise Bank" />}
+          <SaveBtn 
+          className=' routine-form-btn save-routine-btn'  
+          onClick={() => handleCreateOrEdit()} 
+          text=" Save"/>}
         </ButtonGroup>
-
+        {currentRoutine._id &&
+        <ButtonGroup className="mr-2 mt-2">
+          <Button onClick={handleMangeScheduleClick}>Manage Weeks</Button>
+        </ButtonGroup>}
       </ButtonToolbar>
-        {/* <br></br>
-        <br/>
-        <pre>{JSON.stringify({error_message, currentRoutineName, unsavedChanges, userId, currentRoutine,}, null, 2)}</pre> */}
     </Form>
   )
 }
@@ -202,7 +238,8 @@ const mapDispatchToProps = {
   clearErrorMessage,
   createNewRoutine,
   saveRoutineChanges,
-  clearCurrentRoutine
+  clearCurrentRoutine,
+  fetchFlattenedRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineInfoForm)

@@ -89,11 +89,11 @@ export const saveSetGroupChanges = (setGroupId, updates) => dispatch => {
   dispatch({type: constants.UPDATING_SET_GROUP})
   return updateSetGroup(setGroupId, updates)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
      dispatch({type: constants.UPDATE_SET_GROUP_SUCCESS, payload: response.data})
      return true
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.UPDATE_SET_GROUP_FAIL, payload: response.error_message})
       return false
     } 
@@ -109,13 +109,13 @@ export const saveManySetGroupChanges = (queryAndChanges) => dispatch => {
   dispatch({type: constants.UPDATING_MANY_SET_GROUPS})
   return updateManySetGroups(queryAndChanges)
   .then(response =>{
-    if(response.success){
+    if(response && response.success){
       dispatch({type: constants.UPDATE_MANY_SET_GROUPS_SUCCESS})
       const queryString = `?week=${queryAndChanges.query.week}`
       dispatch(fetchSetGroups(queryString))
       return response
     }
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.UPDATE_MANY_SET_GROUPS_FAIL, payload: response.error_message})
       return false
     }
@@ -128,11 +128,11 @@ export const createNewSetGroup = (newSetGroup) => dispatch => {
   dispatch({type: constants.CREATING_SET_GROUP})
   return createSetGroup(newSetGroup)
   .then(response=>{
-    if(response.success){
+    if(response && response.success){
       dispatch({type: constants.CREATE_SET_GROUP_SUCCESS, payload: response.data})
       return response
     }
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.CREATE_SET_GROUP_FAIL, payload: response.error_message})
       return false
     }
@@ -146,12 +146,12 @@ export const destroySetGroup = (setGroupId) => dispatch => {
   dispatch({type: constants.DELETING_SET_GROUP})
   deleteSetGroup(setGroupId)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
       const payload = response.data._id ? response.data : setGroupId
       dispatch({type: constants.DELETE_SET_GROUP_SUCCESS, payload})
       return response
     }
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.DELETE_SET_GROUP_FAIL, payload: response.error_message})
       return false
     }

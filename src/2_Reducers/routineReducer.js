@@ -10,7 +10,6 @@ const initialState = {
   userRoutines: [], // [{}]
   currentRoutineName: '', 
   currentRoutine: {
-    _id: null,
     user: null,
     name: null,
     category: null,

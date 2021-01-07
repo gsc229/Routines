@@ -41,11 +41,11 @@ export const saveExerciseSetChanges = (exerciseSetId, updates) => dispatch => {
   dispatch({type: constants.UPDATING_EXERCISE_SET})
   return updateExerciseSet(exerciseSetId, updates)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
       dispatch({type: constants.UPDATE_EXERCISE_SET_SUCCESS, payload: response.data})
       return true
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.UPDATE_EXERCISE_SET_FAIL, payload: response.error_message})
       return false
     }

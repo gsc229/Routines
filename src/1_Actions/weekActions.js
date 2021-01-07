@@ -38,11 +38,11 @@ export const createNewWeek = (newWeek) => dispatch => {
   dispatch({type: constants.CREATING_WEEK})
   return createWeek(newWeek)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
      dispatch({type: constants.CREATE_WEEK_SUCCESS, payload: response.data})
      return true
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.CREATE_WEEK_FAIL, payload: response.error_message})
       return false
     } 
@@ -56,11 +56,11 @@ export const saveWeekChanges = (weekId, updates) => dispatch => {
   dispatch({type: constants.UPDATING_WEEK})
   return updateWeek(weekId, updates)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
     dispatch({type: constants.UPDATE_WEEK_SUCCESS, payload: response.data})
     return response
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.UPDATE_WEEK_FAIL, payload: response.error_message})
       return false
     } 
@@ -75,12 +75,12 @@ export const destroyWeek = (weekId) => dispatch => {
   dispatch({type: constants.DELETING_WEEK})
   return deleteWeek(weekId)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
     const payload = response.data._id ? response.data : weekId
     dispatch({type: constants.DELETE_WEEK_SUCCESS, payload})
     return response
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.DELETE_WEEK_FAIL, payload: response.error_message})
       return false
     } 

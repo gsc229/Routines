@@ -44,11 +44,11 @@ export const fetchFlattenedRoutine = (routineId) => dispatch => {
   dispatch({type: constants.FETCHING_FLATTENED_ROUTINE})
   return getFlattenedRoutine(routineId)
   .then(response=> {
-    if(response.success){
+    if(response && response.success){
       dispatch({type: constants.FETCH_FLATTENED_ROUTINE_SUCCESS, payload: response.data})
       return response
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.FETCH_FLATTENED_ROUTINE_FAIL, payload: response.error_message})
       return false
     } 
@@ -56,7 +56,6 @@ export const fetchFlattenedRoutine = (routineId) => dispatch => {
       return false
   })
 }
-
 
 export const fetchRoutineById = (routineId, queryString) => dispatch => {
   dispatch({type: constants.FETCHING_ROUTINE})
@@ -80,11 +79,11 @@ export const createNewRoutine = (newRoutine) => dispatch => {
   dispatch({type: constants.CREATING_ROUTINE})
   return createRoutine(newRoutine)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
      dispatch({type: constants.CREATE_ROUTINE_SUCCESS, payload: response.data})
-     return true
+     return response
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.CREATE_ROUTINE_FAIL, payload: response.error_message})
       return false
     } 
@@ -98,11 +97,11 @@ export const saveRoutineChanges = (routineId, updates) => dispatch => {
   dispatch({type: constants.UPDATING_ROUTINE})
   return updateRoutine(routineId, updates)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
      dispatch({type: constants.UPDATE_ROUTINE_SUCCESS, payload: response.data})
-     return true
+     return response
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.UPDATE_ROUTINE_FAIL, payload: response.error_message})
       return false
     } 
@@ -117,12 +116,12 @@ export const destroyRoutine = (routineId) => dispatch => {
   dispatch({type: constants.DELETING_ROUTINE})
   return deleteRoutine(routineId)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
       const payload = response.data._id ? response.data : routineId
       dispatch({type: constants.DELETE_ROUTINE_SUCCESS, payload})
       return response
     }
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.DELETE_ROUTINE_FAIL, payload: response.error_message})
       return false
     }

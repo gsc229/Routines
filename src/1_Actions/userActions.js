@@ -7,9 +7,9 @@ export const logInUser = (userInfo) => dispatch => {
 
   signIn(userInfo)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
       dispatch({type: constants.LOG_IN_SUCCESS, payload: response.data})
-    } else if(response.error_message){
+    } else if(response && response.error_message){
       dispatch({type: constants.LOG_IN_FAIL, payload: response.error_message})
     } else{
       dispatch({type: constants.LOG_IN_FAIL, payload: "Whoops! Something went wrong. Pleasee try again later. Sorry :("})
