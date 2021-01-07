@@ -1,12 +1,12 @@
 import React from 'react'
 import Container from 'react-bootstrap/Container'
-import DropSetForm from './DropSetForm'
-import StraightSetForm from './StraightSetForm'
+import DropSetForm from '../form_create_set_group/DropSetForm'
+import StraightSetForm from '../form_create_set_group/StraightSetForm'
 
-const SetTypeData = ({type}) => {
+const SetTypeExplanation = ({type}) => {
 
 
-  const typeDetail = {
+  const typeExplanation = {
     "Manual": "Manually create a set group by adding sets one by one",
     "Straight": "Straight sets means doing exercises in the old fashion way, performing all sets of each exercise one after another with rest in between. This system is used to apply maximum adaptive response for the trained muscles.",
     "Super": "In super sets you perform exercise set immediately after another exercise set, with no rest in between, only that required for taking the position of the second exercise. Super sets allow you to perform more work in less time, they are especially useful if you have short time to spend in training, plus they can be used as a mean to increase training intensity due to less rest time.",
@@ -33,10 +33,9 @@ const SetTypeData = ({type}) => {
   return (
     <Container>
       <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
-      {typeDetail[type]}
-      {forms[type]}
+      {typeExplanation[type]}
     </Container>
   )
 }
 
-export default SetTypeData
+export default SetTypeExplanation

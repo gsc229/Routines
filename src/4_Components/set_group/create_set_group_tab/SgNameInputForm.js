@@ -1,24 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import {writingSetGroup} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tab from 'react-bootstrap/Tab'
-import Tabs from 'react-bootstrap/Tabs'
 import Tooltip from 'react-bootstrap/Tooltip'
-import { connect } from 'react-redux'
-import { writingSetGroup } from '../../../1_Actions/setGroupActions'
-import SetTypeData from './SetTypeFormAndData'
 
-export const SetGroupForm = ({
+export const SgNameInputForm = ({
   currentSetGroup,
-  setGroupTypes,
   writingSetGroup
 }) => {
-
-  const {set_group_type} = currentSetGroup
-
   return (
-    <Form className='info-form setgroup-form'>
+    <Form className='info-form create-set-group-name-input-form'>
       <Form.Group>
         <Form.Label>
           Add Set Group
@@ -38,33 +31,16 @@ export const SetGroupForm = ({
           </InputGroup.Append>
           </InputGroup>
       </Form.Group>
-      <Form.Group>
-      <h6>Quick Build: </h6>
-      <Tabs
-      variant= 'pills'
-      onSelect={(type) => writingSetGroup('set_group_type',type)}
-      activeKey={set_group_type}>
-        {setGroupTypes.map(type=>
-        <Tab
-        key={type}
-        title={type}
-        eventKey={type}>
-          <SetTypeData type={type} />
-        </Tab>
-        )}
-      </Tabs>
-      </Form.Group>
-    </Form>
+      </Form>
   )
 }
 
 const mapStateToProps = (state) => ({
-  currentSetGroup: state.setGroupReducer.currentSetGroup,
-  setGroupTypes: state.setGroupReducer.set_group_types
+  currentSetGroup: state.setGroupReducer.currentSetGroup
 })
 
 const mapDispatchToProps = {
   writingSetGroup
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SetGroupForm)
+export default connect(mapStateToProps, mapDispatchToProps)(SgNameInputForm)

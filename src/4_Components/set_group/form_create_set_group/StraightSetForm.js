@@ -22,11 +22,7 @@ export const StraightSetForm = ({
 
   let {starting_weight, percent_weight_decrease, weight_decrease, total_sets, reps_per_set, rest_time} = createSetGroupData
 
-  // !!!!! temp vars DELETE THESE AFTER FORM IS FINISHED
-  total_sets = 3
-  starting_weight = 100
-  reps_per_set = 10
-  rest_time = 120
+  
   const allowAddExercise = total_sets !=="" && starting_weight !== "" && reps_per_set !== "" && rest_time !== ""
   const [decreaseMethod, setDecreaseMethod] = useState({key: 'percent_weight_decrease', value: 10})
 

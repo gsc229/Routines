@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import CreateSetGroupSteps from '../../4_Components/set_group/create_set_group_steps/CreateSetGroupSteps'
+import CreateSetGroupTab from '../../4_Components/set_group/create_set_group_tab/CreateSetGroupTab'
 
 export const CreateOrEditExerciseSet = ({
   currentRoutine,
@@ -36,7 +36,7 @@ export const CreateOrEditExerciseSet = ({
           activeKey={searchMode}
           onSelect={(mode) => setSearchMode(mode)}>
           <Tab eventKey="exercise" title="Create A New Set Group">
-            <CreateSetGroupSteps />
+            <CreateSetGroupTab />
           </Tab>
           <Tab eventKey="set" title="Use A Saved Set Group">
             Find a set

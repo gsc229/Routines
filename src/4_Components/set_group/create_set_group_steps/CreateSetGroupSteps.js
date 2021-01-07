@@ -1,27 +1,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import SelectTypeInputsAndBtns from '../form_create_set_group/SelectTypeInputsAndBtns'
-import SetGroupSearchExercise from '../set_group_search_exercise/SetGroupSearchExercise'
-import PreviewSetGroup from '../preview_set_group/PreviewSetGroup'
+import SetTypeExplanation from './SetTypeExplanation'
 
-export const CreateSetGroup = ({
-  currentStep
+export const CreateSetGroupSteps = ({
+  currentSetGroup
 }) => {
+
+  const {set_group_type} = currentSetGroup
+
+
   return (
-    <div>
-      {currentStep === 'choose-type' && <SelectTypeInputsAndBtns />}
-      {currentStep === 'choose-exercise' && <SetGroupSearchExercise />}
-      {currentStep === 'preview-set-group' && <PreviewSetGroup />}
+    <div className='create-set-group-steps'>
+      <SetTypeExplanation type={set_group_type} />
     </div>
   )
 }
 
 const mapStateToProps = (state) => ({
-  currentStep: state.setGroupReducer.createSetGroupData.currentStep
+  currentSetGroup: state.setGroupReducer.currentSetGroup
 })
 
 const mapDispatchToProps = {
   
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSetGroup)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateSetGroupSteps)
