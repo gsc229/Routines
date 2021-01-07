@@ -60,11 +60,11 @@ export const createNewExercise = (newExercise) => dispatch => {
   dispatch({type: constants.CREATING_EXERCISE})
   return createExercise(newExercise)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
      dispatch({type: constants.CREATE_EXERCISE_SUCCESS, payload: response.data})
      return true
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.CREATE_EXERCISE_FAIL, payload: response.error_message})
       return false
     } 
@@ -78,11 +78,11 @@ export const saveExerciseChanges = (exerciseId, updates) => dispatch => {
   dispatch({type: constants.UPDATING_EXERCISE})
   return updateExercise(exerciseId, updates)
   .then(response => {
-    if(response.success){
+    if(response && response.success){
      dispatch({type: constants.UPDATE_EXERCISE_SUCCESS, payload: response.data})
      return true
     } 
-    if(response.error_message){
+    if(response && response.error_message){
       dispatch({type: constants.UPDATE_EXERCISE_FAIL, payload: response.error_message})
       return false
     } 

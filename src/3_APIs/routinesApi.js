@@ -67,7 +67,7 @@ export const createRoutine = (newRoutine) => {
 }
 
 export const updateRoutine = (routineId, updates) => {
-  
+  console.log({routineId, updates})
   return axiosWihAuth()
   .put(`/routines/routine/${routineId}`, updates)
   .then(routinesResponse=>{
