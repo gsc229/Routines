@@ -32,6 +32,7 @@ export const RoutineScheduleDnd = ({
   const [routineSchedule, setRoutineSchedule] = useState({})
   const [weekToDestroy, setWeekToDestroy] = useState('')
   const [modalShow, setModalShow] = useState(false)
+
   useEffect( async() => {
     await syncWeeksAndSetGroups(currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges)
     setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
@@ -48,12 +49,14 @@ export const RoutineScheduleDnd = ({
     }
   }
 
+  //crudingWeek='creating-week'
 
   return (
       <div 
       className='routine-schedule-dnd'>
       {modalShow && <ConfirmDeleteWeekModal week={weekToDestroy} setModalShow={setModalShow} modalShow={modalShow} />}
       {!currentSetGroups && <DarkSpinner />}
+      {crudingWeek === 'creating-week' && <DarkSpinner text='Creating week...' />}
       {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
       {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
       {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
