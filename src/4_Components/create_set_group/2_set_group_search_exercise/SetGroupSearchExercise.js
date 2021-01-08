@@ -3,11 +3,8 @@ import { connect } from 'react-redux'
 import { writingCreateSetGroupData } from '../../../1_Actions/setGroupActions'
 import SearchExercisesForm from '../../exercise/form_search_exercises/SearchExercisesForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
-import AttachExerciseToSetGroupCard from '../3_create_set_group_cards/AttachExerciseToSetGroupCard'
+import AttachExerciseToSetGroupCard from '../3_create_set_group_search_ex_card/AttachExerciseToSetGroupCard'
 import ChosenExercisesBank from './ChosenExercisesBank'
-import { ConnectedPreviousStepButton, ConnectedNextStepButton } from '../2_form_create_set_group/ConnectedPrependInputs'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 
 export const SetGroupSearchExercise = ({
   exerciseSearchResults,
