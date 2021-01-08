@@ -20,28 +20,6 @@ export const SetGroupSearchExercise = ({
 
   return (
     <div className='set-group-exercise-search'>
-      <div className='set-group-exercise-search-btns-container'>
-        <Row className='btn-row'>
-          <Col className='btn-column'  sm='12' md='6'>
-            <ConnectedPreviousStepButton 
-              text='Back to set group type'
-              writeDataKey='currentStep'
-              writeDataValue='choose-type'/>
-          </Col>
-
-          <Col className='btn-column'  sm='12' md='6'>
-           
-            <ConnectedNextStepButton
-            disabled={chosenExercises.length === 0}
-            variant='success'
-            writeDataKey='currentStep'
-            writeDataValue='enter-info'
-            text={`Enter ${currentSetGroup.set_group_type} Set Info`}/>
-          </Col>
-
-        </Row>
-      </div>
-      
       <SearchExercisesForm />
 
       {chosenExercises.length > 0 &&

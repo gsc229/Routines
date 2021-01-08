@@ -1,45 +1,83 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {canMoveToForm} from '../createSetGroupHelpers'
+import {canMoveToForm, canMoveToPreview} from '../createSetGroupHelpers'
 import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../set_group_btns_and_inputs/SetGroupBtnsAndInputs'
 import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import CreateSetGroupBtn from '../set_group_btns_and_inputs/CreateSetGroupBtn'
 
 export const StepNavs = ({
   currentStep,
   chosenExercises,
   currentSetGroup,
-  canMoveToForm
+  createSetGroupData
 }) => {
-
-
-  const {set_group_type, name} = currentSetGroup
+  const {set_group_type} = currentSetGroup
 
   // choose-type --> choose-exercises --> enter-info --> preview-set-group
 
+  const nextStep = {
+    "choose-exercise": {
+      step: "enter-info",
+      text: `Enter ${set_group_type} Set Info`,
+      allowFunction: canMoveToForm
+    },
+    "enter-info": {
+      step: "preview-set-group",
+      text: `Preview ${set_group_type} Set`,
+      allowFunction: canMoveToPreview
+    }
+  }
+
+  const prevStep = {
+    "preview-set-group": {
+      step: "enter-info",
+      text: `Back to ${set_group_type} Set Info`
+    },
+    "enter-info": {
+      step: "choose-exercise",
+      text: "Back To Choose Exercise"
+    },
+    "choose-exercise": {
+      step: "choose-type",
+      text: "Back Set Group Type"
+    },
+    "choose-type": {
+      step: "choose-type",
+      text: ""
+    }
+  }
 
 
   return (
-    <Container>
-      <Row className='create-set-group-navs'>
-          <Col className='create-set-group-btn-column' sm='12' md='6'>
-            <ConnectedPreviousStepButton
-            writeDataKey='currentStep'
-            writeDataValue='enter-info' 
-            text='Back to Info Input'
-            />
-          </Col>
-          
-          {currentStep === 'preview-set-group' &&
-          <Col className='create-set-group-btn-column' sm='12' md='6'>
-            <CreateSetGroupBtn />
-          </Col>}
+    <Container className='create-set-group-navs-container'>
+      <Row className='create-set-group-navs-row'>
+        <Col className='create-set-group-btn-column' sm='12' md='6'>
+          {currentStep !== 'choose-type' && 
+          <ConnectedPreviousStepButton
+          writeDataKey='currentStep'
+          writeDataValue={prevStep[currentStep].step}
+          text={prevStep[currentStep].text}
+          />}
+        </Col>
+        
+        {currentStep === 'preview-set-group' &&
+        <Col className='create-set-group-btn-column' sm='12' md='6'>
+          <CreateSetGroupBtn />
+        </Col>}
 
-          {currentStep !== 'preview-set-group' && canMoveToForm(set_group_type, chosenExercises) && 
-          <Col className='create-set-group-btn-column' sm='12' md='6'>
-            <ConnectedNextStepButton />
-          </Col>}
-
+        {currentStep !== 'preview-set-group' && currentStep !== 'choose-type' && 
+        <Col className='create-set-group-btn-column' sm='12' md='6'>
+          <ConnectedNextStepButton
+          disabled={
+          !nextStep[currentStep].allowFunction(set_group_type, createSetGroupData, chosenExercises)}
+          variant='success'
+          writeDataKey='currentStep'
+          writeDataValue={nextStep[currentStep].step}
+          text={nextStep[currentStep].text}
+          />
+        </Col>}
       </Row>
     </Container>
   )
@@ -48,11 +86,12 @@ export const StepNavs = ({
 const mapStateToProps = (state) => ({
   currentStep: state.setGroupReducer.createSetGroupData.currentStep,
   chosenExercises: state.setGroupReducer.chosenExercises,
-  currentSetGroup: state.setGroupReducer.currentSetGroup
+  currentSetGroup: state.setGroupReducer.currentSetGroup,
+  createSetGroupData: state.setGroupReducer.createSetGroupData
 })
 
 const mapDispatchToProps = {
-  canMoveToForm
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StepNavs)

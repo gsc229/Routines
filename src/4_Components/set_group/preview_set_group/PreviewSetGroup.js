@@ -3,13 +3,9 @@ import { connect } from 'react-redux'
 import {createSetGroupLocal} from './previewSetGroupHelpers'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
 import {setCurrentSetGroupSets} from '../../../1_Actions/exerciseSetActions'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
-import Container from 'react-bootstrap/Container'
 import ExerciseSetCard from '../../exercise_set/card_exercise_set/ExerciseSetCard'
-import { ConnectedPreviousStepButton} from '../set_group_btns_and_inputs/SetGroupBtnsAndInputs';
-import CreateSetGroupBtn from '../set_group_btns_and_inputs/CreateSetGroupBtn'
 
+ 
 export const PreviewSetGroup = ({
   chosenExercises,
   currentSetGroup,
@@ -42,23 +38,6 @@ export const PreviewSetGroup = ({
   
   return (
     <div className='preview-set-group-container'>
-      <Container>
-        <Row className='preview-set-group-top-buttons'>
-          <Col className='set-group-btn-column' sm='12' md='6'>
-            <ConnectedPreviousStepButton
-            writeDataKey='currentStep'
-            writeDataValue='enter-info' 
-            text='Back to Info Input'
-            />
-          </Col>
-          <Col className='set-group-btn-column' sm='12' md='6'>
-            <CreateSetGroupBtn />
-          </Col>
-          <Col sm='12'>
-          <h3>Preview Set Group: {currentSetGroup.name ? currentSetGroup.name : 'No Name'}</h3>
-          </Col>
-        </Row>
-      </Container>
       <div className="set-groups">
         {currentSetGroupSets.length > 0 && 
         currentSetGroupSets.map((set, index) => 

@@ -32,7 +32,7 @@ export const canMoveToPreview = (setGroupType, createSetGoupData, chosenExercise
 
 
 
-export const canMoveToForm = (setGroupType, chosenExercises) => {
+export const canMoveToForm = (setGroupType, createSetGoupData, chosenExercises) => {
 
   switch(setGroupType){
 

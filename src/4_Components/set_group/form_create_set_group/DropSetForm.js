@@ -32,7 +32,6 @@ export const DropSetForm = ({
   const [decreaseMethod, setDecreaseMethod] = useState({key: 'percent_weight_decrease', value: 10})
 
   useEffect(() => {
-
     writingCreateSetGroupData('percent_weight_decrease', 10)
   }, [])
 
@@ -110,16 +109,6 @@ export const DropSetForm = ({
 
        <Col className='input-column' lg='3' sm='12'>
          <ConnectedRestSecondsInput placeholder='optional' />
-       </Col>
-
-       <Col className='input-column'  sm='12'>
-        <ConnectedNextStepButton
-         variant='success'
-         disabled={!allowAddExercise}
-         text={'Proceed to add exercise'}
-         writeDataKey='currentStep'
-         writeDataValue='choose-exercise'
-         />
        </Col>
      </Row>
 
