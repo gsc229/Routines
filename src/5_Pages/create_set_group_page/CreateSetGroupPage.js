@@ -34,7 +34,8 @@ export const CreateOrEditExerciseSet = ({
           </Link>
         </div>
         <Tabs
-          id="controlled-tab-example"
+          className='create-set-group-tabs'
+          id="create-set-group-tabs"
           activeKey={searchMode}
           onSelect={(mode) => setSearchMode(mode)}>
           <Tab eventKey="exercise" title="Create A New Set Group">

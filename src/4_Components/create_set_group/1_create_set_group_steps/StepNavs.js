@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {canMoveToForm, canMoveToPreview} from '../createSetGroupHelpers'
-import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../set_group_btns_and_inputs/SetGroupBtnsAndInputs'
+import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../2_form_create_set_group/SetGroupBtnsAndInputs'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import CreateSetGroupBtn from '../set_group_btns_and_inputs/CreateSetGroupBtn'
+import CreateSetGroupBtn from '../2_preview_set_group/CreateSetGroupBtn'
 
 export const StepNavs = ({
   currentStep,

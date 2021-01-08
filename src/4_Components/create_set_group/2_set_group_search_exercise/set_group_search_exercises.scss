@@ -86,9 +86,20 @@
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
-      list-style: none;
       li{
-        margin-right: 20px;
+        margin: 0 20px;
+        padding-left: 0;
+        color: $honey-yellow;
+        list-style: none;
+      }
+    }
+
+    ol{
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      li{
+        margin: 0 20px;
         padding-left: 0;
         color: $honey-yellow;
       }

@@ -15,26 +15,29 @@ export const SetGroupForm = ({
   const {set_group_type} = currentSetGroup
 
   return (
-    <Nav
-    className='set-group-type-tab-btns'
-    variant="pills">
-      {setGroupTypes.map(type=>
-        <Nav.Item
-        key={type}
-        >
-          <Nav.Link
-          className={set_group_type === type && currentStep !== 'choose-type' && 'selected-disabled'}  
-          eventKey={type}
-          disabled={currentStep !== 'choose-type'}
-          active={set_group_type === type}
-          onClick={() => writingSetGroup('set_group_type', type)}
+    <div className='set-group-type-tab-btns-container'>
+      <h6>Quick Build: </h6>
+      <Nav
+      className='set-group-type-tab-btns'
+      variant="pills">
+        {setGroupTypes.map(type=>
+          <Nav.Item
+          key={type}
           >
-            {type}
-          </Nav.Link>
-        </Nav.Item>
-        )}
-      
-    </Nav> 
+            <Nav.Link
+            className={set_group_type === type && currentStep !== 'choose-type' && 'selected-disabled'}  
+            eventKey={type}
+            disabled={currentStep !== 'choose-type'}
+            active={set_group_type === type}
+            onClick={() => writingSetGroup('set_group_type', type)}
+            >
+              {type}
+            </Nav.Link>
+          </Nav.Item>
+          )}
+        
+      </Nav> 
+    </div>
   )
 }
 

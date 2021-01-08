@@ -1,18 +1,18 @@
-export const minAndMax = (setGroupType) => {
+export const minAndMaxExercisesAllowed = (setGroupType) => {
   switch(setGroupType){
 
     case "Drop":
+    case "Stripping":
     case "Straight":
-    case "Manual":
+    case "Pyramid":
       return {min: 1, max: 1}
+    case "Manual":
     case "Super":
     case "Super - Antagonist":
     case "Super - Compound": 
     case "Circuit": 
-    case "Stripping":
     case "Pre-Exhaustion":
     case "Rest - Pause": 
-    case "Pyramid":
       return {min: 2, max: null}
     case "Super - Tri":
       return {min: 3, max: 3}
@@ -21,6 +21,31 @@ export const minAndMax = (setGroupType) => {
 
     default:
       return true
+  }
+}
+
+export const getSetComboType = (setGroupType) => {
+  switch(setGroupType){
+
+    case "Drop":
+    case "Stripping":
+    case "Straight":
+    case "Pyramid":
+      return 'single'
+    case "Super - Tri":
+    case "Super - Giant":
+      return 'compound-limited'
+    case "Manual":
+    case "Super":
+    case "Super - Antagonist":
+    case "Super - Compound": 
+    case "Circuit": 
+    case "Pre-Exhaustion":
+    case "Rest - Pause": 
+      return 'compound-unlimited'
+
+    default:
+      return "compound-unlimited"
   }
 }
 

@@ -10,7 +10,7 @@ import {
   ConnectedWeightInput, 
   ConnectedTotalSetsInput,
   ConnectedNextStepButton
-} from '../set_group_btns_and_inputs/SetGroupBtnsAndInputs'
+} from './SetGroupBtnsAndInputs'
 import Container  from 'react-bootstrap/Container'
 
 

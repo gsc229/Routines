@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {removeChosenExercise, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
-import {canMoveToForm, minAndMax} from '../createSetGroupHelpers'
+import {canMoveToForm, minAndMaxExercisesAllowed, getSetComboType} from '../createSetGroupHelpers'
 import Container from 'react-bootstrap/Container'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
@@ -16,7 +16,8 @@ export const ChosenExercisesBank = ({
   createSetGroupData
 }) => {
   const {set_group_type} = currentSetGroup
-  const {min, max} = minAndMax(set_group_type)
+  const set_combo_type = getSetComboType()
+  const {min, max} = minAndMaxExercisesAllowed(set_group_type)
 
   const minMaxMessage = () => {
 
@@ -46,10 +47,10 @@ export const ChosenExercisesBank = ({
         
       </div>
       <div className='bank-body'>
-        {chosenExercises.length === 0 && 
+        {!chosenExercises.length && 
           minMaxMessage()
         }
-        {chosenExercises.length > 0 &&
+        {chosenExercises.length > 0 && max === 1 &&
         <ul>
           {chosenExercises.map(exercise=> 
           <li key={`chosen-exercise-bank-${exercise._id}`}>
@@ -59,6 +60,16 @@ export const ChosenExercisesBank = ({
             </OverlayTrigger>
           </li>)}
         </ul>}
+        {chosenExercises.length > 0 && min > 1 &&
+        <ol>
+          {chosenExercises.map(exercise=> 
+          <li key={`chosen-exercise-bank-${exercise._id}`}>
+            {exercise.name}&nbsp;
+            <OverlayTrigger overlay={<ToolTip>Remove {exercise.name}</ToolTip>}>
+              <FiMinusSquare className='remove-icon' onClick={() => removeChosenExercise(exercise._id)} />
+            </OverlayTrigger>
+          </li>)}
+        </ol>}
       </div>
     </Container>
   )
