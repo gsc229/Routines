@@ -3,7 +3,7 @@
   padding: 10px;
   .set-group-exercise-search-btns-container{
     //border: 1px solid red;
-    width: 95%;
+    //width: 95%;
     margin: auto;
     .btn-row{
       display: flex;
@@ -21,7 +21,7 @@
 
   .search-exercises-form{
     //border: 1px solid red;
-    width: 95%;
+    //width: 95%;
     margin: auto;
     margin-top: 10px;
     padding: 0;
@@ -54,7 +54,7 @@
   .chosen-exercises-bank{
     //border: 1px solid yellow;
     color: white;
-    max-width: 95%;
+    //max-width: 95%;
     margin-bottom: 20px;
     padding: 0;
     .chosen-exerciese-bank-header{
@@ -105,8 +105,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: fit-content;
-    max-width: 95%;
+    //max-width: 95%;
     margin: auto;
     background-color: $spanish-gray;
     padding: 20px 0;

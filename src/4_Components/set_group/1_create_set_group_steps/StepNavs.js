@@ -53,7 +53,7 @@ export const StepNavs = ({
   return (
     <Container className='create-set-group-navs-container'>
       <Row className='create-set-group-navs-row'>
-        <Col className='create-set-group-btn-column' sm='12' md='6'>
+        <Col className='create-set-group-btn-column' sm='12' md='4'>
           {currentStep !== 'choose-type' && 
           <ConnectedPreviousStepButton
           writeDataKey='currentStep'
@@ -63,12 +63,12 @@ export const StepNavs = ({
         </Col>
         
         {currentStep === 'preview-set-group' &&
-        <Col className='create-set-group-btn-column' sm='12' md='6'>
+        <Col className='create-set-group-btn-column' sm='12' md='4'>
           <CreateSetGroupBtn />
         </Col>}
 
         {currentStep !== 'preview-set-group' && currentStep !== 'choose-type' && 
-        <Col className='create-set-group-btn-column' sm='12' md='6'>
+        <Col className='create-set-group-btn-column' sm='12' md='4'>
           <ConnectedNextStepButton
           disabled={
           !nextStep[currentStep].allowFunction(set_group_type, createSetGroupData, chosenExercises)}

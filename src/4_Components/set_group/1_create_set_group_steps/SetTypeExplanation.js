@@ -35,16 +35,14 @@ const SetTypeExplanation = ({
   }
 
   return (
-    <Container>
-      <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
       <div className='type-explanation-and-use-btn'>
+        <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
         {typeExplanation[type]}
         {currentStep === 'choose-type' &&
         <Button 
         onClick={handleTypeClick}
         className='use-set-type-btn'>Use {type} Set</Button>}
       </div>
-    </Container>
   )
 }
 const mapStateToProps = (state) => ({

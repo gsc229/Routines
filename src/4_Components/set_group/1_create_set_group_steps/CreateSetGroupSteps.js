@@ -1,11 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import SetTypeExplanation from './SetTypeExplanation'
-import SetGroupSearchExercise from '../set_group_search_exercise/SetGroupSearchExercise'
-import PreviewSetGroup from '../preview_set_group/PreviewSetGroup'
-import SetGroupInfoForm from '../form_create_set_group/SetGroupInfoForm'
-import StepNavs from './StepNavs'
+import SetGroupSearchExercise from '../2_set_group_search_exercise/SetGroupSearchExercise'
+import PreviewSetGroup from '../2_preview_set_group/PreviewSetGroup'
+import SetGroupInfoForm from '../2_form_create_set_group/SetGroupInfoForm'
 
+import SgNameInputForm from './SgNameInputForm'
+import StepNavs from './StepNavs'
+import SelectTypeTabs from './SelectTypeTabs'
 export const CreateSetGroupSteps = ({
   currentSetGroup,
   currentStep
@@ -16,11 +18,13 @@ export const CreateSetGroupSteps = ({
 
   return (
     <div className='create-set-group-steps'>
-      <SetTypeExplanation type={set_group_type} />
+      <SgNameInputForm />
+      <SelectTypeTabs />
+      {currentStep === 'choose-type' &&  <SetTypeExplanation type={set_group_type} />}
       <StepNavs />
       {currentStep === 'choose-exercise' && <SetGroupSearchExercise />}
-      {currentStep === 'preview-set-group' && <PreviewSetGroup />}
       {currentStep === 'enter-info' && <SetGroupInfoForm />}
+      {currentStep === 'preview-set-group' && <PreviewSetGroup />}
     </div>
   )
 }
