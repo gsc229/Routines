@@ -5,7 +5,7 @@ import SearchExercisesForm from '../../exercise/form_search_exercises/SearchExer
 import DarkSpinner from '../../spinners/DarkSpinner'
 import AttachExerciseToSetGroupCard from '../3_create_set_group_cards/AttachExerciseToSetGroupCard'
 import ChosenExercisesBank from './ChosenExercisesBank'
-import { ConnectedPreviousStepButton, ConnectedNextStepButton } from '../2_form_create_set_group/SetGroupBtnsAndInputs'
+import { ConnectedPreviousStepButton, ConnectedNextStepButton } from '../2_form_create_set_group/ConnectedPrependInputs'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
