@@ -1,9 +1,14 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Container from 'react-bootstrap/Container'
-import DropSetForm from '../form_create_set_group/DropSetForm'
-import StraightSetForm from '../form_create_set_group/StraightSetForm'
+import Button from 'react-bootstrap/Button'
 
-const SetTypeExplanation = ({type}) => {
+const SetTypeExplanation = ({
+  type,
+  writingCreateSetGroupData,
+  currentStep
+}) => {
 
 
   const typeExplanation = {
@@ -23,19 +28,26 @@ const SetTypeExplanation = ({type}) => {
   }
 
 
-  const forms = {
-    Drop: <DropSetForm />,
-    Straight: <StraightSetForm />
-  }
-
-
 
   return (
     <Container>
       <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
-      {typeExplanation[type]}
+      <div className='type-explanation-and-use-btn'>
+        {typeExplanation[type]}
+        {currentStep === 'choose-type' &&
+        <Button 
+        onClick={() => writingCreateSetGroupData('currentStep', 'choose-exercise')}
+        className='use-set-type-btn'>Use {type} Set</Button>}
+      </div>
     </Container>
   )
 }
+const mapStateToProps = (state) => ({
+  currentStep: state.setGroupReducer.createSetGroupData.currentStep
+})
 
-export default SetTypeExplanation
+const mapDispatchToProps = {
+  writingCreateSetGroupData
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SetTypeExplanation)

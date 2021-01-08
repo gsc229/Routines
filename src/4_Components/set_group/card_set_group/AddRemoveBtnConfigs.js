@@ -12,14 +12,26 @@ export const AddRemoveBtnConfigs = ({
   exercise,
   addChosenExercise, 
   removeChosenExercise,
-  writingCreateSetGroupData
+  writingCreateSetGroupData,
+  nextStep,
+  nextStepText
 }) => {
 
   const {set_group_type} = currentSetGroup
 
   const compoud_set_groups = ["Super", "Super - Antagonist", "Super - Compound", "Super - Tri", "Super - Giant", "Circuit"]
 
-  const getSetGroupCategory = () => {
+  const limit = {
+    "Super": 0,
+    "Super - Antagonist": 0,
+    "Super - Compound": 0,
+    "Super - Tri": 0,
+    "Ciurcuit": 0
+  }
+
+
+
+  const compoundOrNonCompound = () => {
     return compoud_set_groups.find( type => type === set_group_type) ? "Compound" : "NonCompound"
   }
 
@@ -45,7 +57,7 @@ export const AddRemoveBtnConfigs = ({
     "NonCompound": function(){
       return !chosenExercises.find(chosenEx => chosenEx._id === exercise._id) && chosenExercises.length === 0
     },
-    "Compound": function(){
+    "Compound": function(chosenExerciseLimit){
       return !chosenExercises.find(chosenEx => chosenEx._id === exercise._id) && chosenExercises.length === 0
     }
   }
@@ -61,10 +73,9 @@ export const AddRemoveBtnConfigs = ({
 
 
   const removeButton = () => {
-    return showRemoveButton[getSetGroupCategory()]() && 
+    return showRemoveButton[compoundOrNonCompound()]() && 
     <div className='card-link-container'>
       <Button
-      to='#'
       onClick={handleRemoveClick}
       className='card-link remove-from-set-link'
       >
@@ -75,7 +86,7 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const addButton = () => {
-    return showAddButton[getSetGroupCategory()]() && 
+    return showAddButton[compoundOrNonCompound()]() && 
     <div className='card-link-container'>
       <Button
       variant='success'
@@ -84,14 +95,14 @@ export const AddRemoveBtnConfigs = ({
     </div>
   }
 
-  const previewSetGroupBtn = () => {
-    return showPreviewSetGroupBtn[getSetGroupCategory()]() &&
+  const nestStep = () => {
+    return showPreviewSetGroupBtn[compoundOrNonCompound()]() &&
     <div className='card-link-container'>
       <ConnectedNextStepButton 
       variant='success'
-      text='Preview Set Group'
+      text={nextStepText}
       writeDataKey='currentStep'
-      writeDataValue='preview-set-group'
+      writeDataValue={nextStep}
       />
     </div>
   } 
@@ -101,7 +112,7 @@ export const AddRemoveBtnConfigs = ({
     <div>
       {removeButton()}
       {addButton()}
-      {previewSetGroupBtn()}
+      {nestStep()}
     </div>
   )
 }

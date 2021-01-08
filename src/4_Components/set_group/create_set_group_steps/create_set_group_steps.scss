@@ -1,0 +1,8 @@
+.type-explanation-and-use-btn{
+  display: flex;
+  flex-direction: column;
+  .use-set-type-btn{
+    width: fit-content;
+    margin-top: 20px;
+  }
+}

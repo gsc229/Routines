@@ -1,9 +1,26 @@
 .create-set-group-tab{
   background-color: $bs-dark;
+  border-radius: 8px;
+  border-top-left-radius: 0;
   color: white;
   padding: 10px;
+  .create-set-group-name-input-form{
+    padding: 10px;
+  }
   .quick-build-heading{
     width: fit-content;
-    margin-left: 12px;
+    margin-left: 15px;
+    margin-bottom: 0;
   }
+
+  .set-group-type-tab-btns{
+    border: 1px solid $spanish-gray;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 4px;
+    a:hover{
+      color: white;
+    }
+  }
+
 }

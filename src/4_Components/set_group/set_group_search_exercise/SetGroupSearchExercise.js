@@ -13,13 +13,13 @@ import Col from 'react-bootstrap/Col'
 export const SetGroupSearchExercise = ({
   exerciseSearchResults,
   crudingExercise,
-  chosenExercises
+  chosenExercises,
+  currentSetGroup
 }) => {
 
   return (
     <div className='set-group-exercise-search'>
-      <Container className='set-group-exercise-search-btns-container'>
-
+      <div className='set-group-exercise-search-btns-container'>
         <Row className='btn-row'>
           <Col className='btn-column'  sm='12' md='6'>
             <ConnectedPreviousStepButton 
@@ -29,20 +29,23 @@ export const SetGroupSearchExercise = ({
           </Col>
 
           <Col className='btn-column'  sm='12' md='6'>
-            {chosenExercises.length > 0 &&
+           
             <ConnectedNextStepButton
-              variant='success'
-              writeDataKey='currentStep'
-              writeDataValue='preview-set-group'
-              text='Preview Set Group'/>}
+            disabled={chosenExercises.length > 0}
+            variant='success'
+            writeDataKey='currentStep'
+            writeDataValue='enter-info'
+            text={`Enter ${currentSetGroup.set_group_type} Set Info`}/>
           </Col>
 
         </Row>
-        
-      </Container>
+      </div>
+      
       <SearchExercisesForm/>
+
       {chosenExercises.length > 0 &&
        <ChosenExercisesBank />}
+
       {crudingExercise === 'fetching' &&
       <DarkSpinner />}
 
@@ -50,7 +53,9 @@ export const SetGroupSearchExercise = ({
       <div className='set-group-exercise-search-results'>
         {exerciseSearchResults.map(exercise=>{ 
           return(
-            <AttachExerciseToSetGroupCard 
+            <AttachExerciseToSetGroupCard
+            nextStep='enter-info'
+            nextStepText={`Enter ${currentSetGroup.set_group_type} Set Info`}
             key={exercise._id}
             exercise={exercise} />
           )})}

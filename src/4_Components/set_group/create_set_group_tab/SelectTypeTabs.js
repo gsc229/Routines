@@ -8,19 +8,22 @@ import CreateSetGroupSteps from '../create_set_group_steps/CreateSetGroupSteps'
 export const SetGroupForm = ({
   currentSetGroup,
   setGroupTypes,
-  writingSetGroup
+  writingSetGroup,
+  currentStep
 }) => {
 
   const {set_group_type} = currentSetGroup
-
+  
   return (    
       <Tabs
-      className='this-is-a-nav'
+      className='set-group-type-tab-btns'
       variant= 'pills'
+      
       onSelect={(type) => writingSetGroup('set_group_type',type)}
       activeKey={set_group_type}>
         {setGroupTypes.map(type=>
         <Tab
+        disabled={currentStep !== 'choose-type'}
         key={type}
         title={type}
         eventKey={type}>
@@ -33,7 +36,8 @@ export const SetGroupForm = ({
 
 const mapStateToProps = (state) => ({
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  setGroupTypes: state.setGroupReducer.set_group_types
+  setGroupTypes: state.setGroupReducer.set_group_types,
+  currentStep: state.setGroupReducer.createSetGroupData.currentStep
 })
 
 const mapDispatchToProps = {

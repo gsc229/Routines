@@ -9,6 +9,7 @@ import {FaRegHandPointRight} from 'react-icons/fa'
 
 export const ChosenExercisesBank = ({
   chosenExercises,
+  currentSetGroup,
   removeChosenExercise,
   writingCreateSetGroupData
 }) => {
@@ -18,8 +19,8 @@ export const ChosenExercisesBank = ({
       <div className='chosen-exerciese-bank-header'>
         <h4>Chosen Exercises:</h4>
         <p 
-        onClick={() => writingCreateSetGroupData('currentStep', 'preview-set-group')}>
-          Preview Set Group <FaRegHandPointRight />
+        onClick={() => writingCreateSetGroupData('currentStep', 'enter-info')}>
+          Enter {currentSetGroup.set_group_type} Set Info <FaRegHandPointRight />
         </p>
         
       </div>
@@ -37,7 +38,8 @@ export const ChosenExercisesBank = ({
 }
 
 const mapStateToProps = (state) => ({
-  chosenExercises: state.setGroupReducer.chosenExercises
+  chosenExercises: state.setGroupReducer.chosenExercises,
+  currentSetGroup: state.setGroupReducer.currentSetGroup
 })
 
 const mapDispatchToProps = {

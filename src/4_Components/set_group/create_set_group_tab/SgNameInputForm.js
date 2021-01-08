@@ -11,7 +11,7 @@ export const SgNameInputForm = ({
   writingSetGroup
 }) => {
   return (
-    <Form className='info-form create-set-group-name-input-form'>
+    <Form className='create-set-group-name-input-form'>
       <Form.Group>
         <Form.Label>
           Add Set Group

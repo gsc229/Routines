@@ -8,7 +8,9 @@ import AddRemoveButtons from './AddRemoveBtnConfigs'
 
 export const AttachExerciseToSetGroupCard = ({
   exercise,
-  chosenExercises
+  chosenExercises,
+  nextStep,
+  nextStepText
 }) => {
 
   const selected = chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
@@ -22,7 +24,10 @@ export const AttachExerciseToSetGroupCard = ({
         <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
       </Card.Header>
       <Card.Body>
-        <AddRemoveButtons exercise={exercise} />
+        <AddRemoveButtons 
+        nextStep={nextStep}
+        nextStepText={nextStepText}
+        exercise={exercise} />
         <Card.Title>
           <Card.Text>{exercise.name}</Card.Text>
         </Card.Title>
