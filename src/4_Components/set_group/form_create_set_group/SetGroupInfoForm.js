@@ -10,21 +10,28 @@ export const SetGroupInfoForm = ({
 
   const {set_group_type} = currentSetGroup
 
-  const form = {
-    "Drop": <DropSetForm />,
-    "Straight": <StraightSetForm />
+  const getForm = () => {
+    switch(set_group_type){
+      case "Drop":
+        return <DropSetForm />
+      case "Straight":
+        return <StraightSetForm />
+      default:
+        return <StraightSetForm />
+    }
   }
 
 
 
 
+
   return (
-    form[set_group_type]
+    getForm()
   )
 }
 
 const mapStateToProps = (state) => ({
-  currentSetGroup: state.setGroupReduer.currentSetGroup
+  currentSetGroup: state.setGroupReducer.currentSetGroup
 })
 
 const mapDispatchToProps = {

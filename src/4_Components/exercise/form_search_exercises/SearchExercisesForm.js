@@ -59,100 +59,118 @@ export const SearchExercisesForm = ({
           <Button onClick={submitSearch}>Search</Button>
         </InputGroup.Append>
       </InputGroup>
-      <Form.Group controlId="category">
-        <Row style={{display: 'flex' }}>
-        <Col>
-          <Form.Label style={{marginLeft: 0, paddingLeft: 0}} column sm={12}>
-            Exercise Category
-          </Form.Label>
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Endurance"
-            name="category"
-            value="category[in]=Endurance"
-            id="Endurance"
-          />
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Strength"
-            name="category"
-            value="category[in]=Strength"
-            id="Strength"
-          />
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Flexibility"
-            name="category"
-            value="category[in]=Flexibility"
-            id="Flexibility"
-          />
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Balance"
-            name="category"
-            value="category[in]=Balance"
-            id="Balance"
-          />
-        </Col>
-        <Col>
-        <Form.Label style={{marginLeft: 0, paddingLeft: 0}} column sm={12}>
-          Muscle Group
-        </Form.Label>
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Chest"
-            name="muscle_group"
-            value="muscle_group[in]=Chest"
-            id="muscle_group1"
-          />
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Arms"
-            name="muscle_group"
-            value="muscle_group[in]=Arms"
-            id="muscle_group2"
-          />
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Back"
-            name="muscle_group"
-            value="muscle_group[in]=Back"
-            id="muscle_group3"
-          />
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Shoulders"
-            name="muscle_group"
-            value="muscle_group[in]=Shoulders"
-            id="muscle_group3"
-          />
+      <Form.Group 
+      className='form-group-muscle-group-and-category' 
+      controlId="category">
+        <Row 
+        className='row-muscle-group-and-category'
+        style={{display: 'flex' }}>
+        <Col 
+        className='col-muscle-group-and-category'
+        xs='12' sm='6'>
+          <div
+          className='form-label-container'>
+            <Form.Label style={{marginLeft: 0, paddingLeft: 0}} column sm={12}>
+              Exercise Category
+            </Form.Label>
+          </div>
+          <div className='form-checkbox-container'>
             <Form.Check
-            onClick={handleCheckValue}
-            label="Legs"
-            name="muscle_group"
-            value="muscle_group[in]=Legs"
-            id="muscle_group1"
-          />
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Calves"
-            name="muscle_group"
-            value="muscle_group[in]=Calves"
-            id="muscle_group2"
-          />
-          <Form.Check
-            onClick={handleCheckValue}
-            label="Full Body"
-            name="muscle_group"
-            value="muscle_group[in]=Full Body"
-            id="muscle_group3"
-          />
-          <Form.Check
-            label="Multiple Major Muscle Groups"
-            name="muscle_group"
-            value="muscle_group[in]=Multiple Major Muscle Groups"
-            id="muscle_group3"
-          />
+              onClick={handleCheckValue}
+              label="Endurance"
+              name="category"
+              value="category[in]=Endurance"
+              id="Endurance"
+            />
+            <Form.Check
+              onClick={handleCheckValue}
+              label="Strength"
+              name="category"
+              value="category[in]=Strength"
+              id="Strength"
+            />
+            <Form.Check
+              onClick={handleCheckValue}
+              label="Flexibility"
+              name="category"
+              value="category[in]=Flexibility"
+              id="Flexibility"
+            />
+            <Form.Check
+              onClick={handleCheckValue}
+              label="Balance"
+              name="category"
+              value="category[in]=Balance"
+              id="Balance"
+            />
+          </div>
+        </Col>
+        <Col 
+        className='col-muscle-group-and-category'
+        xs='12' sm='6'>
+        <div
+        className='form-label-container'>
+          <Form.Label style={{marginLeft: 0, paddingLeft: 0}} column sm={12}>
+            Muscle Group
+          </Form.Label>
+        </div>
+          <div className='form-checkbox-container'>
+            <Form.Check
+              onClick={handleCheckValue}
+              label="Chest"
+              name="muscle_group"
+              value="muscle_group[in]=Chest"
+              id="muscle_group1"
+            />
+            <Form.Check
+              onClick={handleCheckValue}
+              label="Arms"
+              name="muscle_group"
+              value="muscle_group[in]=Arms"
+              id="muscle_group2"
+            />
+            <Form.Check
+              onClick={handleCheckValue}
+              label="Back"
+              name="muscle_group"
+              value="muscle_group[in]=Back"
+              id="muscle_group3"
+            />
+            <Form.Check
+              onClick={handleCheckValue}
+              label="Shoulders"
+              name="muscle_group"
+              value="muscle_group[in]=Shoulders"
+              id="muscle_group3"
+            />
+              <Form.Check
+              onClick={handleCheckValue}
+              label="Legs"
+              name="muscle_group"
+              value="muscle_group[in]=Legs"
+              id="muscle_group1"
+            />
+            <Form.Check
+              onClick={handleCheckValue}
+              label="Calves"
+              name="muscle_group"
+              value="muscle_group[in]=Calves"
+              id="muscle_group2"
+            />
+            <Form.Check
+              onClick={handleCheckValue}
+              label="Full Body"
+              name="muscle_group"
+              value="muscle_group[in]=Full Body"
+              id="muscle_group3"
+            />
+            <Form.Check
+              label="Multiple Major Muscle Groups"
+              name="muscle_group"
+              value="muscle_group[in]=Multiple Major Muscle Groups"
+              id="muscle_group3"
+            />
+          </div>
         </Col>
         </Row>
       </Form.Group>

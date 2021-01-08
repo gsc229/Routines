@@ -1,9 +1,9 @@
 import React from 'react'
-import Tab from 'react-bootstrap/Tab'
-import Tabs from 'react-bootstrap/Tabs'
 import { connect } from 'react-redux'
 import { writingSetGroup } from '../../../1_Actions/setGroupActions'
-import CreateSetGroupSteps from '../create_set_group_steps/CreateSetGroupSteps'
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
+import Nav from 'react-bootstrap/Nav'
 
 export const SetGroupForm = ({
   currentSetGroup,
@@ -14,23 +14,27 @@ export const SetGroupForm = ({
 
   const {set_group_type} = currentSetGroup
 
-  return (    
-      <Tabs
-      className='set-group-type-tab-btns'
-      variant= 'pills'
-      
-      onSelect={(type) => writingSetGroup('set_group_type',type)}
-      activeKey={set_group_type}>
-        {setGroupTypes.map(type=>
-        <Tab
-        disabled={currentStep !== 'choose-type'}
+  return (
+    <Nav
+    className='set-group-type-tab-btns'
+    variant="pills">
+      {setGroupTypes.map(type=>
+        <Nav.Item
         key={type}
-        title={type}
-        eventKey={type}>
-          <CreateSetGroupSteps />
-        </Tab>
+        >
+          <Nav.Link
+          className={set_group_type === type && currentStep !== 'choose-type' && 'selected-disabled'}  
+          eventKey={type}
+          disabled={currentStep !== 'choose-type'}
+          active={set_group_type === type}
+          onClick={() => writingSetGroup('set_group_type', type)}
+          >
+            {type}
+          </Nav.Link>
+        </Nav.Item>
         )}
-      </Tabs>
+      
+    </Nav> 
   )
 }
 
@@ -45,3 +49,20 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetGroupForm)
+   
+      {/* <Tabs
+      className='set-group-type-tab-btns'
+      variant= 'pills'
+      
+      onSelect={(type) => writingSetGroup('set_group_type',type)}
+      activeKey={set_group_type}>
+        {setGroupTypes.map(type=>
+        <Tab
+        disabled={currentStep !== 'choose-type'}
+        key={type}
+        title={type}
+        eventKey={type}>
+        <CreateSetGroupSteps />
+        </Tab>
+        )}
+      </Tabs> */}

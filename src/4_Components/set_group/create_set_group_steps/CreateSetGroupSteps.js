@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import SetTypeExplanation from './SetTypeExplanation'
 import SetGroupSearchExercise from '../set_group_search_exercise/SetGroupSearchExercise'
 import PreviewSetGroup from '../preview_set_group/PreviewSetGroup'
+import SetGroupInfoForm from '../form_create_set_group/SetGroupInfoForm'
 
 export const CreateSetGroupSteps = ({
   currentSetGroup,
@@ -17,6 +18,7 @@ export const CreateSetGroupSteps = ({
       <SetTypeExplanation type={set_group_type} />
       {currentStep === 'choose-exercise' && <SetGroupSearchExercise />}
       {currentStep === 'preview-set-group' && <PreviewSetGroup />}
+      {currentStep === 'enter-info' && <SetGroupInfoForm />}
     </div>
   )
 }

@@ -2,7 +2,9 @@
   background-color: $bs-dark;
   padding: 10px;
   .set-group-exercise-search-btns-container{
-
+    //border: 1px solid red;
+    width: 95%;
+    margin: auto;
     .btn-row{
       display: flex;
     }
@@ -18,8 +20,34 @@
   }
 
   .search-exercises-form{
+    //border: 1px solid red;
+    width: 95%;
+    margin: auto;
     margin-top: 10px;
     padding: 0;
+    .row-muscle-group-and-category{
+      //border: 1px solid yellow;
+      //width: 95%;
+      margin: auto;
+      .col-muscle-group-and-category{
+        //border: 1px solid blue;
+        padding: 0;
+        .form-checkbox-container{
+          //border: 1px solid red;
+          width: fit-content;
+          display: grid;
+          grid-template-columns: auto auto;
+          @media only screen and (max-width: 1000px) {
+            grid-template-columns: auto auto;
+          }
+          .form-check{
+            margin-right: 15px;
+          }
+        }
+
+
+      }
+    }
   }
   
   
@@ -34,6 +62,8 @@
       
       p{
         color: $russian-green;
+        padding: 0;
+        margin: 0;
         cursor: pointer;
       }
     }
@@ -64,8 +94,8 @@
     width: fit-content;
     max-width: 95%;
     margin: auto;
-    background-color: whitesmoke;
-    //padding: 20px;
+    background-color: $spanish-gray;
+    padding: 20px 0;
     border-radius: 4px;
     h5{
       margin-bottom: 20px;
