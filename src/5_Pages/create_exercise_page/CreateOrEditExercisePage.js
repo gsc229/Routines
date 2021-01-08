@@ -7,7 +7,7 @@ import ExerciseForm from '../../4_Components/exercise/form_exercise/ExerciseForm
 export const CreateOrEditExercisePage = (props) => {
   return (
     <Layout>
-      <Container>
+      <Container className='page create-exercise-page' >
         <ExerciseForm/>
       </Container>
     </Layout>

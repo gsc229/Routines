@@ -22,7 +22,7 @@ export const CreateOrEditExerciseSet = ({
 
   return (
     <Layout>
-      <Container className='create-setgroup-page-container'>
+      <Container className='page create-setgroup-page-container'>
         <div className='create-set-group-page-header'>
           <h2>Create Set Group for {currentRoutine.name}</h2>
           <Link 

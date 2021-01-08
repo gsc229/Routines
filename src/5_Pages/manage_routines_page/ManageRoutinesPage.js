@@ -34,7 +34,7 @@ export const ManageRoutinesPage = ({
 
   return (
     <LayoutOne showTop={false}>
-      <Container className='manage-routines container'>
+      <Container className='page manage-routines container'>
         <Row>
           <Col lg='8' md='12' className="routines-column">
             <h2>Your Routines:</h2>

@@ -26,7 +26,7 @@ const CreateRoutine = ({currentIsSaved, crudingRoutine}) => {
 
   return (
     <Layout>
-      <Container>
+      <Container className='page create-routine-page' >
         {!showSpinner && !crudingRoutine && 
         <RoutineInfoForm />}
         {(showSpinner || crudingRoutine )&& 
