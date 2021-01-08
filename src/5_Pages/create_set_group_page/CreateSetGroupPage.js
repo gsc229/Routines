@@ -8,7 +8,7 @@ import Container from 'react-bootstrap/Container'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import CreateSetGroupSteps from '../../4_Components/set_group/1_create_set_group_steps/CreateSetGroupSteps'
+import CreateSetGroupSteps from '../../4_Components/create_set_group/1_create_set_group_steps/CreateSetGroupSteps'
 export const CreateOrEditExerciseSet = ({
   currentRoutine,
   fullResetCreateSetGroup,
