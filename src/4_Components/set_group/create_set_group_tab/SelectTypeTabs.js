@@ -13,7 +13,7 @@ export const SetGroupForm = ({
 }) => {
 
   const {set_group_type} = currentSetGroup
-  
+
   return (    
       <Tabs
       className='set-group-type-tab-btns'

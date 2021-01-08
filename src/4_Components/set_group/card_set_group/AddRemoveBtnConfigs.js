@@ -1,7 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {addChosenExercise, removeChosenExercise, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
-import {FaRegHandPointRight} from 'react-icons/fa'
+import {
+  canAddThisExercise, 
+  canMoveNext, 
+  canRemoveThisExercise, 
+  canMoveNextFromThisExerciseCard, 
+  getRemainingExercises} from '../createSetGroupHelpers'
 import {ConnectedNextStepButton} from '../form_create_set_group/SetGroupBtnsAndInputs'
 import Button from 'react-bootstrap/Button'
 import {FiMinusSquare} from 'react-icons/fi'
@@ -12,7 +17,10 @@ export const AddRemoveBtnConfigs = ({
   exercise,
   addChosenExercise, 
   removeChosenExercise,
-  writingCreateSetGroupData,
+  showNextStepBtn,
+  showNextStepBtnOnCardBtn,
+  showRemoveExerciseBtn,
+  shwoAddExerciseBtn,
   nextStep,
   nextStepText
 }) => {
@@ -21,19 +29,6 @@ export const AddRemoveBtnConfigs = ({
 
   const compoud_set_groups = ["Super", "Super - Antagonist", "Super - Compound", "Super - Tri", "Super - Giant", "Circuit"]
 
-  const limit = {
-    "Super": 0,
-    "Super - Antagonist": 0,
-    "Super - Compound": 0,
-    "Super - Tri": 0,
-    "Ciurcuit": 0
-  }
-
-
-
-  const compoundOrNonCompound = () => {
-    return compoud_set_groups.find( type => type === set_group_type) ? "Compound" : "NonCompound"
-  }
 
   const handleRemoveClick = () => {
     removeChosenExercise(exercise._id)
@@ -43,37 +38,8 @@ export const AddRemoveBtnConfigs = ({
     addChosenExercise(exercise)
   }
 
-
-  const showRemoveButton = {
-    "NonCompound": function(){
-      return chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
-    },
-    "Compound": function () {
-      return chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
-    } 
-  }
-
-  const showAddButton = {
-    "NonCompound": function(){
-      return !chosenExercises.find(chosenEx => chosenEx._id === exercise._id) && chosenExercises.length === 0
-    },
-    "Compound": function(chosenExerciseLimit){
-      return !chosenExercises.find(chosenEx => chosenEx._id === exercise._id) && chosenExercises.length === 0
-    }
-  }
-
-  const showPreviewSetGroupBtn = {
-    "NonCompound": function(){
-      return chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
-    },
-    "Compound": function(){
-      return chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
-    }
-  }
-
-
   const removeButton = () => {
-    return showRemoveButton[compoundOrNonCompound()]() && 
+    return canRemoveThisExercise(exercise, chosenExercises) && 
     <div className='card-link-container'>
       <Button
       onClick={handleRemoveClick}
@@ -86,7 +52,7 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const addButton = () => {
-    return showAddButton[compoundOrNonCompound()]() && 
+    return canAddThisExercise(exercise, set_group_type, chosenExercises) && 
     <div className='card-link-container'>
       <Button
       variant='success'
@@ -95,8 +61,20 @@ export const AddRemoveBtnConfigs = ({
     </div>
   }
 
-  const nestStep = () => {
-    return showPreviewSetGroupBtn[compoundOrNonCompound()]() &&
+  const nextStepBtn = () => {
+    return canMoveNext(set_group_type, chosenExercises) &&
+    <div className='card-link-container'>
+      <ConnectedNextStepButton 
+      variant='success'
+      text={nextStepText}
+      writeDataKey='currentStep'
+      writeDataValue={nextStep}
+      />
+    </div>
+  } 
+
+  const nextStepOnCardBtn = () => {
+    return canMoveNextFromThisExerciseCard(exercise, set_group_type, chosenExercises)  &&
     <div className='card-link-container'>
       <ConnectedNextStepButton 
       variant='success'
@@ -110,9 +88,10 @@ export const AddRemoveBtnConfigs = ({
 
   return (
     <div>
-      {removeButton()}
-      {addButton()}
-      {nestStep()}
+      {showRemoveExerciseBtn && removeButton()}
+      {shwoAddExerciseBtn && addButton()}
+      {showNextStepBtnOnCardBtn && nextStepOnCardBtn()}
+      {showNextStepBtn && nextStepBtn()}
     </div>
   )
 }

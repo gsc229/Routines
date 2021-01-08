@@ -1,12 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {writingCreateSetGroupData, clearChosenExercises} from '../../../1_Actions/setGroupActions'
+import {clearExerciseSearchResults} from '../../../1_Actions/exerciseActions'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 
 const SetTypeExplanation = ({
   type,
   writingCreateSetGroupData,
+  clearExerciseSearchResults,
+  clearChosenExercises,
   currentStep
 }) => {
 
@@ -27,7 +30,11 @@ const SetTypeExplanation = ({
     "Pre-Exhaustion": "As the name implies; in pre-exhaustion technique you exhaust the targeted muscle with isolate exercise first, and then you perform a compound exercises. Each progressive set incorporates additional muscles to aid the work of the muscle under focus. For example, do lying dumbbell fly (which is a chest isolate exercise) and then perform bench press (which works chest and triceps)."
   }
 
-
+  const handleTypeClick = () => {
+    clearChosenExercises()
+    clearExerciseSearchResults()
+    writingCreateSetGroupData('currentStep', 'choose-exercise')
+  }
 
   return (
     <Container>
@@ -36,7 +43,7 @@ const SetTypeExplanation = ({
         {typeExplanation[type]}
         {currentStep === 'choose-type' &&
         <Button 
-        onClick={() => writingCreateSetGroupData('currentStep', 'choose-exercise')}
+        onClick={handleTypeClick}
         className='use-set-type-btn'>Use {type} Set</Button>}
       </div>
     </Container>
@@ -47,7 +54,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  writingCreateSetGroupData,
+  clearExerciseSearchResults,
+  clearChosenExercises
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetTypeExplanation)

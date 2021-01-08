@@ -6,7 +6,6 @@ import DarkSpinner from '../../spinners/DarkSpinner'
 import AttachExerciseToSetGroupCard from '../card_set_group/AttachExerciseToSetGroupCard'
 import ChosenExercisesBank from './ChosenExercisesBank'
 import { ConnectedPreviousStepButton, ConnectedNextStepButton } from '../form_create_set_group/SetGroupBtnsAndInputs'
-import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
@@ -16,6 +15,8 @@ export const SetGroupSearchExercise = ({
   chosenExercises,
   currentSetGroup
 }) => {
+
+ 
 
   return (
     <div className='set-group-exercise-search'>
@@ -31,7 +32,7 @@ export const SetGroupSearchExercise = ({
           <Col className='btn-column'  sm='12' md='6'>
            
             <ConnectedNextStepButton
-            disabled={chosenExercises.length > 0}
+            disabled={chosenExercises.length === 0}
             variant='success'
             writeDataKey='currentStep'
             writeDataValue='enter-info'
@@ -41,7 +42,7 @@ export const SetGroupSearchExercise = ({
         </Row>
       </div>
       
-      <SearchExercisesForm/>
+      <SearchExercisesForm />
 
       {chosenExercises.length > 0 &&
        <ChosenExercisesBank />}
