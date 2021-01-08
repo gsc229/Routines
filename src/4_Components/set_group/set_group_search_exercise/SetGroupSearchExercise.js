@@ -20,10 +20,10 @@ export const SetGroupSearchExercise = ({
 
   return (
     <div className='set-group-exercise-search'>
+      
+     
+      <ChosenExercisesBank />
       <SearchExercisesForm />
-
-      {chosenExercises.length > 0 &&
-       <ChosenExercisesBank />}
 
       {crudingExercise === 'fetching' &&
       <DarkSpinner />}
