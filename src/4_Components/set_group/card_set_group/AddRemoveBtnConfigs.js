@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import {addChosenExercise, removeChosenExercise, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {
   canAddThisExercise, 
-  canMoveNext, 
+  canMoveToForm, 
   canRemoveThisExercise, 
-  canMoveNextFromThisExerciseCard, 
+  canMoveToFormFromAnExerciseCard, 
   getRemainingExercises} from '../createSetGroupHelpers'
-import {ConnectedNextStepButton} from '../form_create_set_group/SetGroupBtnsAndInputs'
+import {ConnectedNextStepButton} from '../set_group_btns_and_inputs/SetGroupBtnsAndInputs'
 import Button from 'react-bootstrap/Button'
 import {FiMinusSquare} from 'react-icons/fi'
 
@@ -62,7 +62,7 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const nextStepBtn = () => {
-    return canMoveNext(set_group_type, chosenExercises) &&
+    return canMoveToForm(set_group_type, chosenExercises) &&
     <div className='card-link-container'>
       <ConnectedNextStepButton 
       variant='success'
@@ -74,7 +74,7 @@ export const AddRemoveBtnConfigs = ({
   } 
 
   const nextStepOnCardBtn = () => {
-    return canMoveNextFromThisExerciseCard(exercise, set_group_type, chosenExercises)  &&
+    return canMoveToFormFromAnExerciseCard(exercise, set_group_type, chosenExercises)  &&
     <div className='card-link-container'>
       <ConnectedNextStepButton 
       variant='success'

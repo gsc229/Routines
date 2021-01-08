@@ -10,7 +10,7 @@ import {
   ConnectedWeightInput, 
   ConnectedTotalSetsInput,
   ConnectedNextStepButton
-} from './SetGroupBtnsAndInputs'
+} from '../set_group_btns_and_inputs/SetGroupBtnsAndInputs'
 import Container  from 'react-bootstrap/Container'
 
 
@@ -78,9 +78,9 @@ export const StraightSetForm = ({
         <ConnectedNextStepButton
          variant='success'
          disabled={!allowAddExercise}
-         text={'Proceed to add exercise'}
+         text='Proceed to Preview'
          writeDataKey='currentStep'
-         writeDataValue='choose-exercise'
+         writeDataValue='preview-set-group'
          />
        </Col>
      </Row>

@@ -7,8 +7,8 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import ExerciseSetCard from '../../exercise_set/card_exercise_set/ExerciseSetCard'
-import { ConnectedPreviousStepButton} from '../form_create_set_group/SetGroupBtnsAndInputs';
-import CreateSetGroupBtn from './CreateSetGroupBtn'
+import { ConnectedPreviousStepButton} from '../set_group_btns_and_inputs/SetGroupBtnsAndInputs';
+import CreateSetGroupBtn from '../set_group_btns_and_inputs/CreateSetGroupBtn'
 
 export const PreviewSetGroup = ({
   chosenExercises,
@@ -47,8 +47,8 @@ export const PreviewSetGroup = ({
           <Col className='set-group-btn-column' sm='12' md='6'>
             <ConnectedPreviousStepButton
             writeDataKey='currentStep'
-            writeDataValue='choose-exercise' 
-            text='Go back to choose exercises'
+            writeDataValue='enter-info' 
+            text='Back to Info Input'
             />
           </Col>
           <Col className='set-group-btn-column' sm='12' md='6'>
@@ -58,8 +58,6 @@ export const PreviewSetGroup = ({
           <h3>Preview Set Group: {currentSetGroup.name ? currentSetGroup.name : 'No Name'}</h3>
           </Col>
         </Row>
-        
-      
       </Container>
       <div className="set-groups">
         {currentSetGroupSets.length > 0 && 
