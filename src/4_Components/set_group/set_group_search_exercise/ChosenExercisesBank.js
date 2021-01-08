@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {removeChosenExercise, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {canMoveToForm, minAndMax} from '../createSetGroupHelpers'
 import Container from 'react-bootstrap/Container'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
@@ -11,22 +12,42 @@ export const ChosenExercisesBank = ({
   chosenExercises,
   currentSetGroup,
   removeChosenExercise,
-  writingCreateSetGroupData
+  writingCreateSetGroupData,
+  createSetGroupData
 }) => {
+  const {set_group_type} = currentSetGroup
+  const {min, max} = minAndMax(set_group_type)
+
+  const minMaxMessage = () => {
+
+    const common = <>Exercises you choose for your <strong><i>{set_group_type} Set</i></strong> will be displayed here...</>
+
+    if(min && !max){
+      return <p className='no-exercises-message'>{common}<br/>{set_group_type} sets need a miniumum of {min} exercises</p>
+    }
+    if(min === max){
+      return <p className='no-exercises-message'>{common}<br/>{set_group_type} sets need exactly {min} {min > 1 ? 'exercises' : 'exercise'}.</p>
+    }
+
+  }
+
+
   return (
     <Container 
     className='chosen-exercises-bank'>
       <div className='chosen-exerciese-bank-header'>
         <h4>Chosen Exercises:</h4>
+        {canMoveToForm(set_group_type, createSetGroupData, chosenExercises) && 
         <p 
         onClick={() => writingCreateSetGroupData('currentStep', 'enter-info')}>
-          Enter {currentSetGroup.set_group_type} Set Info <FaRegHandPointRight />
-        </p>
+          Enter {set_group_type} Set Info <FaRegHandPointRight />
+        </p>}
+        
         
       </div>
       <div className='bank-body'>
         {chosenExercises.length === 0 && 
-          <p className='no-exercises-message'>Exercises you choose for your <strong><i>{currentSetGroup.set_group_type} Set</i></strong> will be displayed here...</p>
+          minMaxMessage()
         }
         {chosenExercises.length > 0 &&
         <ul>
@@ -45,7 +66,8 @@ export const ChosenExercisesBank = ({
 
 const mapStateToProps = (state) => ({
   chosenExercises: state.setGroupReducer.chosenExercises,
-  currentSetGroup: state.setGroupReducer.currentSetGroup
+  currentSetGroup: state.setGroupReducer.currentSetGroup,
+  createSetGroupData: state.setGroupReducer.createSetGroupData
 })
 
 const mapDispatchToProps = {

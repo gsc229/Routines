@@ -1,3 +1,31 @@
+export const minAndMax = (setGroupType) => {
+  switch(setGroupType){
+
+    case "Drop":
+    case "Straight":
+    case "Manual":
+      return {min: 1, max: 1}
+    case "Super":
+    case "Super - Antagonist":
+    case "Super - Compound": 
+    case "Circuit": 
+    case "Stripping":
+    case "Pre-Exhaustion":
+    case "Rest - Pause": 
+    case "Pyramid":
+      return {min: 2, max: null}
+    case "Super - Tri":
+      return {min: 3, max: 3}
+    case "Super - Giant":
+      return {min: 4, max: 4}
+
+    default:
+      return true
+  }
+}
+
+
+
 export const canMoveToPreview = (setGroupType, createSetGoupData, chosenExercises) => {
 
   const {rep_max, starting_weight, percent_weight_decrease, weight_decrease, total_sets} = createSetGoupData

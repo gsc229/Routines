@@ -49,3 +49,22 @@ export const routineScheduleConstructor = (currentSetGroups, currentWeeks, curre
   return routineSchedule
 }
 
+export const numberToDay = {
+    1: {short: "Su", long: "Sunday"},
+    2: {short: "Mo", long: "Monday"},
+    3: {short: "Tu", long: "Tuesday"},
+    4: {short: "We", long: "Wednesday"},
+    5: {short: "Th", long: "Thursday"},
+    6: {short: "Fr", long: "Friday"},
+    7: {short: "Sa", long: ""}
+}
+
+export const dayShortToNumber = {
+    "Su" : 1, 
+    "Mo" : 2, 
+    "Tu" : 3, 
+    "We" : 4, 
+    "Th" : 5,
+    "Fr" : 6, 
+    "Sa" : 7
+}

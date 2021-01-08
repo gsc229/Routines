@@ -30,8 +30,6 @@ export const ManageRoutinesPage = ({
     fetchRoutines(`?user=${userId}&populate_weeks=true`)
   }, [])
 
-  
-
   return (
     <LayoutOne showTop={false}>
       <Container className='page manage-routines container'>
