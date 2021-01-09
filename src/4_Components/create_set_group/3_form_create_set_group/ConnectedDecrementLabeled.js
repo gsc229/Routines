@@ -54,7 +54,7 @@ export const ConnectedDecrementLabeled = ({
           {allowPercent && 
           <DropDownButton
             as={InputGroup.Append}
-            title={decreaseMethod.key === `percent_${decrementField}_decrease` ? "%" : "lbs/kg"}>
+            title={decreaseMethod.key === `percent_${decrementField}_decrease` ? "%" : decrementField}>
             <DropDown.Item 
             onClick={() => setDecreaseMethod({...decreaseMethod, key: `${decrementField}_decrease`})}>
               lbs/kgs

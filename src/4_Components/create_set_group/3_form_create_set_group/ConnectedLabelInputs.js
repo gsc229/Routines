@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -32,6 +33,48 @@ const RepMaxInput = ({
   )
 }
 
+const DynamicFieldInput = ({
+  placeholder,
+  required=true,
+  label,
+  inputPirmitiveType='number',
+  min=0,
+  max=null,
+  createSetGroupData,
+  writingCreateSetGroupData,
+  appendText,
+  field // rep_max reps_per_set starting_weight starting_time starting_distance total_sets
+}) => {
+  
+  return(
+    <Form.Group>
+      <Form.Label>
+         {label}
+        </Form.Label>
+      <InputGroup>
+        <Form.Control
+        placeholder={placeholder}
+        className={`${required ? !createSetGroupData[field] ? 'requirement-not-met' : 'requirment-met' : ""}`} 
+        onChange={(e) => writingCreateSetGroupData(e.target.name, e.target.value)} 
+        value={createSetGroupData[field]} 
+        name={field} 
+        type={inputPirmitiveType}
+        max={max}
+        min={min}/>
+      {appendText && 
+      <InputGroup.Append>
+        <InputGroup.Text>{appendText}</InputGroup.Text>
+      </InputGroup.Append>}
+      </InputGroup>
+    </Form.Group>
+  )
+}
+
+
+DynamicFieldInput.propTypes = {
+  field: PropTypes.oneOf(['rep_max ', 'reps_per_set', 'starting_weight', 'starting_time', 'starting_distance', 'total_sets']).isRequired
+}
+
 const WeightInput = ({
   placeholder,
   required,
@@ -42,7 +85,6 @@ const WeightInput = ({
 
   return (
     <Form.Group>
-      
       <Form.Label>
           Weight
         </Form.Label>
@@ -155,3 +197,4 @@ export const ConnectedTotalSetsInput = connect(mapStateToProps, mapDispatchToPro
 export const ConnectedWeightInput = connect(mapStateToProps, mapDispatchToProps)(WeightInput)
 export const ConnectedRestSecondsInput = connect(mapStateToProps, mapDispatchToProps)(RestSecondsInput)
 export const ConnectedRepsPerSetInput = connect(mapStateToProps, mapDispatchToProps)(RepsPerSetInput)
+export const ConnectedDynamicFieldInput = connect(mapStateToProps, mapDispatchToProps)(DynamicFieldInput)
