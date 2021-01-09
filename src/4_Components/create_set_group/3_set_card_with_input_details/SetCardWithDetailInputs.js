@@ -4,7 +4,7 @@ import {addChosenExercise, removeChosenExercise} from '../../../1_Actions/setGro
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
-import AddRemoveButtons from './AddRemoveBtnConfigs'
+import {} from '../3_form_create_set_group/ConnectedDecrementLabeled'
 
 export const SetCardDetailInputs = ({
   exercise,
@@ -23,18 +23,11 @@ export const SetCardDetailInputs = ({
     <Card 
     bg="dark"
     text='white'
-    className={`attach-exercise-to-set-card ${selected && 'selected-card'}`}>
+    className={`enter-set-info-card exercise-card`}>
       <Card.Header>
         <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
       </Card.Header>
       <Card.Body>
-        <AddRemoveButtons
-        showNextStepBtnOnCardBtn={true}
-        showRemoveExerciseBtn={true}
-        shwoAddExerciseBtn={true}
-        nextStep={nextStep}
-        nextStepText={nextStepText}
-        exercise={exercise} />
         <Card.Title>
           <Card.Text>{exercise.name}</Card.Text>
         </Card.Title>
