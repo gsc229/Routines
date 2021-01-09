@@ -5,10 +5,12 @@ import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
 import {} from '../3_form_create_set_group/ConnectedDecrementLabeled'
+import SetGroupInfoForm from '../3_form_create_set_group/SetGroupInfoForm'
 
 export const SetCardDetailInputs = ({
   exercise,
   chosenExercises,
+  currentSetGroup,
   showNextStepBtn,
   showNextStepBtnOnCardBtn,
   showRemoveExerciseBtn,
@@ -31,6 +33,8 @@ export const SetCardDetailInputs = ({
         <Card.Title>
           <Card.Text>{exercise.name}</Card.Text>
         </Card.Title>
+        <SetGroupInfoForm />
+        
         <Card.Subtitle>
           <span className={`${exercise.category}-color`}>{exercise.category}</span>
         </Card.Subtitle>

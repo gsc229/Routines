@@ -9,12 +9,10 @@ import {
   ConnectedWeightInput, 
   ConnectedTotalSetsInput
 } from './ConnectedLabelInputs'
-import StepNavs from '../1_create_set_group_steps/StepNavs'
-import ConnectedDecrementLabeled from './ConnectedDecrementLabeled'
-import ConnectedDecrementPrepend from './ConnectedDecrementPrepend'
+import ConnectedIncrementLabeled from './ConnectedIncrementLabeled'
 import Container  from 'react-bootstrap/Container'
 
-export const DropSetForm = () => {
+export const PyramidSetForm = () => {
 
   return (
    <Container className='info-form drop-set-form'>
@@ -31,7 +29,7 @@ export const DropSetForm = () => {
        </Col>
 
        <Col className='input-column' lg='4' sm='12'>
-         <ConnectedDecrementLabeled decrementField='weight'/>
+         <ConnectedIncrementLabeled incrementField='weight' />
        </Col>
 
        <Col className='input-column' lg='3' sm='12'>
@@ -46,7 +44,8 @@ export const DropSetForm = () => {
          <ConnectedRestSecondsInput placeholder='optional' />
        </Col>
      </Row>
-     <StepNavs showPrevBtn={false} />
+
+    
    </Container>
   )
 }
@@ -57,4 +56,4 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DropSetForm)
+export default connect(mapStateToProps, mapDispatchToProps)(PyramidSetForm)

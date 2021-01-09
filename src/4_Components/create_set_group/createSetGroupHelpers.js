@@ -3,10 +3,10 @@ export const minAndMaxExercisesAllowed = (setGroupType) => {
 
     case "Drop":
     case "Stripping":
-    case "Straight":
     case "Pyramid":
       return {min: 1, max: 1}
     case "Manual":
+    case "Straight":
     case "Super":
     case "Super - Antagonist":
     case "Super - Compound": 
@@ -29,13 +29,13 @@ export const getSetComboType = (setGroupType) => {
 
     case "Drop":
     case "Stripping":
-    case "Straight":
     case "Pyramid":
       return 'single'
     case "Super - Tri":
     case "Super - Giant":
       return 'compound-limited'
     case "Manual":
+    case "Straight":
     case "Super":
     case "Super - Antagonist":
     case "Super - Compound": 
@@ -61,6 +61,7 @@ export const canMoveToPreview = (setGroupType, createSetGoupData, chosenExercise
     case "Drop":
     case "Straight":
     case "Manual":
+    case "Pyramid":
       return total_sets !=="" && starting_weight !== ""
     case "Super":
     case "Super - Antagonist":
@@ -69,7 +70,6 @@ export const canMoveToPreview = (setGroupType, createSetGoupData, chosenExercise
     case "Stripping":
     case "Pre-Exhaustion":
     case "Rest - Pause": 
-    case "Pyramid":
       return chosenExercises.length > 1
     case "Super - Tri":
       return chosenExercises.length === 3
@@ -92,6 +92,7 @@ export const canMoveToForm = (setGroupType, createSetGoupData, chosenExercises) 
     case "Drop":
     case "Straight":
     case "Manual":
+    case "Pyramid":
       return chosenExercises.length > 0
     case "Super":
     case "Super - Antagonist":
@@ -100,7 +101,6 @@ export const canMoveToForm = (setGroupType, createSetGoupData, chosenExercises) 
     case "Stripping":
     case "Pre-Exhaustion":
     case "Rest - Pause": 
-    case "Pyramid":
       return chosenExercises.length > 1
     case "Super - Tri":
       return chosenExercises.length === 3
@@ -118,10 +118,10 @@ export const canMoveToFormFromAnExerciseCard = (exercise, setGroupType, chosenEx
 
   switch(setGroupType){
     case "Drop":
-    case "Straight":
     case "Manual":
       return chosenExercises.length > 0 && chosenExercises.some(ex => ex._id === exercise._id)
     case "Super":
+    case "Straight":
     case "Super - Antagonist":
     case "Super - Compound": 
     case "Circuit": 
@@ -141,17 +141,14 @@ export const canMoveToFormFromAnExerciseCard = (exercise, setGroupType, chosenEx
 }
 
 export const canAddThisExercise = (exercise, setGroupType, chosenExercises) => {
-  
-  
-  
   switch(setGroupType){
 
     case "Drop":
-    case "Straight":
     case "Manual":
       return chosenExercises.length < 1
 
     case "Super":
+    case "Straight":
     case "Super - Antagonist":
     case "Super - Compound": 
     case "Circuit": 
@@ -159,7 +156,7 @@ export const canAddThisExercise = (exercise, setGroupType, chosenExercises) => {
     case "Pre-Exhaustion":
     case "Rest - Pause": 
     case "Pyramid":
-      return !chosenExercises.some(ex => ex._id === exercise._id)
+      return chosenExercises.length < 50
 
     case "Super - Tri":
       return chosenExercises.length < 3 && !chosenExercises.some(ex => ex._id === exercise._id)

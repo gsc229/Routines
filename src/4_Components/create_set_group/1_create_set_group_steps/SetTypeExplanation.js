@@ -1,13 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {writingCreateSetGroupData, clearChosenExercises} from '../../../1_Actions/setGroupActions'
-import Container from 'react-bootstrap/Container'
+import {writingCreateSetGroupData, clearChosenExercises, clearCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Button from 'react-bootstrap/Button'
 
 const SetTypeExplanation = ({
   type,
   writingCreateSetGroupData,
-  clearExerciseSearchResults,
+  clearCreateSetGroupData,
   clearChosenExercises,
   currentStep
 }) => {
@@ -31,6 +30,7 @@ const SetTypeExplanation = ({
 
   const handleTypeClick = () => {
     clearChosenExercises()
+    clearCreateSetGroupData()
     writingCreateSetGroupData('currentStep', 'choose-exercise')
   }
 
@@ -51,7 +51,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   writingCreateSetGroupData,
-  clearChosenExercises
+  clearChosenExercises,
+  clearCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetTypeExplanation)

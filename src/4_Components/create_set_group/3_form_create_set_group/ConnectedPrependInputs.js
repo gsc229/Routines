@@ -4,9 +4,6 @@ import { connect } from 'react-redux'
 import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
-import DropDown from 'react-bootstrap/Dropdown'
-import Button from 'react-bootstrap/Button'
-import {FaHandPointRight, FaHandPointLeft} from 'react-icons/fa'
 
 const RepMaxInput = ({
   placeholder,
@@ -142,49 +139,6 @@ const RestSecondsInput = ({
   )
 }
 
-const NextStepButton = ({
-  variant,
-  disabled,
-  text,
-  writingCreateSetGroupData,
-  writeDataKey,
-  writeDataValue
-}) => {
-
-  return (
-    <Button
-      variant={variant}
-      className={`step-btn next-step-btn ${disabled && 'disabled-next-step-btn'}`}
-      onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
-      disabled={disabled}>
-        {text} &nbsp;
-        <FaHandPointRight style={{color:'white'}} className='next-link' />
-    </Button>
-  )
-}
-
-const PreviousStepButton = ({
-  variant,
-  disabled,
-  text,
-  writingCreateSetGroupData,
-  writeDataKey,
-  writeDataValue
-}) => {
-
-  return (
-    <Button
-      variant={variant}
-      className={`step-btn previous-step-btn ${disabled && 'disabled-previous-step-btn'}`}
-      onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
-      disabled={disabled}>
-        <FaHandPointLeft style={{color:'white'}} className='previous-link' />
-        &nbsp;   
-        {text}
-    </Button>
-  )
-}
-
 
 const mapStateToProps = (state) => ({
   createSetGroupData: state.setGroupReducer.createSetGroupData,
@@ -199,6 +153,4 @@ export const ConnectedRepMaxInput = connect(mapStateToProps, mapDispatchToProps)
 export const ConnectedTotalSetsInput = connect(mapStateToProps, mapDispatchToProps)(TotalSetsInput)
 export const ConnectedWeightInput = connect(mapStateToProps, mapDispatchToProps)(WeightInput)
 export const ConnectedRestSecondsInput = connect(mapStateToProps, mapDispatchToProps)(RestSecondsInput)
-export const ConnectedPreviousStepButton = connect(mapStateToProps, mapDispatchToProps)(PreviousStepButton)
-export const ConnectedNextStepButton = connect(mapStateToProps, mapDispatchToProps)(NextStepButton)
 export const ConnectedRepsPerSetInput = connect(mapStateToProps, mapDispatchToProps)(RepsPerSetInput)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {canMoveToForm, canMoveToPreview} from '../createSetGroupHelpers'
-import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../3_form_create_set_group/ConnectedPrependInputs'
+import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../3_form_create_set_group/ConnectedNextAndPrevBtns'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -11,7 +11,9 @@ export const StepNavs = ({
   currentStep,
   chosenExercises,
   currentSetGroup,
-  createSetGroupData
+  createSetGroupData,
+  showNextBtn=true,
+  showPrevBtn=true
 }) => {
   const {set_group_type} = currentSetGroup
 
@@ -53,6 +55,7 @@ export const StepNavs = ({
   return (
     <Container className='create-set-group-navs-container'>
       <Row className='create-set-group-navs-row'>
+        {showPrevBtn && 
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           {currentStep !== 'choose-type' && 
           <ConnectedPreviousStepButton
@@ -60,14 +63,14 @@ export const StepNavs = ({
           writeDataValue={prevStep[currentStep].step}
           text={prevStep[currentStep].text}
           />}
-        </Col>
+        </Col>}
         
         {currentStep === 'preview-set-group' &&
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           <CreateSetGroupBtn />
         </Col>}
 
-        {currentStep !== 'preview-set-group' && currentStep !== 'choose-type' && 
+        {currentStep !== 'preview-set-group' && currentStep !== 'choose-type' && showNextBtn &&
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           <ConnectedNextStepButton
           disabled={

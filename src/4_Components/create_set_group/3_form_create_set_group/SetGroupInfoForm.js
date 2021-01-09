@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DropSetForm from './DropSetForm'
 import StraightSetForm from './StraightSetForm'
-
+import PyramidSetForm from './PyramidSetForm'
 
 export const SetGroupInfoForm = ({
   currentSetGroup
@@ -16,6 +16,8 @@ export const SetGroupInfoForm = ({
         return <DropSetForm />
       case "Straight":
         return <StraightSetForm />
+      case "Pyramid":
+        return <PyramidSetForm />
       default:
         return <StraightSetForm />
     }
