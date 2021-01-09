@@ -30,7 +30,7 @@ export const ManageExercisesPage = ({
 
   return (
     <LayoutOne>
-      <Container className="container manage-exercises">
+      <Container className="page container manage-exercises">
         <div className='manage-exercises-top'>
           <h2>Your Exercises: </h2>
           <Link to='/create-exercise'>

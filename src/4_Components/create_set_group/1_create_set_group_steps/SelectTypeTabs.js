@@ -1,0 +1,71 @@
+import React from 'react'
+import { connect } from 'react-redux'
+import { writingSetGroup } from '../../../1_Actions/setGroupActions'
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
+import Nav from 'react-bootstrap/Nav'
+
+export const SetGroupForm = ({
+  currentSetGroup,
+  setGroupTypes,
+  writingSetGroup,
+  currentStep
+}) => {
+
+  const {set_group_type} = currentSetGroup
+
+  return (
+    <div className='set-group-type-tab-btns-container'>
+      <h6>Quick Build: </h6>
+      <Nav
+      className='set-group-type-tab-btns'
+      variant="pills">
+        {setGroupTypes.map(type=>
+          <Nav.Item
+          key={type}
+          >
+            <Nav.Link
+            className={set_group_type === type && currentStep !== 'choose-type' && 'selected-disabled'}  
+            eventKey={type}
+            disabled={currentStep !== 'choose-type'}
+            active={set_group_type === type}
+            onClick={() => writingSetGroup('set_group_type', type)}
+            >
+              {type}
+            </Nav.Link>
+          </Nav.Item>
+          )}
+        
+      </Nav> 
+    </div>
+  )
+}
+
+const mapStateToProps = (state) => ({
+  currentSetGroup: state.setGroupReducer.currentSetGroup,
+  setGroupTypes: state.setGroupReducer.set_group_types,
+  currentStep: state.setGroupReducer.createSetGroupData.currentStep
+})
+
+const mapDispatchToProps = {
+  writingSetGroup
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SetGroupForm)
+   
+      {/* <Tabs
+      className='set-group-type-tab-btns'
+      variant= 'pills'
+      
+      onSelect={(type) => writingSetGroup('set_group_type',type)}
+      activeKey={set_group_type}>
+        {setGroupTypes.map(type=>
+        <Tab
+        disabled={currentStep !== 'choose-type'}
+        key={type}
+        title={type}
+        eventKey={type}>
+        <CreateSetGroupSteps />
+        </Tab>
+        )}
+      </Tabs> */}

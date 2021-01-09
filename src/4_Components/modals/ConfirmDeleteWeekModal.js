@@ -49,17 +49,17 @@ export const ConfirmDeleteWeekModal = ({
         aria-labelledby={`week-${week._id}`}
         centered>
           <Modal.Header 
-          className='delete-modal-header'
+          className='modal-header delete-week-modal-header'
           closeButton>
-            <Modal.Title id={`week-${week._id}`}>
+            <Modal.Title className='confirm-delete-title' id={`week-${week._id}`}>
                 {confirmingTextObject.title}
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className='modal-body'>
             <p>{confirmingTextObject.paragraph}</p>
           </Modal.Body>
       
-          <Modal.Footer>
+          <Modal.Footer className='modal-footer'>
            <Button onClick={handleDelete} >DELETE WEEK</Button>
           </Modal.Footer>
         </Modal>
@@ -76,13 +76,13 @@ export const ConfirmDeleteWeekModal = ({
                 {failingTextObject.title}
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className='modal-body'>
             <p>{failingTextObject.paragraph}</p>
             {error_message &&
             <p>error message: {error_message}</p>}
           </Modal.Body>
       
-          <Modal.Footer>
+          <Modal.Footer className='modal-footer'>
             <Button onClick={()=> setDeleteFailed(false)} variant='success' >Close</Button>
           </Modal.Footer>
         </Modal>

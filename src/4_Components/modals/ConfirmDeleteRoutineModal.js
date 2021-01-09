@@ -53,16 +53,16 @@ const ConfirmDeleteModal = ({
         size='lg'
         aria-labelledby={`routine-${routine._id}`}
         centered>
-          <Modal.Header closeButton>
+          <Modal.Header className='modal-header' closeButton>
             <Modal.Title id={`routine-${routine._id}`}>
                 {confirmingTextObject.title}
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className='modal-body'>
             <p>{confirmingTextObject.paragraph}</p>
           </Modal.Body>
       
-          <Modal.Footer>
+          <Modal.Footer className='modal-footer'>
            <Button onClick={handleDelete} >DELETE ROUTINE</Button>
           </Modal.Footer>
         </Modal>

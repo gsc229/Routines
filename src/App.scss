@@ -5,6 +5,7 @@
 *{
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body{
@@ -14,6 +15,11 @@ body{
 
 h1{
   font-size: 3rem;
+}
+
+.page{
+  min-height: 1000px;
+  margin-bottom: 300px;
 }
 
 // Variables
@@ -27,7 +33,6 @@ h1{
 
 // Exercises
 @import './5_Pages/manage_exercises_page/manage_exercises_page.scss';
-@import './5_Pages/create_set_group_page/create_or_edit_set_group_page.scss';
 
 // Browse Exercises
 @import './5_Pages/browse_exercises_page/browse_exercises_page.scss';
@@ -51,12 +56,14 @@ h1{
 // Exercise Form 
 @import './4_Components/iframe/iframe.scss';
 
-// Set Group
-@import './4_Components/set_group/form_create_set_group/set_group_forms.scss';
-@import './4_Components/set_group/set_group_search_exercise/set_group_search_exercises.scss';
-@import './4_Components/set_group/card_set_group/attach_exercise_to_sg_card.scss';
-@import './4_Components/set_group/preview_set_group/preview_set_group.scss';
-
+// Create Set Group
+@import './5_Pages/create_set_group_page/create_or_edit_set_group_page.scss';
+@import './4_Components/create_set_group/1_create_set_group_steps/create_set_group_steps.scss';
+@import './4_Components/create_set_group/2_set_group_search_exercise/set_group_search_exercises.scss';
+@import './4_Components/create_set_group/2_preview_set_group/preview_set_group.scss';
+@import './4_Components/create_set_group/3_create_set_group_search_ex_card/attach_exercise_to_sg_card.scss';
+@import './4_Components/create_set_group/3_form_create_set_group/set_group_forms.scss';
+@import './4_Components/create_set_group/3_set_card_with_input_details/set_card_detail_inputs.scss';
 
 // Week 
 @import './4_Components/week/week_template.scss';
@@ -66,7 +73,6 @@ h1{
 @import './4_Components/exercise/accordion_embed_instruction/embed_accordion.scss';
 // Cards
 @import './4_Components/exercise/card_exercise/exercise_card.scss';
-@import './4_Components/set_group/card_set_group/attach_exercise_to_sg_card.scss';
 @import './4_Components/exercise_set/card_exercise_set/exercise_set_card.scss';
 //DND
 @import './4_Components/dnd_routine_schedule/dnd_routine_schedule.scss';

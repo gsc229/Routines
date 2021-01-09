@@ -18,7 +18,7 @@ export const BrowseExercises = ({
  
   return (
     <Layout>
-      <Container>
+      <Container className='page browse-exercise-page'>
         <h1>Browse Exercises</h1>
         <div className='browse-exercise-search-container'>
           <SearchExercisesForm />

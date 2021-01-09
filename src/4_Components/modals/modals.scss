@@ -1,14 +1,18 @@
+.modal-header{
+  background-color: $bs-dark;
+  .confirm-delete-title{
+    color: $routine-red;
+  }
+  .close{
+    color: white;
+  }
+}
+
+
 .view-set-group-modal{
   .view-set-group-modal-header{
-    background-color: $bs-dark;
-    h5{
-      span{
-        color: $spanish-gray;
-      }
-      color: $routine-red;
-    }
-    .close{
-      color: white;
+    span{
+      color: $spanish-gray;
     }
   }
 
@@ -42,9 +46,3 @@
   }
 }
 
-.delete-week-modal{
-  .delete-modal-header{
-    background-color: $bs-dark;
-    color: $routine-red;
-  }
-}

@@ -1,11 +1,18 @@
 import React from 'react'
-import Container from 'react-bootstrap/Container'
-import DropSetForm from '../form_create_set_group/DropSetForm'
+import {connect} from 'react-redux'
+import {writingCreateSetGroupData, clearChosenExercises, clearCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import Button from 'react-bootstrap/Button'
 
-const SetTypeData = ({type}) => {
+const SetTypeExplanation = ({
+  type,
+  writingCreateSetGroupData,
+  clearCreateSetGroupData,
+  clearChosenExercises,
+  currentStep
+}) => {
 
 
-  const typeDetail = {
+  const typeExplanation = {
     "Manual": "Manually create a set group by adding sets one by one",
     "Straight": "Straight sets means doing exercises in the old fashion way, performing all sets of each exercise one after another with rest in between. This system is used to apply maximum adaptive response for the trained muscles.",
     "Super": "In super sets you perform exercise set immediately after another exercise set, with no rest in between, only that required for taking the position of the second exercise. Super sets allow you to perform more work in less time, they are especially useful if you have short time to spend in training, plus they can be used as a mean to increase training intensity due to less rest time.",
@@ -21,20 +28,31 @@ const SetTypeData = ({type}) => {
     "Pre-Exhaustion": "As the name implies; in pre-exhaustion technique you exhaust the targeted muscle with isolate exercise first, and then you perform a compound exercises. Each progressive set incorporates additional muscles to aid the work of the muscle under focus. For example, do lying dumbbell fly (which is a chest isolate exercise) and then perform bench press (which works chest and triceps)."
   }
 
-
-  const forms = {
-    Drop: <DropSetForm />
+  const handleTypeClick = () => {
+    clearChosenExercises()
+    clearCreateSetGroupData()
+    writingCreateSetGroupData('currentStep', 'choose-exercise')
   }
 
-
-
   return (
-    <Container>
-      <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
-      {typeDetail[type]}
-      {forms[type]}
-    </Container>
+      <div className='type-explanation-and-use-btn'>
+        <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
+        {typeExplanation[type]}
+        {currentStep === 'choose-type' &&
+        <Button 
+        onClick={handleTypeClick}
+        className='use-set-type-btn'>Use {type} Set</Button>}
+      </div>
   )
 }
+const mapStateToProps = (state) => ({
+  currentStep: state.setGroupReducer.createSetGroupData.currentStep
+})
 
-export default SetTypeData
+const mapDispatchToProps = {
+  writingCreateSetGroupData,
+  clearChosenExercises,
+  clearCreateSetGroupData
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SetTypeExplanation)

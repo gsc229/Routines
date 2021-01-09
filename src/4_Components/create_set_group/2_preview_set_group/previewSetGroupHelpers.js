@@ -65,25 +65,25 @@ export const createSetGroupLocal = (chosenExercises, currentSetGroup, setGroupDa
 
 
       previousWeight = Math.round(previousWeight - (previousWeight * percentWeightDecrease))
-      previousWeight = Math.round(previousWeight - (previousWeight * percentWeightIncrease))
+      previousWeight = Math.round(previousWeight + (previousWeight * percentWeightIncrease))
       previousWeight = Math.round(previousWeight - weightDecrease)
-      previousWeight = Math.round(previousWeight - weightIncrease)
+      previousWeight = Math.round(previousWeight + weightIncrease)
 
       previousTime = Math.round(previousTime - (previousTime * percentTimeDecrease))
-      previousTime = Math.round(previousTime - (previousTime * percentTimeIncrease))
+      previousTime = Math.round(previousTime + (previousTime * percentTimeIncrease))
       previousTime = Math.round(previousTime - timeDecrease)
-      previousTime = Math.round(previousTime - timeIncrease)
+      previousTime = Math.round(previousTime + timeIncrease)
 
       previousDistance = Math.round(previousDistance - (previousDistance * percentDistanceDecrease))
-      previousDistance = Math.round(previousDistance - (previousDistance * percentDistanceIncrease))
+      previousDistance = Math.round(previousDistance + (previousDistance * percentDistanceIncrease))
       previousDistance = Math.round(previousDistance - distanceDecrease)
-      previousDistance = Math.round(previousDistance - distanceIncrease)
+      previousDistance = Math.round(previousDistance + distanceIncrease)
 
       previousRestTime = Math.round(previousRestTime - restTimeDecrease)
-      previousRestTime = Math.round(previousRestTime - restTimeIncrease)
+      previousRestTime = Math.round(previousRestTime + restTimeIncrease)
 
       previousRepsPerSet = Math.round(previousRepsPerSet - repsDecrease)
-      previousRepsPerSet = Math.round(previousRepsPerSet - repsIncrease)
+      previousRepsPerSet = Math.round(previousRepsPerSet + repsIncrease)
 
 
       exerciseSets.push(newSet)

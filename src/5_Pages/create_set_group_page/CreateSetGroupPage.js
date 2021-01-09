@@ -3,15 +3,16 @@ import { connect } from 'react-redux'
 import {fullResetCreateSetGroup} from '../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import {FaRegHandPointLeft, FaRegCalendarAlt} from 'react-icons/fa'
+import {numberToDay} from '../../4_Components/dnd_routine_schedule/schedule_helpers/routineScheduleConstructor'
 import Container from 'react-bootstrap/Container'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import CreateSetGroup from '../../4_Components/set_group/create_set_group/CreateSetGroup'
-
+import CreateSetGroupSteps from '../../4_Components/create_set_group/1_create_set_group_steps/CreateSetGroupSteps'
 export const CreateOrEditExerciseSet = ({
   currentRoutine,
-  fullResetCreateSetGroup
+  fullResetCreateSetGroup,
+  currentSetGroup
 }) => {
 
   const [searchMode, setSearchMode] = useState("exercise")
@@ -22,9 +23,10 @@ export const CreateOrEditExerciseSet = ({
 
   return (
     <Layout>
-      <Container>
+      <Container className='page create-setgroup-page-container'>
         <div className='create-set-group-page-header'>
           <h2>Create Set Group for {currentRoutine.name}</h2>
+          <h6>{numberToDay[currentSetGroup.day_number].long}, Week {currentSetGroup.week_number}</h6>
           <Link 
           onClick={handleReturnToScheduleClick}
           to={`/view-routine/${currentRoutine._id}/${currentRoutine.name}`}>
@@ -32,11 +34,12 @@ export const CreateOrEditExerciseSet = ({
           </Link>
         </div>
         <Tabs
-          id="controlled-tab-example"
+          className='create-set-group-tabs'
+          id="create-set-group-tabs"
           activeKey={searchMode}
           onSelect={(mode) => setSearchMode(mode)}>
           <Tab eventKey="exercise" title="Create A New Set Group">
-            <CreateSetGroup />
+            <CreateSetGroupSteps />
           </Tab>
           <Tab eventKey="set" title="Use A Saved Set Group">
             Find a set

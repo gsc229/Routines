@@ -53,7 +53,7 @@ export const ViewRoutinePage = ({
 
   return (
     <Layout>
-      <Container className='view-routine-container'>
+      <Container className='page view-routine-container'>
         <h2>Managing Routine: {currentRoutine.name || 'id' + currentRoutine._id}</h2>
         {showWeeks()}
         {noWeeksMessage()}

@@ -6,7 +6,7 @@ export const UserDashBoard = ({user,userRoutines}) => {
   
   return (
     <LayoutOne showTop={false}>
-      <div className="user-dashboard">
+      <div className="page user-dashboard">
         <h1>User Dashboard</h1>
         <div className='raw-data' >
           <pre style={{color: 'white'}}>{JSON.stringify(user, null, 2)}</pre>

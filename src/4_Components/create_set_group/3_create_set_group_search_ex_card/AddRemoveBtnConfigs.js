@@ -1,8 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {addChosenExercise, removeChosenExercise, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
-import {FaRegHandPointRight} from 'react-icons/fa'
-import {ConnectedNextStepButton} from '../form_create_set_group/SetGroupBtnsAndInputs'
+import {
+  canAddThisExercise, 
+  canMoveToForm, 
+  canRemoveThisExercise, 
+  canMoveToFormFromAnExerciseCard, 
+  getRemainingExercises} from '../createSetGroupHelpers'
+import {ConnectedNextStepButton} from '../3_form_create_set_group/ConnectedNextAndPrevBtns'
 import Button from 'react-bootstrap/Button'
 import {FiMinusSquare} from 'react-icons/fi'
 
@@ -12,50 +17,32 @@ export const AddRemoveBtnConfigs = ({
   exercise,
   addChosenExercise, 
   removeChosenExercise,
-  writingCreateSetGroupData
+  showNextStepBtn,
+  showNextStepBtnOnCardBtn,
+  showRemoveExerciseBtn,
+  shwoAddExerciseBtn,
+  nextStep,
+  nextStepText
 }) => {
 
   const {set_group_type} = currentSetGroup
 
-  const handleRemoveClick = {
-    "Drop": function(){
-      removeChosenExercise(exercise._id)
-    }
+  const compoud_set_groups = ["Super", "Super - Antagonist", "Super - Compound", "Super - Tri", "Super - Giant", "Circuit"]
 
+
+  const handleRemoveClick = () => {
+    removeChosenExercise(exercise._id)
   }
 
-  const handleAddClick = {
-    "Drop": function(){
-      addChosenExercise(exercise)
-    }
+  const handleAddClick = () => {
+    addChosenExercise(exercise)
   }
-
-
-  const showRemoveButton = {
-    "Drop": function(){
-      return chosenExercises.find(inChosen => inChosen._id === exercise._id)
-    }
-  }
-
-  const showAddButton = {
-    "Drop": function(){
-      return !chosenExercises.find(inChosen => inChosen._id === exercise._id) && chosenExercises.length === 0
-    }
-  }
-
-  const showPreviewSetGroiupBtn = {
-    "Drop": function(){
-      return chosenExercises.find(inChosen => inChosen._id === exercise._id)
-    }
-  }
-
 
   const removeButton = () => {
-    return showRemoveButton[set_group_type]() && 
+    return canRemoveThisExercise(exercise, chosenExercises) && 
     <div className='card-link-container'>
       <Button
-      to='#'
-      onClick={() => handleRemoveClick[set_group_type]()}
+      onClick={handleRemoveClick}
       className='card-link remove-from-set-link'
       >
         <FiMinusSquare />&nbsp;
@@ -65,23 +52,35 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const addButton = () => {
-    return showAddButton[set_group_type]() && 
+    return canAddThisExercise(exercise, set_group_type, chosenExercises) && 
     <div className='card-link-container'>
       <Button
       variant='success'
-      onClick={() => handleAddClick[set_group_type]()}
+      onClick={handleAddClick}
       className='card-link add-to-set-link'>Use in {set_group_type} Set</Button>
     </div>
   }
 
-  const previewSetGroiupBtn = () => {
-    return showPreviewSetGroiupBtn[set_group_type]() &&
+  const nextStepBtn = () => {
+    return canMoveToForm(set_group_type, chosenExercises) &&
     <div className='card-link-container'>
       <ConnectedNextStepButton 
       variant='success'
-      text='Preview Set Group'
+      text={nextStepText}
       writeDataKey='currentStep'
-      writeDataValue='preview-set-group'
+      writeDataValue={nextStep}
+      />
+    </div>
+  } 
+
+  const nextStepOnCardBtn = () => {
+    return canMoveToFormFromAnExerciseCard(exercise, set_group_type, chosenExercises)  &&
+    <div className='card-link-container'>
+      <ConnectedNextStepButton 
+      variant='success'
+      text={nextStepText}
+      writeDataKey='currentStep'
+      writeDataValue={nextStep}
       />
     </div>
   } 
@@ -89,9 +88,10 @@ export const AddRemoveBtnConfigs = ({
 
   return (
     <div>
-      {removeButton()}
-      {addButton()}
-      {previewSetGroiupBtn()}
+      {showRemoveExerciseBtn && removeButton()}
+      {shwoAddExerciseBtn && addButton()}
+      {showNextStepBtnOnCardBtn && nextStepOnCardBtn()}
+      {showNextStepBtn && nextStepBtn()}
     </div>
   )
 }
