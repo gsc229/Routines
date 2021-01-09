@@ -56,10 +56,10 @@ export const ConnectedIncrementLabeled = ({
           {allowPercent && 
           <DropDownButton
             as={InputGroup.Append}
-            title={increaseMethod.key === `percent_${incrementField}_increase` ? "%" : "lbs/kg"}>
+            title={increaseMethod.key === `percent_${incrementField}_increase` ? "%" : 'unit'}>
             <DropDown.Item 
             onClick={() => setIncreaseMethod({...increaseMethod, key: `${incrementField}_increase`})}>
-              lbs/kgs
+              unit
             </DropDown.Item>
             <DropDown.Item 
             onClick={() => setIncreaseMethod({...increaseMethod, key: `percent_${incrementField}_increase`})}>

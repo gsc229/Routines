@@ -7,7 +7,7 @@ import {
   ConnectedRestSecondsInput,
   ConnectedRepsPerSetInput,
   ConnectedWeightInput, 
-  ConnectedTotalSetsInput
+  ConnectedTotalSetsInput,
 } from './ConnectedLabelInputs'
 import ConnectedIncrementLabeled from './ConnectedIncrementLabeled'
 import Container  from 'react-bootstrap/Container'
@@ -29,7 +29,7 @@ export const PyramidSetForm = () => {
        </Col>
 
        <Col className='input-column' lg='4' sm='12'>
-         <ConnectedIncrementLabeled incrementField='weight' />
+         <ConnectedIncrementLabeled incrementField='weight' labelText="Increase Weight" />
        </Col>
 
        <Col className='input-column' lg='3' sm='12'>
@@ -39,7 +39,7 @@ export const PyramidSetForm = () => {
        <Col className='input-column' lg='3' sm='12'>
          <ConnectedRepsPerSetInput placeholder='optional' />
        </Col>
-
+       
        <Col className='input-column' lg='3' sm='12'>
          <ConnectedRestSecondsInput placeholder='optional' />
        </Col>
