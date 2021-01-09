@@ -13,8 +13,14 @@ export const ConnectedDecrementLabeled = ({
   labelText,
   decrementField, // weight || reps || time || distance || rest_time
 }) => {
-  const fieldCapitalized = decrementField.charAt(0).toUpperCase() + decrementField.slice(1)
-  if(!labelText) labelText = `Drop ${fieldCapitalized}`
+
+  const fieldCapitalized = 
+  decrementField
+  .split("_")
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ")
+
+  if(!labelText) labelText = `Decrease ${fieldCapitalized}`
   const allowPercent = !(decrementField === "reps" || decrementField === "rest_time ")
   //const {rep_max, starting_weight, percent_weight_decrease, weight_decrease, total_sets} = createSetGroupData
   const [decreaseMethod, setDecreaseMethod] = useState({key: `${decrementField}_decrease`, value: 10})
@@ -43,30 +49,31 @@ export const ConnectedDecrementLabeled = ({
         {labelText}
       </Form.Label>
       <InputGroup>
-          <Form.Control
-          onChange={(e)=> setDecreaseMethod({...decreaseMethod, value: e.target.value})}
-          defaultValue={10}
-          value={decreaseMethod.value} 
-          placeholder={`decrease ${decrementField}`}
-          name={decreaseMethod.key} 
-          max={99}
-          min={0} type='number' />
-          {allowPercent && 
-          <DropDownButton
-            as={InputGroup.Append}
-            title={decreaseMethod.key === `percent_${decrementField}_decrease` ? "%" : decrementField}>
-            <DropDown.Item 
-            onClick={() => setDecreaseMethod({...decreaseMethod, key: `${decrementField}_decrease`})}>
-              lbs/kgs
-            </DropDown.Item>
-            <DropDown.Item 
-            onClick={() => setDecreaseMethod({...decreaseMethod, key: `percent_${decrementField}_decrease`})}>
-              %
-            </DropDown.Item>
-          </DropDownButton>}
-          <InputGroup.Append>
-            <InputGroup.Text>each set</InputGroup.Text>
-          </InputGroup.Append>
+        <Form.Control
+        onChange={(e)=> setDecreaseMethod({...decreaseMethod, value: e.target.value})}
+        defaultValue={10}
+        value={decreaseMethod.value} 
+        placeholder={`decrease ${decrementField}`}
+        name={decreaseMethod.key} 
+        max={99}
+        min={0} 
+        type='number' />
+        {allowPercent && 
+        <DropDownButton
+          as={InputGroup.Append}
+          title={decreaseMethod.key === `percent_${decrementField}_decrease` ? "%" : "unit"}>
+          <DropDown.Item 
+          onClick={() => setDecreaseMethod({...decreaseMethod, key: `${decrementField}_decrease`})}>
+            lbs/kgs
+          </DropDown.Item>
+          <DropDown.Item 
+          onClick={() => setDecreaseMethod({...decreaseMethod, key: `percent_${decrementField}_decrease`})}>
+            %
+          </DropDown.Item>
+        </DropDownButton>}
+        <InputGroup.Append>
+          <InputGroup.Text>each set</InputGroup.Text>
+        </InputGroup.Append>
       </InputGroup>
     </Form.Group>
   )

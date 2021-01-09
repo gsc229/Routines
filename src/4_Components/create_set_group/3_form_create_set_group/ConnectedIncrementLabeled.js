@@ -15,8 +15,12 @@ export const ConnectedIncrementLabeled = ({
 }) => {
 
   
-  const fieldCapitalized = incrementField.charAt(0).toUpperCase() + incrementField.slice(1)
-  if(!labelText) labelText = `Drop ${fieldCapitalized}`
+  const fieldCapitalized = 
+  incrementField
+  .split("_")
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ")
+  if(!labelText) labelText = `Increase ${fieldCapitalized}`
   const allowPercent = !(incrementField === "reps" || incrementField === "rest_time ")
 
   const [increaseMethod, setIncreaseMethod] = useState({key: `${incrementField}_increase`, value: 10})
@@ -52,7 +56,8 @@ export const ConnectedIncrementLabeled = ({
           placeholder='10% default'
           name={increaseMethod.key} 
           max={99}
-          min={1} type='number' />
+          min={1} 
+          type='number' />
           {allowPercent && 
           <DropDownButton
             as={InputGroup.Append}

@@ -30,6 +30,7 @@ const initialState = {
   currentSetGroups: [],
   createSetGroupData: {
     currentStep: "choose-type",
+    chosenExerciseIndex: 0,
     is_compound: false,
     total_sets: "",
     rep_max: "",

@@ -8,7 +8,8 @@ import {
   ConnectedRepsPerSetInput,
   ConnectedWeightInput, 
   ConnectedTotalSetsInput,
-} from './ConnectedLabelInputs'
+} from './ConnectedInputsLabeled'
+import ConnectedLabeledDynamicRow from './ConnectedRowDynamicFieldInputDecIncLabeld'
 import ConnectedIncrementLabeled from './ConnectedIncrementLabeled'
 import Container  from 'react-bootstrap/Container'
 
@@ -16,7 +17,19 @@ export const PyramidSetForm = () => {
 
   return (
    <Container className='info-form drop-set-form'>
-     <Row>
+     <ConnectedLabeledDynamicRow
+      //fieldLabelText="Weight"
+      lg='4'
+      labelText='Weight'
+      incrementField='weight'
+      startingField='starting_weight'/>
+    <ConnectedLabeledDynamicRow 
+      lg='4'
+      labelText='reps_per_set'
+      startingField='reps_per_set'
+      decrementField='reps_per_set'/>
+     
+     {/* <Row>
 
        <Col sm='12' className='input-column'><h6>Step 1: Details</h6></Col>
 
@@ -43,7 +56,7 @@ export const PyramidSetForm = () => {
        <Col className='input-column' lg='3' sm='12'>
          <ConnectedRestSecondsInput placeholder='optional' />
        </Col>
-     </Row>
+     </Row> */}
 
     
    </Container>

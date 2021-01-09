@@ -7,7 +7,7 @@ import {
   canRemoveThisExercise, 
   canMoveToFormFromAnExerciseCard, 
   getRemainingExercises} from '../createSetGroupHelpers'
-import {ConnectedNextStepButton} from '../3_form_create_set_group/ConnectedNextAndPrevBtns'
+import {ConnectedNextStepButton} from '../3_form_create_set_group/ConnectedBtnsNextAndPrev'
 import Button from 'react-bootstrap/Button'
 import {FiMinusSquare} from 'react-icons/fi'
 

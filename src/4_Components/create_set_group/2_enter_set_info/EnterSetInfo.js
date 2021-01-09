@@ -1,11 +1,14 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
+import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {minAndMaxExercisesAllowed, getSetComboType} from '../createSetGroupHelpers'
 import SetCardWithDetailInputs from '../3_set_card_with_input_details/SetCardWithDetailInputs'
 
 export const EnterSetInfo = ({
   chosenExercises,
-  currentSetGroup
+  currentSetGroup,
+  chosenExerciseIndex,
+  writingCreateSetGroupData
 }) => {
 
   const [currIndex, setCurrIndex] = useState(0)
@@ -25,6 +28,7 @@ export const EnterSetInfo = ({
 
 const mapStateToProps = (state) => ({
   chosenExercises: state.setGroupReducer.chosenExercises,
+  chosenExerciseIndex: state.setGroupReducer.chosenExerciseIndex,
   currentSetGroup: state.setGroupReducer.currentSetGroup
 })
 

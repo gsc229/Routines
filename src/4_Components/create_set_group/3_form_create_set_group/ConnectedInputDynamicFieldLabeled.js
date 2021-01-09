@@ -8,28 +8,35 @@ import InputGroup from 'react-bootstrap/InputGroup'
 const ConnectedDynamicFieldInput = ({
   placeholder,
   required=true,
-  label,
+  labelText,
   inputPirmitiveType='number',
   min=0,
   max=null,
   createSetGroupData,
   writingCreateSetGroupData,
   appendText,
-  field // rep_max reps_per_set starting_weight starting_time starting_distance total_sets
+  startingField // rep_max reps_per_set starting_weight starting_time starting_distance total_sets
 }) => {
   
+  const startingFieldCapitalized = 
+  startingField
+  .split("_")
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ")
+  if(!labelText) labelText = startingFieldCapitalized
+
   return(
     <Form.Group>
       <Form.Label>
-         {label}
+         {labelText}
         </Form.Label>
       <InputGroup>
         <Form.Control
         placeholder={placeholder}
-        className={`${required ? !createSetGroupData[field] ? 'requirement-not-met' : 'requirment-met' : ""}`} 
+        className={`${required ? !createSetGroupData[startingField] ? 'requirement-not-met' : 'requirment-met' : ""}`} 
         onChange={(e) => writingCreateSetGroupData(e.target.name, e.target.value)} 
-        value={createSetGroupData[field]} 
-        name={field} 
+        value={createSetGroupData[startingField]} 
+        name={startingField} 
         type={inputPirmitiveType}
         max={max}
         min={min}/>
@@ -44,7 +51,7 @@ const ConnectedDynamicFieldInput = ({
 
 
 ConnectedDynamicFieldInput.propTypes = {
-  field: PropTypes.oneOf(['rep_max ', 'reps_per_set', 'starting_weight', 'starting_time', 'starting_distance', 'total_sets']).isRequired
+  startingField: PropTypes.oneOf(['rep_max ', 'reps_per_set', 'starting_weight', 'starting_time', 'starting_distance', 'total_sets']).isRequired
 }
 
 const mapStateToProps = (state) => ({
