@@ -11,7 +11,7 @@ import DarkSpinner from '../spinners/DarkSpinner'
 import Container from 'react-bootstrap/Container'
 import DroppableDay from './DroppableDay'
 import Button from 'react-bootstrap/Button'
-import  ConfirmDeleteWeekModal from '../modals/ConfirmDeleteWeekModal'
+import  ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
 
 export const RoutineScheduleDnd = ({
   currentRoutine,

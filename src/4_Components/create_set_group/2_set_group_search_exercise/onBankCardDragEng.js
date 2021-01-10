@@ -2,6 +2,8 @@ export const onBankCardDragEnd = (result, bulkWriteChosenExercises, chosenExerci
 
   const {destination, source} = result
 
+  if(destination.index === source.index) return
+  console.log({result})
   const cardToMove = chosenExercises[source.index]
   const copy = [...chosenExercises]
   

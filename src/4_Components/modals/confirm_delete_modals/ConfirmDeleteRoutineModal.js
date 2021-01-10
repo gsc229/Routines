@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroyRoutine} from '../../1_Actions/routineActions'
+import {destroyRoutine} from '../../../1_Actions/routineActions'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
