@@ -8,7 +8,7 @@ import {
   ConnectedRepsPerSetInput,
   ConnectedWeightInput, 
   ConnectedTotalSetsInput
-} from './ConnectedLabelInputs'
+} from './ConnectedInputsLabeled'
 import StepNavs from '../1_create_set_group_steps/StepNavs'
 import ConnectedDecrementLabeled from './ConnectedDecrementLabeled'
 import ConnectedDecrementPrepend from './ConnectedDecrementPrepend'

@@ -4,7 +4,7 @@ import {addChosenExercise, removeChosenExercise} from '../../../1_Actions/setGro
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
-import AddRemoveButtons from './AddRemoveBtnConfigs'
+import AddRemoveButtons from './AttachCardBtnConfigs'
 
 export const AttachExerciseToSetGroupCard = ({
   exercise,
@@ -18,6 +18,9 @@ export const AttachExerciseToSetGroupCard = ({
 }) => {
 
   const selected = chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
+  const count = chosenExercises.reduce((counter, ex) => ex._id === exercise._id ? counter += 1 : counter, 0)
+  const indexes = []
+  chosenExercises.forEach((ex, index) => {if(ex._id === exercise._id) indexes.push(index + 1)} )
   
   return (
     <Card 
@@ -25,7 +28,11 @@ export const AttachExerciseToSetGroupCard = ({
     text='white'
     className={`attach-exercise-to-set-card ${selected && 'selected-card'}`}>
       <Card.Header>
-        <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
+        <span className={`${exercise.muscle_group}-color`}>{exercise.name}</span>
+        <span className='count'>
+           {indexes.length ? indexes.length > 1 ? "In Sets:" : "In Set:" : ''}&nbsp;
+          {indexes.map((num, idx )=> `${num}${indexes.length > 1 && idx !== indexes.length - 1 ? "," : ""}`)}
+        </span>
       </Card.Header>
       <Card.Body>
         <AddRemoveButtons
@@ -36,7 +43,7 @@ export const AttachExerciseToSetGroupCard = ({
         nextStepText={nextStepText}
         exercise={exercise} />
         <Card.Title>
-          <Card.Text>{exercise.name}</Card.Text>
+          <Card.Text>{exercise.muscle_group}</Card.Text>
         </Card.Title>
         <Card.Subtitle>
           <span className={`${exercise.category}-color`}>{exercise.category}</span>

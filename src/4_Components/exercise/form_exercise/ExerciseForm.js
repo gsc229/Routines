@@ -44,9 +44,9 @@ export const ExerciseForm = ({
   
   const history = useHistory()
 
-  const handleChange = e => {
-    const trimmeddValue = e.target.value.trim()
-    //trimmeddValue.trim()
+  const handleChange = (e, trim=true) => {
+    const trimmeddValue = trim ? e.target.value.trim() : e.target.value 
+
     writingExercise(e.target.name, trimmeddValue)
   }
 
@@ -100,11 +100,12 @@ export const ExerciseForm = ({
 
 
   return (
-    <Form>
+    <Form
+    className='exercise-form'>
       {showHeader && getHeader()}
       <Form.Group controlId="completeExerciseForm.Name">
         <Form.Label>Name</Form.Label>
-        <Form.Control onChange={handleChange} name="name" value={name} type="text" placeholder="Required" />
+        <Form.Control onChange={(e) => handleChange(e, false)} name="name" value={name} type="text" placeholder="Required" />
       </Form.Group>
       
       <Form.Group controlId="completeExerciseForm.Category">
@@ -153,12 +154,12 @@ export const ExerciseForm = ({
 
       <Form.Group controlId="completeExerciseForm.TargetMuslce">
         <Form.Label>Target Muscle</Form.Label>
-        <Form.Control onChange={handleChange} name="target_muscle" value={target_muscle} type="text" placeholder="Any particular muscle?" />
+        <Form.Control onChange={(e) => handleChange(e, false)} name="target_muscle" value={target_muscle} type="text" placeholder="Any particular muscle?" />
       </Form.Group>
 
       <Form.Group controlId="completeExerciseForm.Description">
         <Form.Label>Description</Form.Label>
-        <Form.Control onChange={handleChange} name="description" value={description} as="textarea" placeholder="More about your exercise..." rows={3} />
+        <Form.Control onChange={(e) => handleChange(e, false)} name="description" value={description} as="textarea" placeholder="More about your exercise..." rows={3} />
       </Form.Group>
 
       <Form.Group controlId="completeExerciseForm.VideoUrl">

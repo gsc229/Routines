@@ -1,4 +1,4 @@
-export const minAndMaxExercisesAllowed = (setGroupType) => {
+export const minAndMaxAllowedExercises = (setGroupType) => {
   switch(setGroupType){
 
     case "Drop":
@@ -119,6 +119,7 @@ export const canMoveToFormFromAnExerciseCard = (exercise, setGroupType, chosenEx
   switch(setGroupType){
     case "Drop":
     case "Manual":
+    case "Pyramid":
       return chosenExercises.length > 0 && chosenExercises.some(ex => ex._id === exercise._id)
     case "Super":
     case "Straight":
@@ -128,7 +129,6 @@ export const canMoveToFormFromAnExerciseCard = (exercise, setGroupType, chosenEx
     case "Stripping":
     case "Pre-Exhaustion":
     case "Rest - Pause": 
-    case "Pyramid":
       return chosenExercises.length > 1 && chosenExercises.some(ex => ex._id === exercise._id)
     case "Super - Tri":
       return chosenExercises.length === 3 && chosenExercises.some(ex => ex._id === exercise._id)
@@ -145,6 +145,7 @@ export const canAddThisExercise = (exercise, setGroupType, chosenExercises) => {
 
     case "Drop":
     case "Manual":
+    case "Pyramid":
       return chosenExercises.length < 1
 
     case "Super":
@@ -155,7 +156,6 @@ export const canAddThisExercise = (exercise, setGroupType, chosenExercises) => {
     case "Stripping":
     case "Pre-Exhaustion":
     case "Rest - Pause": 
-    case "Pyramid":
       return chosenExercises.length < 50
 
     case "Super - Tri":
@@ -189,7 +189,7 @@ export const getRemainingExercises = (setGroupType, chosenExercises) => {
     case "Pre-Exhaustion":
     case "Rest - Pause": 
     case "Pyramid":
-      return chosenExercises.length - 1
+      return chosenExercises.length - 50
     case "Super - Tri":
       return chosenExercises.length - 3
     case "Super - Giant":

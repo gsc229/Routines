@@ -48,6 +48,11 @@ export const removeChosenExercise = (exerciseId) => dispatch => {
  dispatch({type: constants.REMOVE_FROM_CHOSEN_EXERCISES, payload: exerciseId})
 }
 
+export const bulkWriteChosenExercises = (exercisesArray) => dispatch => {
+  dispatch({type: constants.BULK_WRITE_CHOSEN_EXERCISES, payload: exercisesArray})
+}
+
+
 // Async
 export const fetchSetGroups = (query) => dispatch => {
   dispatch({type: constants.FETCHING_SET_GROUPS})

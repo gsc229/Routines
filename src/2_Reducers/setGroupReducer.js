@@ -30,6 +30,7 @@ const initialState = {
   currentSetGroups: [],
   createSetGroupData: {
     currentStep: "choose-type",
+    chosenExerciseIndex: 0,
     is_compound: false,
     total_sets: "",
     rep_max: "",
@@ -107,6 +108,11 @@ const reducer = (state=initialState, action) => {
     return{
       ...state,
       chosenExercises: [...state.chosenExercises.filter(exercise => exercise._id !== action.payload)]
+    }
+  case constants.BULK_WRITE_CHOSEN_EXERCISES:
+    return{
+      ...state,
+      chosenExercises: action.payload
     }
   case constants.CLEAR_CURRENT_SET_GROUP:
     return{

@@ -38,10 +38,10 @@ const SetTypeExplanation = ({
       <div className='type-explanation-and-use-btn'>
         <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
         {typeExplanation[type]}
-        {currentStep === 'choose-type' &&
-        <Button 
+        <Button
+        disabled={currentStep !== 'choose-type'}
         onClick={handleTypeClick}
-        className='use-set-type-btn'>Use {type} Set</Button>}
+        className='use-set-type-btn'>Use {type} Sets</Button>
       </div>
   )
 }

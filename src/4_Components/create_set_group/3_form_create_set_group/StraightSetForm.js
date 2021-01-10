@@ -9,8 +9,8 @@ import {
   ConnectedRepsPerSetInput,
   ConnectedWeightInput, 
   ConnectedTotalSetsInput
-} from './ConnectedLabelInputs'
-import {ConnectedNextStepButton} from './ConnectedNextAndPrevBtns'
+} from './ConnectedInputsLabeled'
+import {ConnectedNextStepButton} from './ConnectedBtnsNextAndPrevStep'
 import Container  from 'react-bootstrap/Container'
 
 

@@ -19,7 +19,6 @@ const IFrame = ({
   const removed = purifiedResults.removed
   const error_message = purifiedResults.error_message
 
-  console.log({purifiedResults, purifiedIframe, removed})
 
   const getEmbed = () => {
     return purifiedIframe &&
