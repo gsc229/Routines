@@ -1,3 +1,9 @@
 .remove-all-resources-modal{
-  
+  .confirm-cancel-btns{
+    .cancel-btn{
+      margin-left: 30px;
+      background-color: $spanish-gray;
+      border-color: $spanish-gray;
+    }
+  }
 }

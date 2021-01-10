@@ -38,7 +38,7 @@ const SetTypeExplanation = ({
   return (
       <div className='type-explanation-and-use-btn'>
 
-        <span onClick={() => setHide(!hide)}>{hide ? 'show description' : 'hide description'}</span>
+        <span className={hide ? 'span-on-hide' : 'span-on-show'} onClick={() => setHide(!hide)}>{hide ? 'show description' : 'hide description'}</span>
 
         <div className={`title-and-content ${hide && 'hide'}`}>
           <h2>{type} {type !== "Manual" && 'Set Group'}</h2>

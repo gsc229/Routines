@@ -7,6 +7,7 @@ const RemoveAllModal = ({
   setModalShow,
   resource,
   handleRemoveAllClick,
+  showCancelBtn=true,
   cancelBtnText='Cancel',
   confirmBtnText='REMOVE All',
   bodyInnerHtml
@@ -36,8 +37,13 @@ const RemoveAllModal = ({
       </Modal.Body>
       <Modal.Footer>
         <div className="confirm-cancel-btns">
-          <Button onClick={handleConfirm}>{confirmBtnText}</Button>
-          <Button onClick={() => setModalShow(false) } >{cancelBtnText}</Button>
+          <Button 
+          className='confirm-btn'
+          onClick={handleConfirm}>{confirmBtnText}</Button>
+          {showCancelBtn && 
+          <Button 
+          className='cancel-btn'
+          onClick={() => setModalShow(false) } >{cancelBtnText}</Button>}
         </div>
       </Modal.Footer>
     </Modal>

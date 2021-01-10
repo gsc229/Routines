@@ -36,19 +36,24 @@
     margin: auto;
     position: relative;
     span{
+      z-index: 10;
       position: absolute;
-      right: 0;
-      top: 0;
-      margin-right: 30px;
+      left: 0;
+      top: 31px;
       font-size: 12px;
       text-decoration: underline;
       font-style: italic;
       color: $routine-red;
       cursor: pointer;
     }
+    .span-on-hide{
+      top: 0;
+      left: 0;
+    }
 
     .hide{
       display: none
+
     }
 
     .use-set-type-btn{

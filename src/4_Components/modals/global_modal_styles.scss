@@ -1,12 +1,16 @@
 .fade{
-  .modal-header{
-    background-color: $bs-dark;
-    color: white;
-    .close{
+  .modal-content{
+    border: none;
+    .modal-header{
+      background-color: $bs-dark;
       color: white;
+      .close{
+        color: white;
+      }
     }
   }
 }
+
 
 /* .modal-header{
   background-color: $bs-dark;
