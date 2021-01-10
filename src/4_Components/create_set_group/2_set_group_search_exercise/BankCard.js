@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {bulkWriteChosenExercises} from '../../../1_Actions/setGroupActions'
 import Card from 'react-bootstrap/Card'
@@ -7,6 +7,7 @@ import ToolTip from 'react-bootstrap/Tooltip'
 import {FiMinusSquare, FiCopy} from 'react-icons/fi'
 import {BsGrid3X3Gap} from 'react-icons/bs'
 import {BiTargetLock} from 'react-icons/bi'
+import EditSetModal from '../../modals/edit_set_modal/EditSetModal'
 
 export const BankCard = ({
   exercise,
@@ -15,6 +16,7 @@ export const BankCard = ({
   bulkWriteChosenExercises
 }) => {
 
+  const [modalShow, setModalShow] = useState(false)
 
   const handleRemoveOne = () => {
     const copy = [...chosenExercises]
@@ -36,6 +38,12 @@ export const BankCard = ({
   return (
     <Card
     className='bank-card'>
+
+      {modalShow && 
+      <EditSetModal 
+      modalShow={modalShow} 
+      setModalShow={setModalShow} />}
+
       <Card.Body>
         
       <BsGrid3X3Gap className='grabber' />
@@ -49,7 +57,7 @@ export const BankCard = ({
       </OverlayTrigger>
 
       <OverlayTrigger overlay={<ToolTip>Set {exercise.name} Targets</ToolTip>}>
-        <BiTargetLock className='target-icon' onClick={handleSetTargets} />
+        <BiTargetLock className='target-icon' onClick={() => setModalShow(true)} />
       </OverlayTrigger>
 
         <Card.Subtitle>

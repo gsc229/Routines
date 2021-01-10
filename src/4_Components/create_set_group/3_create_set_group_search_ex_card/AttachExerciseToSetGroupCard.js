@@ -13,8 +13,6 @@ export const AttachExerciseToSetGroupCard = ({
   nextStepText
 }) => {
 
-  
-
   const selected = chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
   const count = chosenExercises.reduce((counter, ex) => ex._id === exercise._id ? counter += 1 : counter, 0)
   const indexes = []
@@ -28,11 +26,12 @@ export const AttachExerciseToSetGroupCard = ({
       <Card.Header>
         <span className={`${exercise.muscle_group}-color`}>{exercise.name}</span>
         <span className='count'>
-           {indexes.length ? indexes.length > 1 ? "In Sets:" : "In Set:" : ''}&nbsp;
+           {indexes.length ? indexes.length > 1 ? "Sets:" : "Set:" : ''}&nbsp;
           {indexes.map((num, idx )=> `${num}${indexes.length > 1 && idx !== indexes.length - 1 ? "," : ""}`)}
         </span>
       </Card.Header>
       <Card.Body>
+
         <AddRemoveButtons
         showNextStepBtnOnCardBtn={true}
         showRemoveExerciseBtn={true}
@@ -40,6 +39,7 @@ export const AttachExerciseToSetGroupCard = ({
         nextStep={nextStep}
         nextStepText={nextStepText}
         exercise={exercise} />
+        
         <Card.Title>
           <Card.Text>{exercise.muscle_group}</Card.Text>
         </Card.Title>

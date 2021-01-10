@@ -26,7 +26,7 @@ const RemoveAllModal = ({
     show={modalShow}
     onHide={() => setModalShow(false)}
     size='lg'
-    aria-labelledby={`set-group-${resource._id}`}
+    aria-labelledby={`resource-${resource._id}`}
     centered>
       <Modal.Header
       closeButton>
