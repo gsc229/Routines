@@ -29,9 +29,28 @@
 
   .type-explanation-and-use-btn{
     display: flex;
+    width: 100%;
+    min-height: 20px;
     flex-direction: column;
     //width: 95%;
     margin: auto;
+    position: relative;
+    span{
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin-right: 30px;
+      font-size: 12px;
+      text-decoration: underline;
+      font-style: italic;
+      color: $routine-red;
+      cursor: pointer;
+    }
+
+    .hide{
+      display: none
+    }
+
     .use-set-type-btn{
       width: fit-content;
       margin-top: 20px;

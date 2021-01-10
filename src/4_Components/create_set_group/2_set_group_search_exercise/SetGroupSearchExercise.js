@@ -4,7 +4,7 @@ import { writingCreateSetGroupData } from '../../../1_Actions/setGroupActions'
 import SearchExercisesForm from '../../exercise/form_search_exercises/SearchExercisesForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
 import AttachExerciseToSetGroupCard from '../3_create_set_group_search_ex_card/AttachExerciseToSetGroupCard'
-import ChosenExercisesBank from './ChosenExercisesBank'
+import ChosenExercisesBankDND from './ChosenExercisesBankDND'
 
 export const SetGroupSearchExercise = ({
   exerciseSearchResults,
@@ -19,7 +19,7 @@ export const SetGroupSearchExercise = ({
     <div className='set-group-exercise-search'>
       
      
-      <ChosenExercisesBank />
+      <ChosenExercisesBankDND />
       <SearchExercisesForm />
 
       {crudingExercise === 'fetching' &&
