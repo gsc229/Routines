@@ -32,6 +32,7 @@ export const SetGroup = ({
   }
 
   return (
+
     <Card
     text={!isDragging && 'white'}
     style={{margin: '5px auto', cursor: 'grab'}}
@@ -71,6 +72,7 @@ export const SetGroup = ({
         <Card.Subtitle>{set_group.name ? set_group.name : 'no name'}</Card.Subtitle>
       </Card.Body>
     </Card>
+    
   )
 }
 

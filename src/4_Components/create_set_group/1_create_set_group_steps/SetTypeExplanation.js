@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import {writingCreateSetGroupData, clearChosenExercises, clearCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Button from 'react-bootstrap/Button'
@@ -11,6 +11,7 @@ const SetTypeExplanation = ({
   currentStep
 }) => {
 
+  const [hide, setHide] = useState(false)
 
   const typeExplanation = {
     "Manual": "Manually create a set group by adding sets one by one",
@@ -36,12 +37,18 @@ const SetTypeExplanation = ({
 
   return (
       <div className='type-explanation-and-use-btn'>
-        <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
-        {typeExplanation[type]}
+
+        <span onClick={() => setHide(!hide)}>{hide ? 'show description' : 'hide description'}</span>
+
+        <div className={`title-and-content ${hide && 'hide'}`}>
+          <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
+          {typeExplanation[type]}
+        </div>
+        {currentStep === "choose-type" &&
         <Button
         disabled={currentStep !== 'choose-type'}
         onClick={handleTypeClick}
-        className='use-set-type-btn'>Use {type} Sets</Button>
+        className='use-set-type-btn'>Use {type} Sets</Button>}
       </div>
   )
 }
