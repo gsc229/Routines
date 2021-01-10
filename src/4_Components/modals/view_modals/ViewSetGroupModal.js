@@ -40,8 +40,10 @@ export const ViewSetGroupModal = ({
     size='lg'
     aria-labelledby={`set-group-${currentSetGroup._id}`}
     centered>
-      <Modal.Header className='modal-header view-set-group-modal-header' closeButton>
-        <h5><span>Set Name: </span> {currentSetGroup.name}</h5>
+      <Modal.Header 
+      className='view-set-group-modal-header' 
+      closeButton>
+        <h5>Set Name: {currentSetGroup.name}</h5>
 
       </Modal.Header>
       <Modal.Body className='modal-body view-set-group-modal-body'>

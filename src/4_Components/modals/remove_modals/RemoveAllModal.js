@@ -1,0 +1,47 @@
+import React from 'react'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+
+const RemoveAllModal = ({
+  modalShow,
+  setModalShow,
+  resource,
+  handleRemoveAllClick,
+  cancelBtnText='Cancel',
+  confirmBtnText='REMOVE All',
+  bodyInnerHtml
+}) => {
+
+  const handleConfirm = () => {
+    handleRemoveAllClick(resource._id)
+    setModalShow(false)
+  }
+
+  bodyInnerHtml = bodyInnerHtml ? bodyInnerHtml : <>Are you sure you want to remove all <span>{resource.name}</span>? </>
+
+  return (
+    <Modal
+    className='remove-all-resources-modal'
+    show={modalShow}
+    onHide={() => setModalShow(false)}
+    size='lg'
+    aria-labelledby={`set-group-${resource._id}`}
+    centered>
+      <Modal.Header
+      closeButton>
+        Confirm Delete
+      </Modal.Header>
+      <Modal.Body>
+        {bodyInnerHtml}
+      </Modal.Body>
+      <Modal.Footer>
+        <div className="confirm-cancel-btns">
+          <Button onClick={handleConfirm}>{confirmBtnText}</Button>
+          <Button onClick={() => setModalShow(false) } >{cancelBtnText}</Button>
+        </div>
+      </Modal.Footer>
+    </Modal>
+  )
+}
+
+export default RemoveAllModal

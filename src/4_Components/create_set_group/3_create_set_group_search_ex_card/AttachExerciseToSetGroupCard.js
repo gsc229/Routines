@@ -9,13 +9,11 @@ import AddRemoveButtons from './AttachCardBtnConfigs'
 export const AttachExerciseToSetGroupCard = ({
   exercise,
   chosenExercises,
-  showNextStepBtn,
-  showNextStepBtnOnCardBtn,
-  showRemoveExerciseBtn,
-  shwoAddExerciseBtn,
   nextStep,
   nextStepText
 }) => {
+
+  
 
   const selected = chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
   const count = chosenExercises.reduce((counter, ex) => ex._id === exercise._id ? counter += 1 : counter, 0)

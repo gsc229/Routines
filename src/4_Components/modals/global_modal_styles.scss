@@ -1,0 +1,19 @@
+.fade{
+  .modal-header{
+    background-color: $bs-dark;
+    color: white;
+    .close{
+      color: white;
+    }
+  }
+}
+
+/* .modal-header{
+  background-color: $bs-dark;
+  .confirm-delete-title{
+    color: $routine-red;
+  }
+  .close{
+    color: white;
+  }
+} */

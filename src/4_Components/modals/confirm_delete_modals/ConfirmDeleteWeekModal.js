@@ -66,6 +66,7 @@ export const ConfirmDeleteWeekModal = ({
       }
       {deleteFailed && 
         <Modal
+        className='delete-week-modal-fail'
         show={deleteFailed}
         onHide={() => setDeleteFailed(false)}
         size='lg'
