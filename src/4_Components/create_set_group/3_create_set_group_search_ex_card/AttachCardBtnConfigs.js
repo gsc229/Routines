@@ -7,9 +7,11 @@ import {
   canRemoveThisExercise, 
   canMoveToFormFromAnExerciseCard, 
   getRemainingExercises} from '../createSetGroupHelpers'
-import {ConnectedNextStepButton} from '../3_form_create_set_group/ConnectedBtnsNextAndPrev'
+import {ConnectedNextStepBadge, ConnectedNextStepButton} from '../3_form_create_set_group/ConnectedBtnsNextAndPrevStep'
 import Button from 'react-bootstrap/Button'
-import {FiMinusSquare} from 'react-icons/fi'
+import Nav from 'react-bootstrap/Nav'
+import Badge from 'react-bootstrap/Badge'
+import {FiMinusSquare, FiPlus} from 'react-icons/fi'
 
 export const AddRemoveBtnConfigs = ({
   chosenExercises,
@@ -29,6 +31,9 @@ export const AddRemoveBtnConfigs = ({
 
   const compoud_set_groups = ["Super", "Super - Antagonist", "Super - Compound", "Super - Tri", "Super - Giant", "Circuit"]
 
+  const exIsChosen = chosenExercises.find(ex => ex._id === exercise._id) 
+
+  const addToText = exIsChosen ? 'Add Another' : `Use in ${set_group_type} Set`
 
   const handleRemoveClick = () => {
     removeChosenExercise(exercise._id)
@@ -41,23 +46,27 @@ export const AddRemoveBtnConfigs = ({
   const removeButton = () => {
     return canRemoveThisExercise(exercise, chosenExercises) && 
     <div className='card-link-container'>
-      <Button
+      <Badge
+      pill
       onClick={handleRemoveClick}
       className='card-link remove-from-set-link'
       >
-        <FiMinusSquare />&nbsp;
+        <FiMinusSquare />
         Remove from {set_group_type} Set
-      </Button>
+      </Badge>
     </div>
   }
 
   const addButton = () => {
     return canAddThisExercise(exercise, set_group_type, chosenExercises) && 
     <div className='card-link-container'>
-      <Button
-      variant='success'
+      <Badge
+      pill
       onClick={handleAddClick}
-      className='card-link add-to-set-link'>Use in {set_group_type} Set</Button>
+      className='card-link add-to-set-link'>
+        <FiPlus />
+        {addToText}
+      </Badge>
     </div>
   }
 
@@ -76,20 +85,20 @@ export const AddRemoveBtnConfigs = ({
   const nextStepOnCardBtn = () => {
     return canMoveToFormFromAnExerciseCard(exercise, set_group_type, chosenExercises)  &&
     <div className='card-link-container'>
-      <ConnectedNextStepButton 
-      variant='success'
-      text={nextStepText}
-      writeDataKey='currentStep'
-      writeDataValue={nextStep}
-      />
+        <ConnectedNextStepBadge
+        pill={true} 
+        text={nextStepText}
+        writeDataKey='currentStep'
+        writeDataValue={nextStep}
+        />
     </div>
   } 
 
 
   return (
-    <div>
-      {showRemoveExerciseBtn && removeButton()}
+    <div className='add-remove-btn-config'>
       {shwoAddExerciseBtn && addButton()}
+      {showRemoveExerciseBtn && removeButton()}
       {showNextStepBtnOnCardBtn && nextStepOnCardBtn()}
       {showNextStepBtn && nextStepBtn()}
     </div>

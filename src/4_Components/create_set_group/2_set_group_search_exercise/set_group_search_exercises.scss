@@ -105,11 +105,64 @@
       }
     }
     
-    .remove-icon{
-      color: $routine-red;
-      cursor: pointer;
-    }
+    
 
+  }
+
+  .bank-card{
+    background-color: $bs-dark;
+    width: 200px;
+    margin: 5px auto;
+    .card-body{
+      background-color: $bs-dark;
+      //border: 1px solid blue;
+      display: flex;
+      align-items: center;
+      position: relative;
+      .grabber,.copy-icon,.target-icon{
+        color: $spanish-gray
+
+      }
+      .remove-icon, .copy-icon, .target-icon{
+        cursor: pointer;
+      }
+      .grabber{
+        cursor: grab;;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .copy-icon{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+      .target-icon{
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .remove-icon{
+        color: $routine-red;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+
+    .card-subtitle{
+      //border: 1px solid red;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-left: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    }
+    
   }
 
   .set-group-exercise-search-results{

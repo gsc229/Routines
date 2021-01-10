@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
-import {minAndMaxExercisesAllowed, getSetComboType} from '../createSetGroupHelpers'
+import {minAndMaxAllowedExercises, getSetComboType} from '../createSetGroupHelpers'
 import SetCardWithDetailInputs from '../3_set_card_with_input_details/SetCardWithDetailInputs'
 
 export const EnterSetInfo = ({
@@ -11,24 +11,21 @@ export const EnterSetInfo = ({
   writingCreateSetGroupData
 }) => {
 
-  const [currIndex, setCurrIndex] = useState(0)
-  const [nextIndex, setNextIndex] = useState()
-  const [prevIndex, setPrevIndex] = useState()
-  const {set_group_type} = currentSetGroup
-  const setComboType = getSetComboType(set_group_type)
 
+  const {set_group_type} = currentSetGroup
+  const set_combo_type = getSetComboType(set_group_type)
   return (
     <div>
-      {setComboType !== "single" && <h5>Enter Set {currIndex + 1} Info:</h5>}
-      {setComboType === "single" && <h5>Enter Set Group Info:</h5>}
-      <SetCardWithDetailInputs exercise={chosenExercises[currIndex]} />
+      {set_combo_type !== "single" && <h5>Enter Set {chosenExerciseIndex + 1} Info:</h5>}
+      {set_combo_type === "single" && <h5>Enter Set Group Info:</h5>}
+      <SetCardWithDetailInputs exercise={chosenExercises[chosenExerciseIndex]} />
     </div>
   )
 }
 
 const mapStateToProps = (state) => ({
   chosenExercises: state.setGroupReducer.chosenExercises,
-  chosenExerciseIndex: state.setGroupReducer.chosenExerciseIndex,
+  chosenExerciseIndex: state.setGroupReducer.createSetGroupData.chosenExerciseIndex,
   currentSetGroup: state.setGroupReducer.currentSetGroup
 })
 

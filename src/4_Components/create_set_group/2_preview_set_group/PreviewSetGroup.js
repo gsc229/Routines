@@ -4,7 +4,6 @@ import {createSetGroupLocal} from './previewSetGroupHelpers'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
 import {setCurrentSetGroupSets} from '../../../1_Actions/exerciseSetActions'
 import ExerciseSetCard from '../../exercise_set/card_exercise_set/ExerciseSetCard'
-
  
 export const PreviewSetGroup = ({
   chosenExercises,

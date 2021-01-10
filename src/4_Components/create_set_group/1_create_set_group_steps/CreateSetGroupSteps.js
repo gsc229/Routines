@@ -20,7 +20,7 @@ export const CreateSetGroupSteps = ({
     <div className='create-set-group-steps'>
       <SgNameInputForm />
       <SelectTypeTabs />
-      {currentStep === 'choose-type' &&  <SetTypeExplanation type={set_group_type} />}
+      <SetTypeExplanation type={set_group_type} />
       <StepNavs />
       {currentStep === 'choose-exercise' && <SetGroupSearchExercise />}
       {currentStep === 'enter-info' && <EnterSetInfo />}

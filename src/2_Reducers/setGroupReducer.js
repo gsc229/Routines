@@ -109,6 +109,11 @@ const reducer = (state=initialState, action) => {
       ...state,
       chosenExercises: [...state.chosenExercises.filter(exercise => exercise._id !== action.payload)]
     }
+  case constants.BULK_WRITE_CHOSEN_EXERCISES:
+    return{
+      ...state,
+      chosenExercises: action.payload
+    }
   case constants.CLEAR_CURRENT_SET_GROUP:
     return{
       ...state,

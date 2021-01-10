@@ -1,5 +1,5 @@
 .selected-card{
-  border: 5px solid $honey-yellow;
+  border: 1px solid $honey-yellow;
 }
 
 .attach-exercise-to-set-card{
@@ -20,23 +20,58 @@
   .card-header{
     display: flex;
     justify-content: space-between;
-    
+    .count{
+      color: $honey-yellow;
+    }
     span{
       font-weight: bolder;
     }
 
+
     
   }
   .card-body{
+    .add-remove-btn-config{
+      .card-link-container{
+        margin-bottom: 20px;
+        text-align: center;
+        .next-step-btn{
+          background-color: inherit;
+          border: 1px solid $russian-green;
+          color: $russian-green;
+          width: 70%;
+          margin: auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          svg{
+            color: $russian-green;
+          }
+        }
+        .card-link{
+          cursor: pointer;
+          margin: 0 auto;
+          width: 70%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
 
-    .card-link-container{
-      margin-bottom: 20px;
-      text-align: center;
-    }
+      .add-to-set-link{
+        border: 1px solid $honey-yellow;
+        color: $honey-yellow;
+      }
 
-    .card-link{
-      color: white;
+      .remove-from-set-link{
+        border: 1px solid $routine-red;
+        color: $routine-red;
+      }
     }
+    
+
+    
 
     .card-subtitle{
       span{

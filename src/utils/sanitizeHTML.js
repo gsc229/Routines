@@ -13,7 +13,7 @@ export const purifyIframe = (iframeString) => {
     const match = iframe.src && iframe.src.match(regex)
 
     if(!match){
-      console.log("REMOVE SRC")
+      /* console.log("REMOVE SRC") */
       node.removeAttribute('src')
     }
 
@@ -22,14 +22,14 @@ export const purifyIframe = (iframeString) => {
 
   const purifiedIframe = DOMpurify.sanitize(iframeString, {ALLOWED_TAGS: ['iframe'], ALLOWED_ATTR: allowedAttributes})
   const removed = DOMpurify.removed.filter(obj => obj.element && obj.element.tagName !== "BODY")
-  console.log({DOMpurify})
+  /* console.log({DOMpurify})
   console.log({purifiedIframe})
-  console.log({removed})
+  console.log({removed}) */
 
   const testDiv = document.createElement('div')
   testDiv.innerHTML = iframeString
   const childCount = testDiv.childElementCount
-  console.log({testDiv,childCount})
+  /* console.log({testDiv,childCount}) */
   if(childCount > 1){
     return {purifiedIframe: null, removed: [], error_message: "Only one YouTube iframe for each exercise."}
   }

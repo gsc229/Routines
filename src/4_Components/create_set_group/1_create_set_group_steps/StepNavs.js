@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {canMoveToForm, canMoveToPreview} from '../createSetGroupHelpers'
-import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../3_form_create_set_group/ConnectedBtnsNextAndPrev'
+import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../3_form_create_set_group/ConnectedBtnsNextAndPrevStep'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -22,7 +22,7 @@ export const StepNavs = ({
   const nextStep = {
     "choose-exercise": {
       step: "enter-info",
-      text: `Enter ${set_group_type} Set Info`,
+      text: `${set_group_type} Set Targets`,
       allowFunction: canMoveToForm
     },
     "enter-info": {
