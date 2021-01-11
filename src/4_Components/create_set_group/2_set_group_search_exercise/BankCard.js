@@ -9,7 +9,7 @@ import {BsGrid3X3Gap} from 'react-icons/bs'
 import {FiTarget} from 'react-icons/fi'
 import {GrMultiple, GrObjectGroup} from 'react-icons/gr'
 import EditSetModal from '../../modals/edit_set_modal/EditSetModal'
-import {DistanceIcon, WeightIcon, HashIcon, TimeIcon, SwimLapsIcon} from '../../icons/Icons'
+import {DistanceIcon, WeightIcon, HashIcon, TimeIcon, SwimLapsIcon, RepsIcon} from '../../icons/Icons'
 
 export const BankCard = ({
   exerciseSet,
@@ -51,11 +51,11 @@ export const BankCard = ({
     
     return(
       <div className="target-icons-container">
-        {target_weight && <WeightIcon />}
-        {target_time && <TimeIcon />}
-        {target_distance && <DistanceIcon />}
-        {target_reps && <HashIcon />}
-        {target_laps && <SwimLapsIcon />}
+        {target_weight && <div className='icon-and-number'><WeightIcon /><span>{target_weight}</span></div>}
+        {target_time && <div className='icon-and-number'><TimeIcon /><span>{target_time}</span></div>}
+        {target_distance && <div className='icon-and-number'><DistanceIcon /><span>{target_distance}</span></div>}
+        {target_reps && <div className='icon-and-number'><RepsIcon /><span>{target_reps}</span></div>}
+        {target_laps && <div className='icon-and-number'><SwimLapsIcon /><span>{target_laps}</span></div>}
         {noTargets && <span className='no-targets-span'>No targets set</span>}
       </div>
     )
@@ -68,6 +68,7 @@ export const BankCard = ({
 
       {modalShow && 
       <EditSetModal
+      index={index}
       modalShow={modalShow} 
       setModalShow={setModalShow} />}
 
@@ -75,7 +76,7 @@ export const BankCard = ({
         
       <BsGrid3X3Gap className='grabber-icon icon' />
 
-      <OverlayTrigger overlay={<ToolTip>Make a subset from this exercise</ToolTip>}>
+      <OverlayTrigger overlay={<ToolTip>Make a subgroup from this exercise</ToolTip>}>
         <GrObjectGroup 
         onClick={handleCreateSubsetClick} className='create-subset-icon icon' />
       </OverlayTrigger>

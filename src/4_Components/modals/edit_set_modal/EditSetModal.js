@@ -4,13 +4,15 @@ import {bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetAction
 import Modal from 'react-bootstrap/Modal'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
-import ConnectedInputDynamicFieldLabeled from '../../create_set_group/3_form_create_set_group/ConnectedInputDynamicFieldLabeled'
-import ConnectedRow from '../../create_set_group/3_form_create_set_group/ConnectedRowDynamicFieldInputDecIncLabeld';
+import TargetsSetter from '../../create_set_group/3_targets_and_subgroups/TargetsSetter'
 
 export const EditSetModal = ({
   modalShow,
   setModalShow,
-  currentExerciseSet
+  currentExerciseSet,
+  currentExerciseSets,
+  bulkWriteCurrentExerciseSets,
+  index
 }) => {
 
   const [alertShow, setAlertShow] = useState(false)
@@ -39,6 +41,13 @@ export const EditSetModal = ({
     )
   }
 
+  const handleFinishedEditing = () => {
+    const setsCopy = [...currentExerciseSets]
+    setsCopy.splice(index, 1, currentExerciseSet)
+    bulkWriteCurrentExerciseSets(setsCopy)
+    setModalShow(false)
+  }
+
   return (
     <Modal
     className='edit-set-modal'
@@ -65,38 +74,25 @@ export const EditSetModal = ({
 
       {!alertShow && 
       <Modal.Body className='modal-body-normal'>
-          <ConnectedRow 
-          md='6'
-          startingField={'starting_weight'}
-          fieldLabelText='Weight'
-          incrementField={'weight'} />
-          <ConnectedRow 
-          md='6'
-          startingField={'starting_weight'}
-          fieldLabelText='Weight'
-          incrementField={'weight'} />
-          <ConnectedRow 
-          md='6'
-          startingField={'starting_weight'}
-          fieldLabelText='Weight'
-          incrementField={'weight'} />
-          <ConnectedRow 
-          md='6'
-          startingField={'starting_weight'}
-          fieldLabelText='Weight'
-          incrementField={'weight'} />
-          <ConnectedRow 
-          md='6'
-          startingField={'starting_weight'}
-          fieldLabelText='Weight'
-          incrementField={'weight'} />
+        <TargetsSetter />
+        
       </Modal.Body>}
+      <Modal.Footer>
+        <Button
+          className='done-setting-targets-btn'
+          onClick={handleFinishedEditing}>
+          Done
+        </Button>
+      </Modal.Footer>
+      
+
     </Modal>
   )
 }
 
 const mapStateToProps = (state) => ({
-  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet
+  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets
 })
 
 const mapDispatchToProps = {

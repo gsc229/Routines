@@ -1,3 +1,22 @@
+export const targetsList = ["target_weight", "target_time", "target_reps", "target_distance", "target_laps"]
+export const setGroupTypesList = [
+  "Drop",
+  "Stripping",
+  "Pyramid",
+  "Manual",
+  "Straight",
+  "Super",
+  "Super - Antagonist",
+  "Super - Compound", 
+  "Circuit", 
+  "Pre-Exhaustion",
+  "Rest - Pause", 
+  "Super - Tri",
+  "Super - Giant"
+]
+
+
+
 export const minAndMaxAllowedExercises = (setGroupType) => {
   switch(setGroupType){
 
