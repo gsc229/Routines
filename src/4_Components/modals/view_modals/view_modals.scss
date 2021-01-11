@@ -1,19 +1,11 @@
-.modal-header{
-  background-color: $bs-dark;
-  .confirm-delete-title{
-    color: $routine-red;
-  }
-  .close{
-    color: white;
-  }
-}
-
-
 .view-set-group-modal{
   .view-set-group-modal-header{
-    span{
-      color: $spanish-gray;
+    h5{
+      span{
+        color: $spanish-gray;
+      }
     }
+    
   }
 
   .view-set-group-modal-body{
@@ -45,4 +37,3 @@
     }
   }
 }
-

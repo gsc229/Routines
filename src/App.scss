@@ -26,6 +26,7 @@ body{
 
 /* Track */
 ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
   -webkit-border-radius: 10px;
   border-radius: 10px;
@@ -37,6 +38,7 @@ body{
   -webkit-border-radius: 10px;
   border-radius: 10px;
   background: $routine-red; 
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
@@ -74,7 +76,11 @@ h1{
 @import './6_Layouts/layout_one/layout_one.scss';
 
 // Modals
-@import './4_Components/modals/modals.scss';
+@import './4_Components/modals/global_modal_styles.scss';
+@import './4_Components/modals/view_modals/view_modals.scss';
+@import './4_Components/modals/confirm_delete_modals/confirm_delete_modals.scss';
+@import './4_Components/modals/remove_modals/remove_all_modals.scss';
+@import './4_Components/modals/edit_set_modal/edit_set_modal.scss';
 
 // Calendar
 @import './4_Components/calendar/basic_calendar.scss';

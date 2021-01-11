@@ -15,12 +15,29 @@ export const clearCurrentExerciseSet = () => dispatch => {
   dispatch({type: constants.CLEAR_CURRENT_EXERCISE_SET})
 }
 
-export const clearCurrentSetGroupSets = () => dispatch => {
+export const clearCurrentExerciseSets = () => dispatch => {
   dispatch({type: constants.CLEAR_CURRENT_EXERCISE_SETS})
 }
 
-export const setCurrentSetGroupSets = (sets) => dispatch => {
-  dispatch({type: constants.SET_CURRENT_SET_GROUP_SETS, payload: sets})
+export const setCurrentExerciseSets = (sets) => dispatch => {
+  dispatch({type: constants.SET_CURRENT_EXERCISE_SETS, payload: sets})
+}
+
+
+export const addToCurrentExerciseSets = (exerciseSet) => dispatch => {
+  dispatch({type: constants.ADD_TO_CURRENT_EXERCISE_SETS, payload: exerciseSet})
+}
+
+export const removeFromCurrentExerciseSetsByExerciseID = (exerciseId) => dispatch => {
+ dispatch({type: constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_EXERCISE_ID, payload: exerciseId})
+}
+
+export const removeFromCurrentExerciseSetsBySetID = (setId) => dispatch => {
+  dispatch({type: constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_SET_ID, payload: setId})
+ }
+
+export const bulkWriteCurrentExerciseSets = (exercisesSetsArray) => dispatch => {
+  dispatch({type: constants.BULK_WRITE_CURRENT_EXERCISE_SETS, payload: exercisesSetsArray})
 }
 
 // async

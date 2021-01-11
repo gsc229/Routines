@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {addChosenExercise, removeChosenExercise} from '../../../1_Actions/setGroupActions'
+import {addToCurrentExerciseSets, removeFromCurrentExerciseSetsByExerciseID} from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
@@ -8,19 +8,15 @@ import AddRemoveButtons from './AttachCardBtnConfigs'
 
 export const AttachExerciseToSetGroupCard = ({
   exercise,
-  chosenExercises,
-  showNextStepBtn,
-  showNextStepBtnOnCardBtn,
-  showRemoveExerciseBtn,
-  shwoAddExerciseBtn,
+  currentExerciseSets,
   nextStep,
   nextStepText
 }) => {
 
-  const selected = chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
-  const count = chosenExercises.reduce((counter, ex) => ex._id === exercise._id ? counter += 1 : counter, 0)
+  const selected = currentExerciseSets.find(exSet => exSet.exercise._id === exercise._id)
+  const count = currentExerciseSets.reduce((counter, exSet) => exSet.exercise._id === exercise._id ? counter += 1 : counter, 0)
   const indexes = []
-  chosenExercises.forEach((ex, index) => {if(ex._id === exercise._id) indexes.push(index + 1)} )
+  currentExerciseSets.forEach((exSet, index) => {if(exSet.exercise._id === exercise._id) indexes.push(index + 1)} )
   
   return (
     <Card 
@@ -30,11 +26,12 @@ export const AttachExerciseToSetGroupCard = ({
       <Card.Header>
         <span className={`${exercise.muscle_group}-color`}>{exercise.name}</span>
         <span className='count'>
-           {indexes.length ? indexes.length > 1 ? "In Sets:" : "In Set:" : ''}&nbsp;
+           {indexes.length ? indexes.length > 1 ? "Sets:" : "Set:" : ''}&nbsp;
           {indexes.map((num, idx )=> `${num}${indexes.length > 1 && idx !== indexes.length - 1 ? "," : ""}`)}
         </span>
       </Card.Header>
       <Card.Body>
+
         <AddRemoveButtons
         showNextStepBtnOnCardBtn={true}
         showRemoveExerciseBtn={true}
@@ -42,6 +39,7 @@ export const AttachExerciseToSetGroupCard = ({
         nextStep={nextStep}
         nextStepText={nextStepText}
         exercise={exercise} />
+
         <Card.Title>
           <Card.Text>{exercise.muscle_group}</Card.Text>
         </Card.Title>
@@ -62,13 +60,12 @@ export const AttachExerciseToSetGroupCard = ({
 }
 
 const mapStateToProps = (state) => ({
-  currentSetGroup: state.setGroupReducer.currentSetGroup,
-  chosenExercises: state.setGroupReducer.chosenExercises
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets
 })
 
 const mapDispatchToProps = {
-  addChosenExercise,
-  removeChosenExercise
+  addToCurrentExerciseSets,
+  removeFromCurrentExerciseSetsByExerciseID
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AttachExerciseToSetGroupCard)

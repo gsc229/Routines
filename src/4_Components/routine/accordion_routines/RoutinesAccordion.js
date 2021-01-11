@@ -12,7 +12,7 @@ import Calendar from '../../calendar/Calendar'
 import SaveDiscardExpandBtnGroup from '../../buttons/SaveDiscardExpandBtnGroup'
 import CreateRoutineForm from '../form_routine/RoutineInfoForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
-import ConfirmDeleteRoutineModal from '../../modals/ConfirmDeleteRoutineModal'
+import ConfirmDeleteRoutineModal from '../../modals/confirm_delete_modals/ConfirmDeleteRoutineModal'
 
 
 export const RoutinesAccordion = ({

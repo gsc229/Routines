@@ -6,7 +6,7 @@ export const ViewSetGroupModal = ({
   currentSetGroup,
   modalShow,
   setModalShow,
-  currentSetGroupSets
+  currentExerciseSets
 }) => {
 
   const getTargetsAndActual = (exSet) => {
@@ -40,15 +40,17 @@ export const ViewSetGroupModal = ({
     size='lg'
     aria-labelledby={`set-group-${currentSetGroup._id}`}
     centered>
-      <Modal.Header className='modal-header view-set-group-modal-header' closeButton>
-        <h5><span>Set Name: </span> {currentSetGroup.name}</h5>
+      <Modal.Header 
+      className='view-set-group-modal-header' 
+      closeButton>
+        <h5>Set Name: {currentSetGroup.name}</h5>
 
       </Modal.Header>
       <Modal.Body className='modal-body view-set-group-modal-body'>
         <h6>Sets:</h6>
-       {/*  {JSON.stringify(currentSetGroupSets, '', 2)} */}
+       {/*  {JSON.stringify(currentExerciseSets, '', 2)} */}
        <div className='set-group-modal-sets-container'>
-          {currentSetGroupSets.map((set, index) => 
+          {currentExerciseSets.map((set, index) => 
             <div className='set-container'>
               <p>Exercise {index + 1}: <i>{set.exercise.name}</i></p>
               <ul className='targets-and-actual-list'>
@@ -71,7 +73,7 @@ export const ViewSetGroupModal = ({
 
 const mapStateToProps = (state) => ({
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets
 
 })
 

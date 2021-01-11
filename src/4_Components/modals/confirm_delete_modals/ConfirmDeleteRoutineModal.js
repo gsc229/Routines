@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroyRoutine} from '../../1_Actions/routineActions'
+import {destroyRoutine} from '../../../1_Actions/routineActions'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
@@ -45,9 +45,10 @@ const ConfirmDeleteModal = ({
 
 
   return (
-    <div className='delte-routine-modal outer-modal-container'>
+    <div className='outer-modal-container'>
       {!deleteFailed && 
         <Modal
+        className='delete-routine-modal'
         show={modalShow}
         onHide={() => setModalShow(false)}
         size='lg'
@@ -69,6 +70,7 @@ const ConfirmDeleteModal = ({
       }
       {deleteFailed && 
         <Modal
+        className='delete-routine-modal-fail'
         show={deleteFailed}
         onHide={() => setDeleteFailed(false)}
         size='lg'

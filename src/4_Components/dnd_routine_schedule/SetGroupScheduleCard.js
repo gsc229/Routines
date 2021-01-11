@@ -8,7 +8,7 @@ import {RiDeleteBin5Line} from 'react-icons/ri'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
 import DuplicateHereBtn from './DuplicateHereBtn'
-import ViewSetGroupModal from '../modals/ViewSetGroupModal'
+import ViewSetGroupModal from '../modals/view_modals/ViewSetGroupModal'
 
 export const SetGroup = ({
   set_group, 

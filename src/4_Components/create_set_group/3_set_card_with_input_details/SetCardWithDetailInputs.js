@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {addChosenExercise, removeChosenExercise} from '../../../1_Actions/setGroupActions'
+import {} from '../../../1_Actions/setGroupActions'
+import {addToCurrentExerciseSets, removeFromCurrentExerciseSetsByExerciseID} from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
@@ -9,7 +10,7 @@ import SetGroupInfoForm from '../3_form_create_set_group/SetGroupInfoForm'
 import {ConnectedBtnNextExercise, ConnectedBtnPrevExercise} from '../3_form_create_set_group/ConnectedBtnsCycleChosenExercise'
 export const SetCardDetailInputs = ({
   exercise,
-  chosenExercises,
+  currentExerciseSets,
   currentSetGroup,
   showNextStepBtn,
   showNextStepBtnOnCardBtn,
@@ -19,7 +20,7 @@ export const SetCardDetailInputs = ({
   nextStepText
 }) => {
 
-  const selected = chosenExercises.find(chosenEx => chosenEx._id === exercise._id)
+  const selected = currentExerciseSets.find(chosenEx => chosenEx._id === exercise._id)
   
   return (
     <Card 
@@ -65,12 +66,12 @@ export const SetCardDetailInputs = ({
 
 const mapStateToProps = (state) => ({
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  chosenExercises: state.setGroupReducer.chosenExercises
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets
 })
 
 const mapDispatchToProps = {
-  addChosenExercise,
-  removeChosenExercise
+  addToCurrentExerciseSets,
+  removeFromCurrentExerciseSetsByExerciseID
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetCardDetailInputs)

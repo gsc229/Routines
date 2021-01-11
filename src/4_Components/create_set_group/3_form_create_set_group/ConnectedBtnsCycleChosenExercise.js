@@ -7,19 +7,19 @@ import Nav from 'react-bootstrap/Nav'
 
 const NextExerciseBtn = ({
   writingCreateSetGroupData,
-  chosenExercises,
-  chosenExerciseIndex,
+  currentExerciseSets,
+  currentExerciseSetIndex,
   variant
 }) => {
 
   const handleNextClick = () => {
-    chosenExerciseIndex < chosenExercises.length && writingCreateSetGroupData('chosenExerciseIndex',chosenExerciseIndex + 1)
+    currentExerciseSetIndex < currentExerciseSets.length && writingCreateSetGroupData('currentExerciseSetIndex',currentExerciseSetIndex + 1)
   }
 
   return (
     <Nav.Link
     variant={variant}
-    disabled={chosenExerciseIndex === chosenExercises.length - 1}
+    disabled={currentExerciseSetIndex === currentExerciseSets.length - 1}
     onClick={handleNextClick} 
     className='cycle-exercise-btn next-exercise-btn'>
       Next Exercise
@@ -29,20 +29,20 @@ const NextExerciseBtn = ({
 
 const PrevExerciseBtn = ({
   writingCreateSetGroupData,
-  chosenExercises,
-  chosenExerciseIndex,
+  currentExerciseSets,
+  currentExerciseSetIndex,
   variant
 }) => {
 
   const handlePrevClick = () => {
-    chosenExercises.length > 0 && writingCreateSetGroupData('chosenExerciseIndex',chosenExerciseIndex - 1)
+    currentExerciseSets.length > 0 && writingCreateSetGroupData('currentExerciseSetIndex',currentExerciseSetIndex - 1)
   }
 
   return (
     <Nav.Link
     
     variant={variant}
-    disabled={chosenExerciseIndex === 0}
+    disabled={currentExerciseSetIndex === 0}
     onClick={handlePrevClick} 
     className='cycle-exercise-btn next-exercise-btn'>
       Previous Exercise
@@ -51,8 +51,8 @@ const PrevExerciseBtn = ({
 }
 
 const mapStateToProps = (state) => ({
-  chosenExercises: state.setGroupReducer.chosenExercises,
-  chosenExerciseIndex: state.setGroupReducer.createSetGroupData.chosenExerciseIndex
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
+  currentExerciseSetIndex: state.setGroupReducer.createSetGroupData.currentExerciseSetIndex
 })
 
 const mapDispatchToProps = {

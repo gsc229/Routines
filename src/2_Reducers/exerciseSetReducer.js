@@ -5,7 +5,7 @@ const initialState = {
   crudingExerciseSet: false,
   error_message: '',
   currentRoutineSets: [],
-  currentSetGroupSets: [],
+  currentExerciseSets: [],
   currentExerciseSet: {
     exercise: null, // required
     routine: null, // required
@@ -38,11 +38,9 @@ const reducer = (state=initialState, action) => {
     // every time a set group is set or created, initialize the required fields for
     // creating / updating an exercise set
     case constants.SET_CURRENT_SET_GROUP:{
-      console.log('SET CURRENT SET GROUP action.payload', action.payload)
-  
       return{
         ...state,
-        currentSetGroupSets: [...state.currentRoutineSets.filter(exSet => exSet.set_group  === action.payload._id)],
+        currentExerciseSets: [...state.currentRoutineSets.filter(exSet => exSet.set_group  === action.payload._id)],
         currentExerciseSet: {
           ...state.currentExerciseSet,
           routine: action.payload.routine,
@@ -68,10 +66,30 @@ const reducer = (state=initialState, action) => {
         ...state,
         currentExerciseSet: action.payload
       }
-    case constants.SET_CURRENT_SET_GROUP_SETS:
+      case constants.ADD_TO_CURRENT_EXERCISE_SETS:
+        return{
+          ...state,
+          currentExerciseSets: [...state.currentExerciseSets, action.payload]
+        }
+      case constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_EXERCISE_ID:
+        return{
+          ...state,
+          currentExerciseSets: [...state.currentExerciseSets.filter(setGroup => setGroup.exercise._id ? setGroup.exercise._id !== action.payload : setGroup.exercise !== action.payload)]
+        }
+      case  constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_SET_ID:
+        return{
+          ...state,
+          currentExerciseSets: [...state.currentExerciseSets.filter(setGroup => setGroup._id !== action.payload)]
+        }
+      case constants.BULK_WRITE_CURRENT_EXERCISE_SETS:
+        return{
+          ...state,
+          currentExerciseSets: action.payload
+        }
+    case constants.SET_CURRENT_EXERCISE_SETS:
       return{
         ...state,
-        currentSetGroupSets: action.payload
+        currentExerciseSets: action.payload
       }
     case constants.WRITING_EXERCISE_SET:
       return{
@@ -89,7 +107,7 @@ const reducer = (state=initialState, action) => {
     case constants.CLEAR_CURRENT_EXERCISE_SETS:
       return{
         ...state,
-        currentSetGroupSets: initialState.currentSetGroupSets
+        currentExerciseSets: initialState.currentExerciseSets
       }
 
     /* ASYNC   */
@@ -102,7 +120,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingExerciseSet: false,
-        currentSetGroupSets: action.payload,
+        currentExerciseSets: action.payload,
         currentRoutineSets: [...state.currentRoutineSets, ...action.payload]
       }
     case constants.CREATE_EXERCISE_SETS_FAIL:
@@ -121,8 +139,8 @@ const reducer = (state=initialState, action) => {
         ...state,
         crudingExerciseSet: false,
         currentExerciseSet: action.payload,
-        currentSetGroupSets: [
-          ...state.currentSetGroupSets.map(exSet => exSet._id === action.payload._id ? action.payload._id : exSet)
+        currentExerciseSets: [
+          ...state.currentExerciseSets.map(exSet => exSet._id === action.payload._id ? action.payload._id : exSet)
         ]
       }
     case constants.UPDATE_EXERCISE_SET_FAIL:
@@ -153,7 +171,7 @@ const reducer = (state=initialState, action) => {
     case constants.DELETE_ROUTINE_SUCCESS:
       return{
         ...state,
-        currentSetGroupSets: initialState.currentSetGroupSets,
+        currentExerciseSets: initialState.currentExerciseSets,
         currentRoutineSets: initialState.currentRoutineSets
       }
     case constants.DELETE_WEEK_SUCCESS:
@@ -163,8 +181,8 @@ const reducer = (state=initialState, action) => {
         currentRoutineSets: [
           ...state.currentRoutineSets.filter(exSet => exSet.week !== weekId)
         ],
-        currentSetGroupSets: [
-          ...state.currentSetGroupSets.filter(exSet => exSet.week !== weekId)
+        currentExerciseSets: [
+          ...state.currentExerciseSets.filter(exSet => exSet.week !== weekId)
         ]
       }
     case constants.DELETE_SET_GROUP_SUCCESS:
@@ -174,7 +192,7 @@ const reducer = (state=initialState, action) => {
         currentRoutineSets: [
           ...state.currentRoutineSets.filter(exSet => exSet.set_group !== setGroupId)
         ],
-        currentSetGroupSets: initialState.currentSetGroupSets
+        currentExerciseSets: initialState.currentExerciseSets
       }
 
 

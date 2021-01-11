@@ -1,30 +1,30 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {removeChosenExercise, bulkWriteChosenExercises, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {removeFromCurrentExerciseSetsByExerciseID, bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import BankCardDropZone from './BankCardDropZone'
 import {DragDropContext} from 'react-beautiful-dnd'
 import {onBankCardDragEnd} from './onBankCardDragEng'
 
 export const ChosenExercisesBankDND = ({
-  chosenExercises,
-  bulkWriteChosenExercises
+  currentExerciseSets,
+  bulkWriteCurrentExerciseSets
 }) => {
   
 
   return (
     <DragDropContext
-    onDragEnd={result => onBankCardDragEnd(result, bulkWriteChosenExercises, chosenExercises)}>
+    onDragEnd={result => onBankCardDragEnd(result, bulkWriteCurrentExerciseSets, currentExerciseSets)}>
       <BankCardDropZone />   
     </DragDropContext>
   )
 }
 
 const mapStateToProps = (state) => ({
-  chosenExercises: state.setGroupReducer.chosenExercises
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets
 })
 
 const mapDispatchToProps = {
-  bulkWriteChosenExercises
+  bulkWriteCurrentExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChosenExercisesBankDND)
@@ -36,23 +36,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(ChosenExercisesBankD
 
 Old CODE: 
 
-{chosenExercises.length > 0  && 
-          <BankCardDropZone chosenExercises={chosenExercises} />
+{currentExerciseSets.length > 0  && 
+          <BankCardDropZone currentExerciseSets={currentExerciseSets} />
           }
 
- {chosenExercises.length > 0 && max === 1 &&
+ {currentExerciseSets.length > 0 && max === 1 &&
           <ul>
-            {chosenExercises.map((exercise, index)=> 
+            {currentExerciseSets.map((exercise, index)=> 
             <li key={`chosen-exercise-bank-${exercise._id}-${index}`}>
               {exercise.name}&nbsp;
               <OverlayTrigger overlay={<ToolTip>Remove {exercise.name}</ToolTip>}>
-                <FiMinusSquare className='remove-icon' onClick={() => removeChosenExercise(exercise._id)} />
+                <FiMinusSquare className='remove-icon' onClick={() => removeFromCurrentExerciseSetsByExerciseID(exercise._id)} />
               </OverlayTrigger>
             </li>)}
           </ul>}
-          {chosenExercises.length > 0 && min > 1 &&
+          {currentExerciseSets.length > 0 && min > 1 &&
           <ul>
-            {chosenExercises.map((exercise, index)=> 
+            {currentExerciseSets.map((exercise, index)=> 
             <li key={`chosen-exercise-bank-${exercise._id}-${index}`}>
               <BankCard exercise={exercise} index={index} />
             </li>)}

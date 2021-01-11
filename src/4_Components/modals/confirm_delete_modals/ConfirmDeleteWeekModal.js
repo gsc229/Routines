@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroyWeek} from '../../1_Actions/weekActions'
+import {destroyWeek} from '../../../1_Actions/weekActions'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
@@ -66,6 +66,7 @@ export const ConfirmDeleteWeekModal = ({
       }
       {deleteFailed && 
         <Modal
+        className='delete-week-modal-fail'
         show={deleteFailed}
         onHide={() => setDeleteFailed(false)}
         size='lg'
