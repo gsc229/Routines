@@ -9,7 +9,7 @@ import CreateSetGroupBtn from '../2_preview_set_group/CreateSetGroupBtn'
 
 export const StepNavs = ({
   currentStep,
-  chosenExercises,
+  currentExerciseSets,
   currentSetGroup,
   createSetGroupData,
   showNextBtn=true,
@@ -74,7 +74,7 @@ export const StepNavs = ({
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           <ConnectedNextStepButton
           disabled={
-          !nextStep[currentStep].allowFunction(set_group_type, createSetGroupData, chosenExercises)}
+          !nextStep[currentStep].allowFunction(set_group_type, createSetGroupData, currentExerciseSets)}
           variant='success'
           writeDataKey='currentStep'
           writeDataValue={nextStep[currentStep].step}
@@ -88,7 +88,7 @@ export const StepNavs = ({
 
 const mapStateToProps = (state) => ({
   currentStep: state.setGroupReducer.createSetGroupData.currentStep,
-  chosenExercises: state.setGroupReducer.chosenExercises,
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
   createSetGroupData: state.setGroupReducer.createSetGroupData
 })

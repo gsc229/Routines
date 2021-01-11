@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import {writingCreateSetGroupData, clearChosenExercises, clearCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {writingCreateSetGroupData, clearCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {clearCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
 
 const SetTypeExplanation = ({
   type,
   writingCreateSetGroupData,
   clearCreateSetGroupData,
-  clearChosenExercises,
+  clearCurrentExerciseSets,
   currentStep
 }) => {
 
@@ -30,7 +31,7 @@ const SetTypeExplanation = ({
   }
 
   const handleTypeClick = () => {
-    clearChosenExercises()
+    clearCurrentExerciseSets()
     clearCreateSetGroupData()
     writingCreateSetGroupData('currentStep', 'choose-exercise')
   }
@@ -58,7 +59,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   writingCreateSetGroupData,
-  clearChosenExercises,
+  clearCurrentExerciseSets,
   clearCreateSetGroupData
 }
 

@@ -2,11 +2,14 @@ import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
 import BankCard from './BankCard'
 
-const BankCardDraggable = ({exercise, index}) => {
+const BankCardDraggable = ({
+  exerciseSet, 
+  index
+}) => {
   return (
     <Draggable
-    key={`${exercise._id}-${index}-draggable`}
-    draggableId={`${exercise._id}-${index}-draggable`}
+    key={`${exerciseSet._id}-${index}-draggable`}
+    draggableId={`${exerciseSet._id}-${index}-draggable`}
     index={index}>
     {(provided, snapshot) => {
       return(
@@ -17,7 +20,7 @@ const BankCardDraggable = ({exercise, index}) => {
         ref={provided.innerRef}>
          <BankCard 
          snapshot={snapshot}
-         exercise={exercise} 
+         exerciseSet={exerciseSet} 
          index={index} />
          {provided.placeholder}
         </div>

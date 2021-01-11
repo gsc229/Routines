@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
 import {fetchFlattenedRoutine} from '../../../1_Actions/routineActions'
 import {createNewSetGroup, fullResetCreateSetGroup} from '../../../1_Actions/setGroupActions'
-import {createNewExerciseSets, setCurrentSetGroupSets} from '../../../1_Actions/exerciseSetActions'
+import {createNewExerciseSets, setCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
 import {GiBiceps} from 'react-icons/gi'
 
@@ -12,7 +12,7 @@ export const CreateSetGroupBtn = ({
   fetchFlattenedRoutine,
   currentRoutine,
   currentSetGroup,
-  currentSetGroupSets,
+  currentExerciseSets,
   createNewSetGroup,
   createNewExerciseSets,
   fullResetCreateSetGroup,
@@ -29,7 +29,7 @@ export const CreateSetGroupBtn = ({
 
     if(newSetGroupResponse.success){
 
-      const setsWithSetGroupAndExerciseIds = currentSetGroupSets.map(set=>{
+      const setsWithSetGroupAndExerciseIds = currentExerciseSets.map(set=>{
         return{
           ...set,
           exercise: set.exercise._id,
@@ -65,7 +65,7 @@ export const CreateSetGroupBtn = ({
 const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  currentSetGroupSets: state.exerciseSetReducer.currentSetGroupSets,
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
   createSetGroupData: state.setGroupReducer.createSetGroupData,
   currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
   set_group_error_message: state.setGroupReducer.error_message,
@@ -74,7 +74,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchFlattenedRoutine,
-  setCurrentSetGroupSets,
+  setCurrentExerciseSets,
   createNewSetGroup,
   createNewExerciseSets,
   clearErrorMessage,

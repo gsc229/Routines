@@ -1,4 +1,4 @@
-export const createSetGroupLocal = (chosenExercises, currentSetGroup, setGroupData, exerciseSetTemplate) => {
+export const createSetGroupLocal = (currentExerciseSets, currentSetGroup, setGroupData, exerciseSetTemplate) => {
   
   const exerciseSets = []
   
@@ -50,7 +50,7 @@ export const createSetGroupLocal = (chosenExercises, currentSetGroup, setGroupDa
   let previousRestTime = rest_time && JSON.parse(rest_time)
  
   if(!is_compound){
-    chosenExercises.map(exercise => {
+    currentExerciseSets.map(exercise => {
     for(let i = 0; i < total_sets; i ++){
       let newSet = {...exerciseSetTemplate}
       newSet.set_group = currentSetGroup._id
@@ -91,7 +91,7 @@ export const createSetGroupLocal = (chosenExercises, currentSetGroup, setGroupDa
   })
 
   if(is_compound){
-    chosenExercises.map(exercise => {
+    currentExerciseSets.map(exercise => {
       let newSet = {...exerciseSetTemplate}
       newSet.set_group = currentSetGroup._id
       newSet.user = currentSetGroup.user
@@ -109,7 +109,7 @@ export const createSetGroupLocal = (chosenExercises, currentSetGroup, setGroupDa
 
 }
   
-  console.log({chosenExercises, currentSetGroup, setGroupData, exerciseSetTemplate})
+  console.log({currentExerciseSets, currentSetGroup, setGroupData, exerciseSetTemplate})
   console.log({exerciseSets})
   return exerciseSets
 }

@@ -9,7 +9,7 @@ import ChosenExercisesBankDND from './ChosenExercisesBankDND'
 export const SetGroupSearchExercise = ({
   exerciseSearchResults,
   crudingExercise,
-  chosenExercises,
+  currentExerciseSets,
   currentSetGroup
 }) => {
 
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => ({
   exerciseSearchResults: state.exerciseReducer.exerciseSearchResults,
   crudingExercise: state.exerciseReducer.crudingExercise,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  chosenExercises: state.setGroupReducer.chosenExercises
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets
 })
 
 const mapDispatchToProps = {

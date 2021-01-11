@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {canMoveToForm, minAndMaxAllowedExercises, getSetComboType} from '../createSetGroupHelpers'
-import {removeChosenExercise, bulkWriteChosenExercises, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {removeFromCurrentExerciseSetsByExerciseID, bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import {Droppable} from 'react-beautiful-dnd'
 import BankCardDraggable from './BankCardDraggable'
 import Container from 'react-bootstrap/Container'
@@ -11,10 +12,10 @@ import { BiMask } from 'react-icons/bi'
 
 
 const BankCardDropZone = ({
-  chosenExercises,
+  currentExerciseSets,
   currentSetGroup,
-  removeChosenExercise,
-  bulkWriteChosenExercises,
+  removeFromCurrentExerciseSetsByExerciseID,
+  bulkWriteCurrentExerciseSets,
   writingCreateSetGroupData,
   createSetGroupData
 }) => {
@@ -35,8 +36,6 @@ const BankCardDropZone = ({
 
   }
 
-  
-
   return (
     <Droppable
     direction='horizontal'
@@ -48,7 +47,7 @@ const BankCardDropZone = ({
         className={`chosen-exercises-bank ${snapshopt.isDraggingOver && 'exercise-bank-dragover'}`}>
           <div className='chosen-exerciese-bank-header'>
             <h4>Chosen Exercises:</h4>
-            {canMoveToForm(set_group_type, createSetGroupData, chosenExercises) && 
+            {canMoveToForm(set_group_type, createSetGroupData, currentExerciseSets) && 
             <p 
             onClick={() => writingCreateSetGroupData('currentStep', 'enter-info')}>
               Enter {set_group_type} Set Info <FaRegHandPointRight />
@@ -60,33 +59,33 @@ const BankCardDropZone = ({
           ref={provided.innerRef}
           id='bank-body'
           className='bank-body'>
-            {!chosenExercises.length && 
+            {!currentExerciseSets.length && 
               minMaxMessage()
             }
-            {chosenExercises.map((exercise, index) => {
-              return (<BankCardDraggable  exercise={exercise} index={index}  />)
+            {currentExerciseSets.map((exerciseSet, index) => {
+              return (<BankCardDraggable key={`${exerciseSet._id}-${index}`} exerciseSet={exerciseSet} index={index}  />)
             })}
           {provided.placeholder}
           </Row>
 
       </Container>
       
-    )}}
+      )}}
       
     </Droppable>
   )
 }
 
 const mapStateToProps = (state) => ({
-  chosenExercises: state.setGroupReducer.chosenExercises,
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
   createSetGroupData: state.setGroupReducer.createSetGroupData
 })
 
 const mapDispatchToProps = {
-  removeChosenExercise,
+  removeFromCurrentExerciseSetsByExerciseID,
   writingCreateSetGroupData,
-  bulkWriteChosenExercises
+  bulkWriteCurrentExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BankCardDropZone)

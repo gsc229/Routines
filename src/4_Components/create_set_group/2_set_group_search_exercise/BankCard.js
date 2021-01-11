@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {bulkWriteChosenExercises} from '../../../1_Actions/setGroupActions'
+import {bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
@@ -10,24 +10,26 @@ import {BiTargetLock} from 'react-icons/bi'
 import EditSetModal from '../../modals/edit_set_modal/EditSetModal'
 
 export const BankCard = ({
-  exercise,
+  exerciseSet,
   index,
-  chosenExercises, 
-  bulkWriteChosenExercises
+  currentExerciseSets, 
+  bulkWriteCurrentExerciseSets
 }) => {
 
   const [modalShow, setModalShow] = useState(false)
 
+  const {exercise} = exerciseSet
+
   const handleRemoveOne = () => {
-    const copy = [...chosenExercises]
+    const copy = [...currentExerciseSets]
     copy.splice(index, 1)
-    bulkWriteChosenExercises(copy)
+    bulkWriteCurrentExerciseSets(copy)
   }
 
   const handleCopy = () => {
-    const copy = [...chosenExercises]
-    copy.splice(index, 0, exercise)
-    bulkWriteChosenExercises(copy)
+    const copy = [...currentExerciseSets]
+    copy.splice(index, 0, exerciseSet)
+    bulkWriteCurrentExerciseSets(copy)
   }
 
   const handleSetTargets = () => {
@@ -73,11 +75,11 @@ export const BankCard = ({
 }
 
 const mapStateToProps = (state) => ({
-  chosenExercises: state.setGroupReducer.chosenExercises  
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets  
 })
 
 const mapDispatchToProps = {
-  bulkWriteChosenExercises
+  bulkWriteCurrentExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BankCard)

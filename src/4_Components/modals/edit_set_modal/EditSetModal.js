@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import {bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import Modal from 'react-bootstrap/Modal'
 
 export const EditSetModal = ({
@@ -29,11 +30,11 @@ export const EditSetModal = ({
 }
 
 const mapStateToProps = (state) => ({
-  chosenExercises: state.setGroupReducer.chosenExercises  
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets  
 })
 
 const mapDispatchToProps = {
-  bulkWriteChosenExercises
+  bulkWriteCurrentExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditSetModal)

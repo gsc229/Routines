@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import {addChosenExercise, removeChosenExercise, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {addToCurrentExerciseSets, removeFromCurrentExerciseSetsByExerciseID} from '../../../1_Actions/exerciseSetActions'
 import {
   canAddThisExercise, 
   canMoveToForm, 
@@ -15,11 +16,12 @@ import RemoveAllModal from '../../modals/remove_modals/RemoveAllModal'
 
 
 export const AddRemoveBtnConfigs = ({
-  chosenExercises,
+  currentExerciseSet,
+  currentExerciseSets,
   currentSetGroup,
   exercise,
-  addChosenExercise, 
-  removeChosenExercise,
+  addToCurrentExerciseSets, 
+  removeFromCurrentExerciseSetsByExerciseID,
   showNextStepBtn,
   showNextStepBtnOnCardBtn,
   showRemoveExerciseBtn,
@@ -32,20 +34,29 @@ export const AddRemoveBtnConfigs = ({
 
  
 
-  const {set_group_type} = currentSetGroup
+  const {set_group_type, routine, week, user} = currentSetGroup
 
   const compoud_set_groups = ["Super", "Super - Antagonist", "Super - Compound", "Super - Tri", "Super - Giant", "Circuit"]
 
-  const exIsChosen = chosenExercises.find(ex => ex._id === exercise._id) 
+  const exIsChosen = currentExerciseSets.find(ex => ex._id === exercise._id) 
 
   const addToText = exIsChosen ? 'Add Another' : `Use in ${set_group_type} Set`
 
   const handleRemoveAllClick = () => {
-    removeChosenExercise(exercise._id)
+    removeFromCurrentExerciseSetsByExerciseID(exercise._id)
   }
 
   const handleAddClick = () => {
-    addChosenExercise(exercise)
+    const newExSet = {
+      ...currentExerciseSet,
+      routine,
+      week,
+      user,
+      exercise
+
+    }
+
+    addToCurrentExerciseSets(newExSet)
   }
 
   
@@ -63,7 +74,7 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const removeAllButton = () => {
-    return canRemoveThisExercise(exercise, chosenExercises) && 
+    return canRemoveThisExercise(exercise, currentExerciseSets) && 
     <div className='card-link-container'>
       <Badge
       pill
@@ -76,7 +87,7 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const addButton = () => {
-    return canAddThisExercise(exercise, set_group_type, chosenExercises) && 
+    return canAddThisExercise(exercise, set_group_type, currentExerciseSets) && 
     <div className='card-link-container'>
       <Badge
       pill
@@ -89,7 +100,7 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const nextStepBtn = () => {
-    return canMoveToForm(set_group_type, chosenExercises) &&
+    return canMoveToForm(set_group_type, currentExerciseSets) &&
     <div className='card-link-container'>
       <ConnectedNextStepButton 
       variant='success'
@@ -101,7 +112,7 @@ export const AddRemoveBtnConfigs = ({
   } 
 
   const nextStepOnCardBtn = () => {
-    return canMoveToFormFromAnExerciseCard(exercise, set_group_type, chosenExercises)  &&
+    return canMoveToFormFromAnExerciseCard(exercise, set_group_type, currentExerciseSets)  &&
     <div className='card-link-container'>
         <ConnectedNextStepBadge
         pill={true} 
@@ -125,14 +136,15 @@ export const AddRemoveBtnConfigs = ({
 }
 
 const mapStateToProps = (state) => ({
-  chosenExercises: state.setGroupReducer.chosenExercises,
+  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
   createSetGroupData: state.setGroupReducer.createSetGroupData,
   currentSetGroup: state.setGroupReducer.currentSetGroup
 })
 
 const mapDispatchToProps = {
-  addChosenExercise,
-  removeChosenExercise,
+  addToCurrentExerciseSets,
+  removeFromCurrentExerciseSetsByExerciseID,
   writingCreateSetGroupData
 }
 

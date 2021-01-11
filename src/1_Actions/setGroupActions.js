@@ -22,13 +22,10 @@ export const clearCurrentSetGroup = () =>  dispatch => {
   dispatch({type: constants.CLEAR_CURRENT_SET_GROUP})
 }
 
-export const clearChosenExercises = () => dispatch => {
-  dispatch({type: constants.CLEAR_CHOSEN_EXERCISES})
-}
 
 export const fullResetCreateSetGroup = () => dispatch => {
   dispatch({type: constants.CLEAR_CREATE_SET_GROUP_DATA})
-  dispatch({type: constants.CLEAR_CHOSEN_EXERCISES})
+  dispatch({type: constants.CLEAR_CURRENT_EXERCISE_SETS})
   dispatch({type: constants.CLEAR_CURRENT_SET_GROUP})
   dispatch({type: constants.CLEAR_CURRENT_EXERCISE_SETS})
   dispatch({type: constants.CLEAR_EXERCISE_SEARCH_RESULTS})
@@ -38,18 +35,6 @@ export const fullResetCreateSetGroup = () => dispatch => {
 
 export const lockInType = (setGroupType) => dispatch => {
   dispatch({type: constants.LOCK_IN_TYPE, payload: setGroupType})
-}
-
-export const addChosenExercise = (exercise) => dispatch => {
-  dispatch({type: constants.ADD_TO_CHOSEN_EXERCISES, payload: exercise})
-}
-
-export const removeChosenExercise = (exerciseId) => dispatch => {
- dispatch({type: constants.REMOVE_FROM_CHOSEN_EXERCISES, payload: exerciseId})
-}
-
-export const bulkWriteChosenExercises = (exercisesArray) => dispatch => {
-  dispatch({type: constants.BULK_WRITE_CHOSEN_EXERCISES, payload: exercisesArray})
 }
 
 
