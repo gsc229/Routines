@@ -45,8 +45,8 @@ const ConnectedLabeledDynamicRow = ({
 }
 
 ConnectedLabeledDynamicRow.propTypes = {
-  incrementField: PropTypes.oneOf(["weight", "reps", "time", "distance", "rest_time"]).isRequired,
-  decrementField: PropTypes.oneOf(["weight", "reps", "time", "distance", "rest_time"]).isRequired,
+  incrementField: PropTypes.oneOf(["weight", "reps", "time", "distance", "rest_time", null]).isRequired,
+  decrementField: PropTypes.oneOf(["weight", "reps", "time", "distance", "rest_time", null]).isRequired,
   startingField: PropTypes.oneOf(['rep_max ', 'reps_per_set', 'starting_weight', 'starting_time', 'starting_distance', 'total_sets']).isRequired 
 }
 

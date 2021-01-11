@@ -101,29 +101,52 @@
   }
 
   .bank-card{
-    //border: 1px solid $honey-yellow;
     background-color: $bs-dark;
     width: 175px;
-    //margin: 5px auto;
     cursor: grab;
+    .name-and-index{
+      //border: 1px solid red;
+      font-size: 12px;
+      width: 100%;
+      text-align: center;
+    }
     .card-body{
       background-color: $bs-dark;
       display: flex;
+      flex-direction: column;
       align-items: center;
       position: relative;
 
-      .grabber,.copy-icon,.target-icon{
+      .target-icons-container{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        .no-targets-span{
+          font-size: 10px;
+          font-style: italic;
+        }
+        .icon{
+          margin: 0 2px;
+        }
+      }
+
+      .grabber-icon,.copy-icon,.target-icon, .create-subset-icon{
         color: $spanish-gray
 
       }
-      .remove-icon, .copy-icon, .target-icon{
+      .remove-icon, .copy-icon, .target-icon, .create-subset-icon{
         cursor: pointer;
       }
-      .grabber{
+      .grabber-icon{
         cursor: grab;;
         position: absolute;
         top: 0;
         left: 0;
+      }
+      .create-subset-icon{
+        position: absolute;
+        bottom: 0;
+        background-color: $spanish-gray;
       }
       .copy-icon{
         position: absolute;
@@ -134,6 +157,18 @@
         position: absolute;
         top: 0;
         right: 0;
+        circle{
+          color: $routine-red;
+        }
+        :nth-child(2){
+          color: white;
+        }
+        /* circle{
+          color: red;
+        } */
+        path{
+          color: $routine-red;
+        }
       }
       .remove-icon{
         color: $routine-red;
@@ -144,7 +179,6 @@
 
 
     .card-subtitle{
-      //border: 1px solid red;
       color: $honey-yellow;
       width: 100%;
       display: flex;
@@ -163,7 +197,6 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    //max-width: 95%;
     margin: auto;
     background-color: $spanish-gray;
     padding: 20px 0;
@@ -179,28 +212,3 @@
 
 }
 
-/* 
-old card bank
-
-ul{
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      li{
-        margin: 0 20px;
-        padding-left: 0;
-        color: $honey-yellow;
-        list-style: none;
-      }
-    }
-
-    ol{
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      li{
-        margin: 0 20px;
-        padding-left: 0;
-        color: $honey-yellow;
-      }
-    } */

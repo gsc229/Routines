@@ -8,8 +8,8 @@ const BankCardDraggable = ({
 }) => {
   return (
     <Draggable
-    key={`${exerciseSet._id}-${index}-draggable`}
-    draggableId={`${exerciseSet._id}-${index}-draggable`}
+    key={`${exerciseSet.exercise._id}-${index}-draggable`}
+    draggableId={`${exerciseSet.exercise._id}-${index}-draggable`}
     index={index}>
     {(provided, snapshot) => {
       return(
