@@ -1,5 +1,18 @@
 export const onBankCardDragEnd = (result, bulkWriteCurrentExerciseSets, currentExerciseSets) => {
 
+  // each result has a destination index as well a draggable id which is also an exercise _id
+  // get the exerciseId by..   draggableId.split("-")[0]
+  // find all the exercises witht the same draggable/exercise id and put them into an array
+  // if there's only one no problem, move on
+  // if more than one first sort the array by the order, look at the destination index of the moved set 
+  //    keeping in mid that the array will also have an order which is the same as the source index... that's the same set object.
+  // if the destination index is lower than any of the other set order's on the set object then no problem, move on 
+  // if the destination index is higher than any of the other sets swap the orders 
+  // ex 1. destination index is 5 the other orders are  2, 3, 4 and 6
+  //    --> switch out 5's object for 4's object
+  // determine the REAL destination index and the REAL source index. 
+  
+
   const {destination, source} = result
 
   if(destination.index === source.index) return

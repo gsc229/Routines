@@ -15,6 +15,7 @@ const ConnectedDynamicFieldInput = ({
   createSetGroupData,
   writingCreateSetGroupData,
   appendText,
+  inputSize,
   startingField // rep_max reps_per_set starting_weight starting_time starting_distance total_sets
 }) => {
   
@@ -34,12 +35,13 @@ const ConnectedDynamicFieldInput = ({
         <Form.Control
         placeholder={placeholder}
         className={`${required ? !createSetGroupData[startingField] ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-        onChange={(e) => writingCreateSetGroupData(e.target.name, e.target.value)} 
+        onChange={(e) => writingCreateSetGroupData(e.target.name, inputPirmitiveType === 'number' ? JSON.parse(e.target.value) : e.target.value )} 
         value={createSetGroupData[startingField]} 
         name={startingField} 
         type={inputPirmitiveType}
         max={max}
-        min={min}/>
+        min={min}
+        size={inputSize}/>
       {appendText && 
       <InputGroup.Append>
         <InputGroup.Text>{appendText}</InputGroup.Text>

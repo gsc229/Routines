@@ -1,3 +1,22 @@
+export const targetsList = ["target_weight", "target_time", "target_reps", "target_distance", "target_laps"]
+export const setGroupTypesList = [
+  "Drop",
+  "Stripping",
+  "Pyramid",
+  "Manual",
+  "Straight",
+  "Super",
+  "Super - Antagonist",
+  "Super - Compound", 
+  "Circuit", 
+  "Pre-Exhaustion",
+  "Rest - Pause", 
+  "Super - Tri",
+  "Super - Giant"
+]
+
+
+
 export const minAndMaxAllowedExercises = (setGroupType) => {
   switch(setGroupType){
 
@@ -120,7 +139,7 @@ export const canMoveToFormFromAnExerciseCard = (exercise, setGroupType, currentE
     case "Drop":
     case "Manual":
     case "Pyramid":
-      return currentExerciseSets.length > 0 && currentExerciseSets.some(ex => ex._id === exercise._id)
+      return currentExerciseSets.length > 0 && currentExerciseSets.some(exSet => exSet.exercise._id ? exSet.exercise._id === exercise._id : exSet.exercise === exercise._id)
     case "Super":
     case "Straight":
     case "Super - Antagonist":
@@ -129,11 +148,11 @@ export const canMoveToFormFromAnExerciseCard = (exercise, setGroupType, currentE
     case "Stripping":
     case "Pre-Exhaustion":
     case "Rest - Pause": 
-      return currentExerciseSets.length > 1 && currentExerciseSets.some(ex => ex._id === exercise._id)
+      return currentExerciseSets.length > 1 && currentExerciseSets.some(exSet => exSet.exercise._id ? exSet.exercise._id === exercise._id : exSet.exercise === exercise._id)
     case "Super - Tri":
-      return currentExerciseSets.length === 3 && currentExerciseSets.some(ex => ex._id === exercise._id)
+      return currentExerciseSets.length === 3 && currentExerciseSets.some(exSet => exSet.exercise._id ? exSet.exercise._id === exercise._id : exSet.exercise === exercise._id)
     case "Super - Giant":
-      return currentExerciseSets.length === 4 && currentExerciseSets.some(ex => ex._id === exercise._id)
+      return currentExerciseSets.length === 4 && currentExerciseSets.some(exSet => exSet.exercise._id ? exSet.exercise._id === exercise._id : exSet.exercise === exercise._id)
 
     default:
       return true
@@ -159,10 +178,10 @@ export const canAddThisExercise = (exercise, setGroupType, currentExerciseSets) 
       return currentExerciseSets.length < 50
 
     case "Super - Tri":
-      return currentExerciseSets.length < 3 && !currentExerciseSets.some(ex => ex._id === exercise._id)
+      return currentExerciseSets.length < 3 && !currentExerciseSets.some(exSet => exSet.exercise._id ? exSet.exercise._id === exercise._id : exSet.exercise === exercise._id)
 
     case "Super - Giant":
-      return currentExerciseSets.length < 4 && !currentExerciseSets.some(ex => ex._id === exercise._id)
+      return currentExerciseSets.length < 4 && !currentExerciseSets.some(exSet => exSet.exercise._id ? exSet.exercise._id === exercise._id : exSet.exercise === exercise._id)
 
     default:
       return true
@@ -171,7 +190,7 @@ export const canAddThisExercise = (exercise, setGroupType, currentExerciseSets) 
 }
 
 export const canRemoveThisExercise = (exercise, currentExerciseSets) => {
-  return currentExerciseSets.some(ex => ex._id === exercise._id)
+  return currentExerciseSets.some(exSet => exSet.exercise._id ? exSet.exercise._id === exercise._id : exSet.exercise === exercise._id)
 }
 
 export const getRemainingExercises = (setGroupType, currentExerciseSets) => {

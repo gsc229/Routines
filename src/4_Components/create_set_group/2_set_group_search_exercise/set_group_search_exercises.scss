@@ -20,20 +20,15 @@
   }
 
   .search-exercises-form{
-    //border: 1px solid red;
-    //width: 95%;
     margin: auto;
     margin-top: 10px;
     padding: 0;
     .row-muscle-group-and-category{
-      //border: 1px solid yellow;
-      //width: 95%;
       margin: auto;
       .col-muscle-group-and-category{
         //border: 1px solid blue;
         padding: 0;
         .form-checkbox-container{
-          //border: 1px solid red;
           width: fit-content;
           display: grid;
           grid-template-columns: auto auto;
@@ -52,9 +47,7 @@
   
   
   .chosen-exercises-bank{
-    //border: 1px solid yellow;
     color: white;
-    //max-width: 95%;
     margin-bottom: 20px;
     padding: 0;
     .chosen-exerciese-bank-header{
@@ -92,7 +85,7 @@
   }
 
   .bank-card-draggable{
-    border: 1px solid $honey-yellow;
+    //border: 1px solid $honey-yellow;
     border-radius: 4px;
     padding: 2px;
     margin:  5px;
@@ -100,30 +93,71 @@
     flex: 0 0 auto;
   }
 
+  
+
   .bank-card{
-    //border: 1px solid $honey-yellow;
     background-color: $bs-dark;
+    border: 2px solid $gold-fusion;
+    padding: 2px;
     width: 175px;
-    //margin: 5px auto;
+    min-height: 85px;
     cursor: grab;
+    .name-and-index{
+      //border: 1px solid red;
+      font-size: 12px;
+      width: 100%;
+      text-align: center;
+    }
     .card-body{
       background-color: $bs-dark;
       display: flex;
+      flex-direction: column;
       align-items: center;
       position: relative;
 
-      .grabber,.copy-icon,.target-icon{
+      .target-icons-container{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        .no-targets-span{
+          font-size: 10px;
+          font-style: italic;
+        }
+        .icon-and-number{
+          cursor: help;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          span{
+          font-size: 8px;
+          font-style: italic;
+          }
+          .icon{
+            margin: 0 2px;
+          }
+
+        }
+        
+      }
+
+      .grabber-icon,.copy-icon,.target-icon, .create-subset-icon{
         color: $spanish-gray
 
       }
-      .remove-icon, .copy-icon, .target-icon{
+      .remove-icon, .copy-icon, .target-icon, .create-subset-icon{
         cursor: pointer;
       }
-      .grabber{
+      .grabber-icon{
         cursor: grab;;
         position: absolute;
         top: 0;
         left: 0;
+      }
+      .create-subset-icon{
+        position: absolute;
+        bottom: 0;
+        background-color: $spanish-gray;
       }
       .copy-icon{
         position: absolute;
@@ -134,17 +168,49 @@
         position: absolute;
         top: 0;
         right: 0;
+        circle{
+          color: $persian-plum;
+          
+        }
+        :nth-child(2){
+          color: $spanish-gray;
+        }
+        /* circle{
+          color: red;
+        } */
+        path{
+          color: $persian-plum;
+        }
+        
+        &:hover{
+          circle{
+            color: $alive-red;
+            
+          }
+          :nth-child(2){
+            color: white;
+          }
+          /* circle{
+            color: red;
+          } */
+          path{
+            color: $alive-red;
+          }
+         
+        }
       }
       .remove-icon{
-        color: $routine-red;
+        color: $dead-red;
         position: absolute;
         bottom: 0;
         right: 0;
+        &:hover{
+          color: $alive-red;
+        }
       }
 
 
     .card-subtitle{
-      //border: 1px solid red;
       color: $honey-yellow;
       width: 100%;
       display: flex;
@@ -159,11 +225,34 @@
     
   }
 
+  .bank-card-dragging{
+    border: 1px solid $banana-mania;
+    .card-body{
+      .icon{
+        color: white;
+      }
+    }
+    #target-icon{
+      circle{
+        color: $alive-red;
+        
+      }
+      :nth-child(2){
+        color: white;
+      }
+      /* circle{
+        color: red;
+      } */
+      path{
+        color: $alive-red;
+      }
+    }
+  }
+
   .set-group-exercise-search-results{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    //max-width: 95%;
     margin: auto;
     background-color: $spanish-gray;
     padding: 20px 0;
@@ -179,28 +268,3 @@
 
 }
 
-/* 
-old card bank
-
-ul{
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      li{
-        margin: 0 20px;
-        padding-left: 0;
-        color: $honey-yellow;
-        list-style: none;
-      }
-    }
-
-    ol{
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      li{
-        margin: 0 20px;
-        padding-left: 0;
-        color: $honey-yellow;
-      }
-    } */

@@ -48,6 +48,14 @@
           svg{
             color: $russian-green;
           }
+          &:hover{
+            border: 1px solid $live-green;
+            color: $live-green;
+            svg{
+              color: $live-green;
+            }
+
+          }
         }
         .card-link{
           cursor: pointer;
@@ -60,13 +68,21 @@
       }
 
       .add-to-set-link{
-        border: 1px solid $honey-yellow;
-        color: $honey-yellow;
+        border: 1px solid $dead-yellow;
+        color: $dead-yellow;
+        &:hover{
+          border: 1px solid $corn;
+          color: $corn;
+        }
       }
 
       .remove-from-set-link{
         border: 1px solid $routine-red;
         color: $routine-red;
+        &:hover{
+          border: 1px solid red;
+          color: red
+        }
       }
     }
     

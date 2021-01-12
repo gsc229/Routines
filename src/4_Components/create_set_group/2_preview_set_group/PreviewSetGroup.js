@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import {createSetGroupLocal} from './previewSetGroupHelpers'
+import {createSetGroupLocal} from '../createSetGroupLocal'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
 import {setCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import ExerciseSetCard from '../../exercise_set/card_exercise_set/ExerciseSetCard'

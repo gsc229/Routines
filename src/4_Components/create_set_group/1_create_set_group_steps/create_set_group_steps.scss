@@ -12,6 +12,31 @@
     margin-bottom: 0;
   }
 
+  .set-group-type-tab-btns-container{
+    position: relative;
+    min-height: 20px;
+    .show-types-span{
+      z-index: 10;
+      position: absolute;
+      left: 90px;
+      top: 3px;
+      font-size: 12px;
+      text-decoration: underline;
+      font-style: italic;
+      color: $routine-red;
+      cursor: pointer;
+    }
+    .show-types-span-hide{
+      z-index: 10;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 12px;
+      text-decoration: underline;
+      font-style: italic;
+    }
+  }
+
   .set-group-type-tab-btns{
     border: 1px solid $spanish-gray;
     padding: 10px;
@@ -35,11 +60,14 @@
     //width: 95%;
     margin: auto;
     position: relative;
+    .type-title{
+      margin-bottom: 15px;
+    }
     span{
       z-index: 10;
       position: absolute;
       left: 0;
-      top: 31px;
+      top: 35px;
       font-size: 12px;
       text-decoration: underline;
       font-style: italic;

@@ -8,8 +8,8 @@ import {
   ConnectedRepsPerSetInput,
   ConnectedWeightInput, 
   ConnectedTotalSetsInput,
-} from './ConnectedInputsLabeled'
-import ConnectedLabeledDynamicRow from './ConnectedRowDynamicFieldInputDecIncLabeld'
+} from './ConnectedInputsLabeledForSetGroupAutoGen'
+import ConnectedLabeledDynamicRow from './ConnectedRowDynamicFieldInputDecIncLabeldForGetGroupAutoGen'
 import ConnectedIncrementLabeled from './ConnectedIncrementLabeled'
 import Container  from 'react-bootstrap/Container'
 

@@ -10,7 +10,9 @@ import DropDown from 'react-bootstrap/Dropdown'
 export const ConnectedDecrementLabeled = ({
   writingCreateSetGroupData,
   createSetGroupData,
+  inputSize,
   labelText,
+  showLabel=true,
   decrementField, // weight || reps || time || distance || rest_time
 }) => {
 
@@ -45,23 +47,25 @@ export const ConnectedDecrementLabeled = ({
 
   return (
     <Form.Group>
+      {showLabel &&
       <Form.Label>
         {labelText}
-      </Form.Label>
-      <InputGroup>
+      </Form.Label>}
+      <InputGroup size={inputSize}>
         <Form.Control
-        onChange={(e)=> setDecreaseMethod({...decreaseMethod, value: e.target.value})}
+        onChange={(e)=> setDecreaseMethod({...decreaseMethod, value: JSON.parse(e.target.value)})}
         defaultValue={10}
         value={decreaseMethod.value} 
         placeholder={`decrease ${decrementField}`}
         name={decreaseMethod.key} 
         max={99}
         min={0} 
-        type='number' />
+        type='number'
+        size={inputSize}/>
         {allowPercent && 
         <DropDownButton
           as={InputGroup.Append}
-          title={decreaseMethod.key === `percent_${decrementField}_decrease` ? "%" : "unit"}>
+          title={decreaseMethod.key === `percent_${decrementField}_decrease` ? "%" : "lbs/kgs"}>
           <DropDown.Item 
           onClick={() => setDecreaseMethod({...decreaseMethod, key: `${decrementField}_decrease`})}>
             lbs/kgs

@@ -1,0 +1,18 @@
+.set-targets-modal{
+  .modal-body-normal{
+
+  }
+  .modal-body-alert{
+    .continue-close-btns{
+      display: flex;
+      justify-content: flex-end;
+      .close-btn{
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .modal-inner{
+
+  }
+}

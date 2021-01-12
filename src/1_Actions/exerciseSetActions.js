@@ -3,8 +3,8 @@ import {getExerciseSets, updateExerciseSet, createMultipleExerciseSets} from '..
 
 const generalErrorMessage = "Something went wrong with your request"
 
-export const setCurrentExerciseSet = (set) => dispatch => {
-  dispatch({type: constants.SET_CURRENT_EXERCISE, payload: set})
+export const setCurrentExerciseSet = (exerciseSet) => dispatch => {
+  dispatch({type: constants.SET_CURRENT_EXERCISE_SET, payload: exerciseSet})
 }
 
 export const writingExerciseSet = (key, value) => dispatch => {
