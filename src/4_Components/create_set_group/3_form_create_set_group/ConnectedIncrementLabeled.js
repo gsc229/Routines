@@ -10,7 +10,9 @@ import DropDown from 'react-bootstrap/Dropdown'
 export const ConnectedIncrementLabeled = ({
   writingCreateSetGroupData,
   createSetGroupData,
+  inputSize,
   labelText,
+  showLabel=true,
   incrementField, // weight || reps || time || distance || rest_time
 }) => {
 
@@ -20,6 +22,7 @@ export const ConnectedIncrementLabeled = ({
   .split("_")
   .map(word => word.charAt(0).toUpperCase() + word.slice(1))
   .join(" ")
+
   if(!labelText) labelText = `Increase ${fieldCapitalized}`
   const allowPercent = !(incrementField === "reps" || incrementField === "rest_time ")
 
@@ -45,36 +48,45 @@ export const ConnectedIncrementLabeled = ({
 
   return (
     <Form.Group>
-      <Form.Label>
+
+      {showLabel && 
+       <Form.Label>
         {labelText}
-      </Form.Label>
-      <InputGroup>
+      </Form.Label>}
+
+      <InputGroup size={inputSize}>
+
           <Form.Control
-          onChange={(e)=> setIncreaseMethod({...increaseMethod, value: e.target.value})}
+          onChange={(e)=> setIncreaseMethod({...increaseMethod, value: JSON.parse(e.target.value)})}
           defaultValue={10}
           value={increaseMethod.value} 
           placeholder='10% default'
           name={increaseMethod.key} 
           max={99}
           min={1} 
-          type='number' />
+          type='number' 
+          size={inputSize}/>
+
           {allowPercent && 
           <DropDownButton
             as={InputGroup.Append}
-            title={increaseMethod.key === `percent_${incrementField}_increase` ? "%" : 'unit'}>
+            title={increaseMethod.key === `percent_${incrementField}_increase` ? "%" : 'lbs/kgs'}>
             <DropDown.Item 
             onClick={() => setIncreaseMethod({...increaseMethod, key: `${incrementField}_increase`})}>
-              unit
+              lbs/kgs
             </DropDown.Item>
             <DropDown.Item 
             onClick={() => setIncreaseMethod({...increaseMethod, key: `percent_${incrementField}_increase`})}>
               %
             </DropDown.Item>
           </DropDownButton>}
+
           <InputGroup.Append>
             <InputGroup.Text>each set</InputGroup.Text>
           </InputGroup.Append>
+
       </InputGroup>
+
     </Form.Group>
   )
 }

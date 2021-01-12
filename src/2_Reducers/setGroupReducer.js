@@ -32,7 +32,7 @@ const initialState = {
     is_compound: false,
     total_sets: "",
     rep_max: "",
-    reps_per_set: "",
+    starting_reps: "",
     starting_weight: "",
     starting_time: "",
     starting_distance: "",

@@ -7,9 +7,10 @@ import ToolTip from 'react-bootstrap/Tooltip'
 import {FiMinusSquare, FiCopy} from 'react-icons/fi'
 import {BsGrid3X3Gap} from 'react-icons/bs'
 import {FiTarget} from 'react-icons/fi'
-import {GrMultiple, GrObjectGroup} from 'react-icons/gr'
+import {GrObjectGroup} from 'react-icons/gr'
+import TargetIcons from './TargetIcons'
 import EditSetModal from '../../modals/edit_set_modal/SetTargetsModal'
-import {DistanceIcon, WeightIcon, HashIcon, TimeIcon, SwimLapsIcon, RepsIcon} from '../../icons/Icons'
+import SubGroupModal from '../../modals/edit_set_modal/SubGroupModal'
 
 export const BankCard = ({
   exerciseSet,
@@ -22,7 +23,7 @@ export const BankCard = ({
 
   const [modalShow, setModalShow] = useState(false)
 
-  const {exercise, target_reps, target_weight, target_time, target_distance, target_laps} = exerciseSet
+  const {exercise} = exerciseSet
 
   const handleRemoveOne = () => {
     const copy = [...currentExerciseSets]
@@ -39,63 +40,12 @@ export const BankCard = ({
 
   const handleSetTargetsClick = () => {
     setCurrentExerciseSet(exerciseSet)
-    setModalShow(true)
+    setModalShow("set-targets")
   }
 
-  const handleCreateSubsetClick = () => {
-    return
-  }
-
-
-  const iconsContianer = () => {
-    const noTargets = !target_reps && !target_weight && !target_time && !target_distance && !target_laps
-    
-    return(
-      <div className="target-icons-container">
-        {target_weight && 
-
-        <OverlayTrigger overlay={<ToolTip>Weight {target_weight}</ToolTip>}>
-          <div className='icon-and-number'>
-            <WeightIcon />
-            <span>{target_weight}</span>
-          </div>
-        </OverlayTrigger>
-        }
-
-        {target_time && 
-        <OverlayTrigger overlay={<ToolTip>Time</ToolTip>}>
-          <div className='icon-and-number'>
-            <TimeIcon /><span>{target_time}</span>
-          </div>
-        </OverlayTrigger>
-        }
-        {target_distance && 
-        <OverlayTrigger overlay={<ToolTip>Distance</ToolTip>}>
-          <div className='icon-and-number'>
-            <DistanceIcon /><span>{target_distance}</span>
-          </div>
-        </OverlayTrigger>
-        }
-        {target_reps && 
-        <OverlayTrigger overlay={<ToolTip>Reps</ToolTip>}>
-          <div className='icon-and-number'>
-            <RepsIcon /><span>{target_reps}</span>
-          </div>
-        </OverlayTrigger>}
-        {target_laps && 
-        <OverlayTrigger overlay={<ToolTip>Laps</ToolTip>}>
-          <div className='icon-and-number'>
-            <SwimLapsIcon /><span>{target_laps}</span>
-          </div>
-        </OverlayTrigger>
-        }
-        {noTargets && 
-        <span className='no-targets-span'>
-          No targets set
-        </span>
-        }
-      </div>
-    )
+  const handleCreateSubGroupClick = () => {
+    setCurrentExerciseSet(exerciseSet)
+    setModalShow("sub-group")
   }
 
 
@@ -103,11 +53,18 @@ export const BankCard = ({
     <Card
     className={`bank-card ${snapshot.isDragging && 'bank-card-dragging'}`}>
 
-      {modalShow && 
+      {modalShow === "set-targets" &&
       <EditSetModal
       index={index}
-      modalShow={modalShow} 
+      modalShow={modalShow==="set-targets"} 
       setModalShow={setModalShow} />}
+
+      {modalShow === "sub-group" &&
+      <SubGroupModal
+      index={index}
+      modalShow={modalShow==="sub-group"} 
+      setModalShow={setModalShow} />}
+
 
       <Card.Body>
         
@@ -115,7 +72,7 @@ export const BankCard = ({
 
       <OverlayTrigger overlay={<ToolTip>Make a subgroup from this exercise</ToolTip>}>
         <GrObjectGroup 
-        onClick={handleCreateSubsetClick} className='create-subset-icon icon' />
+        onClick={handleCreateSubGroupClick} className='create-subset-icon icon' />
       </OverlayTrigger>
 
       <OverlayTrigger overlay={<ToolTip>Copy {exercise.name}</ToolTip>}>
@@ -136,7 +93,9 @@ export const BankCard = ({
             {exercise.name.length > 15 ? exercise.name.substring(0, 15) + '...' : exercise.name}
           </div>
         </Card.Subtitle>
-        {iconsContianer()}
+
+        <TargetIcons exerciseSet={exerciseSet} />
+
       </Card.Body>
     </Card>
   )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import { writingSetGroup } from '../../../1_Actions/setGroupActions'
 import Tab from 'react-bootstrap/Tab'
@@ -12,11 +12,23 @@ export const SetGroupForm = ({
   currentStep
 }) => {
 
+  const [show, setShow] = useState(true)
   const {set_group_type} = currentSetGroup
 
   return (
     <div className='set-group-type-tab-btns-container'>
-      <h6>Quick Build: </h6>
+
+
+     
+      <span 
+      onClick={() => setShow(!show)}
+      className={`show-types-span ${!show && 'show-types-span-hide'}`}>
+        {show ? 'hide' : 'show types'}
+      </span>
+
+
+      {show && <h6 className='types-tabs-title'>Quick Build: </h6>}
+      {show && 
       <Nav
       className='set-group-type-tab-btns'
       variant="pills">
@@ -36,7 +48,7 @@ export const SetGroupForm = ({
           </Nav.Item>
           )}
         
-      </Nav> 
+      </Nav> }
     </div>
   )
 }

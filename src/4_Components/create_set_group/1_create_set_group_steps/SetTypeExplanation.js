@@ -30,7 +30,7 @@ const SetTypeExplanation = ({
     "Pre-Exhaustion": "As the name implies; in pre-exhaustion technique you exhaust the targeted muscle with isolate exercise first, and then you perform a compound exercises. Each progressive set incorporates additional muscles to aid the work of the muscle under focus. For example, do lying dumbbell fly (which is a chest isolate exercise) and then perform bench press (which works chest and triceps)."
   }
 
-  const handleTypeClick = () => {
+  const handleTypeChoiceClick = () => {
     clearCurrentExerciseSets()
     clearCreateSetGroupData()
     writingCreateSetGroupData('currentStep', 'choose-exercise')
@@ -42,13 +42,13 @@ const SetTypeExplanation = ({
         <span className={hide ? 'span-on-hide' : 'span-on-show'} onClick={() => setHide(!hide)}>{hide ? 'show description' : 'hide description'}</span>
 
         <div className={`title-and-content ${hide && 'hide'}`}>
-          <h2>{type} {type !== "Manual" && 'Set Group'}</h2>
+          <h2 className='type-title'>{type} {type !== "Manual" && 'Set Group'}</h2>
           {typeExplanation[type]}
         </div>
         {currentStep === "choose-type" &&
         <Button
         disabled={currentStep !== 'choose-type'}
-        onClick={handleTypeClick}
+        onClick={handleTypeChoiceClick}
         className='use-set-type-btn'>Use {type} Sets</Button>}
       </div>
   )
