@@ -40,6 +40,7 @@ const BankCardDropZone = ({
     key={'bank-card-drop-zone'}
     droppableId={'bank-card-drop-zone'}>
     {(provided, snapshopt) => {
+      
       return(
         <Container
         className={`chosen-exercises-bank ${snapshopt.isDraggingOver && 'exercise-bank-dragover'}`}>
@@ -62,7 +63,11 @@ const BankCardDropZone = ({
             }
             {currentExerciseSets.map((exerciseSet, index) => {
 
-              return (<BankCardDraggable key={`${exerciseSet._id}-${index}`} exerciseSet={exerciseSet} index={index}  />)
+              return (
+              <BankCardDraggable
+              key={`${exerciseSet._id}-${index}`} 
+              exerciseSet={exerciseSet} 
+              index={index}  />)
             })}
           {provided.placeholder}
           </Row>

@@ -1,17 +1,18 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
+import {bulkWriteCurrentExerciseSets, clearCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
 import Modal from 'react-bootstrap/Modal'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import TargetsSetter from '../../create_set_group/3_targets_and_subgroups/TargetsSetter'
 
-export const EditSetModal = ({
+export const SetTargetsModal = ({
   modalShow,
   setModalShow,
   currentExerciseSet,
   currentExerciseSets,
   bulkWriteCurrentExerciseSets,
+  clearCurrentExerciseSet,
   index
 }) => {
 
@@ -41,19 +42,20 @@ export const EditSetModal = ({
     )
   }
 
-  const handleFinishedEditing = () => {
+  const handleFinishedSettingTargets = () => {
     const setsCopy = [...currentExerciseSets]
     setsCopy.splice(index, 1, currentExerciseSet)
     bulkWriteCurrentExerciseSets(setsCopy)
     setModalShow(false)
+    clearCurrentExerciseSet()
   }
 
   return (
     <Modal
-    className='edit-set-modal'
+    className='set-targets-modal'
     show={modalShow}
     onHide={confirmClose}
-    size='lg'
+    size='sm'
     aria-labelledby={`set-${exercise._id}`}
     centered>
 
@@ -80,7 +82,7 @@ export const EditSetModal = ({
       <Modal.Footer>
         <Button
           className='done-setting-targets-btn'
-          onClick={handleFinishedEditing}>
+          onClick={handleFinishedSettingTargets}>
           Done
         </Button>
       </Modal.Footer>
@@ -96,7 +98,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  bulkWriteCurrentExerciseSets
+  bulkWriteCurrentExerciseSets,
+  clearCurrentExerciseSet
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditSetModal)
+export default connect(mapStateToProps, mapDispatchToProps)(SetTargetsModal)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {removeFromCurrentExerciseSetsByExerciseID, bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
+import {bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import BankCardDropZone from './BankCardDropZone'
 import {DragDropContext} from 'react-beautiful-dnd'
 import {onBankCardDragEnd} from './onBankCardDragEng'

@@ -8,7 +8,7 @@ import {FiMinusSquare, FiCopy} from 'react-icons/fi'
 import {BsGrid3X3Gap} from 'react-icons/bs'
 import {FiTarget} from 'react-icons/fi'
 import {GrMultiple, GrObjectGroup} from 'react-icons/gr'
-import EditSetModal from '../../modals/edit_set_modal/EditSetModal'
+import EditSetModal from '../../modals/edit_set_modal/SetTargetsModal'
 import {DistanceIcon, WeightIcon, HashIcon, TimeIcon, SwimLapsIcon, RepsIcon} from '../../icons/Icons'
 
 export const BankCard = ({
@@ -16,7 +16,8 @@ export const BankCard = ({
   index,
   currentExerciseSets, 
   bulkWriteCurrentExerciseSets,
-  setCurrentExerciseSet
+  setCurrentExerciseSet,
+  snapshot
 }) => {
 
   const [modalShow, setModalShow] = useState(false)
@@ -32,11 +33,11 @@ export const BankCard = ({
   const handleCopy = () => {
     const copy = [...currentExerciseSets]
     copy.splice(index, 0, exerciseSet)
+    currentExerciseSets.splice(index, 0, exerciseSet)
     bulkWriteCurrentExerciseSets(copy)
   }
 
   const handleSetTargetsClick = () => {
-    console.log({exerciseSet})
     setCurrentExerciseSet(exerciseSet)
     setModalShow(true)
   }
@@ -51,12 +52,48 @@ export const BankCard = ({
     
     return(
       <div className="target-icons-container">
-        {target_weight && <div className='icon-and-number'><WeightIcon /><span>{target_weight}</span></div>}
-        {target_time && <div className='icon-and-number'><TimeIcon /><span>{target_time}</span></div>}
-        {target_distance && <div className='icon-and-number'><DistanceIcon /><span>{target_distance}</span></div>}
-        {target_reps && <div className='icon-and-number'><RepsIcon /><span>{target_reps}</span></div>}
-        {target_laps && <div className='icon-and-number'><SwimLapsIcon /><span>{target_laps}</span></div>}
-        {noTargets && <span className='no-targets-span'>No targets set</span>}
+        {target_weight && 
+
+        <OverlayTrigger overlay={<ToolTip>Weight {target_weight}</ToolTip>}>
+          <div className='icon-and-number'>
+            <WeightIcon />
+            <span>{target_weight}</span>
+          </div>
+        </OverlayTrigger>
+        }
+
+        {target_time && 
+        <OverlayTrigger overlay={<ToolTip>Time</ToolTip>}>
+          <div className='icon-and-number'>
+            <TimeIcon /><span>{target_time}</span>
+          </div>
+        </OverlayTrigger>
+        }
+        {target_distance && 
+        <OverlayTrigger overlay={<ToolTip>Distance</ToolTip>}>
+          <div className='icon-and-number'>
+            <DistanceIcon /><span>{target_distance}</span>
+          </div>
+        </OverlayTrigger>
+        }
+        {target_reps && 
+        <OverlayTrigger overlay={<ToolTip>Reps</ToolTip>}>
+          <div className='icon-and-number'>
+            <RepsIcon /><span>{target_reps}</span>
+          </div>
+        </OverlayTrigger>}
+        {target_laps && 
+        <OverlayTrigger overlay={<ToolTip>Laps</ToolTip>}>
+          <div className='icon-and-number'>
+            <SwimLapsIcon /><span>{target_laps}</span>
+          </div>
+        </OverlayTrigger>
+        }
+        {noTargets && 
+        <span className='no-targets-span'>
+          No targets set
+        </span>
+        }
       </div>
     )
   }
@@ -64,7 +101,7 @@ export const BankCard = ({
 
   return (
     <Card
-    className='bank-card'>
+    className={`bank-card ${snapshot.isDragging && 'bank-card-dragging'}`}>
 
       {modalShow && 
       <EditSetModal
@@ -90,7 +127,7 @@ export const BankCard = ({
       </OverlayTrigger>
 
       <OverlayTrigger overlay={<ToolTip>Set {exercise.name} Targets</ToolTip>}>
-        <FiTarget onClick={handleSetTargetsClick} className='target-icon icon' />
+        <FiTarget onClick={handleSetTargetsClick} id='target-icon' className='target-icon icon' />
       </OverlayTrigger>
 
         <Card.Subtitle>

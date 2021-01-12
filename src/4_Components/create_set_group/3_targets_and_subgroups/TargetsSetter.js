@@ -14,8 +14,7 @@ export const TargetsBuilder = (props) => {
   return (
     <Tab.Container id="targets-setter" defaultActiveKey="target_weight">
       <Row>
-        <Col sm={1}>
-
+        <Col sm={2}>
           <Nav variant="pills" className="flex-column">
             <Nav.Item
             className='target-setter-tab-item'>
@@ -58,8 +57,6 @@ export const TargetsBuilder = (props) => {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-
-          
         </Col>
         <Col sm={9}>
           <Tab.Content>

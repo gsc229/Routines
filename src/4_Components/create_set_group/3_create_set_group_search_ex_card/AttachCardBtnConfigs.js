@@ -30,15 +30,13 @@ export const AddRemoveBtnConfigs = ({
   nextStepText
 }) => {
 
-  const [modalShow, setModalShow] = useState(false)
-
- 
+  const [modalShow, setModalShow] = useState(false) 
 
   const {set_group_type, routine, week, user} = currentSetGroup
 
   const compoud_set_groups = ["Super", "Super - Antagonist", "Super - Compound", "Super - Tri", "Super - Giant", "Circuit"]
 
-  const exIsChosen = currentExerciseSets.find(ex => ex._id === exercise._id) 
+  const exIsChosen = currentExerciseSets.find(exSet => exSet.exercise._id === exercise._id) 
 
   const addToText = exIsChosen ? 'Add Another' : `Use in ${set_group_type} Set`
 
