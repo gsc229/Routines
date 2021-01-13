@@ -22,18 +22,36 @@ export const ConnectedDecrementLabeled = ({
   .map(word => word.charAt(0).toUpperCase() + word.slice(1))
   .join(" ")
 
+  if(!createSetGroupData[`starting_${decrementField}`]){
+    createSetGroupData[`starting_${decrementField}`] = 0
+  }
+
   if(!labelText) labelText = `Decrease ${fieldCapitalized}`
   const allowPercent = !(decrementField === "reps" || decrementField === "rest_time ")
-  //const {rep_max, starting_weight, percent_weight_decrease, weight_decrease, total_sets} = createSetGroupData
-  const [decreaseMethod, setDecreaseMethod] = useState({key: `${decrementField}_decrease`, value: 10})
+  const {total_sets} = createSetGroupData
+  const maxDec = Math.floor(JSON.parse(createSetGroupData[`starting_${decrementField}`]) / JSON.parse(total_sets))
+  const defaultDecValue = Math.floor(maxDec/10)
+
+  const [decreaseMethod, setDecreaseMethod] = useState({key: `${decrementField}_decrease`, value: defaultDecValue})
+
+
+  const handleDecrement = (e) => {
+    if(!decreaseMethod.key.includes('percent')){
+      const decValue = JSON.parse(e.target.value)
+      const number = decValue <  maxDec ? decValue : maxDec
+      setDecreaseMethod({...decreaseMethod, value: number})
+    }else{
+      setDecreaseMethod({...decreaseMethod, value: e.target.value})
+    }
+  }
   
-  useEffect(() => {
+  /* useEffect(() => {
     writingCreateSetGroupData(`${decrementField}_decrease`, 10)
-  }, [])
+  }, []) */
 
   useEffect(()=>{
     if(!createSetGroupData[`percent_${decrementField}_decrease`] && !createSetGroupData[`${decrementField}_decrease`]){
-      writingCreateSetGroupData(`${decrementField}_decrease`, 10)
+      writingCreateSetGroupData(`${decrementField}_decrease`, Math.floor(maxDec/10))
     }
     if(decreaseMethod.key === `percent_${decrementField}_decrease`){
       writingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
@@ -47,21 +65,25 @@ export const ConnectedDecrementLabeled = ({
 
   return (
     <Form.Group>
-      {showLabel &&
+
       <Form.Label>
-        {labelText}
-      </Form.Label>}
+        {labelText} {!decreaseMethod.key.includes('percent') && <span>Max: {maxDec}</span>}
+      </Form.Label>
+
       <InputGroup size={inputSize}>
+
         <Form.Control
-        onChange={(e)=> setDecreaseMethod({...decreaseMethod, value: JSON.parse(e.target.value)})}
-        defaultValue={10}
+        onChange={handleDecrement}
         value={decreaseMethod.value} 
         placeholder={`decrease ${decrementField}`}
         name={decreaseMethod.key} 
         max={99}
         min={0} 
         type='number'
-        size={inputSize}/>
+        size={inputSize}
+        />
+
+        
         {allowPercent && 
         <DropDownButton
           as={InputGroup.Append}

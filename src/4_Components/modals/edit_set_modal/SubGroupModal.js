@@ -66,9 +66,8 @@ export const SubSetModal = ({
 
       <Modal.Header
       closeButton={!alertShow}>
-        Create Sub Group
-        Set Name: {currentExerciseSet.name || "No Name"}<br/>
-        Exercise Name: {exercise.name || "No Name"}
+        <h5>{currentExerciseSet.exercise.name || "No Name"} Sub Group</h5>
+        
       </Modal.Header>
 
       {alertShow && 
@@ -83,7 +82,7 @@ export const SubSetModal = ({
       {!alertShow && 
       <Modal.Body className='modal-body-normal'>
         
-      <SubGroupBuilder inputSize='sm' />
+        <SubGroupBuilder inputSize='sm' />
         
       </Modal.Body>}
       <Modal.Footer>

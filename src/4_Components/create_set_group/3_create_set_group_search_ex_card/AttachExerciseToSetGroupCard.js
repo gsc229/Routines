@@ -1,11 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {addToCurrentExerciseSets, removeFromCurrentExerciseSetsByExerciseID} from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
 import AddRemoveButtons from './AttachCardBtnConfigs'
-
 export const AttachExerciseToSetGroupCard = ({
   exercise,
   currentExerciseSets,
@@ -13,6 +12,8 @@ export const AttachExerciseToSetGroupCard = ({
   nextStepText
 }) => {
 
+  
+  const [showAddedAlert, setShowAddedAlert] = useState(false)
   const selected = currentExerciseSets.find(exSet => exSet.exercise._id === exercise._id)
   const count = currentExerciseSets.reduce((counter, exSet) => exSet.exercise._id === exercise._id ? counter += 1 : counter, 0)
   const indexes = []
@@ -24,15 +25,23 @@ export const AttachExerciseToSetGroupCard = ({
     text='white'
     className={`attach-exercise-to-set-card ${selected && 'selected-card'}`}>
       <Card.Header>
+
         <span className={`${exercise.muscle_group}-color`}>{exercise.name}</span>
         <span className='count'>
-           {indexes.length ? indexes.length > 1 ? "Sets:" : "Set:" : ''}&nbsp;
+          {indexes.length ? indexes.length > 1 ? "Sets:" : "Set:" : ''}&nbsp;
           {indexes.map((num, idx )=> `${num}${indexes.length > 1 && idx !== indexes.length - 1 ? "," : ""}`)}
         </span>
+        
       </Card.Header>
       <Card.Body>
+        <div 
+        className={`added-alert ${showAddedAlert ? 'show-added-alert' : 'hide-added-alert'}`} 
+        variant='success' s >
+          Added to set group!
+        </div>
 
         <AddRemoveButtons
+        setShowAddedAlert={setShowAddedAlert}
         showNextStepBtnOnCardBtn={true}
         showRemoveExerciseBtn={true}
         shwoAddExerciseBtn={true}

@@ -21,7 +21,7 @@ body{
 /* Let's get this party started */
 ::-webkit-scrollbar {
   width: 10px;
-  height: 6px;
+  height: 10px;
 }
 
 /* Track */
@@ -81,6 +81,7 @@ h1{
 @import './4_Components/modals/confirm_delete_modals/confirm_delete_modals.scss';
 @import './4_Components/modals/remove_modals/remove_all_modals.scss';
 @import './4_Components/modals/edit_set_modal/edit_set_modal.scss';
+@import './4_Components/modals/color_picker_modal/color_picker_modal.scss';
 
 // Calendar
 @import './4_Components/calendar/basic_calendar.scss';

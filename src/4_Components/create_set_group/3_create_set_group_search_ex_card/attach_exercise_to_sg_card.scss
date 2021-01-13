@@ -21,7 +21,10 @@
     display: flex;
     justify-content: space-between;
     .count{
+      margin-left: 20px;
       color: $honey-yellow;
+      display: flex;
+      overflow: auto;
     }
     span{
       font-weight: bolder;
@@ -31,6 +34,41 @@
     
   }
   .card-body{
+    position: relative;
+    #github-picker{
+      border: 1px solid lime;
+      background-color: red;
+    }
+    .hide-added-alert{
+      background-color: $kelly-green;
+      text-align: center;
+      font-size: 12px;
+      padding-right: 0.6em;
+      padding-left: 0.6em;
+      position: absolute;
+      left: 0;
+      top: -10px;
+      width: 100%;
+      opacity: 0;
+      visibility: 0;
+      -webkit-transition: visibility 2s, opacity 2s, background-color 2s;
+      transition: visibility 2s, opacity 2s, background-color 2s;
+    }
+    .show-added-alert{
+      background-color: $kelly-green;
+      text-align: center;
+      font-size: 12px;
+      padding-right: 0.6em;
+      padding-left: 0.6em;
+      position: absolute;
+      left: 0;
+      top: -10px;
+      width: 100%;
+      opacity: 1;
+      visibility: visible;
+      -webkit-transition: visibility .5s, opacity .5s, background-color .5s;
+      transition: visibility .5s, opacity .5s, background-color .5s;
+    }
     .add-remove-btn-config{
       .card-link-container{
         margin-bottom: 20px;

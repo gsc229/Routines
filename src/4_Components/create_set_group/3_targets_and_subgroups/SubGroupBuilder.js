@@ -15,6 +15,12 @@ export const SetGroupBuilder = ({
 
   const {total_sets} = createSetGroupData
 
+  const handleTotalSets = (e) => {
+    const number = e.target.value <= 100 ? JSON.parse(e.target.value) : 100
+    writingCreateSetGroupData('total_sets', number)
+  
+  }
+
   return (
     <Container className='sub-group-builder-container'>
       <Row className='sets-row'> 
@@ -22,7 +28,13 @@ export const SetGroupBuilder = ({
             <Form>
               <Form.Group>
                 <Form.Label>How many sets?</Form.Label>
-                <Form.Control onChange={(e) => writingCreateSetGroupData('total_sets', JSON.parse(e.target.value))} size={inputSize} type='number' min={1} max={100} />
+                <Form.Control
+                onChange={handleTotalSets} 
+                size={inputSize} 
+                type='number'
+                value={total_sets} 
+                min={1} 
+                max={100} />
               </Form.Group>
             </Form>
           </Col>

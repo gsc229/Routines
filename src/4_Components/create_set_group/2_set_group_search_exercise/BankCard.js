@@ -11,6 +11,9 @@ import {GrObjectGroup} from 'react-icons/gr'
 import TargetIcons from './TargetIcons'
 import EditSetModal from '../../modals/edit_set_modal/SetTargetsModal'
 import SubGroupModal from '../../modals/edit_set_modal/SubGroupModal'
+import ColorPickerModal from '../../modals/color_picker_modal/ColorPickerModal'
+import {BiPalette} from 'react-icons/bi'
+import {GithubPicker} from 'react-color'
 
 export const BankCard = ({
   exerciseSet,
@@ -22,8 +25,22 @@ export const BankCard = ({
 }) => {
 
   const [modalShow, setModalShow] = useState(false)
+  const [showPicker, setShowPicker] = useState(false)
 
   const {exercise} = exerciseSet
+
+  const exerciseColor = exercise.color
+
+  const handleColorPick = (color) => {
+    const currentExerciseSetsCopy = [...currentExerciseSets]
+    currentExerciseSetsCopy.forEach(set => {
+      if(set.exercise._id === exercise._id){
+        set.exercise.color = color.hex
+      }
+    })
+    bulkWriteCurrentExerciseSets(currentExerciseSetsCopy)
+    setShowPicker(false)
+  }
 
   const handleRemoveOne = () => {
     const copy = [...currentExerciseSets]
@@ -51,8 +68,18 @@ export const BankCard = ({
 
   return (
     <Card
+    style={{border: `2px solid ${exercise.color ? exerciseColor: '--gold-fusion'}`}}
     className={`bank-card ${snapshot.isDragging && 'bank-card-dragging'}`}>
+      
+      <BiPalette 
+      className='color-picker-icon'  
+      onClick={() => setShowPicker(true)}/>
 
+      <ColorPickerModal 
+      setShowPickerModal={setShowPicker}
+      handleColorPick={handleColorPick}
+      showPickerModal={showPicker}/>
+      
       {modalShow === "set-targets" &&
       <EditSetModal
       index={index}
@@ -67,7 +94,6 @@ export const BankCard = ({
 
 
       <Card.Body>
-        
       <BsGrid3X3Gap className='grabber-icon icon' />
 
       <OverlayTrigger overlay={<ToolTip>Make a subgroup from this exercise</ToolTip>}>

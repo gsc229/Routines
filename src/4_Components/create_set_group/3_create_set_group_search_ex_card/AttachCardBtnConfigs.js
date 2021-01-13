@@ -14,8 +14,8 @@ import {FiMinusSquare, FiPlus} from 'react-icons/fi'
 import RemoveAllModal from '../../modals/remove_modals/RemoveAllModal'
 
 
-
 export const AddRemoveBtnConfigs = ({
+  setShowAddedAlert,
   currentExerciseSet,
   currentExerciseSets,
   currentSetGroup,
@@ -44,17 +44,19 @@ export const AddRemoveBtnConfigs = ({
     removeFromCurrentExerciseSetsByExerciseID(exercise._id)
   }
 
-  const handleAddClick = () => {
+  const handleAddClick = async() => {
+    console.log(exercise)
     const newExSet = {
       ...currentExerciseSet,
       routine,
       week,
       user,
       exercise
-
     }
 
     addToCurrentExerciseSets(newExSet)
+    setShowAddedAlert(true)
+    setTimeout(() => {setShowAddedAlert(false)}, 1000)
   }
 
   
