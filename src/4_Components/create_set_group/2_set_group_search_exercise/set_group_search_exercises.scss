@@ -101,7 +101,34 @@
     padding: 2px;
     width: 175px;
     min-height: 85px;
+    position: relative;
     cursor: grab;
+    .color-picker-icon{
+      cursor: pointer;
+      position: absolute;
+      z-index: 10;
+      top: 30px;
+      left: 0;
+      color: $spanish-gray;
+      :nth-child(2){
+        color: red;
+      }
+      :nth-child(3){
+        color: rgb(0, 255, 0);
+      }
+      :nth-child(4){
+        color: rgb(255, 247, 0);
+      }
+      :nth-child(5){
+        color: rgb(0, 238, 255);
+      }
+    }
+    .github-picker{
+      position: absolute;
+      z-index: 12;
+      top: 20px;
+      cursor: pointer;
+    }
     .name-and-index{
       //border: 1px solid red;
       font-size: 12px;

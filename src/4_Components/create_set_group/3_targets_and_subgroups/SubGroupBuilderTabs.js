@@ -10,6 +10,7 @@ import {WeightIcon, TimeIcon, DistanceIcon, SwimLapsIcon, RepsIcon} from '../../
 export const SubGroupBuilderTabs = ({
   inputSize
 }) => {
+  
   return (
     <Tab.Container id="sub-group-builder" defaultActiveKey="starting_weight">
         
