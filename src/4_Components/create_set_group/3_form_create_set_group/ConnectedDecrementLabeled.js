@@ -36,11 +36,13 @@ export const ConnectedDecrementLabeled = ({
 
 
   const handleDecrement = (e) => {
-  
-    
-    const decValue = JSON.parse(e.target.value)
-    const number = decValue <  maxDec ? decValue : maxDec
-    setDecreaseMethod({...decreaseMethod, value: number})
+    if(!decreaseMethod.key.includes('percent')){
+      const decValue = JSON.parse(e.target.value)
+      const number = decValue <  maxDec ? decValue : maxDec
+      setDecreaseMethod({...decreaseMethod, value: number})
+    }else{
+      setDecreaseMethod({...decreaseMethod, value: e.target.value})
+    }
   }
   
   /* useEffect(() => {
@@ -65,20 +67,23 @@ export const ConnectedDecrementLabeled = ({
     <Form.Group>
 
       <Form.Label>
-        {labelText} Max: {maxDec}
+        {labelText} {!decreaseMethod.key.includes('percent') && <span>Max: {maxDec}</span>}
       </Form.Label>
 
       <InputGroup size={inputSize}>
+
         <Form.Control
         onChange={handleDecrement}
-        defaultValue={10}
         value={decreaseMethod.value} 
         placeholder={`decrease ${decrementField}`}
         name={decreaseMethod.key} 
         max={99}
         min={0} 
         type='number'
-        size={inputSize}/>
+        size={inputSize}
+        />
+
+        
         {allowPercent && 
         <DropDownButton
           as={InputGroup.Append}
