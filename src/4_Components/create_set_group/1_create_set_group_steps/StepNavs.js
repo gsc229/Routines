@@ -5,7 +5,7 @@ import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../3_form_cr
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import CreateSetGroupBtn from '../2_preview_set_group/CreateSetGroupBtn'
+import CreateSetGroupBtn from '../3_form_create_set_group/CreateSetGroupBtn'
 
 export const StepNavs = ({
   currentStep,
@@ -54,7 +54,9 @@ export const StepNavs = ({
 
   return (
     <Container className='create-set-group-navs-container'>
+
       <Row className='create-set-group-navs-row'>
+
         {showPrevBtn && 
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           {currentStep !== 'choose-type' && 
@@ -65,12 +67,12 @@ export const StepNavs = ({
           />}
         </Col>}
         
-        {currentStep === 'preview-set-group' &&
+        {currentStep === 'choose-exercise' &&
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           <CreateSetGroupBtn />
         </Col>}
 
-        {currentStep !== 'preview-set-group' && currentStep !== 'choose-type' && showNextBtn &&
+        {currentStep !== 'preview-set-group' && currentStep !== 'choose-type' && currentStep !== 'choose-exercise' && showNextBtn &&
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           <ConnectedNextStepButton
           disabled={
@@ -81,7 +83,9 @@ export const StepNavs = ({
           text={nextStep[currentStep].text}
           />
         </Col>}
+
       </Row>
+
     </Container>
   )
 }

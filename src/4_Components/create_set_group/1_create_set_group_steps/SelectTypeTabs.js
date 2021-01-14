@@ -1,8 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import { writingSetGroup } from '../../../1_Actions/setGroupActions'
-import Tab from 'react-bootstrap/Tab'
-import Tabs from 'react-bootstrap/Tabs'
 import Nav from 'react-bootstrap/Nav'
 
 export const SetGroupForm = ({

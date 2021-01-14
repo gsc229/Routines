@@ -2,7 +2,11 @@ import React from 'react'
 import {Draggable} from 'react-beautiful-dnd'
 import SetGroupScheduleCard from './SetGroupScheduleCard'
 
-export const DraggableSetGroup = ({set_group, index}) => {
+export const DraggableSetGroup = ({
+  weekNumber,
+  dayNumber,
+  set_group, 
+  index}) => {
   
   return (
     <Draggable
@@ -17,7 +21,9 @@ export const DraggableSetGroup = ({set_group, index}) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           >
-            <SetGroupScheduleCard 
+            <SetGroupScheduleCard
+            weekNumber={weekNumber}
+            dayNumber={dayNumber}
             set_group={set_group} 
             isDragging={snapshot.isDragging} />
             {provided.placeholder}

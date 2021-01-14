@@ -1,8 +1,16 @@
 .view-set-group-modal{
   .view-set-group-modal-header{
+    .heading-and-edit-link{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      position: relative;
     h5{
-      span{
-        color: $spanish-gray;
+      position: relative;
+      top: 5px;
+      }
+      .edit-link{
+        margin-left: 50px;
       }
     }
     

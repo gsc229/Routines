@@ -76,9 +76,11 @@ export const DroppableDay = ({
             >
               {routineSchedule[weekNumber][dayNumber].set_groups.map((set_group, index) => {
                 return (
-                <DraggableSetGroup 
+                <DraggableSetGroup
                   key={set_group._id}  
                   index={index}
+                  weekNumber={weekNumber}
+                  dayNumber={dayNumber}
                   set_group={set_group} />)
               })}
             {provided.placeholder}

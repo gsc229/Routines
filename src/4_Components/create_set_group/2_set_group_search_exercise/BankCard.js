@@ -13,7 +13,6 @@ import EditSetModal from '../../modals/edit_set_modal/SetTargetsModal'
 import SubGroupModal from '../../modals/edit_set_modal/SubGroupModal'
 import ColorPickerModal from '../../modals/color_picker_modal/ColorPickerModal'
 import {BiPalette} from 'react-icons/bi'
-import {GithubPicker} from 'react-color'
 
 export const BankCard = ({
   exerciseSet,
@@ -27,15 +26,15 @@ export const BankCard = ({
   const [modalShow, setModalShow] = useState(false)
   const [showPicker, setShowPicker] = useState(false)
 
-  const {exercise} = exerciseSet
+  const {exercise, color} = exerciseSet
 
-  const exerciseColor = exercise.color
+ 
 
   const handleColorPick = (color) => {
     const currentExerciseSetsCopy = [...currentExerciseSets]
     currentExerciseSetsCopy.forEach(set => {
       if(set.exercise._id === exercise._id){
-        set.exercise.color = color.hex
+        set.color = color.hex
       }
     })
     bulkWriteCurrentExerciseSets(currentExerciseSetsCopy)
@@ -68,7 +67,7 @@ export const BankCard = ({
 
   return (
     <Card
-    style={{border: `2px solid ${exercise.color ? exerciseColor: '--gold-fusion'}`}}
+    style={{border: `2px solid ${color ? color  : '--gold-fusion'}`}}
     className={`bank-card ${snapshot.isDragging && 'bank-card-dragging'}`}>
       
       <BiPalette 

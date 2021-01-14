@@ -2,23 +2,18 @@ import React from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
-import {fetchFlattenedRoutine} from '../../../1_Actions/routineActions'
 import {createNewSetGroup, fullResetCreateSetGroup} from '../../../1_Actions/setGroupActions'
 import {createNewExerciseSets, setCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
 import {GiBiceps} from 'react-icons/gi'
 
 export const CreateSetGroupBtn = ({
-  fetchFlattenedRoutine,
   currentRoutine,
   currentSetGroup,
   currentExerciseSets,
   createNewSetGroup,
   createNewExerciseSets,
-  fullResetCreateSetGroup,
-  set_group_error_message,
-  exercise_set_error_message,
-  clearErrorMessage
+  fullResetCreateSetGroup
 }) => {
 
 
@@ -50,10 +45,9 @@ export const CreateSetGroupBtn = ({
     }
   }
 
-
-
   return (
     <Button
+    disabled={currentExerciseSets.length < 1}
     variant='success'
     onClick={handleCreateSetGroup}>
       Create Set Group&nbsp;
@@ -73,7 +67,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  fetchFlattenedRoutine,
   setCurrentExerciseSets,
   createNewSetGroup,
   createNewExerciseSets,

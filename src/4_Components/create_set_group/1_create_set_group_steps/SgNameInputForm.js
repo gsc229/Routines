@@ -12,7 +12,7 @@ export const SgNameInputForm = ({
   currentExerciseSets
 }) => {
 
-  const [useExName, setUseExName] = useState(false)
+  const [useAutoGenName, setUseAutoGen] = useState(true)
 
   const setGroupType = currentSetGroup.set_group_type
   const firstThreeNames = []
@@ -23,24 +23,23 @@ export const SgNameInputForm = ({
   const secondSet = firstThreeNames[1] 
   const thirdSet = firstThreeNames[2] 
 
-  const autoNameString = `${setGroupType ? setGroupType + 'Set' : ''} ${firstSet ? ' - ' + firstSet : ''}${secondSet ? ', ' +  secondSet : ''}${thirdSet ? ', ' + thirdSet+ '...' : ''}`
+  const autoNameString = `${setGroupType ? setGroupType + ' Set' : ''} ${firstSet ? ' - ' + firstSet : ''}${secondSet ? ', ' +  secondSet : ''}${thirdSet ? ', ' + thirdSet+ '...' : ''}`
 
-  const autoName = firstSet && useExName ?  autoNameString : useExName ? 'Waiting for first exercise selection...' : ''
+  const autoName = firstSet && useAutoGenName ?  autoNameString : useAutoGenName ? 'Waiting for first exercise selection...' : ''
 
   useEffect(() => {
-
-    if(useExName){
+    if(useAutoGenName){
       writingSetGroup('name', autoNameString)
     }
-
     if(!currentSetGroup.name && currentExerciseSets.length){
       writingSetGroup('name', autoNameString)
     }
+  }, [currentExerciseSets, setGroupType])
 
-  }, [currentExerciseSets])
+
 
   const handlChooseAutoGen = () => {
-    setUseExName(!useExName)
+    setUseAutoGen(!useAutoGenName)
     writingSetGroup('name', autoNameString)
   }
 
@@ -52,7 +51,7 @@ export const SgNameInputForm = ({
         </Form.Label>
           <InputGroup>
           <Form.Control
-          disabled={useExName}
+          disabled={useAutoGenName}
           name='name'
           value={currentSetGroup.name ? currentSetGroup.name : autoName }
           onChange={(e)=> writingSetGroup(e.target.name, e.target.value)}
@@ -61,10 +60,10 @@ export const SgNameInputForm = ({
           <InputGroup.Append>
             <OverlayTrigger overlay={<Tooltip>Name will be the set group type and first three exercises</Tooltip>}>
             <InputGroup.Checkbox 
-            checked={useExName}
+            checked={useAutoGenName}
             onChange={handlChooseAutoGen} />
             </OverlayTrigger>
-            <InputGroup.Text >Auto Getnerate</InputGroup.Text>
+            <InputGroup.Text >Auto Getnerate Name</InputGroup.Text>
           </InputGroup.Append>
           </InputGroup>
       </Form.Group>
