@@ -1,6 +1,6 @@
-import React, {useState, useRef} from 'react'
+import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {bulkWriteCurrentExerciseSets, setCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
+import {destroyExerciseSet, localBulkWriteExerciseSets, setCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
@@ -18,17 +18,18 @@ export const BankCard = ({
   exerciseSet,
   index,
   currentExerciseSets, 
-  bulkWriteCurrentExerciseSets,
+  localBulkWriteExerciseSets,
   setCurrentExerciseSet,
+  destroyExerciseSet,
   snapshot
 }) => {
 
   const [modalShow, setModalShow] = useState(false)
   const [showPicker, setShowPicker] = useState(false)
 
-  const {exercise, color} = exerciseSet
-
+  const {exercise, color, order, _id} = exerciseSet
  
+
 
   const handleColorPick = (color) => {
     const currentExerciseSetsCopy = [...currentExerciseSets]
@@ -37,21 +38,29 @@ export const BankCard = ({
         set.color = color.hex
       }
     })
-    bulkWriteCurrentExerciseSets(currentExerciseSetsCopy)
+    localBulkWriteExerciseSets(currentExerciseSetsCopy)
     setShowPicker(false)
   }
 
-  const handleRemoveOne = () => {
+  const handleRemoveOne = async () => {
+    // new sets don't have _ids so splice index and recreate the array.
     const copy = [...currentExerciseSets]
     copy.splice(index, 1)
-    bulkWriteCurrentExerciseSets(copy)
+    localBulkWriteExerciseSets(copy)
+
+    if(exerciseSet._id){
+      const deleteRepsonse = await destroyExerciseSet(exerciseSet._id)
+      if(!deleteRepsonse.success){
+        localBulkWriteExerciseSets(currentExerciseSets)
+      }
+    }
   }
 
   const handleCopy = () => {
     const copy = [...currentExerciseSets]
     copy.splice(index, 0, exerciseSet)
     currentExerciseSets.splice(index, 0, exerciseSet)
-    bulkWriteCurrentExerciseSets(copy)
+    localBulkWriteExerciseSets(copy)
   }
 
   const handleSetTargetsClick = () => {
@@ -131,8 +140,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  bulkWriteCurrentExerciseSets,
-  setCurrentExerciseSet
+  localBulkWriteExerciseSets,
+  setCurrentExerciseSet,
+  destroyExerciseSet
+  
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BankCard)

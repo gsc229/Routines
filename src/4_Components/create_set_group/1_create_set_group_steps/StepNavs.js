@@ -16,7 +16,7 @@ export const StepNavs = ({
   showPrevBtn=true
 }) => {
   const {set_group_type} = currentSetGroup
-
+  const { mode } = createSetGroupData
   // choose-type --> choose-exercises --> enter-info --> preview-set-group
 
   const nextStep = {
@@ -57,7 +57,7 @@ export const StepNavs = ({
 
       <Row className='create-set-group-navs-row'>
 
-        {showPrevBtn && 
+        {/* {showPrevBtn && 
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           {currentStep !== 'choose-type' && 
           <ConnectedPreviousStepButton
@@ -65,9 +65,9 @@ export const StepNavs = ({
           writeDataValue={prevStep[currentStep].step}
           text={prevStep[currentStep].text}
           />}
-        </Col>}
+        </Col>} */}
         
-        {currentStep === 'choose-exercise' &&
+        {currentStep === 'choose-exercise' && mode !== 'editing' &&
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           <CreateSetGroupBtn />
         </Col>}

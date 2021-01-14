@@ -38,7 +38,6 @@ export const ViewRoutinePage = ({
     return currentWeeks && !currentWeeks.length > 0 && !crudingRoutine &&
       <div className='no-weeks-message'>
         <p>You don't currently have anything scheduled for this routine.<br/>Start by adding a week: </p>
-        <p> </p>
       </div>
   }
 

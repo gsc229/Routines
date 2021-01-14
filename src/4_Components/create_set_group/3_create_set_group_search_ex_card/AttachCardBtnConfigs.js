@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
-import {addToCurrentExerciseSets, removeFromCurrentExerciseSetsByExerciseID} from '../../../1_Actions/exerciseSetActions'
+import {
+  addToCurrentExerciseSets, 
+  removeFromCurrentExerciseSetsByExerciseID,
+  createNewExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import {
   canAddThisExercise, 
   canMoveToForm, 
@@ -22,6 +25,7 @@ export const AddRemoveBtnConfigs = ({
   exercise,
   addToCurrentExerciseSets, 
   removeFromCurrentExerciseSetsByExerciseID,
+  createNewExerciseSets,
   showNextStepBtn,
   showNextStepBtnOnCardBtn,
   showRemoveExerciseBtn,
@@ -51,12 +55,22 @@ export const AddRemoveBtnConfigs = ({
       routine,
       week,
       user,
-      exercise
+      exercise,
+      order: currentExerciseSets.length
     }
 
     addToCurrentExerciseSets(newExSet)
+    const createResponse = await createNewExerciseSets([newExSet])
+    
+    if(!createResponse.success){
+      console.log({createResponse})
+      alert('You fucked up!')
+      return
+    }
+
     setShowAddedAlert(true)
     setTimeout(() => {setShowAddedAlert(false)}, 1000)
+
   }
 
   
@@ -145,7 +159,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addToCurrentExerciseSets,
   removeFromCurrentExerciseSetsByExerciseID,
-  writingCreateSetGroupData
+  writingCreateSetGroupData,
+  createNewExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddRemoveBtnConfigs)

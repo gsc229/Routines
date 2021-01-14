@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {bulkWriteCurrentExerciseSets, clearCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
+import {localBulkWriteExerciseSets, clearCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
 import Modal from 'react-bootstrap/Modal'
 import CloseAlert from './CloseAlert'
 import Button from 'react-bootstrap/Button'
@@ -11,7 +11,7 @@ export const SetTargetsModal = ({
   setModalShow,
   currentExerciseSet,
   currentExerciseSets,
-  bulkWriteCurrentExerciseSets,
+  localBulkWriteExerciseSets,
   clearCurrentExerciseSet,
   index
 }) => {
@@ -33,7 +33,7 @@ export const SetTargetsModal = ({
   const handleFinishedSettingTargets = () => {
     const setsCopy = [...currentExerciseSets]
     setsCopy.splice(index, 1, currentExerciseSet)
-    bulkWriteCurrentExerciseSets(setsCopy)
+    localBulkWriteExerciseSets(setsCopy)
     setModalShow(false)
     clearCurrentExerciseSet()
   }
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  bulkWriteCurrentExerciseSets,
+  localBulkWriteExerciseSets,
   clearCurrentExerciseSet
 }
 

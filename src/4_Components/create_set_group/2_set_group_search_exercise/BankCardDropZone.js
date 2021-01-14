@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {canMoveToForm, minAndMaxAllowedExercises, getSetComboType} from '../createSetGroupHelpers'
 import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
-import {removeFromCurrentExerciseSetsByExerciseID, bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
+import {removeFromCurrentExerciseSetsByExerciseID, localBulkWriteExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import {Droppable} from 'react-beautiful-dnd'
 import BankCardDraggable from './BankCardDraggable'
 import Container from 'react-bootstrap/Container'
@@ -46,11 +46,7 @@ const BankCardDropZone = ({
         className={`chosen-exercises-bank ${snapshopt.isDraggingOver && 'exercise-bank-dragover'}`}>
           <div className='chosen-exerciese-bank-header'>
             <h4>Chosen Exercises:</h4>
-            {canMoveToForm(set_group_type, createSetGroupData, currentExerciseSets) && 
-            <p 
-            onClick={() => writingCreateSetGroupData('currentStep', 'enter-info')}>
-              Enter {set_group_type} Set Info <FaRegHandPointRight />
-            </p>}
+            
           </div>
           
           <Row 
@@ -89,7 +85,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   removeFromCurrentExerciseSetsByExerciseID,
   writingCreateSetGroupData,
-  bulkWriteCurrentExerciseSets
+  localBulkWriteExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BankCardDropZone)

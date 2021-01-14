@@ -8,7 +8,6 @@ import {routineScheduleConstructor} from './schedule_helpers/routineScheduleCons
 import {onSetGroupDragEnd} from './schedule_helpers/onSetGroupDragEnd'
 import {DragDropContext} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
-import Container from 'react-bootstrap/Container'
 import DroppableDay from './DroppableDay'
 import Button from 'react-bootstrap/Button'
 import  ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
@@ -65,7 +64,7 @@ export const RoutineScheduleDnd = ({
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
         return(
-          <Container
+          <div
           key={`week-${weekNumber}`}
           className='week-container'>
             <div
@@ -94,7 +93,7 @@ export const RoutineScheduleDnd = ({
                   )
                 })}
               </div>
-          </Container>
+          </div>
         
         )})}
         </DragDropContext>}

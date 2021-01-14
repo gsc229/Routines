@@ -39,7 +39,7 @@ export const ConfirmDeleteWeekModal = ({
   }
 
   return (
-    <div className='delete-week-outer-modal-container'>
+    <div className='delete-week-outer-modal-container modal'>
       {!deleteFailed && 
         <Modal
         className='delete-week-modal'

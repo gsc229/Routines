@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {bulkWriteCurrentExerciseSets, clearCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
+import {localBulkWriteExerciseSets, clearCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
 import {clearCreateSetGroupData, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {createSetGroupLocal} from '../../create_set_group/createSetGroupLocal'
 import Modal from 'react-bootstrap/Modal'
@@ -15,7 +15,7 @@ export const SubSetModal = ({
   createSetGroupData,
   currentExerciseSet,
   currentExerciseSets,
-  bulkWriteCurrentExerciseSets,
+  localBulkWriteExerciseSets,
   clearCurrentExerciseSet,
   clearCreateSetGroupData,
   writingCreateSetGroupData,
@@ -47,7 +47,7 @@ export const SubSetModal = ({
     const currentSetsCopy = [...currentExerciseSets]
     currentSetsCopy.splice(index, 1, ...newSubGroup)
 
-    bulkWriteCurrentExerciseSets(currentSetsCopy)
+    localBulkWriteExerciseSets(currentSetsCopy)
 
     setModalShow(false)
     clearCurrentExerciseSet()
@@ -57,7 +57,7 @@ export const SubSetModal = ({
 
   return (
     <Modal
-    className='sub-group-modal'
+    className='sub-group-modal modal'
     show={modalShow}
     onHide={confirmClose}
     size='md'
@@ -106,7 +106,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  bulkWriteCurrentExerciseSets,
+  localBulkWriteExerciseSets,
   clearCurrentExerciseSet,
   clearCreateSetGroupData,
   writingCreateSetGroupData

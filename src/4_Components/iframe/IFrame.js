@@ -1,7 +1,6 @@
 import React, {Fragment, useState, useEffect} from 'react'
 import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed'
-import {purifyIframe} from '../../utils/sanitizeHTML'
-import Spinner from 'react-bootstrap/Spinner'
+import {purifyIframe} from './sanitizeHTML'
 
 const IFrame = ({
   iframeString, 

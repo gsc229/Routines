@@ -3,10 +3,13 @@
   width: 100%;
 }
 
+.routine-schedule-dnd{
+  background-color: $bs-dark;
+  border-radius: 4px;
+}
+
 .week-container{
-  padding: 0;
-  background-color: whitesmoke;
-  padding: 20px;
+  padding: 30px;
   border-radius: 4px;
   margin-top: 10px;
   .week-container-header{
@@ -14,10 +17,9 @@
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
-    background-color: whitesmoke;
     padding: 10px;
-    color: $bs-dark;
-    border-radius: 4px;
+    color: white;
+    border-bottom: 1px solid lightslategrey;
     margin-top: 10px;
     h5{
       margin-right: 20px;
@@ -36,9 +38,10 @@
 }
 
 .day-container-card{
-  //border: 1px solid red;
-  margin: 10px auto;
-  width: 50%;
+  border: 1px solid $routine-red;
+  background-color: $bs-dark;
+  margin: 10px 0;
+  width: 30%;
   min-height: 200px;
   min-width: 300px;
   padding: 5px;
@@ -64,7 +67,7 @@
     }
   }
   .card-body{
-    background-color: whitesmoke;
+    
   }
 
   .set-group-schedule-card{
@@ -84,16 +87,15 @@
   }
 
 }
+
+
 .day-container-card-hovering{
   background-color: $routine-red;
   //background-color: $spanish-gray;
   .card-header{
-    background-color: $russian-green;
+    background-color: $routine-red;
     color: white;
     font-weight: bolder;
     
-  }
-  .card-body{
-    background-color: whitesmoke;
   }
 }
