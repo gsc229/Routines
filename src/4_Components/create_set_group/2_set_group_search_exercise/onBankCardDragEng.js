@@ -1,4 +1,4 @@
-export const onBankCardDragEnd = (result, bulkWriteCurrentExerciseSets, currentExerciseSets) => {
+export const onBankCardDragEnd = async (result, localBulkWriteExerciseSets, currentExerciseSets, mode, bulkSaveExerciseSets) => {
 
   // each result has a destination index as well a draggable id which is also an exercise _id
   // get the exerciseId by..   draggableId.split("-")[0]
@@ -14,15 +14,38 @@ export const onBankCardDragEnd = (result, bulkWriteCurrentExerciseSets, currentE
   
 
   const {destination, source} = result
-
+  
   if(destination.index === source.index) return
-  console.log({result})
-  const cardToMove = currentExerciseSets[source.index]
-  const copy = [...currentExerciseSets]
-  
-  copy.splice(source.index, 1)
-  
-  copy.splice(destination.index, 0, cardToMove)
 
-  bulkWriteCurrentExerciseSets(copy)
+  const cardToMove = {...currentExerciseSets[source.index], order: destination.index}
+  const copyOfAllSets = [...currentExerciseSets]
+  const updates = []
+
+  copyOfAllSets.splice(source.index, 1)
+  
+  copyOfAllSets.splice(destination.index, 0, cardToMove)
+  
+  copyOfAllSets
+  .forEach((set, index) => {
+    set.order = index
+    if(mode=='editing'){
+      updates.push({
+        updateOne: {
+          filter: {_id: set._id},
+          update: {order: index}
+        }
+      })
+    }
+  })
+
+  localBulkWriteExerciseSets(copyOfAllSets)
+
+  console.log({mode, updates})
+  if(mode==='editing'){
+    // if it fails revert back to previous order an show an 
+    const response = await bulkSaveExerciseSets(updates)
+    if(!response.success){
+      localBulkWriteExerciseSets(currentExerciseSets)
+    }
+  }
 }

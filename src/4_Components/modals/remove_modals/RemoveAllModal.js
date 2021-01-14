@@ -22,7 +22,7 @@ const RemoveAllModal = ({
 
   return (
     <Modal
-    className='remove-all-resources-modal'
+    className='remove-all-resources-modal modal'
     show={modalShow}
     onHide={() => setModalShow(false)}
     size='lg'

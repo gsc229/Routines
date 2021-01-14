@@ -1,5 +1,5 @@
 import * as constants from './index'
-import {getExerciseSets, updateExerciseSet, createMultipleExerciseSets} from '../3_APIs/exerciseSetApi'
+import {getExerciseSets, updateExerciseSet, createMultipleExerciseSets, bulkUpdateExerciseSets, deleteExerciseSet} from '../3_APIs/exerciseSetApi'
 
 const generalErrorMessage = "Something went wrong with your request"
 
@@ -36,9 +36,10 @@ export const removeFromCurrentExerciseSetsBySetID = (setId) => dispatch => {
   dispatch({type: constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_SET_ID, payload: setId})
  }
 
-export const bulkWriteCurrentExerciseSets = (exercisesSetsArray) => dispatch => {
+export const localBulkWriteExerciseSets = (exercisesSetsArray) => dispatch => {
   dispatch({type: constants.BULK_WRITE_CURRENT_EXERCISE_SETS, payload: exercisesSetsArray})
 }
+
 
 // async
 export const userExerciseSetsQuery = (queryString) => dispatch => {
@@ -71,6 +72,23 @@ export const saveExerciseSetChanges = (exerciseSetId, updates) => dispatch => {
   })
 }
 
+export const bulkSaveExerciseSets = (updatesArray) => dispatch => {
+  dispatch({type: constants.BULK_UPDATING_EXERCISE_SETS})
+  return bulkUpdateExerciseSets(updatesArray)
+  .then(response => {
+    if(response && response.success){
+      dispatch({type: constants.BULK_UPDATE_EXERCISE_SETS_SUCCESS})
+      return response
+    } 
+    if(response && response.error_message){
+      dispatch({type: constants.BULK_UPDATE_EXERCISE_SETS_FAIL, payload: response.error_message})
+      return false
+    }
+    dispatch({type: constants.BULK_UPDATE_EXERCISE_SETS_FAIL, payload: generalErrorMessage})
+      return false
+  })
+}
+
 export const createNewExerciseSets = (newSetsArray) => dispatch => {
   // required on each new set in the array are user, routine, set_group, and week ids 
   if(newSetsArray.length === 0){
@@ -87,6 +105,23 @@ export const createNewExerciseSets = (newSetsArray) => dispatch => {
     }
     if(createNewExerciseSetsResponse.error_message){
       dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: createNewExerciseSetsResponse.error_message})
+      return false
+    }
+    dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: generalErrorMessage})
+      return false
+  })
+}
+
+export const destroyExerciseSet = (setId) => dispatch => {
+  dispatch({type: constants.DELETING_EXERCISE_SET})
+  return deleteExerciseSet(setId)
+  .then(deleteExSetResponse => {
+    if(deleteExSetResponse.success){
+      dispatch({type: constants.DELETE_EXERCISE_SET_SUCCESS, payload: setId})
+      return deleteExSetResponse
+    }
+    if(deleteExSetResponse.error_message){
+      dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: deleteExSetResponse.error_message})
       return false
     }
     dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: generalErrorMessage})

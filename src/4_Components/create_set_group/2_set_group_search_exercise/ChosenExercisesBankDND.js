@@ -1,30 +1,34 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {bulkWriteCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
+import {localBulkWriteExerciseSets, bulkSaveExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import BankCardDropZone from './BankCardDropZone'
 import {DragDropContext} from 'react-beautiful-dnd'
 import {onBankCardDragEnd} from './onBankCardDragEng'
 
 export const ChosenExercisesBankDND = ({
   currentExerciseSets,
-  bulkWriteCurrentExerciseSets
+  localBulkWriteExerciseSets,
+  createSetGroupData,
+  bulkSaveExerciseSets
 }) => {
   
 
   return (
     <DragDropContext
-    onDragEnd={result => onBankCardDragEnd(result, bulkWriteCurrentExerciseSets, currentExerciseSets)}>
+    onDragEnd={result => onBankCardDragEnd(result, localBulkWriteExerciseSets, currentExerciseSets, createSetGroupData.mode, bulkSaveExerciseSets)}>
       <BankCardDropZone />   
     </DragDropContext>
   )
 }
 
 const mapStateToProps = (state) => ({
-  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
+  createSetGroupData: state.setGroupReducer.createSetGroupData
 })
 
 const mapDispatchToProps = {
-  bulkWriteCurrentExerciseSets
+  localBulkWriteExerciseSets,
+  bulkSaveExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChosenExercisesBankDND)

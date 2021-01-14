@@ -85,6 +85,23 @@ export const updateExerciseSet = (exerciseSetId, updates) => {
   })
 }
 
+export const bulkUpdateExerciseSets = (updatesArray) => {
+  
+  return axiosWihAuth()
+  .put(`/exercise-sets/bulk-update`, updatesArray)
+  .then(exerciseSetResponse=>{
+    console.log({exerciseSetResponse})
+    return exerciseSetResponse.data
+  })
+  .catch(exerciseSetError => {
+    console.log({exerciseSetError})
+    if(exerciseSetError.response){
+      return exerciseSetError.response.data
+    }
+    return {succes: false, error_message: "Somthing went wrong. Try again lager"}
+  })
+}
+
 export const deleteExerciseSet = (exerciseSetId) => {
   return axiosWihAuth()
   .delete(`/exercise-sets/${exerciseSetId}`)
@@ -95,6 +112,9 @@ export const deleteExerciseSet = (exerciseSetId) => {
   .catch(exerciseSetError => {
     console.log({exerciseSetError})
     if(exerciseSetError.response){
+      if(!exerciseSetError.response.data){
+        exerciseSetError.response.data = {error_message: exerciseSetError.response.statusText}
+      }
       return exerciseSetError.response.data
     }
     return {succes: false, error_message: "Somthing went wrong. Try again lager"}

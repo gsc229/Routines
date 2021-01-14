@@ -44,7 +44,7 @@ export const ViewSetGroupModal = ({
 
   return (
     <Modal
-    className='view-set-group-modal'
+    className='view-set-group-modal modal'
     show={modalShow}
     onHide={() => setModalShow(false)}
     size='lg'

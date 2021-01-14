@@ -149,6 +149,39 @@ const reducer = (state=initialState, action) => {
         crudingExerciseSet: false,
         error_message: action.payload
       }
+    case constants.BULK_UPDATING_EXERCISE_SETS:
+      return{
+        ...state,
+        crudingExerciseSet: 'bulk-updating'
+      }
+    case constants.BULK_UPDATE_EXERCISE_SETS_SUCCESS:
+      return{
+        ...state,
+        crudingExerciseSet: false
+      }
+    case constants.BULK_UPDATE_EXERCISE_SETS_FAIL:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        error_message: action.payload
+      }
+    case constants.DELETING_EXERCISE_SET:
+      return{
+        ...state,
+        crudingExerciseSet: 'deleteing-exercise-set'
+      }
+    case constants.DELETE_EXERCISE_SET_SUCCESS:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        currentExerciseSets: [...state.currentExerciseSets.filter(set => set._id !== action.payload)]
+      }
+    case constants.DELETE_EXERCISE_SET_FAIL:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        error_message: action.payload
+      }
     
     // interdependant
     case constants.FETCHING_FLATTENED_ROUTINE:

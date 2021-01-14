@@ -45,7 +45,7 @@ const ConfirmDeleteModal = ({
 
 
   return (
-    <div className='outer-modal-container'>
+    <div className='outer-modal-container modal'>
       {!deleteFailed && 
         <Modal
         className='delete-routine-modal'

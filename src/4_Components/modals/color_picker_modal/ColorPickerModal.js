@@ -10,7 +10,7 @@ const ColorPickerModal = ({
     <Modal
     size='sm'
     onHide={() => setShowPickerModal(false)}
-    className='color-picker-modal'
+    className='color-picker-modal modal'
     centered
     show={showPickerModal}>
       <Modal.Body>

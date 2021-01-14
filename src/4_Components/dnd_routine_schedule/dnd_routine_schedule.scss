@@ -9,8 +9,7 @@
 }
 
 .week-container{
-  padding: 0;
-  padding: 20px;
+  padding: 30px;
   border-radius: 4px;
   margin-top: 10px;
   .week-container-header{
@@ -19,8 +18,8 @@
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 10px;
-    color: $bs-dark;
-    border-radius: 4px;
+    color: white;
+    border-bottom: 1px solid lightslategrey;
     margin-top: 10px;
     h5{
       margin-right: 20px;
@@ -94,12 +93,9 @@
   background-color: $routine-red;
   //background-color: $spanish-gray;
   .card-header{
-    background-color: $russian-green;
+    background-color: $routine-red;
     color: white;
     font-weight: bolder;
     
-  }
-  .card-body{
-    background-color: whitesmoke;
   }
 }
