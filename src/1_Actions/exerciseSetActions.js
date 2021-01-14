@@ -72,9 +72,9 @@ export const saveExerciseSetChanges = (exerciseSetId, updates) => dispatch => {
   })
 }
 
-export const bulkSaveExerciseSets = (updatesArray) => dispatch => {
+export const bulkSaveExerciseSets = (updatesArray, setGroupId) => dispatch => {
   dispatch({type: constants.BULK_UPDATING_EXERCISE_SETS})
-  return bulkUpdateExerciseSets(updatesArray)
+  return bulkUpdateExerciseSets(updatesArray, setGroupId)
   .then(response => {
     if(response && response.success){
       dispatch({type: constants.BULK_UPDATE_EXERCISE_SETS_SUCCESS})

@@ -6,7 +6,7 @@ export const createSetGroupLocal = (
 
   // ensure the correct data type
   for(const key in createSetGroupData) {
-
+    console.log('createSetGroupData[key]: ', createSetGroupData[key])
     if(createSetGroupData[key]){
       try{
         createSetGroupData[key] = JSON.parse(createSetGroupData[key])

@@ -85,10 +85,14 @@ export const updateExerciseSet = (exerciseSetId, updates) => {
   })
 }
 
-export const bulkUpdateExerciseSets = (updatesArray) => {
+export const bulkUpdateExerciseSets = (updatesArray, setGroupId) => {
+  console.log({updatesArray, setGroupId})
+  /* if(!updatesArray || setGroupId){
+    return {succes: false, error_message: "One or more required arguments missing: updatesArray, setGroup"}
+  } */
   
   return axiosWihAuth()
-  .put(`/exercise-sets/bulk-update`, updatesArray)
+  .put(`/exercise-sets/bulk-update`, {updatesArray, setGroupId})
   .then(exerciseSetResponse=>{
     console.log({exerciseSetResponse})
     return exerciseSetResponse.data

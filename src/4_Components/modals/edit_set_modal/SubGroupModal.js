@@ -50,12 +50,19 @@ export const SubSetModal = ({
   }
 
   const buildSubGroup = async () => {
+
+    const firstId = currentExerciseSet._id
+    delete currentExerciseSet._id
     const newSubGroup = createSetGroupLocal(currentSetGroup, createSetGroupData, currentExerciseSet)
-    console.log({newSubGroup})
+    newSubGroup[0]._id = firstId
+  
     const currentSetsCopy = [...currentExerciseSets]
-    currentSetsCopy.splice(index, 1, ...newSubGroup)
+
     // if the set groups been created already...
     if(currentSetGroup._id){
+
+      console.log({newSubGroup})
+      
 
       const updatesOrInserts = []
 
@@ -69,6 +76,7 @@ export const SubSetModal = ({
               }
             })
           } else{
+            set.exercise = set.exercise._id
             updatesOrInserts.push({
               insertOne: {
                 document: set
@@ -79,30 +87,49 @@ export const SubSetModal = ({
         
       })
 
-      const subGroupResonse = bulkSaveExerciseSets(updatesOrInserts)
-      if(!subGroupResonse){
-        // report the error in the alert
-        setAlertConfig({
-          show: true,
-          text: 'Something went wrong pleas try again later.',
-          continue_btn: false
-        })
-      }
+      const subGroupResonse = await bulkSaveExerciseSets(updatesOrInserts, currentSetGroup._id)
+      console.log({subGroupResonse})
+
+        if(!subGroupResonse.success){
+          // report the error in the alert
+          setAlertConfig({
+            show: true,
+            text: `Something went wrong please try again later.`,
+            continue_btn: false
+          })
+
+            // do this if it's a new setGroup
+          localBulkWriteExerciseSets(currentExerciseSets)
+          setModalShow(false)
+          clearCurrentExerciseSet()
+          clearCreateSetGroupData()
+          localWritingCreateSetGroupData('currentStep', 'choose-exercise')
+
+          return
+        }
+      
+      
+      localBulkWriteExerciseSets(subGroupResonse.data)
       setModalShow(false)
       clearCurrentExerciseSet()
       clearCreateSetGroupData()
       localWritingCreateSetGroupData('currentStep', 'choose-exercise')
-
       return
     
     }
+    // do this if it's a new setGroup
 
+  
+    currentSetsCopy.splice(index, 1, ...newSubGroup)
     localBulkWriteExerciseSets(currentSetsCopy)
     setModalShow(false)
     clearCurrentExerciseSet()
     clearCreateSetGroupData()
     localWritingCreateSetGroupData('currentStep', 'choose-exercise')
   }
+
+
+
 
   return (
     <Modal
