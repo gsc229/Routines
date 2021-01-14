@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {ConnectedDynamicFieldInputForExerciseSet} from '../3_form_create_set_group/ConnectedInputsLabeledForExerciseSet'
+import ConnecedDynamicInput from '../3_form_create_set_group/ConnectedInputLabeledForExerciseSet'
 import Tab from 'react-bootstrap/Tab'
 import Nav from 'react-bootstrap/Nav'
 import Row from 'react-bootstrap/Row'
@@ -64,7 +64,7 @@ export const TargetsBuilder = (props) => {
               <Tab.Pane 
               className='target-setter-tab-pande'
               eventKey="target_weight">
-                <ConnectedDynamicFieldInputForExerciseSet
+                <ConnecedDynamicInput
                   label='Weight'
                   field='target_weight'
                 />
@@ -72,7 +72,7 @@ export const TargetsBuilder = (props) => {
               <Tab.Pane 
               className='target-setter-tab-pande'
               eventKey="target_reps">
-                <ConnectedDynamicFieldInputForExerciseSet
+                <ConnecedDynamicInput
                   label='Reps Per Set'
                   field='target_reps'
                 />
@@ -80,7 +80,7 @@ export const TargetsBuilder = (props) => {
               <Tab.Pane 
               className='target-setter-tab-pande'
               eventKey="target_time">
-                <ConnectedDynamicFieldInputForExerciseSet
+                <ConnecedDynamicInput
                   field='target_time'
                   label='Time'  
                 />              
@@ -88,7 +88,7 @@ export const TargetsBuilder = (props) => {
               <Tab.Pane 
               className='target-setter-tab-pande'
               eventKey="target_distance">
-                <ConnectedDynamicFieldInputForExerciseSet
+                <ConnecedDynamicInput
                   field='target_distance'
                   label='Distance'  
                 />              
@@ -96,7 +96,7 @@ export const TargetsBuilder = (props) => {
               <Tab.Pane 
               className='target-setter-tab-pande'
               eventKey="target_laps">
-                <ConnectedDynamicFieldInputForExerciseSet
+                <ConnecedDynamicInput
                   field='target_laps'
                   label='Laps'  
                 />              

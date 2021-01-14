@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {
   addToCurrentExerciseSets, 
   removeFromCurrentExerciseSetsByExerciseID,
   createNewExerciseSets,
-  localBulkWriteExerciseSets} from '../../../1_Actions/exerciseSetActions'
+  localBulkWriteExerciseSets,
+  bulkWriteExerciseSets
+} from '../../../1_Actions/exerciseSetActions'
 import {
   canAddThisExercise, 
   canMoveToForm, 
@@ -26,7 +27,7 @@ export const AddRemoveBtnConfigs = ({
   exercise,
   addToCurrentExerciseSets, 
   localBulkWriteExerciseSets,
-  localWritingCreateSetGroupData,
+  bulkWriteExerciseSets,
   removeFromCurrentExerciseSetsByExerciseID,
   createNewExerciseSets,
   showNextStepBtn,
@@ -47,8 +48,26 @@ export const AddRemoveBtnConfigs = ({
 
   const addToText = exIsChosen ? 'Add Another' : `Use in ${set_group_type} Set`
 
-  const handleRemoveAllClick = () => {
-    removeFromCurrentExerciseSetsByExerciseID(exercise._id)
+  const handleRemoveAllClick = async() => {
+    if(currentSetGroup._id){
+
+      const deleteCommands = []
+      currentExerciseSets.forEach(set => set.exercise._id === exercise._id && 
+        deleteCommands.push({
+            deleteOne: {
+              filter: {_id: set._id}
+            }
+        })
+      ) 
+      console.log({deleteCommands})
+      const deleteResponse = await bulkWriteExerciseSets(deleteCommands, currentSetGroup._id)
+      if(!deleteResponse.success){
+        alert(`Something wend went wrong trying to delet: ${JSON.stringify(deleteCommands)}`)
+      }
+      
+    }else{
+      removeFromCurrentExerciseSetsByExerciseID(exercise._id)
+    }
   }
 
   const handleAddClick = async() => {
@@ -69,7 +88,6 @@ export const AddRemoveBtnConfigs = ({
         
         addToCurrentExerciseSets(newExSet)
         const createResponse = await createNewExerciseSets([newExSet])
-        
         if(!createResponse.success){
           localBulkWriteExerciseSets(currentExerciseSets)
           return
@@ -87,8 +105,6 @@ export const AddRemoveBtnConfigs = ({
     }
 
   }
-
-  
 
   const removeAllModal = () => {
     const modalBodyHtml = <div>Are you sure you want to remove all sets of {exercise.name} from this set group?</div>
@@ -108,8 +124,7 @@ export const AddRemoveBtnConfigs = ({
       <Badge
       pill
       onClick={() => setModalShow(true) }
-      className='card-link remove-from-set-link'
-      >
+      className='card-link remove-from-set-link'>
         <FiMinusSquare />&nbsp;REMOVE ALL
       </Badge>
     </div>
@@ -174,9 +189,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addToCurrentExerciseSets,
   localBulkWriteExerciseSets,
-  localWritingCreateSetGroupData,
+  bulkWriteExerciseSets,
   removeFromCurrentExerciseSetsByExerciseID,
-  localWritingCreateSetGroupData,
   createNewExerciseSets
 }
 

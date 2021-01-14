@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {localBulkWriteExerciseSets, clearCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
+import {localBulkWriteExerciseSets, clearCurrentExerciseSet, saveExerciseSetChanges} from '../../../1_Actions/exerciseSetActions'
 import Modal from 'react-bootstrap/Modal'
 import CloseAlert from './CloseAlert'
 import Button from 'react-bootstrap/Button'
@@ -10,30 +10,36 @@ export const SetTargetsModal = ({
   modalShow,
   setModalShow,
   currentExerciseSet,
-  currentExerciseSets,
-  localBulkWriteExerciseSets,
-  clearCurrentExerciseSet,
-  index
+  saveExerciseSetChanges,
+  clearCurrentExerciseSet
 }) => {
 
-  const [alertShow, setAlertShow] = useState(false)
+  const [alertConfig, setAlertConfig] = useState({
+    show: false,
+    text: 'Are you sure you want to closee?',
+    coninute_btn: false
+  })
 
   const {exercise} = currentExerciseSet
 
   const confirmClose = () => {
-    setAlertShow(true)
+    setAlertConfig({
+      ...alertConfig,
+      show: true
+    })
   }
 
   const colseConfirmed = () => {
     setModalShow(false)
-    setAlertShow(false)
+    setAlertConfig({
+      ...alertConfig,
+      show: false
+    })
   }
 
 
-  const handleFinishedSettingTargets = () => {
-    const setsCopy = [...currentExerciseSets]
-    setsCopy.splice(index, 1, currentExerciseSet)
-    localBulkWriteExerciseSets(setsCopy)
+  const handleFinishedSettingTargets = async () => {
+    await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
     setModalShow(false)
     clearCurrentExerciseSet()
   }
@@ -48,27 +54,29 @@ export const SetTargetsModal = ({
     centered>
 
       <Modal.Header
-      closeButton={!alertShow}>
+      closeButton={!alertConfig.show}>
         Set Name: {currentExerciseSet.name || "No Name"}<br/>
         Exercise Name: {exercise.name || "No Name"}
       </Modal.Header>
 
-      {alertShow && 
+      {alertConfig.show && 
       <Modal.Body className='modal-body-alert' >
-        <CloseAlert alertShow={alertShow} />
+
+        <CloseAlert alertConfig={alertConfig} />
+
         <div className='continue-close-btns'>
-          <Button className='continue-btn' variant='success' onClick={() => setAlertShow(false)}>Continue Working</Button> 
+          <Button className='continue-btn' variant='success' onClick={() => setAlertConfig(false)}>Continue Working</Button> 
           <Button className='close-btn' onClick={colseConfirmed}>Close</Button>
         </div>
       </Modal.Body>}
 
-      {!alertShow && 
+      {!alertConfig.show && 
       <Modal.Body className='modal-body-normal'>
         <TargetsSetter />
         
       </Modal.Body>}
       <Modal.Footer>
-        {!alertShow && 
+        {!alertConfig.show && 
         <Button
           className='done-setting-targets-btn'
           onClick={handleFinishedSettingTargets}>
@@ -87,8 +95,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  localBulkWriteExerciseSets,
-  clearCurrentExerciseSet
+  clearCurrentExerciseSet,
+  saveExerciseSetChanges
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetTargetsModal)

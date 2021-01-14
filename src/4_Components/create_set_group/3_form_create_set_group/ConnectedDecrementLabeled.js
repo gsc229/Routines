@@ -28,8 +28,12 @@ export const ConnectedDecrementLabeled = ({
 
   if(!labelText) labelText = `Decrease ${fieldCapitalized}`
   const allowPercent = !(decrementField === "reps" || decrementField === "rest_time ")
-  const {total_sets} = createSetGroupData
-  const maxDec = Math.floor(JSON.parse(createSetGroupData[`starting_${decrementField}`]) / JSON.parse(total_sets))
+  const total_sets = JSON.parse(createSetGroupData.total_sets)
+  const startingNumber = JSON.parse(createSetGroupData[`starting_${decrementField}`])
+  const maxDecCeil = Math.ceil(startingNumber / total_sets)
+  const maxDecFloor = Math.floor(startingNumber / total_sets)
+  const maxDec = maxDecCeil < startingNumber / total_sets  ? maxDecCeil : maxDecFloor
+  
   const defaultDecValue = Math.floor(maxDec/10)
 
   const [decreaseMethod, setDecreaseMethod] = useState({key: `${decrementField}_decrease`, value: defaultDecValue})
@@ -67,7 +71,7 @@ export const ConnectedDecrementLabeled = ({
     <Form.Group>
 
       <Form.Label>
-        {labelText} {!decreaseMethod.key.includes('percent') && <span>Max: {maxDec}</span>}
+        {labelText}: {!decreaseMethod.key.includes('percent') && <span>(max {maxDec})</span>}
       </Form.Label>
 
       <InputGroup size={inputSize}>

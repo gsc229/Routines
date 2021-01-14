@@ -33,7 +33,7 @@ const DynamicFieldInput = ({
           placeholder={placeholder}
           className={`${required ? !currentExerciseSet[field] ? 'requirement-not-met' : 'requirment-met' : ""}`} 
           onChange={(e) => localWritingExerciseSet(e.target.name, e.target.value)} 
-          value={currentExerciseSet[field]} 
+          value={currentExerciseSet[field] || 0 } 
           name={field} 
           type={inputPirmitiveType}
           max={max}
@@ -68,4 +68,6 @@ const mapDispatchToProps = {
   localWritingExerciseSet
 }
 
-export const ConnectedDynamicFieldInputForExerciseSet = connect(mapStateToProps, mapDispatchToProps)(DynamicFieldInput)
+const ConnectedDynamicFieldInputForExerciseSet = connect(mapStateToProps, mapDispatchToProps)(DynamicFieldInput)
+
+export default ConnectedDynamicFieldInputForExerciseSet

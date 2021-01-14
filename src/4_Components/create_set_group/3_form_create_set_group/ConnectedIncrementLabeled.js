@@ -26,7 +26,7 @@ export const ConnectedIncrementLabeled = ({
   if(!labelText) labelText = `Increase ${fieldCapitalized}`
   const allowPercent = !(incrementField === "reps" || incrementField === "rest_time ")
 
-  const [increaseMethod, setIncreaseMethod] = useState({key: `${incrementField}_increase`, value: 10})
+  const [increaseMethod, setIncreaseMethod] = useState({key: `${incrementField}_increase`, value: 0})
   
   useEffect(() => {
     localWritingCreateSetGroupData(`${incrementField}_increase`, 10)
@@ -58,7 +58,6 @@ export const ConnectedIncrementLabeled = ({
 
           <Form.Control
           onChange={(e)=> setIncreaseMethod({...increaseMethod, value: JSON.parse(e.target.value)})}
-          defaultValue={10}
           value={increaseMethod.value} 
           placeholder='10% default'
           name={increaseMethod.key} 

@@ -36,7 +36,7 @@ export const AttachExerciseToSetGroupCard = ({
       <Card.Body>
         <div 
         className={`added-alert ${showAddedAlert ? 'show-added-alert' : 'hide-added-alert'}`} 
-        variant='success' s >
+        variant='success'>
           Added to set group!
         </div>
 

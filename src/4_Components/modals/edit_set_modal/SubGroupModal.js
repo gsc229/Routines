@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {localBulkWriteExerciseSets, clearCurrentExerciseSet, bulkSaveExerciseSets} from '../../../1_Actions/exerciseSetActions'
+import {localBulkWriteExerciseSets, clearCurrentExerciseSet, bulkWriteExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import {clearCreateSetGroupData, localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {createSetGroupLocal} from '../../create_set_group/createSetGroupLocal'
 import Modal from 'react-bootstrap/Modal'
@@ -19,7 +19,7 @@ export const SubSetModal = ({
   clearCurrentExerciseSet,
   clearCreateSetGroupData,
   localWritingCreateSetGroupData,
-  bulkSaveExerciseSets,
+  bulkWriteExerciseSets,
   index
 }) => {
 
@@ -87,7 +87,7 @@ export const SubSetModal = ({
         
       })
 
-      const subGroupResonse = await bulkSaveExerciseSets(updatesOrInserts, currentSetGroup._id)
+      const subGroupResonse = await bulkWriteExerciseSets(updatesOrInserts, currentSetGroup._id)
       console.log({subGroupResonse})
 
         if(!subGroupResonse.success){
@@ -119,7 +119,6 @@ export const SubSetModal = ({
     }
     // do this if it's a new setGroup
 
-  
     currentSetsCopy.splice(index, 1, ...newSubGroup)
     localBulkWriteExerciseSets(currentSetsCopy)
     setModalShow(false)
@@ -191,7 +190,7 @@ const mapDispatchToProps = {
   clearCurrentExerciseSet,
   clearCreateSetGroupData,
   localWritingCreateSetGroupData,
-  bulkSaveExerciseSets
+  bulkWriteExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubSetModal)

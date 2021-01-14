@@ -82,9 +82,11 @@ const reducer = (state=initialState, action) => {
           currentExerciseSets: [...state.currentExerciseSets.filter(setGroup => setGroup._id !== action.payload)]
         }
       case constants.LOCAL_BULK_WRITE_CURRENT_EXERCISE_SETS:
+        const setId = action.payload[0] ? action.payload[0]._id : ''
         return{
           ...state,
           currentExerciseSets: action.payload
+          
         }
     case constants.SET_CURRENT_EXERCISE_SETS:
       return{
@@ -140,7 +142,10 @@ const reducer = (state=initialState, action) => {
         crudingExerciseSet: false,
         currentExerciseSet: action.payload,
         currentExerciseSets: [
-          ...state.currentExerciseSets.map(exSet => exSet._id === action.payload._id ? action.payload._id : exSet)
+          ...state.currentExerciseSets.map(exSet => exSet._id === action.payload._id ? action.payload: exSet)
+        ],
+        currentRoutineSets: [
+          ...state.currentRoutineSets.map(exSet => exSet._id === action.payload._id ? action.payload: exSet)
         ]
       }
     case constants.UPDATE_EXERCISE_SET_FAIL:
@@ -149,17 +154,17 @@ const reducer = (state=initialState, action) => {
         crudingExerciseSet: false,
         error_message: action.payload
       }
-    case constants.BULK_UPDATING_EXERCISE_SETS:
+    case constants.BULK_WRITING_EXERCISE_SETS:
       return{
         ...state,
         crudingExerciseSet: 'bulk-updating'
       }
-    case constants.BULK_UPDATE_EXERCISE_SETS_SUCCESS:
+    case constants.BULK_WRITE_EXERCISE_SETS_SUCCESS:
       return{
         ...state,
         crudingExerciseSet: false
       }
-    case constants.BULK_UPDATE_EXERCISE_SETS_FAIL:
+    case constants.BULK_WRITE_EXERCISE_SETS_FAIL:
       return{
         ...state,
         crudingExerciseSet: false,
