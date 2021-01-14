@@ -141,7 +141,6 @@
       flex-direction: column;
       align-items: center;
       position: relative;
-
       .target-icons-container{
         display: flex;
         justify-content: center;
@@ -151,13 +150,13 @@
           font-style: italic;
         }
         .icon-and-number{
-          cursor: help;
+          cursor: default;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           span{
-          font-size: 8px;
+          font-size: 9px;
           font-style: italic;
           }
           .icon{

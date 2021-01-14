@@ -1,12 +1,16 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
+import {setCurrentSetGroup} from '../../../1_Actions/setGroupActions'
 import Modal from 'react-bootstrap/Modal'
+import {Link} from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 
 export const ViewSetGroupModal = ({
   currentSetGroup,
   modalShow,
   setModalShow,
-  currentExerciseSets
+  currentExerciseSets,
+  redirectLink
 }) => {
 
   const getTargetsAndActual = (exSet) => {
@@ -32,6 +36,11 @@ export const ViewSetGroupModal = ({
   }
 
 
+  const handleEdit = () => {
+
+  }
+
+
   return (
     <Modal
     className='view-set-group-modal'
@@ -43,20 +52,26 @@ export const ViewSetGroupModal = ({
       <Modal.Header 
       className='view-set-group-modal-header' 
       closeButton>
-        <h5>Set Name: {currentSetGroup.name}</h5>
-
+        <div className='heading-and-edit-link'>
+          <h5>Set Name: {currentSetGroup.name}</h5>
+          <Link
+          className='edit-link' 
+          to={redirectLink}>
+            Edit Set
+          </Link>
+        </div>
       </Modal.Header>
       <Modal.Body className='modal-body view-set-group-modal-body'>
         <h6>Sets:</h6>
        {/*  {JSON.stringify(currentExerciseSets, '', 2)} */}
        <div className='set-group-modal-sets-container'>
           {currentExerciseSets.map((set, index) => 
-            <div className='set-container'>
+            <div key={`${set._id}${index}`} className='set-container'>
               <p>Exercise {index + 1}: <i>{set.exercise.name}</i></p>
               <ul className='targets-and-actual-list'>
-                {getTargetsAndActual(set).map(kVs => {
+                {getTargetsAndActual(set).map((kVs, index2 )=> {
                   return(
-                    <li>
+                    <li key={`${set._id}-${index}-${index2}`}>
                       {kVs.target.key}: {kVs.target.value} <br/>
                       {kVs.actual.key}: {kVs.actual.value ? kVs.actual.value : <i>not recorded</i>}
                     </li>
@@ -72,9 +87,9 @@ export const ViewSetGroupModal = ({
 }
 
 const mapStateToProps = (state) => ({
+  currentRoutine: state.routineReducer.currentRoutine,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
   currentExerciseSets: state.exerciseSetReducer.currentExerciseSets
-
 })
 
 const mapDispatchToProps = {

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {destroySetGroup, setCurrentSetGroup} from '../../1_Actions/setGroupActions'
+import {numberToDay} from '../../4_Components/dnd_routine_schedule/schedule_helpers/routineScheduleConstructor'
 import Card from 'react-bootstrap/Card'
 import {BsGrid3X3Gap} from 'react-icons/bs'
 import {BsEye} from 'react-icons/bs'
@@ -12,16 +13,20 @@ import ViewSetGroupModal from '../modals/view_modals/ViewSetGroupModal'
 
 export const SetGroup = ({
   set_group, 
+  weekNumber,
+  dayNumber,
   isDragging,
   destroySetGroup,
   currentWeeks,
-  setCurrentSetGroup
+  setCurrentSetGroup,
+  currentRoutine
 }) => {
 
 
   const [modalShow, setModalShow] = useState(false)
 
-
+  const redirectLink = `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${weekNumber}/day-${dayNumber}-${numberToDay[dayNumber].short}`
+  
   const handleDeleteSetGroup = () => {
     destroySetGroup(set_group._id)
   }
@@ -32,15 +37,17 @@ export const SetGroup = ({
   }
 
   return (
-
     <Card
     text={!isDragging && 'white'}
     style={{margin: '5px auto', cursor: 'grab'}}
     className="set-group-schedule-card">
-    {modalShow && 
-    <ViewSetGroupModal 
-    setModalShow={setModalShow} 
-    modalShow={modalShow}/>}
+
+      {modalShow && 
+      <ViewSetGroupModal
+      redirectLink={redirectLink}
+      setModalShow={setModalShow} 
+      modalShow={modalShow}/>}
+
       <Card.Header
       className='set-group-schedule-card-header'>
         <div className='view-copy-move-btns-conainer'>
@@ -77,7 +84,8 @@ export const SetGroup = ({
 }
 
 const mapStateToProps = (state) => ({
-  currentWeeks: state.weekReducer.currentWeeks
+  currentWeeks: state.weekReducer.currentWeeks,
+  currentRoutine: state.routineReducer.currentRoutine
 })
 
 const mapDispatchToProps = {
