@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
-import {createNewExercise, clearCurrentExercise, saveExerciseChanges, writingExercise} from '../../../1_Actions/exerciseActions'
+import {createNewExercise, clearCurrentExercise, saveExerciseChanges, localWritingExercise} from '../../../1_Actions/exerciseActions'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
 import {majorMuscleGroups, categories} from '../../routine/form_routine/routineFormData'
 import Form from 'react-bootstrap/Form'
@@ -18,7 +18,7 @@ import IFramePreview from './IFramePreview'
 export const ExerciseForm = ({ 
   currentExercise,
   currentExerciseName, 
-  writingExercise, 
+  localWritingExercise, 
   error_message, 
   unsavedChanges,
   clearErrorMessage, 
@@ -47,7 +47,7 @@ export const ExerciseForm = ({
   const handleChange = (e, trim=true) => {
     const trimmeddValue = trim ? e.target.value.trim() : e.target.value 
 
-    writingExercise(e.target.name, trimmeddValue)
+    localWritingExercise(e.target.name, trimmeddValue)
   }
 
   useEffect(()=> {
@@ -213,7 +213,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingExercise,
+  localWritingExercise,
   clearErrorMessage,
   createNewExercise,
   saveExerciseChanges,

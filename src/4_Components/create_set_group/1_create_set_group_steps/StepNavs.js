@@ -67,7 +67,7 @@ export const StepNavs = ({
           />}
         </Col>} */}
         
-        {currentStep === 'choose-exercise' && mode !== 'editing' &&
+        {currentStep === 'choose-exercise' && !currentSetGroup._id &&
         <Col className='create-set-group-btn-column' sm='12' md='4'>
           <CreateSetGroupBtn />
         </Col>}

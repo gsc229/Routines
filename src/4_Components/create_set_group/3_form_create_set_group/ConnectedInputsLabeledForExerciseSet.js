@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {writingExerciseSet} from '../../../1_Actions/exerciseSetActions'
+import {localWritingExerciseSet} from '../../../1_Actions/exerciseSetActions'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -15,12 +15,12 @@ const DynamicFieldInput = ({
   min=0,
   max=null,
   currentExerciseSet,
-  writingExerciseSet,
+  localWritingExerciseSet,
   appendText,
   field // rep_max reps_per_set target_weight target_time target_distance total_sets
 }) => {
 
-  /* onChange={(e) => writingExerciseSet(e.target.name, inputPirmitiveType === 'number' ? JSON.parse(e.target.value) : e.target.value)}  */
+  /* onChange={(e) => localWritingExerciseSet(e.target.name, inputPirmitiveType === 'number' ? JSON.parse(e.target.value) : e.target.value)}  */
   
   return(
     <Form>
@@ -32,7 +32,7 @@ const DynamicFieldInput = ({
           <FormControl
           placeholder={placeholder}
           className={`${required ? !currentExerciseSet[field] ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-          onChange={(e) => writingExerciseSet(e.target.name, e.target.value)} 
+          onChange={(e) => localWritingExerciseSet(e.target.name, e.target.value)} 
           value={currentExerciseSet[field]} 
           name={field} 
           type={inputPirmitiveType}
@@ -65,7 +65,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingExerciseSet
+  localWritingExerciseSet
 }
 
 export const ConnectedDynamicFieldInputForExerciseSet = connect(mapStateToProps, mapDispatchToProps)(DynamicFieldInput)

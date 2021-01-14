@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 
@@ -9,7 +9,7 @@ const RepMaxInput = ({
   placeholder,
   required,
   createSetGroupData,
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }) => {
   const {rep_max} = createSetGroupData
 
@@ -21,7 +21,7 @@ const RepMaxInput = ({
         <Form.Control
         placeholder={placeholder}
         className={`${required ? !rep_max ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-        onChange={(e)=> writingCreateSetGroupData(e.target.name, e.target.value)} 
+        onChange={(e)=> localWritingCreateSetGroupData(e.target.name, e.target.value)} 
         value={rep_max} 
         name='rep_max' 
         type='number'
@@ -41,7 +41,7 @@ const DynamicFieldInput = ({
   min=0,
   max=null,
   createSetGroupData,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   appendText,
   field // rep_max reps_per_set starting_weight starting_time starting_distance total_sets
 }) => {
@@ -55,7 +55,7 @@ const DynamicFieldInput = ({
         <Form.Control
         placeholder={placeholder}
         className={`${required ? !createSetGroupData[field] ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-        onChange={(e) => writingCreateSetGroupData(e.target.name, e.target.value)} 
+        onChange={(e) => localWritingCreateSetGroupData(e.target.name, e.target.value)} 
         value={createSetGroupData[field]} 
         name={field} 
         type={inputPirmitiveType}
@@ -79,7 +79,7 @@ const WeightInput = ({
   placeholder,
   required,
   createSetGroupData,
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }) => {
   const {starting_weight} = createSetGroupData
 
@@ -92,7 +92,7 @@ const WeightInput = ({
         <Form.Control
         placeholder={placeholder}
         className={`${required ? !starting_weight ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-        onChange={(e) => writingCreateSetGroupData(e.target.name, e.target.value)} 
+        onChange={(e) => localWritingCreateSetGroupData(e.target.name, e.target.value)} 
         value={starting_weight} 
         name='starting_weight' 
         type='number'
@@ -109,7 +109,7 @@ const RepsPerSetInput = ({
   placeholder,
   required,
   createSetGroupData,
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }) => {
   const {reps_per_set} = createSetGroupData
 
@@ -123,7 +123,7 @@ const RepsPerSetInput = ({
         <Form.Control
         placeholder={placeholder}
         className={`${required ? !reps_per_set ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-        onChange={(e) => writingCreateSetGroupData(e.target.name, e.target.value)} 
+        onChange={(e) => localWritingCreateSetGroupData(e.target.name, e.target.value)} 
         value={reps_per_set} 
         name= 'reps_per_set' 
         type='number'
@@ -136,7 +136,7 @@ const TotalSetsInput = ({
   placeholder,
   required,
   createSetGroupData,
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }) => {
   const {total_sets} = createSetGroupData
 
@@ -148,7 +148,7 @@ const TotalSetsInput = ({
         <Form.Control
         placeholder={placeholder}
         className={`${required ? !total_sets ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-        onChange={(e) => writingCreateSetGroupData(e.target.name, e.target.value)} 
+        onChange={(e) => localWritingCreateSetGroupData(e.target.name, e.target.value)} 
         value={total_sets} name='total_sets' 
         max={20} 
         min={1} type='number' />
@@ -160,7 +160,7 @@ const RestSecondsInput = ({
   placeholder,
   required,
   createSetGroupData,
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }) => {
   const {rest_time} = createSetGroupData
 
@@ -172,7 +172,7 @@ const RestSecondsInput = ({
         <Form.Control
         placeholder={placeholder}
         className={`${required ? !rest_time ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-        onChange={(e) => writingCreateSetGroupData(e.target.name, e.target.value)}  
+        onChange={(e) => localWritingCreateSetGroupData(e.target.name, e.target.value)}  
         value={rest_time} 
         name='rest_time' 
         min={0} 
@@ -189,7 +189,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export const ConnectedRepMaxInput = connect(mapStateToProps, mapDispatchToProps)(RepMaxInput)

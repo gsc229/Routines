@@ -43,7 +43,7 @@ export const setCurrentExercise = (exercise) => dispatch => {
   dispatch({type: constants.SET_CURRENT_EXERCISE, payload: exercise})
 }
 
-export const writingExercise = (field, data) => dispatch => {
+export const localWritingExercise = (field, data) => dispatch => {
   dispatch({type: constants.WRITING_EXERCISE, payload: {field, data}})
 }
 

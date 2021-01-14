@@ -7,7 +7,7 @@ export const setCurrentRoutine = (routine) => dispatch => {
   dispatch({type: constants.SET_CURRENT_ROUTINE, payload: routine})
 }
 
-export const writingRoutine = (field, data) => dispatch => {
+export const localWritingRoutine = (field, data) => dispatch => {
   dispatch({type: constants.WRITING_ROUTINE, payload: {field, data}})
 }
 

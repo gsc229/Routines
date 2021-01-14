@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -16,7 +16,7 @@ import Container  from 'react-bootstrap/Container'
 
 
 export const StraightSetForm = ({
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   createSetGroupData
 }) => {
 
@@ -27,22 +27,22 @@ export const StraightSetForm = ({
   const [decreaseMethod, setDecreaseMethod] = useState({key: 'percent_weight_decrease', value: 10})
 
   useEffect(() => {
-    writingCreateSetGroupData('percent_weight_decrease', 10)
+    localWritingCreateSetGroupData('percent_weight_decrease', 10)
   }, [])
 
 
   useEffect(()=>{
     console.log('DROPSET FORM')
     if(!percent_weight_decrease && !weight_decrease){
-      writingCreateSetGroupData('percent_weight_decrease', 10)
+      localWritingCreateSetGroupData('percent_weight_decrease', 10)
     }
 
     if(decreaseMethod.key === 'percent_weight_decrease'){
-      writingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
-      writingCreateSetGroupData('weight_decrease', 0)
+      localWritingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
+      localWritingCreateSetGroupData('weight_decrease', 0)
     } else{
-      writingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
-      writingCreateSetGroupData('percent_weight_decrease', 0) 
+      localWritingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
+      localWritingCreateSetGroupData('percent_weight_decrease', 0) 
     }
 
   },[decreaseMethod])
@@ -96,7 +96,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StraightSetForm)

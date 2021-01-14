@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import DropDownButton from 'react-bootstrap/DropdownButton'
 import DropDown from 'react-bootstrap/Dropdown'
 
 export const ConnectedIncrementLabeled = ({
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   createSetGroupData,
   inputSize,
   labelText,
@@ -29,19 +29,19 @@ export const ConnectedIncrementLabeled = ({
   const [increaseMethod, setIncreaseMethod] = useState({key: `${incrementField}_increase`, value: 10})
   
   useEffect(() => {
-    writingCreateSetGroupData(`${incrementField}_increase`, 10)
+    localWritingCreateSetGroupData(`${incrementField}_increase`, 10)
   }, [])
 
   useEffect(()=>{
     if(!createSetGroupData[`percent_${incrementField}_increase`] && !createSetGroupData[`${incrementField}_increase`]){
-      writingCreateSetGroupData(`${incrementField}_increase`, 10)
+      localWritingCreateSetGroupData(`${incrementField}_increase`, 10)
     }
     if(increaseMethod.key === `percent_${incrementField}_increase`){
-      writingCreateSetGroupData(increaseMethod.key, increaseMethod.value)
-      writingCreateSetGroupData(`${incrementField}_increase`, 0)
+      localWritingCreateSetGroupData(increaseMethod.key, increaseMethod.value)
+      localWritingCreateSetGroupData(`${incrementField}_increase`, 0)
     } else{
-      writingCreateSetGroupData(increaseMethod.key, increaseMethod.value)
-      writingCreateSetGroupData(`percent_${incrementField}_increase`, 0) 
+      localWritingCreateSetGroupData(increaseMethod.key, increaseMethod.value)
+      localWritingCreateSetGroupData(`percent_${incrementField}_increase`, 0) 
     }
 
   },[increaseMethod])
@@ -101,7 +101,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedIncrementLabeled)

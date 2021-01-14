@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Button from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import {FaHandPointRight, FaHandPointLeft} from 'react-icons/fa'
@@ -12,7 +12,7 @@ const NextStepButton = ({
   variant,
   disabled,
   text,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   writeDataKey,
   writeDataValue
 }) => {
@@ -21,7 +21,7 @@ const NextStepButton = ({
     <Button
       variant={variant}
       className={`step-btn next-step-btn ${disabled && 'disabled-next-step-btn'}`}
-      onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
+      onClick={() => localWritingCreateSetGroupData(writeDataKey, writeDataValue)} 
       disabled={disabled}>
         {text} &nbsp;
         <FaHandPointRight className='next-link' />
@@ -33,7 +33,7 @@ const PreviousStepButton = ({
   variant,
   disabled,
   text,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   writeDataKey,
   writeDataValue
 }) => {
@@ -42,7 +42,7 @@ const PreviousStepButton = ({
     <Button
       variant={variant}
       className={`step-btn previous-step-btn ${disabled && 'disabled-previous-step-btn'}`}
-      onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
+      onClick={() => localWritingCreateSetGroupData(writeDataKey, writeDataValue)} 
       disabled={disabled}>
         <FaHandPointLeft className='previous-link' />
         &nbsp;   
@@ -56,7 +56,7 @@ const NextStepBadge = ({
   variant,
   disabled,
   text,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   writeDataKey,
   writeDataValue
 }) => {
@@ -66,7 +66,7 @@ const NextStepBadge = ({
       pill={pill}
       variant={variant}
       className={`step-btn next-step-btn ${disabled && 'disabled-next-step-btn'}`}
-      onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
+      onClick={() => localWritingCreateSetGroupData(writeDataKey, writeDataValue)} 
       disabled={disabled}>
         {text} &nbsp;
         <FaHandPointRight className='next-link' />
@@ -79,7 +79,7 @@ const PreviousStepBadge = ({
   variant,
   disabled,
   text,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   writeDataKey,
   writeDataValue
 }) => {
@@ -89,7 +89,7 @@ const PreviousStepBadge = ({
       pill={pill}
       variant={variant}
       className={`step-btn previous-step-btn ${disabled && 'disabled-previous-step-btn'}`}
-      onClick={() => writingCreateSetGroupData(writeDataKey, writeDataValue)} 
+      onClick={() => localWritingCreateSetGroupData(writeDataKey, writeDataValue)} 
       disabled={disabled}>
         <FaHandPointLeft className='previous-link' />
         &nbsp;   
@@ -105,7 +105,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export const ConnectedPreviousStepButton = connect(mapStateToProps, mapDispatchToProps)(PreviousStepButton)

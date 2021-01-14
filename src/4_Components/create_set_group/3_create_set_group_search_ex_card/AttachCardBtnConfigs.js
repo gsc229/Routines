@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {
   addToCurrentExerciseSets, 
   removeFromCurrentExerciseSetsByExerciseID,
-  createNewExerciseSets} from '../../../1_Actions/exerciseSetActions'
+  createNewExerciseSets,
+  localBulkWriteExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import {
   canAddThisExercise, 
   canMoveToForm, 
@@ -24,6 +25,8 @@ export const AddRemoveBtnConfigs = ({
   currentSetGroup,
   exercise,
   addToCurrentExerciseSets, 
+  localBulkWriteExerciseSets,
+  localWritingCreateSetGroupData,
   removeFromCurrentExerciseSetsByExerciseID,
   createNewExerciseSets,
   showNextStepBtn,
@@ -49,27 +52,39 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const handleAddClick = async() => {
-    console.log(exercise)
+    // if creating mode the whole set group and exercise sets are 
+    // created at once through the CreateSetGroupBtn so just add them to bank without back end call
     const newExSet = {
       ...currentExerciseSet,
+      set_group: currentSetGroup._id || null,
       routine,
       week,
       user,
       exercise,
       order: currentExerciseSets.length
     }
-
-    addToCurrentExerciseSets(newExSet)
-    const createResponse = await createNewExerciseSets([newExSet])
     
-    if(!createResponse.success){
-      console.log({createResponse})
-      alert('You fucked up!')
-      return
-    }
+    if(currentSetGroup._id){
+        console.log(exercise)
+        
+        addToCurrentExerciseSets(newExSet)
+        const createResponse = await createNewExerciseSets([newExSet])
+        
+        if(!createResponse.success){
+          localBulkWriteExerciseSets(currentExerciseSets)
+          return
+        }
 
-    setShowAddedAlert(true)
-    setTimeout(() => {setShowAddedAlert(false)}, 1000)
+        setShowAddedAlert(true)
+        setTimeout(() => {setShowAddedAlert(false)}, 1000)
+
+    } else{
+
+      addToCurrentExerciseSets(newExSet)
+      setShowAddedAlert(true)
+      setTimeout(() => {setShowAddedAlert(false)}, 1000)
+
+    }
 
   }
 
@@ -158,8 +173,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   addToCurrentExerciseSets,
+  localBulkWriteExerciseSets,
+  localWritingCreateSetGroupData,
   removeFromCurrentExerciseSetsByExerciseID,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   createNewExerciseSets
 }
 

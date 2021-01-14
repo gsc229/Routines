@@ -7,7 +7,7 @@ export const setCurrentExerciseSet = (exerciseSet) => dispatch => {
   dispatch({type: constants.SET_CURRENT_EXERCISE_SET, payload: exerciseSet})
 }
 
-export const writingExerciseSet = (key, value) => dispatch => {
+export const localWritingExerciseSet = (key, value) => dispatch => {
   dispatch({type: constants.WRITING_EXERCISE_SET, payload: {key, value}})
 }
 
@@ -37,7 +37,7 @@ export const removeFromCurrentExerciseSetsBySetID = (setId) => dispatch => {
  }
 
 export const localBulkWriteExerciseSets = (exercisesSetsArray) => dispatch => {
-  dispatch({type: constants.BULK_WRITE_CURRENT_EXERCISE_SETS, payload: exercisesSetsArray})
+  dispatch({type: constants.LOCAL_BULK_WRITE_CURRENT_EXERCISE_SETS, payload: exercisesSetsArray})
 }
 
 
@@ -121,10 +121,10 @@ export const destroyExerciseSet = (setId) => dispatch => {
       return deleteExSetResponse
     }
     if(deleteExSetResponse.error_message){
-      dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: deleteExSetResponse.error_message})
+      dispatch({type: constants.DELETE_EXERCISE_SET_FAIL, payload: deleteExSetResponse.error_message})
       return false
     }
-    dispatch({type: constants.CREATE_EXERCISE_SETS_FAIL, payload: generalErrorMessage})
+    dispatch({type: constants.DELETE_EXERCISE_SET_FAIL, payload: generalErrorMessage})
       return false
   })
 }

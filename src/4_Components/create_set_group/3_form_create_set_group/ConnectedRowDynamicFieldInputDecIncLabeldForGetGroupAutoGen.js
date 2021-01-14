@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -10,7 +10,7 @@ import ConnectedIncrementLabeled from './ConnectedIncrementLabeled'
 import ConnectedDynamicFiledInputLabeled from './ConnectedInputDynamicFieldLabeledForSetGroupAutoGen'
 
 const ConnectedRowDynamicFiledInputForSetGroupAutoGen = ({
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   createSetGroupData,
   placeholderText='optional',
   startingField,
@@ -34,20 +34,20 @@ const ConnectedRowDynamicFiledInputForSetGroupAutoGen = ({
   useEffect(() => {
 
     if(changeOption === "choose" || changeOption === "clear"  ){
-      writingCreateSetGroupData(`percent_${decIncField}_increase`, 0)
-      writingCreateSetGroupData(`percent_${decIncField}_decrease`, 0)
-      writingCreateSetGroupData(`${decIncField}_increase`, 0)
-      writingCreateSetGroupData(`${decIncField}_decrease`, 0)
+      localWritingCreateSetGroupData(`percent_${decIncField}_increase`, 0)
+      localWritingCreateSetGroupData(`percent_${decIncField}_decrease`, 0)
+      localWritingCreateSetGroupData(`${decIncField}_increase`, 0)
+      localWritingCreateSetGroupData(`${decIncField}_decrease`, 0)
     }
 
     if(changeOption === "increment"){
-      writingCreateSetGroupData(`percent_${decIncField}_decrease`, 0)
-      writingCreateSetGroupData(`${decIncField}_decrease`, 0)
+      localWritingCreateSetGroupData(`percent_${decIncField}_decrease`, 0)
+      localWritingCreateSetGroupData(`${decIncField}_decrease`, 0)
     }
 
     if(changeOption === 'decrement'){
-      writingCreateSetGroupData(`percent_${decIncField}_increase`, 0)
-      writingCreateSetGroupData(`${decIncField}_increase`, 0)
+      localWritingCreateSetGroupData(`percent_${decIncField}_increase`, 0)
+      localWritingCreateSetGroupData(`${decIncField}_increase`, 0)
     }
 
   }, [changeOption])
@@ -104,7 +104,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedRowDynamicFiledInputForSetGroupAutoGen)

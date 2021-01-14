@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {canMoveToForm, minAndMaxAllowedExercises, getSetComboType} from '../createSetGroupHelpers'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {removeFromCurrentExerciseSetsByExerciseID, localBulkWriteExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import {Droppable} from 'react-beautiful-dnd'
 import BankCardDraggable from './BankCardDraggable'
@@ -14,7 +14,7 @@ import { BiMask } from 'react-icons/bi'
 const BankCardDropZone = ({
   currentExerciseSets,
   currentSetGroup,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   createSetGroupData
 }) => {
 
@@ -84,7 +84,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   removeFromCurrentExerciseSetsByExerciseID,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   localBulkWriteExerciseSets
 }
 
