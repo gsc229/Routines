@@ -66,28 +66,27 @@ const reducer = (state=initialState, action) => {
         ...state,
         currentExerciseSet: action.payload
       }
-      case constants.ADD_TO_CURRENT_EXERCISE_SETS:
-        return{
-          ...state,
-          currentExerciseSets: [...state.currentExerciseSets, action.payload]
-        }
-      case constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_EXERCISE_ID:
-        return{
-          ...state,
-          currentExerciseSets: [...state.currentExerciseSets.filter(setGroup => setGroup.exercise._id ? setGroup.exercise._id !== action.payload : setGroup.exercise !== action.payload)]
-        }
-      case  constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_SET_ID:
-        return{
-          ...state,
-          currentExerciseSets: [...state.currentExerciseSets.filter(setGroup => setGroup._id !== action.payload)]
-        }
-      case constants.LOCAL_BULK_WRITE_CURRENT_EXERCISE_SETS:
-        const setId = action.payload[0] ? action.payload[0]._id : ''
-        return{
-          ...state,
-          currentExerciseSets: action.payload
-          
-        }
+    case constants.ADD_TO_CURRENT_EXERCISE_SETS:
+      return{
+        ...state,
+        currentExerciseSets: [...state.currentExerciseSets, action.payload]
+      }
+    case constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_EXERCISE_ID:
+      return{
+        ...state,
+        currentExerciseSets: [...state.currentExerciseSets.filter(setGroup => setGroup.exercise._id ? setGroup.exercise._id !== action.payload : setGroup.exercise !== action.payload)]
+      }
+    case  constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_SET_ID:
+      return{
+        ...state,
+        currentExerciseSets: [...state.currentExerciseSets.filter(setGroup => setGroup._id !== action.payload)]
+      }
+    case constants.LOCAL_BULK_WRITE_CURRENT_EXERCISE_SETS:
+      return{
+        ...state,
+        currentExerciseSets: action.payload
+        
+      }
     case constants.SET_CURRENT_EXERCISE_SETS:
       return{
         ...state,
@@ -160,9 +159,14 @@ const reducer = (state=initialState, action) => {
         crudingExerciseSet: 'bulk-updating'
       }
     case constants.BULK_WRITE_EXERCISE_SETS_SUCCESS:
+      // success will always return all the remaining/modified/created sets of a single set group (populated with exercise)
+      
+
       return{
         ...state,
-        crudingExerciseSet: false
+        crudingExerciseSet: false,
+        currentExerciseSets: action.payload.data.sort((a, b) => a.order - b.order),
+        currentRoutineSets: [...state.currentRoutineSets.filter(set => set.set_group !== action.payload.setGroupId), ...action.payload.data].sort((a, b) => a - b)
       }
     case constants.BULK_WRITE_EXERCISE_SETS_FAIL:
       return{

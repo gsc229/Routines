@@ -109,7 +109,7 @@ export const SubSetModal = ({
         }
       
       
-      localBulkWriteExerciseSets(subGroupResonse.data)
+      //localBulkWriteExerciseSets(subGroupResonse.data)
       setModalShow(false)
       clearCurrentExerciseSet()
       clearCreateSetGroupData()

@@ -77,7 +77,7 @@ export const bulkWriteExerciseSets = (updatesArray, setGroupId) => dispatch => {
   return bulkUpdateExerciseSets(updatesArray, setGroupId)
   .then(response => {
     if(response && response.success){
-      dispatch({type: constants.BULK_WRITE_EXERCISE_SETS_SUCCESS})
+      dispatch({type: constants.BULK_WRITE_EXERCISE_SETS_SUCCESS, payload: {setGroupId, data: response.data}})
       return response
     } 
     if(response && response.error_message){
