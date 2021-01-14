@@ -46,11 +46,7 @@ const BankCardDropZone = ({
         className={`chosen-exercises-bank ${snapshopt.isDraggingOver && 'exercise-bank-dragover'}`}>
           <div className='chosen-exerciese-bank-header'>
             <h4>Chosen Exercises:</h4>
-            {canMoveToForm(set_group_type, createSetGroupData, currentExerciseSets) && 
-            <p 
-            onClick={() => writingCreateSetGroupData('currentStep', 'enter-info')}>
-              Enter {set_group_type} Set Info <FaRegHandPointRight />
-            </p>}
+            
           </div>
           
           <Row 

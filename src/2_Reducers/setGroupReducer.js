@@ -27,6 +27,7 @@ const initialState = {
   mulipleExercises: false,
   lockedInType: "",
   createSetGroupData: {
+    mode: 'creating-new',
     currentStep: "choose-type",
     currentExerciseSetIndex: 0,
     is_compound: false,

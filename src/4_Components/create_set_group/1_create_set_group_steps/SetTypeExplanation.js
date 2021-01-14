@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {writingCreateSetGroupData, clearCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {clearCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
@@ -13,6 +13,12 @@ const SetTypeExplanation = ({
 }) => {
 
   const [hide, setHide] = useState(false)
+
+  useEffect(() => {
+    if(currentStep === 'choose-type'){
+      setHide(false)
+    }
+  }, [currentStep])
 
   const typeExplanation = {
     "Manual": "Manually create a set group by adding sets one by one",
@@ -39,7 +45,12 @@ const SetTypeExplanation = ({
   return (
       <div className='type-explanation-and-use-btn'>
 
-        <span className={hide ? 'span-on-hide' : 'span-on-show'} onClick={() => setHide(!hide)}>{hide ? 'show description' : 'hide description'}</span>
+        {currentStep !== 'choose-type' && 
+        <span 
+        className={hide ? 'span-on-hide' : 'span-on-show'} 
+        onClick={() => setHide(!hide)}>
+          {hide ? 'show description' : 'hide description'}
+        </span>}
 
         <div className={`title-and-content ${hide && 'hide'}`}>
           <h2 className='type-title'>{type} {type !== "Manual" && 'Set Group'}</h2>

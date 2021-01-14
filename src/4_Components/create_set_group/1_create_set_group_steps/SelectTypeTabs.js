@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import { writingSetGroup } from '../../../1_Actions/setGroupActions'
 import Nav from 'react-bootstrap/Nav'
@@ -13,16 +13,23 @@ export const SetGroupForm = ({
   const [show, setShow] = useState(true)
   const {set_group_type} = currentSetGroup
 
+  useEffect(() => {
+    if(currentStep === 'choose-type'){
+      setShow(true)
+    }
+  }, [currentStep])
+
   return (
     <div className='set-group-type-tab-btns-container'>
 
 
      
+      {currentStep !== 'choose-type' && 
       <span 
       onClick={() => setShow(!show)}
       className={`show-types-span ${!show && 'show-types-span-hide'}`}>
         {show ? 'hide' : 'show types'}
-      </span>
+      </span>}
 
 
       {show && <h6 className='types-tabs-title'>Quick Build: </h6>}
