@@ -1,4 +1,4 @@
-export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupChanges, setRoutineSchedule) => {
+export const onSetGroupDragEnd = async (result, selectedWeek, saveSetGroupChanges, setSelectedWeek) => {
 
   const {destination, source} = result
   if(!destination) return
@@ -19,8 +19,8 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
   [sourceWeek, sourceDay, sourceWeekId, sourceDayName] = sourceCodes
 
   if(sourceWeek !== destinationWeek){
-  const locatedSource = routineSchedule[sourceWeek][sourceDay]
-  const locatedDestination = routineSchedule[destinationWeek][destinationDay]
+  const locatedSource = selectedWeek[sourceWeek][sourceDay]
+  const locatedDestination = selectedWeek[destinationWeek][destinationDay]
   const sourceItems = [...locatedSource.set_groups]
   const destinationItems = [...locatedDestination.set_groups]
   const [removed] = sourceItems.splice(source.index, 1)
@@ -31,19 +31,19 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
   removed.day = destinationDayName
   destinationItems.splice(destination.index, 0, removed)
 
-  setRoutineSchedule({
-      ...routineSchedule,
+  setSelectedWeek({
+      ...selectedWeek,
       [sourceWeek]: {
-        ...routineSchedule[sourceWeek],
+        ...selectedWeek[sourceWeek],
         [sourceDay]: {
-        ...routineSchedule[sourceWeek][sourceDay],
+        ...selectedWeek[sourceWeek][sourceDay],
         set_groups: sourceItems
       }
       },
       [destinationWeek]: {
-        ...routineSchedule[destinationWeek],
+        ...selectedWeek[destinationWeek],
         [destinationDay]: {
-          ...routineSchedule[destinationWeek][destinationDay],
+          ...selectedWeek[destinationWeek][destinationDay],
           set_groups: destinationItems
         }
         
@@ -57,8 +57,8 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
 } else if(sourceWeek === destinationWeek && (sourceDay !== destinationDay)){
 
 
-  const sameWeekSourceLocation = routineSchedule[sourceWeek][sourceDay]
-  const sameWeekDesitnationLocation = routineSchedule[destinationWeek][destinationDay]
+  const sameWeekSourceLocation = selectedWeek[sourceWeek][sourceDay]
+  const sameWeekDesitnationLocation = selectedWeek[destinationWeek][destinationDay]
   const copyOfSourceDaySetGroups = [...sameWeekSourceLocation.set_groups]
 
   const copyOfDestinationDaySetGroups = [...sameWeekDesitnationLocation.set_groups]
@@ -70,16 +70,16 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
   removed.day = destinationDayName
 
   copyOfDestinationDaySetGroups.splice(destination.index, 0, removed)
-  setRoutineSchedule({
-    ...routineSchedule,
+  setSelectedWeek({
+    ...selectedWeek,
     [destinationWeek]:{
-      ...routineSchedule[destinationWeek],
+      ...selectedWeek[destinationWeek],
       [destinationDay]:{
-        ...routineSchedule[destinationWeek][destinationDay],
+        ...selectedWeek[destinationWeek][destinationDay],
           set_groups: copyOfDestinationDaySetGroups
       },
       [sourceDay]:{
-        ...routineSchedule[destinationWeek][sourceDay],
+        ...selectedWeek[destinationWeek][sourceDay],
           set_groups: copyOfSourceDaySetGroups
       }
     }
@@ -89,18 +89,18 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
   return saveSetGroupChanges(removed._id, removed)
    
 } else if(sourceWeek === destinationWeek && sourceDay === destinationDay){
-    const sameDaySourceAndDestinationLocation = routineSchedule[sourceWeek][sourceDay]
+    const sameDaySourceAndDestinationLocation = selectedWeek[sourceWeek][sourceDay]
     const copyOfSetGroups = [...sameDaySourceAndDestinationLocation.set_groups]
     const [removed] = copyOfSetGroups.splice(source.index, 1)
     removed.order = destination.index
     copyOfSetGroups.splice(destination.index, 0, removed)
 
-    setRoutineSchedule({
-      ...routineSchedule,
+    setSelectedWeek({
+      ...selectedWeek,
       [destinationWeek]:{
-        ...routineSchedule[destinationWeek],
+        ...selectedWeek[destinationWeek],
         [destinationDay]: {
-          ...routineSchedule[destinationWeek][destinationDay],
+          ...selectedWeek[destinationWeek][destinationDay],
           set_groups: copyOfSetGroups
         }
       }

@@ -18,7 +18,7 @@ export const ConfirmDeleteWeekModal = ({
 
 
   confirmingTextObject ? confirmingTextObject = confirmingTextObject : confirmingTextObject = {
-  title: `Are sure you want to delete Week: ${week.week_number}?`, 
+  title: <p className='delete-modal-heading-text'>Are you sure you want to delete <span className='delete-modal-heading-name-sapn'>Week: {week.week_number}</span> ?</p>, 
   paragraph: 
   "Deleting a week will delete all the set groups connected to that week, but your records for doing the exercises will be saved"}
 

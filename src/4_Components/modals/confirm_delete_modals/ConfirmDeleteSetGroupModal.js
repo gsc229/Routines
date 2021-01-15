@@ -1,33 +1,30 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroyRoutine} from '../../../1_Actions/routineActions'
+import {destroySetGroup} from '../../../1_Actions/setGroupActions'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
 const ConfirmDeleteModal = ({
-  destroyRoutine,
+  destroySetGroup,
   modalShow, 
   setModalShow,
-  routine,
+  setGroup,
   confirmingTextObject={
-    title: <p className='delete-modal-heading-text'>Are you sure you want to delete <span className='delete-modal-heading-name-sapn'>{routine.name}</span> ?</p>,
-    paragraph: 'Deleting a routine deletes set groups, but records of your exercise sets will be saved.'
+    title: <p className='delete-modal-heading-text'>Are you sure you want to delete <span className='delete-modal-heading-name-sapn'>{setGroup.name}</span>?</p>,
+    paragraph: 'Deleting a set group deletes the set group, but records of your exercise sets will be saved.'
   },
   failingTextObject={
     title: `Sorry!`,
-    paragraph: `There was a problem deleting ${routine.name}. Please try again later`
+    paragraph: `There was a problem deleting ${setGroup.name}. Please try again later`
   }
 }) => {
 
-  
-
   const [deleteFailed, setDeleteFailed] = useState(false)
-  console.log('ConfirmDeleteModal', {routine})
 
 
   const handleDelete = async () => {
 
-      const destroyResult = await  destroyRoutine(routine._id)
+      const destroyResult = await  destroySetGroup(setGroup._id)
 
       if(destroyResult.success){
         setModalShow(false)
@@ -48,14 +45,14 @@ const ConfirmDeleteModal = ({
     <div className='outer-modal-container modal'>
       {!deleteFailed && 
         <Modal
-        className='delete-routine-modal'
+        className='delete-setGroup-modal'
         show={modalShow}
         onHide={() => setModalShow(false)}
         size='lg'
-        aria-labelledby={`routine-${routine._id}`}
+        aria-labelledby={`setGroup-${setGroup._id}`}
         centered>
           <Modal.Header className='modal-header' closeButton>
-            <Modal.Title id={`routine-${routine._id}`}>
+            <Modal.Title id={`setGroup-${setGroup._id}`}>
                 {confirmingTextObject.title}
             </Modal.Title>
           </Modal.Header>
@@ -64,13 +61,13 @@ const ConfirmDeleteModal = ({
           </Modal.Body>
       
           <Modal.Footer className='modal-footer'>
-           <Button onClick={handleDelete} >DELETE ROUTINE</Button>
+           <Button onClick={handleDelete} >DELETE</Button>
           </Modal.Footer>
         </Modal>
       }
       {deleteFailed && 
         <Modal
-        className='delete-routine-modal-fail'
+        className='delete-setGroup-modal-fail'
         show={deleteFailed}
         onHide={() => setDeleteFailed(false)}
         size='lg'
@@ -78,7 +75,7 @@ const ConfirmDeleteModal = ({
         centered>
           <Modal.Header closeButton>
             <Modal.Title id='confirm-delete-modal-title'>
-                {failingTextObject.title}
+              {failingTextObject.title}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -100,8 +97,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  destroyRoutine
+  destroySetGroup
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmDeleteModal)
-

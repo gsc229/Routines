@@ -1,5 +1,5 @@
 import * as constants from '.'
-import {createWeek, getWeeks, updateWeek, getWeekById, deleteWeek } from '../3_APIs/routineWeekApi'
+import {createWeek, getWeeks, updateWeek, deleteWeek } from '../3_APIs/routineWeekApi'
 const generalErrorMessage = "Something went wrong with the request."
 
 

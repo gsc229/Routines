@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import { connect } from 'react-redux'
 import {Switch, Route} from 'react-router-dom'
 import './App.scss'
@@ -15,9 +16,21 @@ import CreateSetGroupPage from './5_Pages/create_set_group_page/CreateSetGroupPa
 import ManageExercisesPage from './5_Pages/manage_exercises_page/ManageExercisesPage'
 import BrowseExercisesPage from './5_Pages/browse_exercises_page/BrowseExercisesPage'
 
-function App({loggedIn}) {
+function App({
+  loggedIn,
+  user_ERROR,
+  routine_ERROR,
+  week_ERROR,
+  set_group_ERROR,
+  exercise_set_ERROR,
+  exercise_ERROR
+}) {
 
-  console.log({loggedIn})
+
+
+
+
+
 
   return (
     <div className="App">
@@ -57,11 +70,17 @@ function App({loggedIn}) {
 }
 
 const mapStateToProps = (state) => ({
-  loggedIn: state.userReducer.loggedIn
+  loggedIn: state.userReducer.loggedIn,
+  user_ERROR: state.userReducer.error_message,
+  routine_ERROR: state.routineReducer.error_message,
+  week_ERROR: state.weekReducer.error_message,
+  set_group_ERROR: state.routineReducer.error_message,
+  exercise_set_ERROR: state.exerciseSetReducer.error_message,
+  exercise_ERROR: state.exerciseReducer.error_message
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
