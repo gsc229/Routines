@@ -31,6 +31,7 @@ export const RoutineScheduleDnd = ({
   const [routineSchedule, setRoutineSchedule] = useState({})
   const [weekToDestroy, setWeekToDestroy] = useState('')
   const [modalShow, setModalShow] = useState(false)
+  const [selectedWeek, setSelectedWeek] = useState(routineSchedule)
 
   useEffect( async() => {
     await syncWeeksAndSetGroups(currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges)
@@ -49,7 +50,7 @@ export const RoutineScheduleDnd = ({
   }
 
   //crudingWeek='creating-week'
-
+  console.log({routineSchedule})
   return (
       <div 
       className='routine-schedule-dnd'>
@@ -60,6 +61,7 @@ export const RoutineScheduleDnd = ({
       {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
       {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
       {currentSetGroups && !crudingWeek && 
+      
       <DragDropContext 
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
@@ -69,7 +71,7 @@ export const RoutineScheduleDnd = ({
           className='week-container'>
             <div
             className='week-container-header'>
-              <h5>{currentRoutine.name} - Week: {weekNumber}</h5>
+              <h5>{currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}</h5>
               <Button 
               onClick={() =>{ 
               setModalShow(true)

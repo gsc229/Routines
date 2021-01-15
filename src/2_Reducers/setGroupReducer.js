@@ -1,5 +1,3 @@
-import { act } from 'react-dom/test-utils'
-import { ReactReduxContext } from 'react-redux'
 import * as constants from '../1_Actions'
 
 

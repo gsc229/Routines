@@ -1,4 +1,3 @@
-import { ReactReduxContext } from 'react-redux'
 import axiosWihAuth from '../utils/axiosWithAuth'
 
 export const getRoutines = (querString) => {

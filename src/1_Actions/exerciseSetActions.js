@@ -1,6 +1,6 @@
 import * as constants from './index'
 import {getExerciseSets, updateExerciseSet, createMultipleExerciseSets, bulkUpdateExerciseSets, deleteExerciseSet, createExerciseSet} from '../3_APIs/exerciseSetApi'
-import { bindActionCreators } from 'redux'
+
 
 const generalErrorMessage = "Something went wrong with your request"
 

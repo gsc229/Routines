@@ -10,6 +10,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
 import DuplicateHereBtn from './DuplicateHereBtn'
 import ViewSetGroupModal from '../modals/view_modals/ViewSetGroupModal'
+import ConfirmDeleteModal from '../modals/confirm_delete_modals/ConfirmDeleteSetGroupModal'
 
 export const SetGroup = ({
   set_group, 
@@ -24,12 +25,10 @@ export const SetGroup = ({
 
 
   const [modalShow, setModalShow] = useState(false)
-
+  const [deletaModalShow, setDeleteModalShow] = useState(false)
   const redirectLink = `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${weekNumber}/day-${dayNumber}-${numberToDay[dayNumber].short}`
   
-  const handleDeleteSetGroup = () => {
-    destroySetGroup(set_group._id)
-  }
+  
 
   const handleViewSetGroup = () => {
     setCurrentSetGroup(set_group)
@@ -39,15 +38,17 @@ export const SetGroup = ({
   return (
     <Card
     text={!isDragging && 'white'}
-    style={{margin: '5px auto', cursor: 'grab'}}
     className="set-group-schedule-card">
-
       {modalShow && 
       <ViewSetGroupModal
       redirectLink={redirectLink}
       setModalShow={setModalShow} 
       modalShow={modalShow}/>}
-
+      <ConfirmDeleteModal  
+      setGroup={set_group}
+      modalShow={deletaModalShow}
+      setModalShow={setDeleteModalShow}
+      />
       <Card.Header
       className='set-group-schedule-card-header'>
         <div className='view-copy-move-btns-conainer'>
@@ -65,14 +66,13 @@ export const SetGroup = ({
       </div>
 
       <div className="delete-btn-container">
-
         <OverlayTrigger overlay={<ToolTip>Delete set group</ToolTip>}>
           <RiDeleteBin5Line 
-          onClick={handleDeleteSetGroup}
+          onClick={() => setDeleteModalShow(true)}
           className='delete-icon'/>
         </OverlayTrigger>
-
       </div>
+
       </Card.Header>
       <Card.Body
         className='set-group-schedule-card-body'>

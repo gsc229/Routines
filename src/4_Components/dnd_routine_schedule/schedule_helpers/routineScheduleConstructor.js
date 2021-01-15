@@ -18,9 +18,9 @@ export const routineScheduleConstructor = (currentSetGroups, currentWeeks, curre
   
     currentWeeks.forEach((week, index) => {
                 
-      return routineSchedule[index + 1] = {
+      return routineSchedule[week.week_number] = {
         _id: week._id,
-        week_number: index + 1
+        week_number: week.week_number
       }
     })
 

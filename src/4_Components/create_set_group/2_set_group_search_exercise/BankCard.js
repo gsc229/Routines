@@ -27,9 +27,7 @@ export const BankCard = ({
   const [modalShow, setModalShow] = useState(false)
   const [showPicker, setShowPicker] = useState(false)
 
-  const {exercise, color, order, _id} = exerciseSet
- 
-
+  const {exercise, color} = exerciseSet
 
   const handleColorPick = (color) => {
     const currentExerciseSetsCopy = [...currentExerciseSets]

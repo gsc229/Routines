@@ -1,5 +1,4 @@
 import axiosWihAuth from '../utils/axiosWithAuth'
-import axios from 'axios'
 
 export const getExerciseSets = (querString) => {
   return axiosWihAuth()

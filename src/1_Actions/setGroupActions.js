@@ -134,7 +134,7 @@ export const createNewSetGroup = (newSetGroup) => dispatch => {
 
 export const destroySetGroup = (setGroupId) => dispatch => {
   dispatch({type: constants.DELETING_SET_GROUP})
-  deleteSetGroup(setGroupId)
+  return deleteSetGroup(setGroupId)
   .then(response => {
     if(response && response.success){
       const payload = response.data._id ? response.data : setGroupId
