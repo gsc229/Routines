@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import {
   addToCurrentExerciseSets, 
-  removeFromCurrentExerciseSetsByExerciseID,
+   removeFromCurrentExerciseSetsByExerciseID,
   createNewExerciseSets,
   localBulkWriteExerciseSets,
-  bulkWriteExerciseSets
+  bulkWriteExerciseSets,
+  createSingleExerciseSet
 } from '../../../1_Actions/exerciseSetActions'
 import {
   canAddThisExercise, 
@@ -16,7 +17,7 @@ import {
 import {ConnectedNextStepBadge, ConnectedNextStepButton} from '../3_form_create_set_group/ConnectedBtnsNextAndPrevStep'
 import Badge from 'react-bootstrap/Badge'
 import {FiMinusSquare, FiPlus} from 'react-icons/fi'
-import RemoveAllModal from '../../modals/remove_modals/RemoveAllModal'
+import RemoveAllModal from '../../modals/remove_modals/RemoveAllSetsModal'
 
 
 export const AddRemoveBtnConfigs = ({
@@ -28,8 +29,9 @@ export const AddRemoveBtnConfigs = ({
   addToCurrentExerciseSets, 
   localBulkWriteExerciseSets,
   bulkWriteExerciseSets,
-  removeFromCurrentExerciseSetsByExerciseID,
+   removeFromCurrentExerciseSetsByExerciseID,
   createNewExerciseSets,
+  createSingleExerciseSet,
   showNextStepBtn,
   showNextStepBtnOnCardBtn,
   showRemoveExerciseBtn,
@@ -52,6 +54,7 @@ export const AddRemoveBtnConfigs = ({
     if(currentSetGroup._id){
 
       const deleteCommands = []
+
       currentExerciseSets.forEach(set => set.exercise._id === exercise._id && 
         deleteCommands.push({
             deleteOne: {
@@ -59,18 +62,26 @@ export const AddRemoveBtnConfigs = ({
             }
         })
       ) 
-      console.log({deleteCommands})
+
       const deleteResponse = await bulkWriteExerciseSets(deleteCommands, currentSetGroup._id)
+
       if(!deleteResponse.success){
-        alert(`Something wend went wrong trying to delet: ${JSON.stringify(deleteCommands)}`)
+         const filtered = currentExerciseSets.filter(set => set.exercise._id !== exercise._id)
+         const setGroupId = filtered[0] ? filtered[0].set_group : ''
+         localBulkWriteExerciseSets(filtered, setGroupId)
+        return false
       }
-      
+
+      return true
     }else{
-      removeFromCurrentExerciseSetsByExerciseID(exercise._id)
+       removeFromCurrentExerciseSetsByExerciseID(exercise._id)
+      return true
     }
   }
 
   const handleAddClick = async() => {
+    
+    
     // if creating mode the whole set group and exercise sets are 
     // created at once through the CreateSetGroupBtn so just add them to bank without back end call
     const newExSet = {
@@ -85,19 +96,18 @@ export const AddRemoveBtnConfigs = ({
     
     if(currentSetGroup._id){
         console.log(exercise)
-        
-        addToCurrentExerciseSets(newExSet)
-        const createResponse = await createNewExerciseSets([newExSet])
+        const createResponse = await createSingleExerciseSet(newExSet)
+        console.log({createResponse})
         if(!createResponse.success){
-          localBulkWriteExerciseSets(currentExerciseSets)
+          
           return
         }
-
+        
+        
         setShowAddedAlert(true)
         setTimeout(() => {setShowAddedAlert(false)}, 1000)
 
     } else{
-
       addToCurrentExerciseSets(newExSet)
       setShowAddedAlert(true)
       setTimeout(() => {setShowAddedAlert(false)}, 1000)
@@ -191,7 +201,8 @@ const mapDispatchToProps = {
   localBulkWriteExerciseSets,
   bulkWriteExerciseSets,
   removeFromCurrentExerciseSetsByExerciseID,
-  createNewExerciseSets
+  createNewExerciseSets,
+  createSingleExerciseSet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddRemoveBtnConfigs)

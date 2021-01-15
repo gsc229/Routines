@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {addToCurrentExerciseSets, removeFromCurrentExerciseSetsByExerciseID} from '../../../1_Actions/exerciseSetActions'
+import {addToCurrentExerciseSets,  removeFromCurrentExerciseSetsByExerciseID} from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import IFrame from '../../iframe/IFrame'
@@ -74,7 +74,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   addToCurrentExerciseSets,
-  removeFromCurrentExerciseSetsByExerciseID
+   removeFromCurrentExerciseSetsByExerciseID
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AttachExerciseToSetGroupCard)

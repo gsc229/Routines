@@ -71,20 +71,22 @@ const reducer = (state=initialState, action) => {
         ...state,
         currentExerciseSets: [...state.currentExerciseSets, action.payload]
       }
-    case constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_EXERCISE_ID:
+    case constants.REMOVE_FROM_CURRENT_EXERCISE_SETS:
       return{
         ...state,
-        currentExerciseSets: [...state.currentExerciseSets.filter(setGroup => setGroup.exercise._id ? setGroup.exercise._id !== action.payload : setGroup.exercise !== action.payload)]
-      }
-    case  constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_SET_ID:
-      return{
-        ...state,
-        currentExerciseSets: [...state.currentExerciseSets.filter(setGroup => setGroup._id !== action.payload)]
+        currentExerciseSets: 
+        [
+          ...state.currentExerciseSets
+          .filter(set => set.exercise._id ? set.exercise._id !== action.payload.exercise._id : set.exercise !== action.payload.exercise)
+        ]
       }
     case constants.LOCAL_BULK_WRITE_CURRENT_EXERCISE_SETS:
+      // locally still may need to remove from currentRouinteSets in cases where a delete failed because an exericse was deleted from the backed, 
+      // but for some reason was not removed from the cRss
       return{
         ...state,
-        currentExerciseSets: action.payload
+        currentExerciseSets: action.payload.data,
+        currentRoutineSets: [...state.currentRoutineSets.filter(set => set.set_group === action.payload.setGroupId)]
         
       }
     case constants.SET_CURRENT_EXERCISE_SETS:
@@ -112,12 +114,35 @@ const reducer = (state=initialState, action) => {
       }
 
     /* ASYNC   */
+
+    // single set
+    case constants.CREATING_EXERCISE_SET:
+      return{
+        ...state,
+        crudingExerciseSet: 'creating-exercise-set'
+      }
+    case constants.CREATE_EXERCISE_SET_SUCCESS:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        currentExerciseSets: [...state.currentExerciseSets, action.payload],
+        currentRoutineSets: [...state.currentRoutineSets, action.payload]
+      }
+    case constants.CREATE_EXERCISE_SET_FAIL:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        error_message: action.payload
+      }
+    //multiple sets
     case constants.CREATING_EXERCISE_SETS:
       return{
         ...state,
         crudingExerciseSet: 'creating-exercise-sets'
       }
     case constants.CREATE_EXERCISE_SETS_SUCCESS:
+      // success of multiple sends back all the sets of a set group so...
+      // just set currentExerciseSets equal to action.payload
       return{
         ...state,
         crudingExerciseSet: false,
@@ -160,8 +185,6 @@ const reducer = (state=initialState, action) => {
       }
     case constants.BULK_WRITE_EXERCISE_SETS_SUCCESS:
       // success will always return all the remaining/modified/created sets of a single set group (populated with exercise)
-      
-
       return{
         ...state,
         crudingExerciseSet: false,

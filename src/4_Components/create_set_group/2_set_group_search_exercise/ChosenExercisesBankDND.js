@@ -50,7 +50,7 @@ Old CODE:
             <li key={`chosen-exercise-bank-${exercise._id}-${index}`}>
               {exercise.name}&nbsp;
               <OverlayTrigger overlay={<ToolTip>Remove {exercise.name}</ToolTip>}>
-                <FiMinusSquare className='remove-icon' onClick={() => removeFromCurrentExerciseSetsByExerciseID(exercise._id)} />
+                <FiMinusSquare className='remove-icon' onClick={() =>  removeFromCurrentExerciseSetsByExerciseID(exercise._id)} />
               </OverlayTrigger>
             </li>)}
           </ul>}

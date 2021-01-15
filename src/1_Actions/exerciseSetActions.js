@@ -1,5 +1,6 @@
 import * as constants from './index'
-import {getExerciseSets, updateExerciseSet, createMultipleExerciseSets, bulkUpdateExerciseSets, deleteExerciseSet} from '../3_APIs/exerciseSetApi'
+import {getExerciseSets, updateExerciseSet, createMultipleExerciseSets, bulkUpdateExerciseSets, deleteExerciseSet, createExerciseSet} from '../3_APIs/exerciseSetApi'
+import { bindActionCreators } from 'redux'
 
 const generalErrorMessage = "Something went wrong with your request"
 
@@ -28,16 +29,14 @@ export const addToCurrentExerciseSets = (exerciseSet) => dispatch => {
   dispatch({type: constants.ADD_TO_CURRENT_EXERCISE_SETS, payload: exerciseSet})
 }
 
-export const removeFromCurrentExerciseSetsByExerciseID = (exerciseId) => dispatch => {
- dispatch({type: constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_EXERCISE_ID, payload: exerciseId})
+export const  removeFromCurrentExerciseSetsByExerciseID = (exerciseId) => dispatch => {
+ dispatch({type: constants.REMOVE_FROM_CURRENT_EXERCISE_SETS, payload: exerciseId})
 }
 
-export const removeFromCurrentExerciseSetsBySetID = (setId) => dispatch => {
-  dispatch({type: constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_SET_ID, payload: setId})
- }
 
-export const localBulkWriteExerciseSets = (exercisesSetsArray) => dispatch => {
-  dispatch({type: constants.LOCAL_BULK_WRITE_CURRENT_EXERCISE_SETS, payload: exercisesSetsArray})
+
+export const localBulkWriteExerciseSets = (exercisesSetsArray, setGroupId) => dispatch => {
+  dispatch({type: constants.LOCAL_BULK_WRITE_CURRENT_EXERCISE_SETS, payload: {setGroupId, data: exercisesSetsArray} })
 }
 
 
@@ -88,6 +87,25 @@ export const bulkWriteExerciseSets = (updatesArray, setGroupId) => dispatch => {
       return false
   })
 }
+
+export const createSingleExerciseSet = (newSet) => dispatch => {
+  dispatch({type: constants.CREATING_EXERCISE_SET})
+
+  return createExerciseSet(newSet)
+  .then(response => {
+    if(response.success){
+      dispatch({type: constants.CREATE_EXERCISE_SET_SUCCESS, payload: response.data})
+      return response
+    }
+    if(response.error_message){
+      dispatch({type: constants.CREATE_EXERCISE_SET_FAIL, payload: response.error_message})
+      return false  
+    }
+    dispatch({type: constants.CREATE_EXERCISE_SET_FAIL, payload: generalErrorMessage})
+      return false
+  })
+}
+
 
 export const createNewExerciseSets = (newSetsArray) => dispatch => {
   // required on each new set in the array are user, routine, set_group, and week ids 
