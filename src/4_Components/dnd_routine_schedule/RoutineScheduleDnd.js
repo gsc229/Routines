@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {destroyWeek, saveWeekChanges, setCurrentWeek} from '../../1_Actions/weekActions'
+import {destroyWeek, saveWeekChanges, setCurrentWeek, setScheduleDnDSelectedWeekNumber} from '../../1_Actions/weekActions'
 import {saveManySetGroupChanges, saveSetGroupChanges} from '../../1_Actions/setGroupActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import {syncWeeksAndSetGroups} from './schedule_helpers/syncWeeksAndSetGroups'
@@ -18,15 +18,14 @@ export const RoutineScheduleDnd = ({
   currentWeeks,
   currentSetGroups,
   currentRoutineSets,
-  destroyWeek,
   setCurrentWeek,
   saveSetGroupChanges,
   saveWeekChanges,
   saveManySetGroupChanges,
-  error_message,
   crudingWeek,
   crudingSetGroup,
-  clearErrorMessage
+  setScheduleDnDSelectedWeekNumber,
+  scheduleDnDSelectedWeekNumber
 }) => {
 
   const [routineSchedule, setRoutineSchedule] = useState({})
@@ -35,23 +34,21 @@ export const RoutineScheduleDnd = ({
 
   useEffect( async() => {
     await syncWeeksAndSetGroups(currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges)
-    setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
 
-  }, [currentWeeks, currentRoutineSets, currentWeeks])
+  }, [])
 
-  
-
-  const handleWeekChange = (e) => {
-    if(e.target.value === 'all'){
-      //setSelectedWeek(routineSchedule)
+  useEffect(() => {
+    if(scheduleDnDSelectedWeekNumber === 'all'){
       setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
     } else{
-      const targetWeek = currentWeeks.filter(week=> week.week_number == e.target.value)
-      console.log({targetWeek, number: e.target.value})
+      const targetWeek = currentWeeks.filter(week=> week.week_number == scheduleDnDSelectedWeekNumber)
+      console.log({targetWeek, number: scheduleDnDSelectedWeekNumber})
       setRoutineSchedule(routineScheduleConstructor(currentSetGroups, targetWeek, currentRoutineSets))
-      //setSelectedWeek({[e.target.value]: routineSchedule[e.target.value]})
     }
-  }
+
+
+  }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumber])
+
 
   return (
       <div 
@@ -67,12 +64,12 @@ export const RoutineScheduleDnd = ({
         <Form.Group controlId="exampleForm.ControlSelect1">
           <Form.Label>Choose Week</Form.Label>
           <Form.Control
-          defaultValue='all' 
-          onChange={handleWeekChange}
+          onChange={(e) => setScheduleDnDSelectedWeekNumber(e.target.value)}
           as="select">
             <option value='all'>All</option>
             {currentWeeks.map(week => 
             <option
+            selected={week.week_number == scheduleDnDSelectedWeekNumber}
             value={week.week_number}
             key={week._id}>
               Week {week.week_number}
@@ -127,6 +124,7 @@ export const RoutineScheduleDnd = ({
 const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
+  scheduleDnDSelectedWeekNumber: state.weekReducer.scheduleDnDSelectedWeekNumber,
   currentSetGroups: state.setGroupReducer.currentSetGroups,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
@@ -140,7 +138,8 @@ const mapDispatchToProps = {
   saveSetGroupChanges,
   saveWeekChanges,
   saveManySetGroupChanges,
-  clearErrorMessage
+  clearErrorMessage,
+  setScheduleDnDSelectedWeekNumber
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineScheduleDnd)
