@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import {canMoveToForm, canMoveToPreview} from '../createSetGroupHelpers'
-import {ConnectedNextStepButton, ConnectedPreviousStepButton} from '../3_form_create_set_group/ConnectedBtnsNextAndPrevStep'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {ConnectedNextStepButton} from '../3_form_create_set_group/ConnectedBtnsNextAndPrevStep'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import CreateSetGroupBtn from '../3_form_create_set_group/CreateSetGroupBtn'
+import { localWritingSetGroup } from '../../../1_Actions/setGroupActions'
 
 export const StepNavs = ({
   currentStep,
@@ -13,11 +15,18 @@ export const StepNavs = ({
   currentSetGroup,
   createSetGroupData,
   showNextBtn=true,
-  showPrevBtn=true
+  showPrevBtn=true,
+  localWritingCreateSetGroupData
 }) => {
   const {set_group_type} = currentSetGroup
   const { mode } = createSetGroupData
   // choose-type --> choose-exercises --> enter-info --> preview-set-group
+
+  useEffect(() => {
+    if(mode !== 'editing' && currentSetGroup._id){
+      localWritingCreateSetGroupData('mode', 'editing')
+    }
+  }, [])
 
   const nextStep = {
     "choose-exercise": {
@@ -98,7 +107,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StepNavs)

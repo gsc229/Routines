@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {localBulkWriteExerciseSets, clearCurrentExerciseSet, saveExerciseSetChanges} from '../../../1_Actions/exerciseSetActions'
+import {clearCurrentExerciseSet, saveExerciseSetChanges} from '../../../1_Actions/exerciseSetActions'
 import Modal from 'react-bootstrap/Modal'
 import CloseAlert from './CloseAlert'
 import Button from 'react-bootstrap/Button'

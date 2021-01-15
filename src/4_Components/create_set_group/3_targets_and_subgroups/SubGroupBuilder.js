@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Container from 'react-bootstrap/Container'
@@ -18,7 +18,6 @@ export const SetGroupBuilder = ({
   const handleTotalSets = (e) => {
     const number = e.target.value <= 100 ? JSON.parse(e.target.value) : 100
     localWritingCreateSetGroupData('total_sets', number)
-  
   }
 
   return (
