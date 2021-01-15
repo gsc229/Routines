@@ -15,8 +15,8 @@ const Menu = ({logout}) => {
   }
 
   return (
-    <div className="menu" style={{marginBottom: '56px'}}>
-      <Navbar fixed='top' expand="lg" bg="dark" variant="dark">
+    <div className="menu main-menu" style={{marginBottom: '56px'}}>
+      <Navbar fixed='top' expand="lg"  variant='dark' bg='dark'/* bg="dark" variant="dark" */>
         <Navbar.Brand as={Link} to="/">Routines</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">

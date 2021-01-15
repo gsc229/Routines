@@ -1,4 +1,4 @@
-export const onBankCardDragEnd = async (result, localBulkWriteExerciseSets, currentExerciseSets, mode, bulkSaveExerciseSets) => {
+export const onBankCardDragEnd = async (result, localBulkWriteExerciseSets, currentExerciseSets, mode, bulkWriteExerciseSets) => {
 
   // each result has a destination index as well a draggable id which is also an exercise _id
   // get the exerciseId by..   draggableId.split("-")[0]
@@ -43,7 +43,7 @@ export const onBankCardDragEnd = async (result, localBulkWriteExerciseSets, curr
   console.log({mode, updates})
   if(mode==='editing'){
     // if it fails revert back to previous order an show an 
-    const response = await bulkSaveExerciseSets(updates)
+    const response = await bulkWriteExerciseSets(updates)
     if(!response.success){
       localBulkWriteExerciseSets(currentExerciseSets)
     }

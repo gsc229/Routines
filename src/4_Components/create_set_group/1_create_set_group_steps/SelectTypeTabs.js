@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import { writingSetGroup } from '../../../1_Actions/setGroupActions'
+import { localWritingSetGroup } from '../../../1_Actions/setGroupActions'
 import Nav from 'react-bootstrap/Nav'
 
 export const SetGroupForm = ({
   currentSetGroup,
   setGroupTypes,
-  writingSetGroup,
+  localWritingSetGroup,
   currentStep
 }) => {
 
@@ -46,7 +46,7 @@ export const SetGroupForm = ({
             eventKey={type}
             disabled={currentStep !== 'choose-type'}
             active={set_group_type === type}
-            onClick={() => writingSetGroup('set_group_type', type)}
+            onClick={() => localWritingSetGroup('set_group_type', type)}
             >
               {type}
             </Nav.Link>
@@ -65,7 +65,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingSetGroup
+  localWritingSetGroup
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetGroupForm)
@@ -74,7 +74,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(SetGroupForm)
       className='set-group-type-tab-btns'
       variant= 'pills'
       
-      onSelect={(type) => writingSetGroup('set_group_type',type)}
+      onSelect={(type) => localWritingSetGroup('set_group_type',type)}
       activeKey={set_group_type}>
         {setGroupTypes.map(type=>
         <Tab

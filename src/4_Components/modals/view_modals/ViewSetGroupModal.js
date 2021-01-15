@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Modal from 'react-bootstrap/Modal'
 import {Link} from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
@@ -11,7 +11,7 @@ export const ViewSetGroupModal = ({
   setModalShow,
   currentExerciseSets,
   redirectLink,
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }) => {
 
   const getTargetsAndActual = (exSet) => {
@@ -38,7 +38,7 @@ export const ViewSetGroupModal = ({
 
 
   const handleEditClick = () => {
-    writingCreateSetGroupData('mode', 'editing')
+    localWritingCreateSetGroupData('mode', 'editing')
   }
 
 
@@ -95,7 +95,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewSetGroupModal)

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {minAndMaxAllowedExercises, getSetComboType} from '../createSetGroupHelpers'
 import SetCardWithDetailInputs from '../3_set_card_with_input_details/SetCardWithDetailInputs'
 
@@ -8,7 +8,7 @@ export const EnterSetInfo = ({
   currentExerciseSets,
   currentSetGroup,
   currentExerciseSetIndex,
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }) => {
 
 

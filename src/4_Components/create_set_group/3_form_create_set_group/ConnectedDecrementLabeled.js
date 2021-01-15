@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import DropDownButton from 'react-bootstrap/DropdownButton'
 import DropDown from 'react-bootstrap/Dropdown'
 
 export const ConnectedDecrementLabeled = ({
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   createSetGroupData,
   inputSize,
   labelText,
@@ -28,8 +28,12 @@ export const ConnectedDecrementLabeled = ({
 
   if(!labelText) labelText = `Decrease ${fieldCapitalized}`
   const allowPercent = !(decrementField === "reps" || decrementField === "rest_time ")
-  const {total_sets} = createSetGroupData
-  const maxDec = Math.floor(JSON.parse(createSetGroupData[`starting_${decrementField}`]) / JSON.parse(total_sets))
+  const total_sets = JSON.parse(createSetGroupData.total_sets)
+  const startingNumber = JSON.parse(createSetGroupData[`starting_${decrementField}`])
+  const maxDecCeil = Math.ceil(startingNumber / total_sets)
+  const maxDecFloor = Math.floor(startingNumber / total_sets)
+  const maxDec = maxDecCeil < startingNumber / total_sets  ? maxDecCeil : maxDecFloor
+  
   const defaultDecValue = Math.floor(maxDec/10)
 
   const [decreaseMethod, setDecreaseMethod] = useState({key: `${decrementField}_decrease`, value: defaultDecValue})
@@ -46,19 +50,19 @@ export const ConnectedDecrementLabeled = ({
   }
   
   /* useEffect(() => {
-    writingCreateSetGroupData(`${decrementField}_decrease`, 10)
+    localWritingCreateSetGroupData(`${decrementField}_decrease`, 10)
   }, []) */
 
   useEffect(()=>{
     if(!createSetGroupData[`percent_${decrementField}_decrease`] && !createSetGroupData[`${decrementField}_decrease`]){
-      writingCreateSetGroupData(`${decrementField}_decrease`, Math.floor(maxDec/10))
+      localWritingCreateSetGroupData(`${decrementField}_decrease`, Math.floor(maxDec/10))
     }
     if(decreaseMethod.key === `percent_${decrementField}_decrease`){
-      writingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
-      writingCreateSetGroupData(`${decrementField}_decrease`, 0)
+      localWritingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
+      localWritingCreateSetGroupData(`${decrementField}_decrease`, 0)
     } else{
-      writingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
-      writingCreateSetGroupData(`percent_${decrementField}_decrease`, 0) 
+      localWritingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
+      localWritingCreateSetGroupData(`percent_${decrementField}_decrease`, 0) 
     }
 
   },[decreaseMethod])
@@ -67,7 +71,7 @@ export const ConnectedDecrementLabeled = ({
     <Form.Group>
 
       <Form.Label>
-        {labelText} {!decreaseMethod.key.includes('percent') && <span>Max: {maxDec}</span>}
+        {labelText}: {!decreaseMethod.key.includes('percent') && <span>(max {maxDec})</span>}
       </Form.Label>
 
       <InputGroup size={inputSize}>
@@ -117,7 +121,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedDecrementLabeled)

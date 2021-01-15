@@ -49,10 +49,7 @@ export const BankCard = ({
     localBulkWriteExerciseSets(copy)
 
     if(exerciseSet._id){
-      const deleteRepsonse = await destroyExerciseSet(exerciseSet._id)
-      if(!deleteRepsonse.success){
-        localBulkWriteExerciseSets(currentExerciseSets)
-      }
+      await destroyExerciseSet(exerciseSet._id)
     }
   }
 

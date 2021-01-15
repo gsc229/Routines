@@ -27,6 +27,7 @@ function loadFromLocalStorage(){
 
 const persistedState = loadFromLocalStorage()
 
+
 const store = createStore(reducer, persistedState, composeWithDevTools(applyMiddleware(thunk, logger)))
 
 // persist data when ready: 

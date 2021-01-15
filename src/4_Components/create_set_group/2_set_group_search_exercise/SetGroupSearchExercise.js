@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { writingCreateSetGroupData } from '../../../1_Actions/setGroupActions'
+import { localWritingCreateSetGroupData } from '../../../1_Actions/setGroupActions'
 import SearchExercisesForm from '../../exercise/form_search_exercises/SearchExercisesForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
 import AttachExerciseToSetGroupCard from '../3_create_set_group_search_ex_card/AttachExerciseToSetGroupCard'
@@ -48,7 +48,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetGroupSearchExercise)

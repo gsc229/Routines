@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {majorMuscleGroups, categories} from './routineFormData'
-import {writingRoutine, createNewRoutine, saveRoutineChanges, clearCurrentRoutine, fetchFlattenedRoutine} from '../../../1_Actions/routineActions'
+import {localWritingRoutine, createNewRoutine, saveRoutineChanges, clearCurrentRoutine, fetchFlattenedRoutine} from '../../../1_Actions/routineActions'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -17,7 +17,7 @@ import Button from 'react-bootstrap/Button'
 export const RoutineInfoForm = ({ 
   currentRoutine,
   currentRoutineName, 
-  writingRoutine, 
+  localWritingRoutine, 
   error_message, 
   unsavedChanges,
   clearErrorMessage, 
@@ -39,7 +39,7 @@ export const RoutineInfoForm = ({
   
   const history = useHistory()
   const handleChange = e => {
-    writingRoutine(e.target.name, e.target.value)
+    localWritingRoutine(e.target.name, e.target.value)
   }
 
   useEffect(()=> {
@@ -234,7 +234,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingRoutine,
+  localWritingRoutine,
   clearErrorMessage,
   createNewRoutine,
   saveRoutineChanges,

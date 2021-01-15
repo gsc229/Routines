@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 import SubGroupBuilderTabs from './SubGroupBuilderTabs'
 
 export const SetGroupBuilder = ({
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   createSetGroupData,
   inputSize
 }) => {
@@ -17,8 +17,7 @@ export const SetGroupBuilder = ({
 
   const handleTotalSets = (e) => {
     const number = e.target.value <= 100 ? JSON.parse(e.target.value) : 100
-    writingCreateSetGroupData('total_sets', number)
-  
+    localWritingCreateSetGroupData('total_sets', number)
   }
 
   return (
@@ -51,7 +50,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetGroupBuilder)

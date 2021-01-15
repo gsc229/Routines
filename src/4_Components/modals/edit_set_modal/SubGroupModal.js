@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {localBulkWriteExerciseSets, clearCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
-import {clearCreateSetGroupData, writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localBulkWriteExerciseSets, clearCurrentExerciseSet, bulkWriteExerciseSets} from '../../../1_Actions/exerciseSetActions'
+import {clearCreateSetGroupData, localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import {createSetGroupLocal} from '../../create_set_group/createSetGroupLocal'
 import Modal from 'react-bootstrap/Modal'
 import CloseAlert from './CloseAlert'
@@ -18,42 +18,117 @@ export const SubSetModal = ({
   localBulkWriteExerciseSets,
   clearCurrentExerciseSet,
   clearCreateSetGroupData,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
+  bulkWriteExerciseSets,
   index
 }) => {
 
   
-  const [alertShow, setAlertShow] = useState(false)
+  const [alertConfig, setAlertConfig] = useState({
+    show: false,
+    text: "Are you sure you want to close?",
+    continue_btn: true
+
+  })
 
   const {exercise} = currentExerciseSet
 
   const confirmClose = () => {
-    setAlertShow(true)
+    setAlertConfig({
+      ...alertConfig,
+      show: true
+    })
   }
 
   const colseConfirmed = () => {
     setModalShow(false)
-    setAlertShow(false)
+    setAlertConfig(false)
     clearCreateSetGroupData()
     clearCurrentExerciseSet()
-    writingCreateSetGroupData('currentStep', 'choose-exercise')
+    localWritingCreateSetGroupData('currentStep', 'choose-exercise')
     
   }
 
-  const buildSubGroup = () => {
-    const newSubGroup = 
-    createSetGroupLocal(currentSetGroup, createSetGroupData, currentExerciseSet)
+  const buildSubGroup = async () => {
 
+    const firstId = currentExerciseSet._id
+    delete currentExerciseSet._id
+    const newSubGroup = createSetGroupLocal(currentSetGroup, createSetGroupData, currentExerciseSet)
+    newSubGroup[0]._id = firstId
+  
     const currentSetsCopy = [...currentExerciseSets]
+
+    // if the set groups been created already...
+    if(currentSetGroup._id){
+
+      console.log({newSubGroup})
+      
+
+      const updatesOrInserts = []
+
+      newSubGroup.forEach(set => {
+        // mongoose bulk update objects
+          if(set._id){
+            updatesOrInserts.push({
+              updateOne: {
+                filter: {_id: set._id},
+                update: set
+              }
+            })
+          } else{
+            set.exercise = set.exercise._id
+            updatesOrInserts.push({
+              insertOne: {
+                document: set
+              }
+            })
+          }
+
+        
+      })
+
+      const subGroupResonse = await bulkWriteExerciseSets(updatesOrInserts, currentSetGroup._id)
+      console.log({subGroupResonse})
+
+        if(!subGroupResonse.success){
+          // report the error in the alert
+          setAlertConfig({
+            show: true,
+            text: `Something went wrong please try again later.`,
+            continue_btn: false
+          })
+
+            // do this if it's a new setGroup
+          localBulkWriteExerciseSets(currentExerciseSets)
+          setModalShow(false)
+          clearCurrentExerciseSet()
+          clearCreateSetGroupData()
+          localWritingCreateSetGroupData('currentStep', 'choose-exercise')
+
+          return
+        }
+      
+      
+      //localBulkWriteExerciseSets(subGroupResonse.data)
+      setModalShow(false)
+      clearCurrentExerciseSet()
+      clearCreateSetGroupData()
+      localWritingCreateSetGroupData('currentStep', 'choose-exercise')
+      return
+    
+    }
+    // do this if it's a new setGroup
+
     currentSetsCopy.splice(index, 1, ...newSubGroup)
-
     localBulkWriteExerciseSets(currentSetsCopy)
-
     setModalShow(false)
     clearCurrentExerciseSet()
     clearCreateSetGroupData()
-    writingCreateSetGroupData('currentStep', 'choose-exercise')
+    localWritingCreateSetGroupData('currentStep', 'choose-exercise')
   }
+
+
+
 
   return (
     <Modal
@@ -65,28 +140,33 @@ export const SubSetModal = ({
     centered>
 
       <Modal.Header
-      closeButton={!alertShow}>
+      closeButton={!alertConfig.show}>
         <h5>{currentExerciseSet.exercise.name || "No Name"} Sub Group</h5>
-        
       </Modal.Header>
 
-      {alertShow && 
+      {alertConfig.show && 
       <Modal.Body className='modal-body-alert' >
-        <CloseAlert alertShow={alertShow} />
+
+        <CloseAlert alertConfig={alertConfig} />
+
         <div className='continue-close-btns'>
-          <Button className='continue-btn' variant='success' onClick={() => setAlertShow(false)}>Continue Working</Button> 
+
+          {alertConfig.continue_btn && 
+          <Button className='continue-btn' variant='success' onClick={() => setAlertConfig(false)}>Continue Working</Button>}
+          
           <Button className='close-btn' onClick={colseConfirmed}>Close</Button>
+
         </div>
       </Modal.Body>}
 
-      {!alertShow && 
+      {!alertConfig.show && 
       <Modal.Body className='modal-body-normal'>
         
         <SubGroupBuilder inputSize='sm' />
         
       </Modal.Body>}
       <Modal.Footer>
-       {!alertShow && 
+       {!alertConfig.show && 
         <Button
           variant='success'
           className='done-setting-targets-btn'
@@ -109,7 +189,8 @@ const mapDispatchToProps = {
   localBulkWriteExerciseSets,
   clearCurrentExerciseSet,
   clearCreateSetGroupData,
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData,
+  bulkWriteExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubSetModal)

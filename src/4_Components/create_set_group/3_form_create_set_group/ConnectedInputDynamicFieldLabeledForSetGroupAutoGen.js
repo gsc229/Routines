@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 
@@ -13,7 +13,7 @@ const ConnectedDynamicFieldInput = ({
   min=0,
   max=null,
   createSetGroupData,
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   appendText,
   inputSize,
   startingField // rep_max reps_per_set starting_weight starting_time starting_distance total_sets
@@ -35,7 +35,7 @@ const ConnectedDynamicFieldInput = ({
         <Form.Control
         placeholder={placeholder}
         className={`${required ? !createSetGroupData[startingField] ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-        onChange={(e) => writingCreateSetGroupData(e.target.name, inputPirmitiveType === 'number' ? JSON.parse(e.target.value) : e.target.value )} 
+        onChange={(e) => localWritingCreateSetGroupData(e.target.name, inputPirmitiveType === 'number' ? JSON.parse(e.target.value) : e.target.value )} 
         value={createSetGroupData[startingField]} 
         name={startingField} 
         type={inputPirmitiveType}
@@ -62,7 +62,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedDynamicFieldInput)

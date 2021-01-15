@@ -1,19 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Button from 'react-bootstrap/Button'
 import {Link, NavLink} from 'react-router-dom'
 import Nav from 'react-bootstrap/Nav'
 
 const NextExerciseBtn = ({
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   currentExerciseSets,
   currentExerciseSetIndex,
   variant
 }) => {
 
   const handleNextClick = () => {
-    currentExerciseSetIndex < currentExerciseSets.length && writingCreateSetGroupData('currentExerciseSetIndex',currentExerciseSetIndex + 1)
+    currentExerciseSetIndex < currentExerciseSets.length && localWritingCreateSetGroupData('currentExerciseSetIndex',currentExerciseSetIndex + 1)
   }
 
   return (
@@ -28,14 +28,14 @@ const NextExerciseBtn = ({
 }
 
 const PrevExerciseBtn = ({
-  writingCreateSetGroupData,
+  localWritingCreateSetGroupData,
   currentExerciseSets,
   currentExerciseSetIndex,
   variant
 }) => {
 
   const handlePrevClick = () => {
-    currentExerciseSets.length > 0 && writingCreateSetGroupData('currentExerciseSetIndex',currentExerciseSetIndex - 1)
+    currentExerciseSets.length > 0 && localWritingCreateSetGroupData('currentExerciseSetIndex',currentExerciseSetIndex - 1)
   }
 
   return (
@@ -56,7 +56,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export const ConnectedBtnNextExercise = connect(mapStateToProps, mapDispatchToProps)(NextExerciseBtn)

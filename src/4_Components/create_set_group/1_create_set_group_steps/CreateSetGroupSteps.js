@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import {writingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
+import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import SetTypeExplanation from './SetTypeExplanation'
 import SetGroupSearchExercise from '../2_set_group_search_exercise/SetGroupSearchExercise'
 import PreviewSetGroup from '../2_preview_set_group/PreviewSetGroup'
@@ -13,7 +13,7 @@ export const CreateSetGroupSteps = ({
   currentSetGroup,
   currentStep,
   currentExerciseSets,
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }) => {
 
   const {set_group_type} = currentSetGroup
@@ -21,7 +21,7 @@ export const CreateSetGroupSteps = ({
   useEffect(() => {
     
     if(currentExerciseSets.length > 0){
-      writingCreateSetGroupData('currentStep', 'choose-exercise')
+      localWritingCreateSetGroupData('currentStep', 'choose-exercise')
     }
 
   }, [])
@@ -46,7 +46,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingCreateSetGroupData
+  localWritingCreateSetGroupData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateSetGroupSteps)

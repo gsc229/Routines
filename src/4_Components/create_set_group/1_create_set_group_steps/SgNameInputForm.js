@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {writingSetGroup} from '../../../1_Actions/setGroupActions'
+import {localWritingSetGroup} from '../../../1_Actions/setGroupActions'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
@@ -8,7 +8,7 @@ import Tooltip from 'react-bootstrap/Tooltip'
 
 export const SgNameInputForm = ({
   currentSetGroup,
-  writingSetGroup,
+  localWritingSetGroup,
   currentExerciseSets
 }) => {
 
@@ -29,10 +29,10 @@ export const SgNameInputForm = ({
 
   useEffect(() => {
     if(useAutoGenName){
-      writingSetGroup('name', autoNameString)
+      localWritingSetGroup('name', autoNameString)
     }
     if(!currentSetGroup.name && currentExerciseSets.length){
-      writingSetGroup('name', autoNameString)
+      localWritingSetGroup('name', autoNameString)
     }
   }, [currentExerciseSets, setGroupType])
 
@@ -40,7 +40,7 @@ export const SgNameInputForm = ({
 
   const handlChooseAutoGen = () => {
     setUseAutoGen(!useAutoGenName)
-    writingSetGroup('name', autoNameString)
+    localWritingSetGroup('name', autoNameString)
   }
 
   return (
@@ -54,7 +54,7 @@ export const SgNameInputForm = ({
           disabled={useAutoGenName}
           name='name'
           value={currentSetGroup.name ? currentSetGroup.name : autoName }
-          onChange={(e)=> writingSetGroup(e.target.name, e.target.value)}
+          onChange={(e)=> localWritingSetGroup(e.target.name, e.target.value)}
           type='text' 
           placeholder='Name your set group...' />
           <InputGroup.Append>
@@ -77,7 +77,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  writingSetGroup
+  localWritingSetGroup
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SgNameInputForm)

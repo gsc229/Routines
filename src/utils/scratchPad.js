@@ -35,10 +35,20 @@ const columnsFromBackEnd =
     {week_number: 6, week_of_year: null, week_start_date: null, year: null, _id: "5ff402a92e36156d904e5d1c", created_at: '2021-01-05T06:09:45.686Z'}
 ]
 
-console.log(new Date(datesArray[0].created_at).getTime(), new Date(datesArray[1].created_at).getTime())
+/* console.log(new Date(datesArray[0].created_at).getTime(), new Date(datesArray[1].created_at).getTime())
 console.log(Date.now())
-console.log(Date.now())
+console.log(Date.now()) */
 /* console.log(datesArray.sort((a, b) => new Date(a.created_at ) - new Date(b.created_at)))
 console.log(datesArray[0].created_at - datesArray[5].created_at)
 const dates2 = [new Date('01/05/2021'), new Date('01/08/2021'), new Date('01/06/2021'),new Date('01/07/2021')]
 console.log(dates2.sort((a, b) => a - b)) */
+
+
+const _id = ''
+
+const object  = {
+  field: 'somthing',
+  set_group: _id || null
+}
+
+console.log(object)

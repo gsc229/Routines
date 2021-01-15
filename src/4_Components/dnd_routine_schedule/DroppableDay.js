@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {fullResetCreateSetGroup, writingSetGroup} from '../../1_Actions/setGroupActions'
+import {fullResetCreateSetGroup, localWritingSetGroup} from '../../1_Actions/setGroupActions'
 import {Link} from 'react-router-dom'
 import {Droppable} from 'react-beautiful-dnd'
 import Card from 'react-bootstrap/Card'
@@ -14,7 +14,7 @@ export const DroppableDay = ({
   setCurrentWeek,
   currentRoutine,
   fullResetCreateSetGroup,
-  writingSetGroup,
+  localWritingSetGroup,
   userId
   }) => {
 
@@ -42,12 +42,12 @@ export const DroppableDay = ({
   const handleAddSetsClick = () => {
     fullResetCreateSetGroup()
     setCurrentWeek(routineSchedule[weekNumber])
-    writingSetGroup('routine', currentRoutine._id)
-    writingSetGroup('user', userId)
-    writingSetGroup('week', routineSchedule[weekNumber]._id)
-    writingSetGroup('week_number', weekNumber)
-    writingSetGroup('day_number', name.day_number)
-    writingSetGroup('day', name.day_name)
+    localWritingSetGroup('routine', currentRoutine._id)
+    localWritingSetGroup('user', userId)
+    localWritingSetGroup('week', routineSchedule[weekNumber]._id)
+    localWritingSetGroup('week_number', weekNumber)
+    localWritingSetGroup('day_number', name.day_number)
+    localWritingSetGroup('day', name.day_name)
   }
 
   return (
@@ -98,7 +98,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fullResetCreateSetGroup,
-  writingSetGroup
+  localWritingSetGroup
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DroppableDay)
