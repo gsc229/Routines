@@ -46,12 +46,7 @@ export const RoutineScheduleDnd = ({
   const handleDestroyWeek  = async (weekNumber) => {
     const weekId = routineSchedule[weekNumber]._id
     const destroyedWeekResponse = await destroyWeek(weekId)
-    if(!destroyedWeekResponse.success){ 
-      alert(error_message)
-      setTimeout(() => {
-        clearErrorMessage()
-      }, 3000)
-    }
+    
   }
 
   const handleWeekChange = (e) => {

@@ -1,5 +1,6 @@
 import {useEffect} from 'react'
 import { connect } from 'react-redux'
+import {clearErrorMessage} from './1_Actions/userActions'
 import {Switch, Route} from 'react-router-dom'
 import './App.scss'
 import PrivateRoute from './7_Auth/PrivateRoute'
@@ -23,11 +24,26 @@ function App({
   week_ERROR,
   set_group_ERROR,
   exercise_set_ERROR,
-  exercise_ERROR
+  exercise_ERROR,
+  clearErrorMessage
 }) {
 
 
-
+  useEffect(() => {
+    if(`${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}`){
+      alert(`${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}`)
+    }
+    
+    setTimeout(() => clearErrorMessage(), 4000)
+  }, 
+  [
+    user_ERROR,
+    routine_ERROR,
+    week_ERROR,
+    set_group_ERROR,
+    exercise_set_ERROR,
+    exercise_ERROR
+  ])
 
 
 
@@ -80,7 +96,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-
+  clearErrorMessage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

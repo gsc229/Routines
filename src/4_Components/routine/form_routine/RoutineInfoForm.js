@@ -42,11 +42,7 @@ export const RoutineInfoForm = ({
     localWritingRoutine(e.target.name, e.target.value)
   }
 
-  useEffect(()=> {
-    if(error_message){
-    setTimeout(() => clearErrorMessage(),4000)
-    }
-  }, [error_message])
+  
 
   // Handles logic to distinguish the need of POST vs PUT requests of the currentRoutine
   // What distinguishes an unsaved-on-the-backend-routine from a saved one will be the _id (or lack thereof)
