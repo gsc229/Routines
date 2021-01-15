@@ -8,6 +8,7 @@ import {routineScheduleConstructor} from './schedule_helpers/routineScheduleCons
 import {onSetGroupDragEnd} from './schedule_helpers/onSetGroupDragEnd'
 import {DragDropContext} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
+import Form from 'react-bootstrap/Form'
 import DroppableDay from './DroppableDay'
 import Button from 'react-bootstrap/Button'
 import  ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
@@ -38,6 +39,10 @@ export const RoutineScheduleDnd = ({
     setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
   }, [currentWeeks, currentRoutineSets, currentWeeks])
 
+  useEffect(() => {
+    setSelectedWeek(routineSchedule)
+  }, [routineSchedule])
+
   const handleDestroyWeek  = async (weekNumber) => {
     const weekId = routineSchedule[weekNumber]._id
     const destroyedWeekResponse = await destroyWeek(weekId)
@@ -49,8 +54,14 @@ export const RoutineScheduleDnd = ({
     }
   }
 
-  //crudingWeek='creating-week'
-  console.log({routineSchedule})
+  const handleWeekChange = (e) => {
+    if(e.target.value === 'all'){
+      setSelectedWeek(routineSchedule)
+    } else{
+      setSelectedWeek({[e.target.value]: routineSchedule[e.target.value]})
+    }
+  }
+
   return (
       <div 
       className='routine-schedule-dnd'>
@@ -60,33 +71,52 @@ export const RoutineScheduleDnd = ({
       {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
       {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
       {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
+
+      <Form className='week-selector'>  
+        <Form.Group controlId="exampleForm.ControlSelect1">
+          <Form.Label>Choose Week</Form.Label>
+          <Form.Control
+          defaultValue='all' 
+          onChange={handleWeekChange}
+          as="select">
+            <option value='all'>All</option>
+            {currentWeeks.map(week => 
+            <option
+            value={week.week_number}
+            key={week._id}>
+              Week {week.week_number}
+            </option>)}
+          </Form.Control>
+        </Form.Group>
+      </Form>
+
+
       {currentSetGroups && !crudingWeek && 
-      
       <DragDropContext 
-       onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
-      {Object.entries(routineSchedule).map(([weekNumber, days]) => {
+       onDragEnd={ result => onSetGroupDragEnd(result, selectedWeek, saveSetGroupChanges, setSelectedWeek)}>
+      {Object.entries(selectedWeek).map(([weekNumber, days]) => {
         return(
           <div
           key={`week-${weekNumber}`}
           className='week-container'>
             <div
             className='week-container-header'>
-              <h5>{currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}</h5>
+              <h5>{currentRoutine.name} - Week: {selectedWeek[weekNumber].week_number}</h5>
               <Button 
               onClick={() =>{ 
               setModalShow(true)
-              setWeekToDestroy(routineSchedule[weekNumber])
+              setWeekToDestroy(selectedWeek[weekNumber])
               }}>
                 Delete Week
               </Button>
             </div>
                 <div
                 className='week-container-row'>
-                {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
+                {Object.entries(selectedWeek[weekNumber]).map(([dayNumber, name]) => {
                   return dayNumber !== "_id" && dayNumber !== "week_number" && (
                     <DroppableDay 
                     key={weekNumber+dayNumber}
-                    routineSchedule={routineSchedule}
+                    selectedWeek={selectedWeek}
                     setCurrentWeek={setCurrentWeek}
                     currentRoutine={currentRoutine}
                     name={name}

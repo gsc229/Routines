@@ -20,7 +20,6 @@ const ConfirmDeleteModal = ({
 }) => {
 
   const [deleteFailed, setDeleteFailed] = useState(false)
-  console.log('ConfirmDeleteModal', {setGroup})
 
 
   const handleDelete = async () => {
@@ -76,7 +75,7 @@ const ConfirmDeleteModal = ({
         centered>
           <Modal.Header closeButton>
             <Modal.Title id='confirm-delete-modal-title'>
-                {failingTextObject.title}
+              {failingTextObject.title}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>

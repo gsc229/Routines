@@ -10,7 +10,7 @@ export const DroppableDay = ({
   weekNumber,
   dayNumber, 
   name, 
-  routineSchedule, 
+  selectedWeek, 
   setCurrentWeek,
   currentRoutine,
   fullResetCreateSetGroup,
@@ -41,19 +41,20 @@ export const DroppableDay = ({
 
   const handleAddSetsClick = () => {
     fullResetCreateSetGroup()
-    setCurrentWeek(routineSchedule[weekNumber])
+    setCurrentWeek(selectedWeek[weekNumber])
     localWritingSetGroup('routine', currentRoutine._id)
     localWritingSetGroup('user', userId)
-    localWritingSetGroup('week', routineSchedule[weekNumber]._id)
+    localWritingSetGroup('week', selectedWeek[weekNumber]._id)
     localWritingSetGroup('week_number', weekNumber)
     localWritingSetGroup('day_number', name.day_number)
     localWritingSetGroup('day', name.day_name)
   }
 
+
   return (
     <Droppable 
-    key={`${weekNumber}-${dayNumber}-${routineSchedule[weekNumber]._id}-${name.day_name}`}
-    droppableId={`${weekNumber}-${dayNumber}-${routineSchedule[weekNumber]._id}-${name.day_name}`}>
+    key={`${weekNumber}-${dayNumber}-${selectedWeek[weekNumber]._id}-${name.day_name}`}
+    droppableId={`${weekNumber}-${dayNumber}-${selectedWeek[weekNumber]._id}-${name.day_name}`}>
     {(provided, snapshot) => {
       return(
         <Card              
@@ -65,7 +66,7 @@ export const DroppableDay = ({
               <Link 
               onClick={handleAddSetsClick}
               to={
-                `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${routineSchedule[weekNumber].week_number}/day-${dayNumber}-${dayKey[dayNumber]}`}>
+                `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${selectedWeek[weekNumber].week_number}/day-${dayNumber}-${dayKey[dayNumber]}`}>
                 Add Sets
               </Link>
             </div>
@@ -74,7 +75,7 @@ export const DroppableDay = ({
             {...provided.droppableProps}
             ref={provided.innerRef}  
             >
-              {routineSchedule[weekNumber][dayNumber].set_groups.map((set_group, index) => {
+              {selectedWeek[weekNumber][dayNumber].set_groups.map((set_group, index) => {
                 return (
                 <DraggableSetGroup
                   key={set_group._id}  
