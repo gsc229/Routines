@@ -32,28 +32,24 @@ export const RoutineScheduleDnd = ({
   const [routineSchedule, setRoutineSchedule] = useState({})
   const [weekToDestroy, setWeekToDestroy] = useState('')
   const [modalShow, setModalShow] = useState(false)
-  const [selectedWeek, setSelectedWeek] = useState(routineSchedule)
 
   useEffect( async() => {
     await syncWeeksAndSetGroups(currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges)
     setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
+
   }, [currentWeeks, currentRoutineSets, currentWeeks])
 
-  useEffect(() => {
-    setSelectedWeek(routineSchedule)
-  }, [routineSchedule])
-
-  const handleDestroyWeek  = async (weekNumber) => {
-    const weekId = routineSchedule[weekNumber]._id
-    const destroyedWeekResponse = await destroyWeek(weekId)
-    
-  }
+  
 
   const handleWeekChange = (e) => {
     if(e.target.value === 'all'){
-      setSelectedWeek(routineSchedule)
+      //setSelectedWeek(routineSchedule)
+      setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
     } else{
-      setSelectedWeek({[e.target.value]: routineSchedule[e.target.value]})
+      const targetWeek = currentWeeks.filter(week=> week.week_number == e.target.value)
+      console.log({targetWeek, number: e.target.value})
+      setRoutineSchedule(routineScheduleConstructor(currentSetGroups, targetWeek, currentRoutineSets))
+      //setSelectedWeek({[e.target.value]: routineSchedule[e.target.value]})
     }
   }
 
@@ -88,30 +84,30 @@ export const RoutineScheduleDnd = ({
 
       {currentSetGroups && !crudingWeek && 
       <DragDropContext 
-       onDragEnd={ result => onSetGroupDragEnd(result, selectedWeek, saveSetGroupChanges, setSelectedWeek)}>
-      {Object.entries(selectedWeek).map(([weekNumber, days]) => {
+       onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
+      {Object.entries(routineSchedule).map(([weekNumber, days]) => {
         return(
           <div
           key={`week-${weekNumber}`}
           className='week-container'>
             <div
             className='week-container-header'>
-              <h5>{currentRoutine.name} - Week: {selectedWeek[weekNumber].week_number}</h5>
+              <h5>{currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}</h5>
               <Button 
               onClick={() =>{ 
               setModalShow(true)
-              setWeekToDestroy(selectedWeek[weekNumber])
+              setWeekToDestroy(routineSchedule[weekNumber])
               }}>
                 Delete Week
               </Button>
             </div>
                 <div
                 className='week-container-row'>
-                {Object.entries(selectedWeek[weekNumber]).map(([dayNumber, name]) => {
+                {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
                   return dayNumber !== "_id" && dayNumber !== "week_number" && (
                     <DroppableDay 
                     key={weekNumber+dayNumber}
-                    selectedWeek={selectedWeek}
+                    routineSchedule={routineSchedule}
                     setCurrentWeek={setCurrentWeek}
                     currentRoutine={currentRoutine}
                     name={name}
