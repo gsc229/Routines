@@ -43,7 +43,8 @@ export const onBankCardDragEnd = async (result, localBulkWriteExerciseSets, curr
   console.log({mode, updates})
   if(mode==='editing'){
     // if it fails revert back to previous order an show an 
-    const response = await bulkWriteExerciseSets(updates)
+    const setGroupId = currentExerciseSets[0].set_group
+    const response = await bulkWriteExerciseSets(updates, setGroupId)
     if(!response.success){
       localBulkWriteExerciseSets(currentExerciseSets)
     }
