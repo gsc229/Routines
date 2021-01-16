@@ -40,16 +40,6 @@ export const DuplicateHereBtn = ({
         console.log('DuplicateHereBtn: ',{newSets})
         const newSetsResponse = await createNewExerciseSets(newSets)
     }
-
-    if(set_group_ERROR){
-      alert(`DuplicateHereBtn set group error: ${set_group_ERROR}`)
-      clearErrorMessage()
-      
-    }
-    if(exercise_set_ERROR){
-      alert(`DuplicateHereBtn exercise set error: ${exercise_set_ERROR}`)
-      clearErrorMessage()
-    }
   }
 
   return (

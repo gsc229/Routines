@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {destroyWeek, saveWeekChanges, setCurrentWeek} from '../../1_Actions/weekActions'
+import {destroyWeek, saveWeekChanges, setCurrentWeek, setScheduleDnDSelectedWeekNumber} from '../../1_Actions/weekActions'
 import {saveManySetGroupChanges, saveSetGroupChanges} from '../../1_Actions/setGroupActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import {syncWeeksAndSetGroups} from './schedule_helpers/syncWeeksAndSetGroups'
@@ -18,49 +18,37 @@ export const RoutineScheduleDnd = ({
   currentWeeks,
   currentSetGroups,
   currentRoutineSets,
-  destroyWeek,
   setCurrentWeek,
   saveSetGroupChanges,
   saveWeekChanges,
   saveManySetGroupChanges,
-  error_message,
   crudingWeek,
   crudingSetGroup,
-  clearErrorMessage
+  setScheduleDnDSelectedWeekNumber,
+  scheduleDnDSelectedWeekNumber
 }) => {
 
   const [routineSchedule, setRoutineSchedule] = useState({})
   const [weekToDestroy, setWeekToDestroy] = useState('')
   const [modalShow, setModalShow] = useState(false)
-  const [selectedWeek, setSelectedWeek] = useState(routineSchedule)
 
   useEffect( async() => {
     await syncWeeksAndSetGroups(currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges)
-    setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
-  }, [currentWeeks, currentRoutineSets, currentWeeks])
+
+  }, [])
 
   useEffect(() => {
-    setSelectedWeek(routineSchedule)
-  }, [routineSchedule])
-
-  const handleDestroyWeek  = async (weekNumber) => {
-    const weekId = routineSchedule[weekNumber]._id
-    const destroyedWeekResponse = await destroyWeek(weekId)
-    if(!destroyedWeekResponse.success){ 
-      alert(error_message)
-      setTimeout(() => {
-        clearErrorMessage()
-      }, 3000)
-    }
-  }
-
-  const handleWeekChange = (e) => {
-    if(e.target.value === 'all'){
-      setSelectedWeek(routineSchedule)
+    if(scheduleDnDSelectedWeekNumber === 'all'){
+      setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
     } else{
-      setSelectedWeek({[e.target.value]: routineSchedule[e.target.value]})
+      const targetWeek = currentWeeks.filter(week=> week.week_number == scheduleDnDSelectedWeekNumber)
+      console.log({targetWeek, number: scheduleDnDSelectedWeekNumber})
+      setRoutineSchedule(routineScheduleConstructor(currentSetGroups, targetWeek, currentRoutineSets))
     }
-  }
+
+
+  }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumber])
+
 
   return (
       <div 
@@ -76,12 +64,12 @@ export const RoutineScheduleDnd = ({
         <Form.Group controlId="exampleForm.ControlSelect1">
           <Form.Label>Choose Week</Form.Label>
           <Form.Control
-          defaultValue='all' 
-          onChange={handleWeekChange}
+          onChange={(e) => setScheduleDnDSelectedWeekNumber(e.target.value)}
           as="select">
             <option value='all'>All</option>
             {currentWeeks.map(week => 
             <option
+            selected={week.week_number == scheduleDnDSelectedWeekNumber}
             value={week.week_number}
             key={week._id}>
               Week {week.week_number}
@@ -93,30 +81,30 @@ export const RoutineScheduleDnd = ({
 
       {currentSetGroups && !crudingWeek && 
       <DragDropContext 
-       onDragEnd={ result => onSetGroupDragEnd(result, selectedWeek, saveSetGroupChanges, setSelectedWeek)}>
-      {Object.entries(selectedWeek).map(([weekNumber, days]) => {
+       onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
+      {Object.entries(routineSchedule).map(([weekNumber, days]) => {
         return(
           <div
           key={`week-${weekNumber}`}
           className='week-container'>
             <div
             className='week-container-header'>
-              <h5>{currentRoutine.name} - Week: {selectedWeek[weekNumber].week_number}</h5>
+              <h5>{currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}</h5>
               <Button 
               onClick={() =>{ 
               setModalShow(true)
-              setWeekToDestroy(selectedWeek[weekNumber])
+              setWeekToDestroy(routineSchedule[weekNumber])
               }}>
                 Delete Week
               </Button>
             </div>
                 <div
                 className='week-container-row'>
-                {Object.entries(selectedWeek[weekNumber]).map(([dayNumber, name]) => {
+                {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
                   return dayNumber !== "_id" && dayNumber !== "week_number" && (
                     <DroppableDay 
                     key={weekNumber+dayNumber}
-                    selectedWeek={selectedWeek}
+                    routineSchedule={routineSchedule}
                     setCurrentWeek={setCurrentWeek}
                     currentRoutine={currentRoutine}
                     name={name}
@@ -136,6 +124,7 @@ export const RoutineScheduleDnd = ({
 const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
+  scheduleDnDSelectedWeekNumber: state.weekReducer.scheduleDnDSelectedWeekNumber,
   currentSetGroups: state.setGroupReducer.currentSetGroups,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
@@ -149,7 +138,8 @@ const mapDispatchToProps = {
   saveSetGroupChanges,
   saveWeekChanges,
   saveManySetGroupChanges,
-  clearErrorMessage
+  clearErrorMessage,
+  setScheduleDnDSelectedWeekNumber
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineScheduleDnd)

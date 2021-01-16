@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroyWeek} from '../../../1_Actions/weekActions'
+import {destroyWeek, setScheduleDnDSelectedWeekNumber} from '../../../1_Actions/weekActions'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 
@@ -11,7 +11,8 @@ export const ConfirmDeleteWeekModal = ({
   setModalShow,
   confirmingTextObject,
   failingTextObject,
-  error_message
+  error_message,
+  setScheduleDnDSelectedWeekNumber
 }) => {
 
   const [deleteFailed, setDeleteFailed] = useState(false)
@@ -28,6 +29,7 @@ export const ConfirmDeleteWeekModal = ({
   const handleDelete = async () => {
     const response = await destroyWeek(week._id)
     if(response.success){
+      setScheduleDnDSelectedWeekNumber('all')
       return setModalShow(false)
     }
     setDeleteFailed(true)
@@ -97,7 +99,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  destroyWeek
+  destroyWeek,
+  setScheduleDnDSelectedWeekNumber
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmDeleteWeekModal)

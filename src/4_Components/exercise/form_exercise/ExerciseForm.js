@@ -50,11 +50,7 @@ export const ExerciseForm = ({
     localWritingExercise(e.target.name, trimmeddValue)
   }
 
-  useEffect(()=> {
-    if(error_message){
-    setTimeout(() => clearErrorMessage(),4000)
-    }
-  }, [error_message])
+  
 
   // Handles logic to distinguish the need of POST vs PUT requests of the currentExercise
   // What distinguishes an unsaved-on-the-backend-exercise from a saved one will be the _id (or lack thereof)

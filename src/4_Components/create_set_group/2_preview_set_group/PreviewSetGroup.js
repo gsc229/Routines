@@ -25,15 +25,7 @@ export const PreviewSetGroup = ({
 
   }, [])
 
-  useEffect(() => {
-    if(set_group_error_message || exercise_set_error_message){
-      alert(JSON.stringify({set_group_error_message, exercise_set_error_message}))
-      setTimeout(() => {
-        clearErrorMessage()
-      }, 3000);
-    }
-  },[set_group_error_message, exercise_set_error_message])
-  
+    
   return (
     <div className='preview-set-group-container'>
       <div className="set-groups">

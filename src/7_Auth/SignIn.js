@@ -32,18 +32,9 @@ export const SignIn = ({
       history.push('/')
       
     }
-
-    if(error_message){
-      setTimeout(() => {
-        clearErrorMessage()
-      }, 4000)
-    }
   })
 
   const handleChange = (e) => {
-    if(error_message){
-      clearErrorMessage()
-    }
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value

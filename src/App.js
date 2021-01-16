@@ -1,6 +1,8 @@
 import {useEffect} from 'react'
 import { connect } from 'react-redux'
+import {clearErrorMessage} from './1_Actions/userActions'
 import {Switch, Route} from 'react-router-dom'
+import {environment} from './config/config'
 import './App.scss'
 import PrivateRoute from './7_Auth/PrivateRoute'
 import PublicLandingPage from './5_Pages/landing_page/LandingPage'
@@ -23,11 +25,23 @@ function App({
   week_ERROR,
   set_group_ERROR,
   exercise_set_ERROR,
-  exercise_ERROR
+  exercise_ERROR,
+  clearErrorMessage
 }) {
 
+  
+  useEffect(() => {
+    const error_message = `${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}` 
+    if(error_message && environment ==='development'){
+      alert(`${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}`)
+    }
 
-
+    if(error_message){
+      setTimeout(() => clearErrorMessage(), 4000)
+    }
+    
+  }, 
+  [user_ERROR,routine_ERROR,week_ERROR,set_group_ERROR,exercise_set_ERROR,exercise_ERROR])
 
 
 
@@ -80,7 +94,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-
+  clearErrorMessage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
