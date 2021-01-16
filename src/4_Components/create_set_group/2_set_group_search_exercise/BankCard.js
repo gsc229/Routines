@@ -96,24 +96,31 @@ export const BankCard = ({
       setModalShow={setModalShow} />}
 
 
-      <Card.Body>
+    <Card.Body>
       <BsGrid3X3Gap className='grabber-icon icon' />
 
       <OverlayTrigger overlay={<ToolTip>Make a subgroup from this exercise</ToolTip>}>
-        <GrObjectGroup 
+        <GrObjectGroup
+        onTouchStart={handleCreateSubGroupClick}  
         onClick={handleCreateSubGroupClick} className='create-subset-icon icon' />
       </OverlayTrigger>
 
       <OverlayTrigger overlay={<ToolTip>Copy {exercise.name}</ToolTip>}>
-        <FiCopy className='copy-icon icon' onClick={handleCopy} />
+        <FiCopy 
+        onTouchStart={handleCopy} 
+        onClick={handleCopy} className='copy-icon icon' />
       </OverlayTrigger>
 
       <OverlayTrigger overlay={<ToolTip>Remove {exercise.name}</ToolTip>}>
-        <FiMinusSquare className='remove-icon icon' onClick={handleRemoveOne} />
+        <FiMinusSquare 
+        onTouchStart={handleRemoveOne}
+        onClick={handleRemoveOne} className='remove-icon icon'  />
       </OverlayTrigger>
 
       <OverlayTrigger overlay={<ToolTip>Set {exercise.name} Targets</ToolTip>}>
-        <FiTarget onClick={handleSetTargetsClick} id='target-icon' className='target-icon icon' />
+        <FiTarget 
+        onTouchStart={handleSetTargetsClick}
+        onClick={handleSetTargetsClick} id='target-icon' className='target-icon icon' />
       </OverlayTrigger>
 
         <Card.Subtitle>
