@@ -8,8 +8,7 @@ const CloseAlert = ({
 
   return (
     <Alert
-    className='modal-alert'
-    variant='danger'
+    className='modal-alert close-alert'
     show={alertConfig.show} >
       <Alert.Heading>
         {alertConfig.text}

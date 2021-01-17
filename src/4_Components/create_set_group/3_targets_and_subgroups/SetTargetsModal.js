@@ -4,7 +4,7 @@ import {clearCurrentExerciseSet, saveExerciseSetChanges} from '../../../1_Action
 import Modal from 'react-bootstrap/Modal'
 import CloseAlert from './CloseAlert'
 import Button from 'react-bootstrap/Button'
-import TargetsSetter from '../../create_set_group/3_targets_and_subgroups/TargetsSetter'
+import TargetsSetter from './TargetsSetter'
 
 export const SetTargetsModal = ({
   modalShow,

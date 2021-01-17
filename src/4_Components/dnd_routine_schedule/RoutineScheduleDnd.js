@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {destroyWeek, saveWeekChanges, setCurrentWeek, setScheduleDnDSelectedWeekNumber} from '../../1_Actions/weekActions'
+import {saveWeekChanges, setCurrentWeek, setScheduleDnDSelectedWeekNumber, createNewWeek} from '../../1_Actions/weekActions'
 import {saveManySetGroupChanges, saveSetGroupChanges} from '../../1_Actions/setGroupActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import {syncWeeksAndSetGroups} from './schedule_helpers/syncWeeksAndSetGroups'
@@ -14,9 +14,11 @@ import Button from 'react-bootstrap/Button'
 import  ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
 
 export const RoutineScheduleDnd = ({
+  userId,
   currentRoutine,
   currentWeeks,
   currentSetGroups,
+  createNewWeek,
   currentRoutineSets,
   setCurrentWeek,
   saveSetGroupChanges,
@@ -42,18 +44,26 @@ export const RoutineScheduleDnd = ({
       setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
     } else{
       const targetWeek = currentWeeks.filter(week=> week.week_number == scheduleDnDSelectedWeekNumber)
-      console.log({targetWeek, number: scheduleDnDSelectedWeekNumber})
       setRoutineSchedule(routineScheduleConstructor(currentSetGroups, targetWeek, currentRoutineSets))
     }
 
 
   }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumber])
 
+  const addWeek = async () => {
+    const credentials = {
+      user: userId,
+      routine: currentRoutine._id,
+      week_number: currentWeeks.length + 1
+    }
+    createNewWeek(credentials)
+    setScheduleDnDSelectedWeekNumber(currentWeeks.length + 1)
+  }
 
   return (
       <div 
       className='routine-schedule-dnd'>
-      {modalShow && <ConfirmDeleteWeekModal week={weekToDestroy} setModalShow={setModalShow} modalShow={modalShow} />}
+      {modalShow && <ConfirmDeleteWeekModal setModalShow={setModalShow} modalShow={modalShow} />}
       {!currentSetGroups && <DarkSpinner />}
       {crudingWeek === 'creating-week' && <DarkSpinner text='Creating week...' />}
       {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
@@ -76,6 +86,10 @@ export const RoutineScheduleDnd = ({
             </option>)}
           </Form.Control>
         </Form.Group>
+        <Button
+        className='add-week-btn' 
+        onClick={addWeek}
+        variant='primary'>Add Week</Button>
       </Form>
 
 
@@ -93,7 +107,7 @@ export const RoutineScheduleDnd = ({
               <Button 
               onClick={() =>{ 
               setModalShow(true)
-              setWeekToDestroy(routineSchedule[weekNumber])
+              setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))
               }}>
                 Delete Week
               </Button>
@@ -117,11 +131,16 @@ export const RoutineScheduleDnd = ({
         
         )})}
         </DragDropContext>}
+        <Button
+        className='add-week-btn' 
+        onClick={addWeek}
+        variant='primary'>Add Week</Button>
       </div>
   )
 }
 
 const mapStateToProps = (state) => ({
+  userId: state.userReducer.user._id,
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
   scheduleDnDSelectedWeekNumber: state.weekReducer.scheduleDnDSelectedWeekNumber,
@@ -133,7 +152,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  destroyWeek,
+  createNewWeek,
   setCurrentWeek,
   saveSetGroupChanges,
   saveWeekChanges,

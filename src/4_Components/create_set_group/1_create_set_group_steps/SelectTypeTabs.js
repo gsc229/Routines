@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import { localWritingSetGroup } from '../../../1_Actions/setGroupActions'
+import { localWritingSetGroup, saveSetGroupChanges } from '../../../1_Actions/setGroupActions'
 import Nav from 'react-bootstrap/Nav'
 
 export const SetGroupForm = ({
   currentSetGroup,
   setGroupTypes,
   localWritingSetGroup,
+  saveSetGroupChanges,
   currentStep
 }) => {
 
@@ -18,6 +19,15 @@ export const SetGroupForm = ({
       setShow(true)
     }
   }, [currentStep])
+
+  const handleTypeChoice = (type) => {
+
+    if(currentSetGroup._id){
+      saveSetGroupChanges(currentSetGroup._id, {set_group_type: type })
+    } else{
+      localWritingSetGroup('set_group_type', type)
+    }
+  }
 
   return (
     <div className='set-group-type-tab-btns-container'>
@@ -44,9 +54,8 @@ export const SetGroupForm = ({
             <Nav.Link
             className={set_group_type === type && currentStep !== 'choose-type' && 'selected-disabled'}  
             eventKey={type}
-            disabled={currentStep !== 'choose-type'}
             active={set_group_type === type}
-            onClick={() => localWritingSetGroup('set_group_type', type)}
+            onClick={() => handleTypeChoice(type)}
             >
               {type}
             </Nav.Link>
@@ -65,7 +74,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  localWritingSetGroup
+  localWritingSetGroup,
+  saveSetGroupChanges
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetGroupForm)

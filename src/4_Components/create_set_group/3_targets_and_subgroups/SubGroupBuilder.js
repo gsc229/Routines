@@ -38,8 +38,7 @@ export const SetGroupBuilder = ({
             </Form>
           </Col>
         </Row>
-        {total_sets > 0 && 
-        <SubGroupBuilderTabs inputSize={inputSize} />}
+        <SubGroupBuilderTabs inputSize={inputSize} />
     </Container>
   )
 }

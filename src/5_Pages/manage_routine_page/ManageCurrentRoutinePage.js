@@ -1,11 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
-import {createNewWeek} from '../../1_Actions/weekActions'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import RoutineScheduleDnd from '../../4_Components/dnd_routine_schedule/RoutineScheduleDnd'
-import Button from 'react-bootstrap/Button'
 import {FiRefreshCcw} from 'react-icons/fi'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 
@@ -13,26 +11,15 @@ export const ViewRoutinePage = ({
   currentRoutine, 
   currentWeeks,
   crudingRoutine,
-  fetchFlattenedRoutine, 
-  createNewWeek,
-  userId
-  
+  crudingWeek,
+  fetchFlattenedRoutine,
 }) => {
   
   const handleRefresh = () => {
     fetchFlattenedRoutine(currentRoutine._id)
   }
   
-  const addWeek = async () => {
-    const credentials = {
-      user: userId,
-      routine: currentRoutine._id,
-      week_number: currentWeeks.length + 1
-    }
-    console.log({credentials})
-    createNewWeek(credentials)
-
-  }
+  
 
   const noWeeksMessage = () => {
     return currentWeeks && !currentWeeks.length > 0 && !crudingRoutine &&
@@ -49,6 +36,8 @@ export const ViewRoutinePage = ({
       </div>
   }
 
+   
+
 
   return (
     <Layout>
@@ -57,10 +46,7 @@ export const ViewRoutinePage = ({
         {showWeeks()}
         {noWeeksMessage()}
         {crudingRoutine && <DarkSpinner text='Loading schedule...' />}
-        <Button
-        className='add-week-btn' 
-        onClick={addWeek}
-        variant='primary'>Add Week</Button>
+        {crudingWeek && <DarkSpinner text='Saving changes...' />}
       </Container>
     </Layout>
   )
@@ -68,14 +54,13 @@ export const ViewRoutinePage = ({
 
 const mapStateToProps = (state) => ({
   crudingRoutine: state.routineReducer.crudingRoutine,
+  crudingWeek: state.weekReducer.crudingWeek,
   currentRoutine: state.routineReducer.currentRoutine,
-  currentWeeks: state.weekReducer.currentWeeks,
-  userId: state.userReducer.user._id
+  currentWeeks: state.weekReducer.currentWeeks
 })
 
 const mapDispatchToProps = {
-  fetchFlattenedRoutine,
-  createNewWeek
+  fetchFlattenedRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewRoutinePage)

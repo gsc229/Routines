@@ -6,6 +6,12 @@
 .routine-schedule-dnd{
   background-color: $bs-dark;
   border-radius: 4px;
+  .week-selector{
+    select{
+      background-color: $bs-dark;
+      color: white;
+    }
+  }
 }
 
 .week-container{
@@ -38,7 +44,7 @@
 }
 /* ========== DAY ========= */
 .day-container-card{
-  border: 1px solid $routine-red;
+  border: 2px solid $jet;
   background-color: $bs-dark;
   margin: 10px 0;
   width: 30%;

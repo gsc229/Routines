@@ -148,6 +148,24 @@ const reducer = (state=initialState, action) => {
         crudingWeek: false,
         error_message: action.payload
       }
+    case constants.BULK_WRITING_WEEKS:
+      return{
+        ...state,
+        crudingWeek: 'bulk-updating'
+      }
+    case constants.BULK_WRITE_WEEKS_SUCCESS:
+      // success will always return all the remaining/modified/created sets of a single set group (populated with exercise)
+      return{
+        ...state,
+        crudingWeek: false,
+        currentWeeks: action.payload.data.sort((a, b) => a.week_number - b.week_number)
+      }
+    case constants.BULK_WRITE_WEEKS_FAIL:
+      return{
+        ...state,
+        crudingWeek: false,
+        error_message: action.payload
+      }
     case constants.DELETING_WEEK:
       return{
         ...state,

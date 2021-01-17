@@ -1,5 +1,5 @@
 import * as constants from '.'
-import {createWeek, getWeeks, updateWeek, deleteWeek } from '../3_APIs/routineWeekApi'
+import {createWeek, getWeeks, updateWeek, deleteWeek, bulkUpdateWeeks } from '../3_APIs/routineWeekApi'
 const generalErrorMessage = "Something went wrong with the request."
 
 
@@ -70,6 +70,26 @@ export const saveWeekChanges = (weekId, updates) => dispatch => {
     } 
     dispatch({type: constants.UPDATE_WEEK_FAIL, payload: generalErrorMessage})
     return false
+  })
+
+}
+
+export const bulkWriteWeeks = (updatesArray, routineId) => dispatch => {
+
+  dispatch({type: constants.BULK_WRITING_WEEKS})
+  
+  return bulkUpdateWeeks(updatesArray, routineId)
+  .then(response => {
+    if(response && response.success){
+      dispatch({type: constants.BULK_WRITE_WEEKS_SUCCESS, payload: {routineId, data: response.data}})
+      return response
+    } 
+    if(response && response.error_message){
+      dispatch({type: constants.BULK_WRITE_WEEKS_FAIL, payload: response.error_message})
+      return false
+    }
+    dispatch({type: constants.BULK_WRITE_WEEKS_FAIL, payload: generalErrorMessage})
+      return false
   })
 
 }

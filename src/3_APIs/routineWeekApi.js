@@ -57,6 +57,24 @@ export const updateWeek= (weekId, updates) => {
   })
 }
 
+export const bulkUpdateWeeks = (updatesArray, routineId) => {
+  console.log({updatesArray, routineId})
+  
+  return axiosWihAuth()
+  .put(`/routines/bulk-write/weeks`, {updatesArray, routineId})
+  .then(bulkWriteWeeksResponse=>{
+    console.log({bulkWriteWeeksResponse})
+    return bulkWriteWeeksResponse.data
+  })
+  .catch(bulkWriteWeeksError => {
+    console.log({bulkWriteWeeksError})
+    if(bulkWriteWeeksError.response){
+      return bulkWriteWeeksError.response.data
+    }
+    return {succes: false, error_message: "Somthing went wrong. Try again lager"}
+  })
+}
+
 export const deleteWeek= (weekId) => {
   return axiosWihAuth()
   .delete(`/routines/weeks/${weekId}`)
