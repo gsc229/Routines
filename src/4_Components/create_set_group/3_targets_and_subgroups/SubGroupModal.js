@@ -6,7 +6,7 @@ import {createSetGroupLocal} from '../../create_set_group/createSetGroupLocal'
 import Modal from 'react-bootstrap/Modal'
 import CloseAlert from './CloseAlert'
 import Button from 'react-bootstrap/Button'
-import SubGroupBuilder from '../../create_set_group/3_targets_and_subgroups/SubGroupBuilder'
+import SubGroupBuilder from './SubGroupBuilder'
 
 export const SubSetModal = ({
   modalShow,

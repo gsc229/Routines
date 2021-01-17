@@ -72,7 +72,9 @@ export const saveExerciseSetChanges = (exerciseSetId, updates) => dispatch => {
 }
 
 export const bulkWriteExerciseSets = (updatesArray, setGroupId) => dispatch => {
+
   dispatch({type: constants.BULK_WRITING_EXERCISE_SETS})
+  
   return bulkUpdateExerciseSets(updatesArray, setGroupId)
   .then(response => {
     if(response && response.success){
@@ -86,6 +88,7 @@ export const bulkWriteExerciseSets = (updatesArray, setGroupId) => dispatch => {
     dispatch({type: constants.BULK_WRITE_EXERCISE_SETS_FAIL, payload: generalErrorMessage})
       return false
   })
+
 }
 
 export const createSingleExerciseSet = (newSet) => dispatch => {
