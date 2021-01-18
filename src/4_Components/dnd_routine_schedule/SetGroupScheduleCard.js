@@ -40,6 +40,7 @@ export const SetGroup = ({
     text={!isDragging && 'white'}
     className="set-group-schedule-card">
       {modalShow && 
+      
       <ViewSetGroupModal
       redirectLink={redirectLink}
       setModalShow={setModalShow} 

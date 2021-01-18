@@ -12,12 +12,13 @@ import Form from 'react-bootstrap/Form'
 import DroppableDay from './DroppableDay'
 import Button from 'react-bootstrap/Button'
 import  ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
+import WeekHeader from './WeekHeader'
 
 export const RoutineScheduleDnd = ({
   userId,
   currentRoutine,
   currentWeeks,
-  currentSetGroups,
+  currentRoutineSetGroups,
   createNewWeek,
   currentRoutineSets,
   setCurrentWeek,
@@ -35,16 +36,16 @@ export const RoutineScheduleDnd = ({
   const [modalShow, setModalShow] = useState(false)
 
   useEffect( async() => {
-    await syncWeeksAndSetGroups(currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges)
+    await syncWeeksAndSetGroups(currentWeeks, currentRoutineSetGroups, saveWeekChanges, saveManySetGroupChanges)
 
   }, [])
 
   useEffect(() => {
     if(scheduleDnDSelectedWeekNumber === 'all'){
-      setRoutineSchedule(routineScheduleConstructor(currentSetGroups, currentWeeks, currentRoutineSets))
+      setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, currentWeeks, currentRoutineSets))
     } else{
       const targetWeek = currentWeeks.filter(week=> week.week_number == scheduleDnDSelectedWeekNumber)
-      setRoutineSchedule(routineScheduleConstructor(currentSetGroups, targetWeek, currentRoutineSets))
+      setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, targetWeek, currentRoutineSets))
     }
 
 
@@ -64,7 +65,7 @@ export const RoutineScheduleDnd = ({
       <div 
       className='routine-schedule-dnd'>
       {modalShow && <ConfirmDeleteWeekModal setModalShow={setModalShow} modalShow={modalShow} />}
-      {!currentSetGroups && <DarkSpinner />}
+      {!currentRoutineSetGroups && <DarkSpinner />}
       {crudingWeek === 'creating-week' && <DarkSpinner text='Creating week...' />}
       {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
       {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
@@ -93,7 +94,7 @@ export const RoutineScheduleDnd = ({
       </Form>
 
 
-      {currentSetGroups && !crudingWeek && 
+      {currentRoutineSetGroups && !crudingWeek && 
       <DragDropContext 
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
@@ -101,32 +102,27 @@ export const RoutineScheduleDnd = ({
           <div
           key={`week-${weekNumber}`}
           className='week-container'>
+
+            <WeekHeader 
+            setModalShow={setModalShow}
+            routineSchedule={routineSchedule} 
+            weekNumber={weekNumber} />
+
             <div
-            className='week-container-header'>
-              <h5>{currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}</h5>
-              <Button 
-              onClick={() =>{ 
-              setModalShow(true)
-              setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))
-              }}>
-                Delete Week
-              </Button>
+              className='week-container-row'>
+              {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
+                return dayNumber !== "_id" && dayNumber !== "week_number" && (
+                  <DroppableDay 
+                  key={weekNumber+dayNumber}
+                  routineSchedule={routineSchedule}
+                  setCurrentWeek={setCurrentWeek}
+                  currentRoutine={currentRoutine}
+                  name={name}
+                  weekNumber={weekNumber}
+                  dayNumber={dayNumber}/>
+                )
+              })}
             </div>
-                <div
-                className='week-container-row'>
-                {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
-                  return dayNumber !== "_id" && dayNumber !== "week_number" && (
-                    <DroppableDay 
-                    key={weekNumber+dayNumber}
-                    routineSchedule={routineSchedule}
-                    setCurrentWeek={setCurrentWeek}
-                    currentRoutine={currentRoutine}
-                    name={name}
-                    weekNumber={weekNumber}
-                    dayNumber={dayNumber}/>
-                  )
-                })}
-              </div>
           </div>
         
         )})}
@@ -144,7 +140,7 @@ const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
   scheduleDnDSelectedWeekNumber: state.weekReducer.scheduleDnDSelectedWeekNumber,
-  currentSetGroups: state.setGroupReducer.currentSetGroups,
+  currentRoutineSetGroups: state.setGroupReducer.currentRoutineSetGroups,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
   crudingWeek: state.weekReducer.crudingWeek,

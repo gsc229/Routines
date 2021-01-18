@@ -1,5 +1,5 @@
 import * as constants from './index'
-import { getSetGroupById, getSetGroups, updateSetGroup, updateManySetGroups, createSetGroup, deleteSetGroup } from '../3_APIs/setGroupApi'
+import { getSetGroupById, getSetGroups, updateSetGroup, updateManySetGroups, createSetGroup, deleteSetGroup, bulkUpdatSetGroups } from '../3_APIs/setGroupApi'
 const generalErrorMessage = "Something went wrong with the request."
 
 export const setCurrentSetGroup = (setGroup) => dispatch => {
@@ -130,6 +130,26 @@ export const createNewSetGroup = (newSetGroup) => dispatch => {
       return false
 
   })
+}
+
+export const bulkWriteSetGroups = (updatesArray, findByObj) => dispatch => {
+
+  dispatch({type: constants.BULK_WRITING_SET_GROUPS})
+  
+  return bulkUpdatSetGroups(updatesArray, findByObj)
+  .then(response => {
+    if(response && response.success){
+      dispatch({type: constants.BULK_WRITE_SET_GROUPS_SUCCESS, payload: {findByObj, data: response.data}})
+      return response
+    } 
+    if(response && response.error_message){
+      dispatch({type: constants.BULK_WRITE_SET_GROUPS_FAIL, payload: response.error_message})
+      return false
+    }
+    dispatch({type: constants.BULK_WRITE_SET_GROUPS_FAIL, payload: generalErrorMessage})
+      return false
+  })
+
 }
 
 export const destroySetGroup = (setGroupId) => dispatch => {

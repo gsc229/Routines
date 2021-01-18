@@ -88,7 +88,7 @@ const mapStateToProps = (state) => ({
   user_ERROR: state.userReducer.error_message,
   routine_ERROR: state.routineReducer.error_message,
   week_ERROR: state.weekReducer.error_message,
-  set_group_ERROR: state.routineReducer.error_message,
+  set_group_ERROR: state.setGroupReducer.error_message,
   exercise_set_ERROR: state.exerciseSetReducer.error_message,
   exercise_ERROR: state.exerciseReducer.error_message
 })

@@ -185,11 +185,15 @@ const reducer = (state=initialState, action) => {
       }
     case constants.BULK_WRITE_EXERCISE_SETS_SUCCESS:
       // success will always return all the remaining/modified/created sets of a single set group (populated with exercise)
+      const {set_group, week} = action.payload.findByObj
       return{
         ...state,
         crudingExerciseSet: false,
         currentExerciseSets: action.payload.data.sort((a, b) => a.order - b.order),
-        currentRoutineSets: [...state.currentRoutineSets.filter(set => set.set_group !== action.payload.setGroupId), ...action.payload.data].sort((a, b) => a - b)
+        currentRoutineSets: set_group ?
+         [...state.currentRoutineSets.filter(set => set.set_group !== set_group), ...action.payload.data].sort((a, b) => a - b)
+         :
+         [...state.currentRoutineSets.filter(set => set.week !== week), ...action.payload.data].sort((a, b) => a - b)
       }
     case constants.BULK_WRITE_EXERCISE_SETS_FAIL:
       return{
@@ -260,10 +264,6 @@ const reducer = (state=initialState, action) => {
         ],
         currentExerciseSets: initialState.currentExerciseSets
       }
-
-
-
-    
     case constants.CLEAR_ERROR_MESSAGE:
       return{
         ...state,

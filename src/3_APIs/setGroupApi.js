@@ -83,6 +83,24 @@ export const updateManySetGroups = (queryAndChanges) => {
   })
 }
 
+export const bulkUpdatSetGroups = (updatesArray, findByObj) => {
+  console.log({updatesArray, findByObj})
+  
+  return axiosWihAuth()
+  .put(`/set-groups/bulk-write`, {updatesArray, findByObj})
+  .then(bulkWritSetGroupsResponse=>{
+    console.log({bulkWritSetGroupsResponse})
+    return bulkWritSetGroupsResponse.data
+  })
+  .catch(bulkWritSetGroupsError => {
+    console.log({bulkWritSetGroupsError})
+    if(bulkWritSetGroupsError.response){
+      return bulkWritSetGroupsError.response.data
+    }
+    return {succes: false, error_message: "Somthing went wrong. Try again lager"}
+  })
+}
+
 export const deleteSetGroup = (setGroupId) => {
   
   return axiosWihAuth()
