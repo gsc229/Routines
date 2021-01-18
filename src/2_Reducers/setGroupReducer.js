@@ -158,13 +158,9 @@ const reducer = (state=initialState, action) => {
       crudingSetGroup: true
     }
   case constants.BULK_WRITE_SET_GROUPS_SUCCESS:
-    const {week} = action.payload.findByObj
     return{
       ...state,
-      currentRoutineSetGroups: week ? 
-      [...state.currentRoutineSetGroups.filter(sg => sg.week !== week), ...action.payload.data] 
-      : 
-      action.payload.data
+      currentRoutineSetGroups: action.payload.data
     }
   case constants.BULK_WRITE_SET_GROUPS_FAIL:{
     return{

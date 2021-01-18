@@ -2,9 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { setCurrentWeek, setScheduleDnDSelectedWeekNumber,  bulkWriteWeeks} from '../../1_Actions/weekActions'
 import { bulkWriteSetGroups } from '../../1_Actions/setGroupActions'
-import {clearErrorMessage} from '../../1_Actions/userActions'
 import {bulkWriteExerciseSets} from '../../1_Actions/exerciseSetActions'
-import {syncWeeksAndSetGroups} from './schedule_helpers/syncWeeksAndSetGroups'
+import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
@@ -25,25 +24,33 @@ export const WeekHeader = ({
   crudingWeek,
   crudingSetGroup,
   setScheduleDnDSelectedWeekNumber,
-  scheduleDnDSelectedWeekNumber
+  scheduleDnDSelectedWeekNumber,
+  fetchFlattenedRoutine
 }) => {
 
 
   const handleCopyAndInsert = async (e) => {
     const routineId = currentWeek.routine
-    const weekId = currentWeek._id
+    const idOfCopiedWeek = currentWeek._id
+    let newWeekId
     const copyToWeekNumber = JSON.parse(e.target.value)
-    const currentWeekCopy = {...currentWeek, copied_from: weekId, week_number: copyToWeekNumber}
+    const currentWeeksUpdates = []
+    const oldToNewSetGroupIds = {}
+    const bulkSetGroupCommands = []
+    const bulkExSetCommands = []
+
+    const currentWeekCopy = 
+    {...currentWeek, copied_from: idOfCopiedWeek, week_number: copyToWeekNumber}
     delete currentWeekCopy._id
     delete currentWeekCopy.id
     delete currentWeekCopy.createdAt
     delete currentWeekCopy.updatedAt
     delete currentWeekCopy._v
-    const weeksUpdates = []
+
     // update the week_number of all the existing weeks
     currentWeeks.forEach(wk => {
       if(wk.week_number >= copyToWeekNumber){
-        weeksUpdates.push({
+        currentWeeksUpdates.push({
           updateOne: {
             filter: {_id: wk._id},
             update: {week_number: wk.week_number + 1}
@@ -52,85 +59,78 @@ export const WeekHeader = ({
       }
     })
     // creates the new week witht the given week number
-    weeksUpdates.push({
+    currentWeeksUpdates.push({
       insertOne: {
         document: {
           ...currentWeekCopy
         }
       }
     })
-    console.log({routineId, weekId, currentWeekCopy, weeksUpdates})
+    
     // one of these results will be the result of a new insert, the rest will be updated with new week_numbers
-    const weeksResult = await bulkWriteWeeks(weeksUpdates, routineId)
-    console.log({weeksResult})
+    const weekBulkWriteResults = await bulkWriteWeeks(currentWeeksUpdates, routineId)
+    console.log({weekBulkWriteResults})
 
-    if(weeksResult.success){
 
-      const newWeekId = weeksResult.data.find(wk => wk.copied_from === weekId)._id
-      const copyOfSetGroups = currentRoutineSetGroups.filter(sg => sg.week === weekId)
-      const setGroupUpdates = []
-      // copy all the set groups
-      copyOfSetGroups.forEach(sg => {
-
-        const sgCopy = {
-          ...sg,
-          week: newWeekId,
-          copied_from: sg._id
-        }
-        delete sgCopy.exercise_sets
-        delete sgCopy._id 
-        delete sgCopy.id 
-        delete sgCopy.createdAt 
-        delete sgCopy.updatedAt
-        console.log({sgCopy})
-        setGroupUpdates.push({
-          insertOne: {
-            document: sgCopy
-          }
-        })
-
-        console.log({newWeekId, copyOfSetGroups, setGroupUpdates})
-
-      })
-
-        const setGroupsResult = await bulkWriteSetGroups(setGroupUpdates, {week: newWeekId})
-
-        console.log({setGroupsResult})
-        if(setGroupsResult.success){
-          const exSetUpdates = []
-          setGroupsResult.data.forEach(sg => {
-            
-            const copyOfExSets = currentRoutineSets.filter(set => set.set_group === sg.copied_from)
-
-              copyOfExSets.forEach(exSet => {
-                const exSetCopy ={
-                  ...exSet,
-                  set_group: sg._id,
-                  week: newWeekId,
-                  exercise: exSet.exercise._id
-                }
-                
-                delete exSetCopy._id 
-                delete exSetCopy.id 
-                delete exSetCopy.createdAt 
-                delete exSetCopy.updatedAt
-                exSetUpdates.push({
-                  insertOne: {
-                    document: exSetCopy
-                  }
-                })
-              })
-
-            console.log({copyOfExSets})
-          })
-
-          console.log({exSetUpdates})
-
-          const exSetResults = await bulkWriteExerciseSets(exSetUpdates, {week: newWeekId})
-          console.log({exSetResults})
-      }
-      
+    if(!weekBulkWriteResults.success){
+      return fetchFlattenedRoutine(routineId)
     }
+
+    if(weekBulkWriteResults.success){
+      newWeekId = weekBulkWriteResults.data.find(wk => wk.copied_from === idOfCopiedWeek)._id
+    }
+    
+    currentRoutineSetGroups.filter(sg => sg.week === idOfCopiedWeek).forEach(sg => {
+      sg.week = newWeekId
+      sg.copied_from = sg._id
+      oldToNewSetGroupIds[sg._id] = ''
+      delete sg.updatedAt
+      delete sg.createdAt
+      delete sg.exercise_sets
+      delete sg._id
+      delete sg.id 
+      bulkSetGroupCommands.push({
+        insertOne: {
+          document: sg
+        }
+      })
+    })
+
+    const bulkWriteSetGroupsResult = await bulkWriteSetGroups(bulkSetGroupCommands, {routine: routineId})
+    console.log(bulkWriteSetGroupsResult)
+    if(!bulkWriteSetGroupsResult.success){
+      return fetchFlattenedRoutine(routineId)
+    }
+
+    // map old sg ids to new one's for the next bulkwrite
+    bulkWriteSetGroupsResult.data.forEach(newSg => oldToNewSetGroupIds[newSg.copied_from] = newSg._id)
+
+    
+    currentRoutineSets.filter(exSet => exSet.week === idOfCopiedWeek).forEach(exSet => {
+      exSet.week = newWeekId
+      exSet.set_group = oldToNewSetGroupIds[exSet.set_group]
+      exSet.exercise = exSet.exercise ? exSet.exercise._id ? exSet.exercise._id : exSet.exercise : null // just in caes the exercise had been populated (only need the _id when creating, not the whole object)
+      exSet.copied_from = exSet._id
+      delete exSet._id
+      delete exSet.id
+      delete exSet.createdAt
+      delete exSet.updatedAt
+      bulkExSetCommands.push({
+        insertOne: {
+          document: exSet
+        }
+      })
+    })
+
+    const bulkWriteExerciseSetsResult = await bulkWriteExerciseSets(bulkExSetCommands, {week: newWeekId})
+    console.log({bulkWriteExerciseSetsResult})
+    if(!bulkExSetCommands){
+      return fetchFlattenedRoutine(routineId)
+    }
+
+    
+    fetchFlattenedRoutine(routineId)
+    setScheduleDnDSelectedWeekNumber('all')
 
   }
 
@@ -190,8 +190,8 @@ const mapDispatchToProps = {
   bulkWriteSetGroups,
   bulkWriteExerciseSets,
   setCurrentWeek,
-  clearErrorMessage,
-  setScheduleDnDSelectedWeekNumber
+  setScheduleDnDSelectedWeekNumber,
+  fetchFlattenedRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeekHeader)
