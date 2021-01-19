@@ -17,7 +17,8 @@ const initialState = {
     week_of_year: null,
     week_start_date: null,
     year: null,
-    set_groups: [] 
+    set_groups: [],
+    copied_from: null
   }
 }
 
@@ -151,7 +152,7 @@ const reducer = (state=initialState, action) => {
     case constants.BULK_WRITING_WEEKS:
       return{
         ...state,
-        crudingWeek: 'bulk-updating'
+        crudingWeek: 'bulk-writing-weeks'
       }
     case constants.BULK_WRITE_WEEKS_SUCCESS:
       // success will always return all the remaining/modified/created sets of a single set group (populated with exercise)

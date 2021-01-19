@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setCurrentWeek, setScheduleDnDSelectedWeekNumber,  bulkWriteWeeks} from '../../1_Actions/weekActions'
+import { setCurrentWeek, setScheduleDnDSelectedWeekNumber,  bulkWriteWeeks, clearCurrentWeek} from '../../1_Actions/weekActions'
 import { bulkWriteSetGroups } from '../../1_Actions/setGroupActions'
 import {bulkWriteExerciseSets} from '../../1_Actions/exerciseSetActions'
 import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import  Col  from 'react-bootstrap/Col'
 
 export const WeekHeader = ({
   routineSchedule,
@@ -25,12 +26,13 @@ export const WeekHeader = ({
   crudingSetGroup,
   setScheduleDnDSelectedWeekNumber,
   scheduleDnDSelectedWeekNumber,
-  fetchFlattenedRoutine
+  fetchFlattenedRoutine,
+  clearCurrentWeek
 }) => {
 
 
   const handleCopyAndInsert = async (e) => {
-    const routineId = currentWeek.routine
+    const routineId = currentRoutine._id
     const idOfCopiedWeek = currentWeek._id
     let newWeekId
     const copyToWeekNumber = JSON.parse(e.target.value)
@@ -130,8 +132,122 @@ export const WeekHeader = ({
 
     
     fetchFlattenedRoutine(routineId)
-    setScheduleDnDSelectedWeekNumber('all')
+    setScheduleDnDSelectedWeekNumber(copyToWeekNumber)
 
+  }
+
+
+
+  const handleMoveTo = async (e) => {
+    const destinationWeekNumber = JSON.parse(e.target.value)
+    const sourceWeekNumber = JSON.parse(currentWeek.week_number)
+    const sourceId = currentWeek._id
+    const updates = []
+    const updateLog = []
+
+    currentWeeks.forEach(wk => {
+      if(sourceWeekNumber > destinationWeekNumber){
+        if(wk.week_number >= destinationWeekNumber && wk.week_number < sourceWeekNumber && wk._id !== sourceId){
+          updates.push({
+            updateOne: {
+              filter: {_id: wk._id},
+              update: {week_number: wk.week_number + 1}
+            }
+          })
+
+          updateLog.push({
+            updateOne: {
+              filter: {_id: wk._id},
+              update: {week_number: wk.week_number + 1},
+              original: {week_number: wk.week_number},
+              destinationWeekNumber,
+              sourceWeekNumber,
+              sourceId
+            }
+          })
+        }
+      }
+      if(sourceWeekNumber < destinationWeekNumber){
+        if(wk.week_number > sourceWeekNumber && wk.week_number <= destinationWeekNumber && wk._id !== sourceId){
+          updates.push({
+            updateOne: {
+              filter: {_id: wk._id},
+              update: {week_number: wk.week_number - 1}
+            }
+          })
+
+          updateLog.push({
+            updateOne: {
+              filter: {_id: wk._id},
+              update: {week_number: wk.week_number - 1},
+              original: {week_number: wk.week_number},
+              destinationWeekNumber,
+              sourceWeekNumber,
+              sourceId
+            }
+          })
+        }
+      }
+    })
+
+    updates.push({
+      updateOne: {
+        filter: {_id: sourceId},
+        update: {week_number: destinationWeekNumber}
+      }
+    })
+
+    updateLog.push({
+      updateOne: {
+        filter: {_id: sourceId},
+        update: {week_number: destinationWeekNumber},
+        original: {week_number: sourceWeekNumber},
+        destinationWeekNumber,
+        sourceWeekNumber,
+        sourceId
+      }
+    })
+
+    console.log({updateLog})
+    await bulkWriteWeeks(updates,  currentRoutine._id)
+    setScheduleDnDSelectedWeekNumber(destinationWeekNumber)
+  }
+
+
+  const handleCreateNewAndInsert = async (e) => {
+    const copyToWeekNumber = JSON.parse(e.target.value)
+    alert(`Insert Blank at ${copyToWeekNumber}`)
+    const routineId = currentRoutine._id
+    // currentWeek will have been reset
+    const blankWeek = 
+    {...currentWeek, user: userId, routine: routineId, week_number: copyToWeekNumber}
+
+    
+    const currentWeeksUpdates = []
+
+    currentWeeks.forEach(wk => {
+      if(wk.week_number >= copyToWeekNumber){
+        currentWeeksUpdates.push({
+          updateOne: {
+            filter: {_id: wk._id},
+            update: {week_number: wk.week_number + 1}
+          }
+        })
+      }
+    })
+    // creates the new week witht the given week number
+    currentWeeksUpdates.push({
+      insertOne: {
+        document: {
+          ...blankWeek
+        }
+      }
+    })
+
+    const weekBulkWriteResults = await bulkWriteWeeks(currentWeeksUpdates, routineId)
+    console.log({weekBulkWriteResults})
+    fetchFlattenedRoutine(routineId)
+    setScheduleDnDSelectedWeekNumber(copyToWeekNumber)
   }
 
 
@@ -141,33 +257,80 @@ export const WeekHeader = ({
     <div
     className='week-container-header'>
       <h5>{currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}</h5>
-      <Form className='week-selector'>  
-        <Form.Group controlId="exampleForm.ControlSelect1">
-          <Form.Label>Copy and insert at: </Form.Label>
-          <Form.Control
-          onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
-          onChange={handleCopyAndInsert}
-          as="select">
-            <option selected={true} value='choose' disabled={true}>Choose</option>
-            {currentWeeks.map(week => 
-            <option
-            selected={false}
-            value={week.week_number}
-            key={week._id}>
-              Week {week.week_number}
-            </option>)}
-          </Form.Control>
-        </Form.Group>
+      <Form className='week-header-form'>  
+        <Form.Row>
+            <Col sm='12' md='3'>
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Label>Move to: </Form.Label>
+                <Form.Control
+                onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
+                onChange={handleMoveTo}
+                as="select">
+                  <option selected={true} value='choose' disabled={true}>Move to...</option>
+                  {currentWeeks.map(week => {
+                  return week.week_number !== currentWeek.week_number &&
+                  <option
+                  selected={false}
+                  value={week.week_number}
+                  key={week._id}>
+                    Week {week.week_number}
+                  </option>})}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col sm='12' md='3'>
+              <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Label>Copy and insert at: </Form.Label>
+              <Form.Control
+              onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
+              onChange={handleCopyAndInsert}
+              as="select">
+                <option selected={true} value='choose' disabled={true}>Copy to...</option>
+                {currentWeeks.map(week => {
+                return week.week_number !== currentWeek.week_number &&
+                <option
+                selected={false}
+                value={week.week_number}
+                key={week._id}>
+                  Week {week.week_number}
+                </option>})}
+              </Form.Control>
+            </Form.Group>
+            </Col>
+            <Col sm='12' md='3'>
+              <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Label>Insert Blank Week: </Form.Label>
+              <Form.Control
+              onClick={clearCurrentWeek}
+              onChange={handleCreateNewAndInsert}
+              as="select">
+                <option selected={true} value='choose' disabled={true}>Choose...</option>
+                <option 
+                value={weekNumber}>
+                  Here
+                </option>
+                <option 
+                value={JSON.parse(weekNumber) + 1}>
+                  Below
+                </option>
+              </Form.Control>
+            </Form.Group>
+            </Col>
+        
+            <Button
+            className='delete-week-btn'
+            onClick={() =>{ 
+            setModalShow(true)
+            setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))
+            }}>
+              Delete Week
+            </Button>
+        
+        
+        </Form.Row>
       </Form>
 
-      <Button>Insert Blank Week</Button>
-      <Button 
-      onClick={() =>{ 
-      setModalShow(true)
-      setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))
-      }}>
-        Delete Week
-      </Button>
+      
     </div>
   )
 }
@@ -191,7 +354,8 @@ const mapDispatchToProps = {
   bulkWriteExerciseSets,
   setCurrentWeek,
   setScheduleDnDSelectedWeekNumber,
-  fetchFlattenedRoutine
+  fetchFlattenedRoutine,
+  clearCurrentWeek
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeekHeader)

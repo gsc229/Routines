@@ -181,7 +181,7 @@ const reducer = (state=initialState, action) => {
     case constants.BULK_WRITING_EXERCISE_SETS:
       return{
         ...state,
-        crudingExerciseSet: 'bulk-updating'
+        crudingExerciseSet: 'bulk-wrtiting-exercise-sets'
       }
     case constants.BULK_WRITE_EXERCISE_SETS_SUCCESS:
       // success will always return all the remaining/modified/created sets of a single set group (populated with exercise)

@@ -155,7 +155,7 @@ const reducer = (state=initialState, action) => {
   case constants.BULK_WRITING_SET_GROUPS:
     return{
       ...state,
-      crudingSetGroup: true
+      crudingSetGroup: 'bulk-writing-set-groups'
     }
   case constants.BULK_WRITE_SET_GROUPS_SUCCESS:
     return{

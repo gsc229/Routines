@@ -27,6 +27,7 @@ export const RoutineScheduleDnd = ({
   saveManySetGroupChanges,
   crudingWeek,
   crudingSetGroup,
+  crudingExerciseSet,
   setScheduleDnDSelectedWeekNumber,
   scheduleDnDSelectedWeekNumber
 }) => {
@@ -34,6 +35,23 @@ export const RoutineScheduleDnd = ({
   const [routineSchedule, setRoutineSchedule] = useState({})
   const [weekToDestroy, setWeekToDestroy] = useState('')
   const [modalShow, setModalShow] = useState(false)
+
+  
+  const bulkWrting = () => {
+    if(crudingWeek === 'bulk-writing-weeks'){
+      return 'Week'
+    }
+    if(crudingSetGroup === 'bulk-writing-set-groups'){
+      return 'Set Group'
+    } 
+    if(crudingExerciseSet === 'bulk-writing-exercise-sets'){
+      return 'Set'
+    }
+
+    return false
+  } 
+
+  const isCruding = crudingWeek || crudingExerciseSet || crudingExerciseSet
 
   useEffect( async() => {
     await syncWeeksAndSetGroups(currentWeeks, currentRoutineSetGroups, saveWeekChanges, saveManySetGroupChanges)
@@ -47,7 +65,6 @@ export const RoutineScheduleDnd = ({
       const targetWeek = currentWeeks.filter(week=> week.week_number == scheduleDnDSelectedWeekNumber)
       setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, targetWeek, currentRoutineSets))
     }
-
 
   }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumber])
 
@@ -64,12 +81,6 @@ export const RoutineScheduleDnd = ({
   return (
       <div 
       className='routine-schedule-dnd'>
-      {modalShow && <ConfirmDeleteWeekModal setModalShow={setModalShow} modalShow={modalShow} />}
-      {!currentRoutineSetGroups && <DarkSpinner />}
-      {crudingWeek === 'creating-week' && <DarkSpinner text='Creating week...' />}
-      {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
-      {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
-      {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
 
       <Form className='week-selector'>  
         <Form.Group controlId="exampleForm.ControlSelect1">
@@ -87,14 +98,19 @@ export const RoutineScheduleDnd = ({
             </option>)}
           </Form.Control>
         </Form.Group>
-        <Button
-        className='add-week-btn' 
-        onClick={addWeek}
-        variant='primary'>Add Week</Button>
       </Form>
+      
+      {modalShow && <ConfirmDeleteWeekModal setModalShow={setModalShow} modalShow={modalShow} />}
+      {!currentRoutineSetGroups && <DarkSpinner />}
+      {crudingWeek === 'creating-week' && <DarkSpinner text='Creating week...' />}
+      {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
+      {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
+      {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
+      {bulkWrting() && <DarkSpinner text={`Saving ${bulkWrting()} Changes...`} />}
+      
 
 
-      {currentRoutineSetGroups && !crudingWeek && 
+      {currentRoutineSetGroups && !crudingWeek && !bulkWrting() &&
       <DragDropContext 
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
@@ -127,10 +143,13 @@ export const RoutineScheduleDnd = ({
         
         )})}
         </DragDropContext>}
+        {!isCruding && 
         <Button
         className='add-week-btn' 
         onClick={addWeek}
-        variant='primary'>Add Week</Button>
+        variant='primary'>
+          Add Week
+        </Button>}
       </div>
   )
 }
@@ -144,7 +163,8 @@ const mapStateToProps = (state) => ({
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
   crudingWeek: state.weekReducer.crudingWeek,
-  crudingSetGroup: state.setGroupReducer.crudingSetGroup
+  crudingSetGroup: state.setGroupReducer.crudingSetGroup,
+  crudingExerciseSet: state.exerciseSetReducer.crudingExerciseSet
 })
 
 const mapDispatchToProps = {
