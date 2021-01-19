@@ -9,6 +9,7 @@ import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import CreateSetGroupSteps from '../../4_Components/create_set_group/1_create_set_group_steps/CreateSetGroupSteps'
+import FindSavedSetGroup from '../../4_Components/saved_set_groups/FindSavedSetGroup'
 export const CreateOrEditExerciseSet = ({
   currentRoutine,
   fullResetCreateSetGroup,
@@ -42,7 +43,7 @@ export const CreateOrEditExerciseSet = ({
             <CreateSetGroupSteps />
           </Tab>
           <Tab eventKey="set" title="Use A Saved Set Group">
-            Find a set
+            <FindSavedSetGroup />
           </Tab>
         </Tabs>
 

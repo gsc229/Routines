@@ -177,6 +177,7 @@ const reducer = (state=initialState, action) => {
   case constants.UPDATE_SET_GROUP_SUCCESS:
     return{
       ...state,
+      crudingSetGroup: false,
       currentSetGroup: action.payload,
       currentRoutineSetGroups: [
         ...state.currentRoutineSetGroups.map(setGroup => setGroup._id === action.payload._id ? action.payload : setGroup)

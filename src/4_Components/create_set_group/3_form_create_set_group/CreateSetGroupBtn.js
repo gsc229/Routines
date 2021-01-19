@@ -1,23 +1,27 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
 import {createNewSetGroup, fullResetCreateSetGroup} from '../../../1_Actions/setGroupActions'
 import {createNewExerciseSets, setCurrentExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
+import Spinner from 'react-bootstrap/Spinner'
 import {GiBiceps} from 'react-icons/gi'
 
+
 export const CreateSetGroupBtn = ({
+  changesSaved, 
+  setChangesSaved,
   currentRoutine,
   currentSetGroup,
   currentExerciseSets,
   createNewSetGroup,
   createNewExerciseSets,
-  fullResetCreateSetGroup
+  fullResetCreateSetGroup,
+  crudingSetGroup
 }) => {
 
-
-  const hisotry = useHistory()
+  
   const handleCreateSetGroup = async () => {
 
     const newSetGroupResponse = await createNewSetGroup(currentSetGroup)
@@ -37,21 +41,56 @@ export const CreateSetGroupBtn = ({
       // Want to manually update the weeks, set_groups and exercise_sets on the current routine
       // will need to populate the newly created exercise_sets with their exercises. 
       if(newExerciseSetsResponse.success){
-        const {_id, name, slug} = currentRoutine
-        hisotry.push(`/view-routine/${_id}/${slug ? slug : name}`)
-        fullResetCreateSetGroup()
+       setChangesSaved(true)
       }
 
     }
   }
+
+  
+
+  const getButtonMessage = () => {
+
+    if(!crudingSetGroup && !changesSaved){
+      return (
+        <div className='btn-message'>
+          Create Set Group&nbsp;
+          <GiBiceps/>
+        </div>
+      )
+    }
+
+    if(crudingSetGroup === 'creating-set-group'){
+      return (
+        <div className='btn-message'>
+          Saving Changes &nbsp;
+          <Spinner
+            as="span"
+            animation="grow"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          />
+        </div>
+      )
+    }
+
+    if(!crudingSetGroup && changesSaved){
+      return (
+        <div className='btn-message'>
+          Set Group Saved!
+        </div>
+      )
+    }
+  }
+
 
   return (
     <Button
     disabled={currentExerciseSets.length < 1}
     variant='success'
     onClick={handleCreateSetGroup}>
-      Create Set Group&nbsp;
-      <GiBiceps/>
+      {getButtonMessage()}
     </Button>
   )
 }
@@ -63,7 +102,8 @@ const mapStateToProps = (state) => ({
   createSetGroupData: state.setGroupReducer.createSetGroupData,
   currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
   set_group_error_message: state.setGroupReducer.error_message,
-  exercise_set_error_message: state.exerciseSetReducer.error_message
+  exercise_set_error_message: state.exerciseSetReducer.error_message,
+  crudingSetGroup: state.setGroupReducer.crudingSetGroup
 })
 
 const mapDispatchToProps = {
