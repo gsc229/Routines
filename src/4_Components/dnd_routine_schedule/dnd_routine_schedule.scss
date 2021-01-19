@@ -14,12 +14,17 @@
   }
 }
 
+
+
 .week-container{
   padding: 30px;
   border-radius: 4px;
-  margin-top: 10px;
+  border: 1px dashed $persian-plum;
+  margin: 10px auto;
+  margin-bottom: 20px;
   .week-container-header{
     display: flex;
+    flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -28,7 +33,19 @@
     border-bottom: 1px solid lightslategrey;
     margin-top: 10px;
     h5{
-      margin-right: 20px;
+      margin: 20px auto;
+    }
+    .week-header-form{
+      width: 100%;
+      .form-row{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .delete-week-btn{
+          margin-top: 15px;
+        }
+      }
+      
     }
   }
   .week-container-row{

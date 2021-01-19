@@ -53,7 +53,7 @@ const initialState = {
     rest_time_increase: "",
     rest_time_decrease: ""
   },
-
+  currentRoutineSetGroups: [],
   currentSetGroup: {
     routine: null, //required
     week: null, //required
@@ -121,8 +121,8 @@ const reducer = (state=initialState, action) => {
     return{
       ...state,
       crudingSetGroup: false,
-      currentSetGroups: [
-        ...state.currentSetGroups
+      currentRoutineSetGroups: [
+        ...state.currentRoutineSetGroups
         .map(localSg => {
           const foundIncomingSg = action.payload.find(sg => sg._id === localSg._id)
           return foundIncomingSg ? foundIncomingSg : localSg
@@ -144,7 +144,7 @@ const reducer = (state=initialState, action) => {
       ...state,
       crudingSetGroup: false,
       currentSetGroup: action.payload,
-      currentSetGroups: [...state.currentSetGroups, action.payload]
+      currentRoutineSetGroups: [...state.currentRoutineSetGroups, action.payload]
     }
   case constants.CREATE_SET_GROUP_FAIL: 
     return{
@@ -152,6 +152,23 @@ const reducer = (state=initialState, action) => {
       crudingSetGroup: false,
       error_message: action.payload
     }
+  case constants.BULK_WRITING_SET_GROUPS:
+    return{
+      ...state,
+      crudingSetGroup: 'bulk-writing-set-groups'
+    }
+  case constants.BULK_WRITE_SET_GROUPS_SUCCESS:
+    return{
+      ...state,
+      currentRoutineSetGroups: action.payload.data
+    }
+  case constants.BULK_WRITE_SET_GROUPS_FAIL:{
+    return{
+      ...state,
+      crudingSetGroup: false,
+      error_message: action.payload
+    }
+  }
   case constants.UPDATING_SET_GROUP:
     return{
       ...state,
@@ -161,8 +178,8 @@ const reducer = (state=initialState, action) => {
     return{
       ...state,
       currentSetGroup: action.payload,
-      currentSetGroups: [
-        ...state.currentSetGroups.map(setGroup => setGroup._id === action.payload._id ? action.payload : setGroup)
+      currentRoutineSetGroups: [
+        ...state.currentRoutineSetGroups.map(setGroup => setGroup._id === action.payload._id ? action.payload : setGroup)
       ]
     }
   case constants.UPDATE_SET_GROUP_FAIL:
@@ -203,8 +220,8 @@ const reducer = (state=initialState, action) => {
     return{
       ...state,
       crudingSetGroup: false,
-      currentSetGroups: [
-        ...state.currentSetGroups
+      currentRoutineSetGroups: [
+        ...state.currentRoutineSetGroups
         .filter(setGroup => setGroup._id !== setGroupId)
       ]
     }
@@ -220,7 +237,7 @@ const reducer = (state=initialState, action) => {
     return{
       ...state,
       crudingSetGroup: false,
-      currentSetGroups: action.payload.set_groups
+      currentRoutineSetGroups: action.payload.set_groups
     }
   case constants.FETCH_FLATTENED_ROUTINE_FAIL:
     return{
@@ -232,8 +249,8 @@ const reducer = (state=initialState, action) => {
     const weekId = action.payload._id ? action.payload._id : action.payload
     return{
       ...state,
-      currentSetGroups: [
-        ...state.currentSetGroups
+      currentRoutineSetGroups: [
+        ...state.currentRoutineSetGroups
         .filter(setGroup => setGroup.week !== weekId)
       ]
     }

@@ -63,7 +63,7 @@ export const AddRemoveBtnConfigs = ({
         })
       ) 
 
-      const deleteResponse = await bulkWriteExerciseSets(deleteCommands, currentSetGroup._id)
+      const deleteResponse = await bulkWriteExerciseSets(deleteCommands, {set_group: currentSetGroup._id})
 
       if(!deleteResponse.success){
          const filtered = currentExerciseSets.filter(set => set.exercise._id !== exercise._id)

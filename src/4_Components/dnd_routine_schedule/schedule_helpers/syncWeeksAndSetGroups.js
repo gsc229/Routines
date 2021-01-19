@@ -1,4 +1,4 @@
-export const syncWeeksAndSetGroups = (currentWeeks, currentSetGroups, saveWeekChanges, saveManySetGroupChanges) => {
+export const syncWeeksAndSetGroups = (currentWeeks, currentRoutineSetGroups, saveWeekChanges, saveManySetGroupChanges) => {
 
   currentWeeks.forEach(async (week, index) => {
     if(week.week_number !== (index + 1)){

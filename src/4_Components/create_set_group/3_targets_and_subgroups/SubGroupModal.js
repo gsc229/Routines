@@ -87,7 +87,7 @@ export const SubSetModal = ({
         
       })
 
-      const subGroupResonse = await bulkWriteExerciseSets(updatesOrInserts, currentSetGroup._id)
+      const subGroupResonse = await bulkWriteExerciseSets(updatesOrInserts, {set_group: currentSetGroup._id})
       console.log({subGroupResonse})
 
         if(!subGroupResonse.success){
