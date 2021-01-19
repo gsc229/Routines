@@ -12,7 +12,7 @@ export const SgNameInputForm = ({
   currentExerciseSets
 }) => {
 
-  const [useAutoGenName, setUseAutoGen] = useState(true)
+  const [useAutoGenName, setUseAutoGen] = useState(false)
 
   const setGroupType = currentSetGroup.set_group_type
   const firstThreeNames = []
@@ -28,6 +28,9 @@ export const SgNameInputForm = ({
   const autoName = firstSet && useAutoGenName ?  autoNameString : useAutoGenName ? 'Waiting for first exercise selection...' : ''
 
   useEffect(() => {
+
+    if(!currentSetGroup.name || currentSetGroup.name === autoNameString) setUseAutoGen(true)
+
     if(useAutoGenName){
       localWritingSetGroup('name', autoNameString)
     }
