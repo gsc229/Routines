@@ -22,11 +22,9 @@ export const SetGroupForm = ({
 
   const handleTypeChoice = (type) => {
 
-    if(currentSetGroup._id){
-      saveSetGroupChanges(currentSetGroup._id, {set_group_type: type })
-    } else{
+   
       localWritingSetGroup('set_group_type', type)
-    }
+    
   }
 
   return (

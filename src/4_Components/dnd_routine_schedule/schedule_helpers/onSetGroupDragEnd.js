@@ -63,7 +63,7 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
 
   const copyOfDestinationDaySetGroups = [...sameWeekDesitnationLocation.set_groups]
   const [removed] = copyOfSourceDaySetGroups.splice(source.index, 1)
-
+  removed.week_number = destinationWeek
   removed.day_number = destinationDay
   removed.order = destination.index
   removed.week = destinationWeekId
@@ -92,7 +92,11 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
     const sameDaySourceAndDestinationLocation = routineSchedule[sourceWeek][sourceDay]
     const copyOfSetGroups = [...sameDaySourceAndDestinationLocation.set_groups]
     const [removed] = copyOfSetGroups.splice(source.index, 1)
+    removed.week_number = destinationWeek
+    removed.day_number = destinationDay
     removed.order = destination.index
+    removed.week = destinationWeekId
+    removed.day = destinationDayName
     copyOfSetGroups.splice(destination.index, 0, removed)
 
     setRoutineSchedule({

@@ -16,7 +16,7 @@ export const SetTargetsModal = ({
 
   const [alertConfig, setAlertConfig] = useState({
     show: false,
-    text: 'Are you sure you want to closee?',
+    text: 'Are you sure you want to close?',
     coninute_btn: false
   })
 

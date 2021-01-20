@@ -21,6 +21,7 @@ import RemoveAllModal from '../../modals/remove_modals/RemoveAllSetsModal'
 
 
 export const AddRemoveBtnConfigs = ({
+  allowAllBtns=false,
   setShowAddedAlert,
   currentExerciseSet,
   currentExerciseSets,
@@ -29,7 +30,7 @@ export const AddRemoveBtnConfigs = ({
   addToCurrentExerciseSets, 
   localBulkWriteExerciseSets,
   bulkWriteExerciseSets,
-   removeFromCurrentExerciseSetsByExerciseID,
+  removeFromCurrentExerciseSetsByExerciseID,
   createNewExerciseSets,
   createSingleExerciseSet,
   showNextStepBtn,
@@ -141,7 +142,7 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const addButton = () => {
-    return canAddThisExercise(exercise, set_group_type, currentExerciseSets) && 
+    return (allowAllBtns || canAddThisExercise(exercise, set_group_type, currentExerciseSets)) && 
     <div className='card-link-container'>
       <Badge
       pill
@@ -154,7 +155,7 @@ export const AddRemoveBtnConfigs = ({
   }
 
   const nextStepBtn = () => {
-    return canMoveToForm(set_group_type, currentExerciseSets) &&
+    return (allowAllBtns || canMoveToForm(set_group_type, currentExerciseSets)) &&
     <div className='card-link-container'>
       <ConnectedNextStepButton 
       variant='success'
@@ -166,7 +167,7 @@ export const AddRemoveBtnConfigs = ({
   } 
 
   const nextStepOnCardBtn = () => {
-    return canMoveToFormFromAnExerciseCard(exercise, set_group_type, currentExerciseSets)  &&
+    return (allowAllBtns || canMoveToFormFromAnExerciseCard(exercise, set_group_type, currentExerciseSets)) &&
     <div className='card-link-container'>
         <ConnectedNextStepBadge
         pill={true} 

@@ -1,25 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {IoDuplicateOutline} from 'react-icons/io5'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import {createNewSetGroup} from '../../1_Actions/setGroupActions'
 import {createNewExerciseSets} from '../../1_Actions/exerciseSetActions'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import ToolTip from 'react-bootstrap/Tooltip'
+import {numberToDay} from './schedule_helpers/routineScheduleConstructor'
+import NavDropdown from 'react-bootstrap/NavDropdown'
 
-export const DuplicateHereBtn = ({
+export const DuplicateTo = ({
   set_group,
   currentRoutineSets,
   createNewExerciseSets,
   createNewSetGroup,
-  clearErrorMessage,
-  set_group_ERROR,
-  exercise_set_ERROR
+  currentWeeks,
 }) => {
 
-  const duplicate = async () => {
+  
+  const duplicate = async (week, week_number, day_number) => {
     const newSetGroup = {
-      ...set_group
+      ...set_group,
+      week_number,
+      day_number,
+      week
     }
     delete newSetGroup._id
     delete newSetGroup.id
@@ -41,16 +42,40 @@ export const DuplicateHereBtn = ({
     }
   }
 
+  
+
   return (
-      <IoDuplicateOutline  
-      onClick={duplicate}/>
+    <NavDropdown 
+    color='white'
+    title='Duplicate to'
+    id='duplicate-to-week-dropdown'
+    className='duplicate-to'>
+      {currentWeeks.map(week => 
+        <NavDropdown
+        key={week._id}
+        className='duplicate-to-day-dropdown'
+        color='white'
+        title={`Week: ${week.week_number}`}>
+          {Object.keys(numberToDay).map(dayNum => 
+            <NavDropdown.Item
+            onClick={() => duplicate(week._id, week.week_number, dayNum)}
+            key={`${week._id}-day-${dayNum}`}
+            >
+              {numberToDay[dayNum].long}
+            </NavDropdown.Item>
+          )}
+        </NavDropdown>
+        
+      )}
+    </NavDropdown>
   )
 }
 
 const mapStateToProps = (state) => ({
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   set_group_ERROR: state.setGroupReducer.error_message,
-  exercise_set_ERROR: state.exerciseSetReducer.error_message
+  exercise_set_ERROR: state.exerciseSetReducer.error_message,
+  currentWeeks: state.weekReducer.currentWeeks
 })
 
 const mapDispatchToProps = {
@@ -59,4 +84,4 @@ const mapDispatchToProps = {
   clearErrorMessage
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DuplicateHereBtn)
+export default connect(mapStateToProps, mapDispatchToProps)(DuplicateTo)

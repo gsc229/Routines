@@ -74,9 +74,13 @@
   }
   .day-header{
     display: flex;
+    width: 100%;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    h6{
+      margin-bottom: 0;
+    }
   }
 
   .card-header{
@@ -107,16 +111,99 @@
   background-color: $bs-dark;
   border: 1px solid $routine-red;
   .set-group-schedule-card-header{
+    padding-left: 4px;
+    padding-right: 4px;
     display: flex;
     justify-content: space-between;
     background-color: $routine-red;
-    .delete-btn-container{
-      .delete-icon{
+    .view-copy-move-btns-conainer{
+      cursor: auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      position: relative;
+      
+      
+      .schedul-card-control-btn{
         cursor: pointer;
       }
+      #schedule-card-grabber-icon{
+        cursor: grab;
+      }
+      .duplicate-to{
+        margin: 0;
+        .schedule-card-select-input{
+          height: 20px;
+          font-size: 12px;
+        }
+      }
     }
+    #duplicate-to-week-dropdown{
+      color: white;
+      .nav-item{
+        background-color: white;
+      }
+
+      
+      
+    }
+    
+    .duplicate-to-day-dropdown{
+      background-color: white;
+      color: black;
+      margin: 15px auto;
+      a{
+        background-color: white;
+        color: black;
+      }
+      div{
+        
+        a{
+          background-color: white;
+        }
+      }
+      
+    }
+
+    .duplicate-to-day-dropdown.show{
+      background-color: $routine-red;
+      color: black;
+      margin: 15px auto;
+      padding: 4px;
+      a{
+        background-color: $routine-red;
+        color: white;
+      }
+      div{
+        a{
+          background-color: white;
+          color: black;
+          &:hover{
+            background-color: lightblue;
+          }
+        }
+      }
+      
+    }
+
+    
+    
   }
+
+
+
+
+
   .set-group-schedule-card-body{
+    position: relative;
+    #set-group-card-delete-icon{
+      position: absolute;
+      right: 2px;
+      bottom: 2px;
+      color: $routine-red;
+      cursor: pointer;
+    }
     .card-subtitle{
       color: whitesmoke;
       font-size: 13px;

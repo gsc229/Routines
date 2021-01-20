@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroySetGroup, setCurrentSetGroup} from '../../1_Actions/setGroupActions'
+import {setCurrentSetGroup} from '../../1_Actions/setGroupActions'
 import {numberToDay} from '../../4_Components/dnd_routine_schedule/schedule_helpers/routineScheduleConstructor'
 import Card from 'react-bootstrap/Card'
 import {BsGrid3X3Gap} from 'react-icons/bs'
@@ -9,6 +9,7 @@ import {RiDeleteBin5Line} from 'react-icons/ri'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
 import DuplicateHereBtn from './DuplicateHereBtn'
+import DuplicateTo from './DuplicateTo'
 import ViewSetGroupModal from '../modals/view_modals/ViewSetGroupModal'
 import ConfirmDeleteModal from '../modals/confirm_delete_modals/ConfirmDeleteSetGroupModal'
 
@@ -17,8 +18,6 @@ export const SetGroup = ({
   weekNumber,
   dayNumber,
   isDragging,
-  destroySetGroup,
-  currentWeeks,
   setCurrentSetGroup,
   currentRoutine
 }) => {
@@ -52,32 +51,47 @@ export const SetGroup = ({
       />
       <Card.Header
       className='set-group-schedule-card-header'>
-        <div className='view-copy-move-btns-conainer'>
-        <OverlayTrigger overlay={<ToolTip>View full details</ToolTip>}>
-          <BsEye
-          onClick={handleViewSetGroup} 
-          style={{marginRight: '10px', cursor: 'pointer'}} 
-          />
-        </OverlayTrigger>
-        
-        <DuplicateHereBtn 
-        set_group={set_group}/>
-  
-        <BsGrid3X3Gap />
-      </div>
 
-      <div className="delete-btn-container">
-        <OverlayTrigger overlay={<ToolTip>Delete set group</ToolTip>}>
-          <RiDeleteBin5Line 
-          onClick={() => setDeleteModalShow(true)}
-          className='delete-icon'/>
-        </OverlayTrigger>
-      </div>
+        <div className='view-copy-move-btns-conainer'>
+          <OverlayTrigger 
+          overlay={<ToolTip>View full details</ToolTip>}>
+          <BsEye
+          className='schedul-card-control-btn'
+          onClick={handleViewSetGroup} 
+          />
+          </OverlayTrigger>
+
+          <OverlayTrigger overlay={<ToolTip>Duplicate here</ToolTip>}>
+          <div 
+          className='schedul-card-control-btn' >
+            <DuplicateHereBtn
+            set_group={set_group}/>
+          </div>
+          </OverlayTrigger>
+          
+          <DuplicateTo
+          set_group={set_group}
+          className='schedul-card-control-btn' />
+
+          <BsGrid3X3Gap
+          id='schedule-card-grabber-icon'
+          className='schedul-card-control-btn' />
+
+          
+
+        </div>
 
       </Card.Header>
       <Card.Body
         className='set-group-schedule-card-body'>
         <Card.Subtitle>{set_group.name ? set_group.name : 'no name'}</Card.Subtitle>
+        <OverlayTrigger 
+        overlay={<ToolTip>Delete set group</ToolTip>}>
+          <RiDeleteBin5Line
+          className='schedul-card-control-btn' 
+          onClick={() => setDeleteModalShow(true)}
+          id='set-group-card-delete-icon'/>
+        </OverlayTrigger>
       </Card.Body>
     </Card>
     
@@ -85,12 +99,10 @@ export const SetGroup = ({
 }
 
 const mapStateToProps = (state) => ({
-  currentWeeks: state.weekReducer.currentWeeks,
   currentRoutine: state.routineReducer.currentRoutine
 })
 
 const mapDispatchToProps = {
-  destroySetGroup,
   setCurrentSetGroup
 }
 

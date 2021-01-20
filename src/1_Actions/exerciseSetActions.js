@@ -30,7 +30,7 @@ export const addToCurrentExerciseSets = (exerciseSet) => dispatch => {
 }
 
 export const  removeFromCurrentExerciseSetsByExerciseID = (exerciseId) => dispatch => {
- dispatch({type: constants.REMOVE_FROM_CURRENT_EXERCISE_SETS, payload: exerciseId})
+ dispatch({type: constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_EX_ID, payload: exerciseId})
 }
 
 
