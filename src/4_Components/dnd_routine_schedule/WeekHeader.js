@@ -25,7 +25,7 @@ export const WeekHeader = ({
   crudingWeek,
   crudingSetGroup,
   setScheduleDnDSelectedWeekNumber,
-  scheduleDnDSelectedWeekNumber,
+  scheduleDnDSelectedWeekNumbers,
   fetchFlattenedRoutine,
   clearCurrentWeek
 }) => {
@@ -276,7 +276,7 @@ export const WeekHeader = ({
             </Col>
             <Col sm='12' md='3'>
               <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label>Copy and insert at: </Form.Label>
+              <Form.Label>Copy and Insert: </Form.Label>
               <Form.Control
               onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
               onChange={handleCopyAndInsert}
@@ -338,7 +338,7 @@ const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
   currentWeek: state.weekReducer.currentWeek,
-  scheduleDnDSelectedWeekNumber: state.weekReducer.scheduleDnDSelectedWeekNumber,
+  scheduleDnDSelectedWeekNumbers: state.weekReducer.scheduleDnDSelectedWeekNumbers,
   currentRoutineSetGroups: state.setGroupReducer.currentRoutineSetGroups,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,

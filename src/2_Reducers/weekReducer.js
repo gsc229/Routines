@@ -9,7 +9,7 @@ const initialState = {
     routine: ""
   },
   currentWeeks: [],
-  scheduleDnDSelectedWeekNumber: 'all',
+  scheduleDnDSelectedWeekNumbers: ['all'], // or [3, 5, 7, ...etc]
   currentWeek: {
     routine: null,
     user: null,
@@ -32,7 +32,7 @@ const reducer = (state=initialState, action) => {
     case constants.SET_SELECTED_WEEK_NUMBER:
       return{
         ...state,
-        scheduleDnDSelectedWeekNumber: action.payload
+        scheduleDnDSelectedWeekNumbers: action.payload
       }
     case constants.CLEAR_CURRENT_WEEK:
       return{

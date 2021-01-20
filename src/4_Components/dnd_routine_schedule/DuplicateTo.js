@@ -14,7 +14,7 @@ export const DuplicateTo = ({
   currentWeeks,
 }) => {
 
-  
+
   const duplicate = async (week, week_number, day_number) => {
     const newSetGroup = {
       ...set_group,
@@ -41,8 +41,6 @@ export const DuplicateTo = ({
         const newSetsResponse = await createNewExerciseSets(newSets)
     }
   }
-
-  
 
   return (
     <NavDropdown 
