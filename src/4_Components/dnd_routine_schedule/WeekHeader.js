@@ -71,7 +71,6 @@ export const WeekHeader = ({
     
     // one of these results will be the result of a new insert, the rest will be updated with new week_numbers
     const weekBulkWriteResults = await bulkWriteWeeks(currentWeeksUpdates, routineId)
-    console.log({weekBulkWriteResults})
 
 
     if(!weekBulkWriteResults.success){
@@ -99,7 +98,6 @@ export const WeekHeader = ({
     })
 
     const bulkWriteSetGroupsResult = await bulkWriteSetGroups(bulkSetGroupCommands, {routine: routineId})
-    console.log(bulkWriteSetGroupsResult)
     if(!bulkWriteSetGroupsResult.success){
       return fetchFlattenedRoutine(routineId)
     }
@@ -125,7 +123,6 @@ export const WeekHeader = ({
     })
 
     const bulkWriteExerciseSetsResult = await bulkWriteExerciseSets(bulkExSetCommands, {week: newWeekId})
-    console.log({bulkWriteExerciseSetsResult})
     if(!bulkExSetCommands){
       return fetchFlattenedRoutine(routineId)
     }
@@ -208,13 +205,12 @@ export const WeekHeader = ({
       }
     })
 
-    console.log({updateLog})
     await bulkWriteWeeks(updates,  currentRoutine._id)
     setScheduleDnDSelectedWeekNumber(destinationWeekNumber)
   }
 
 
-  const handleCreateNewAndInsert = async (e) => {
+  const handleCreateBlankAndInsert = async (e) => {
     const copyToWeekNumber = JSON.parse(e.target.value)
     alert(`Insert Blank at ${copyToWeekNumber}`)
     const routineId = currentRoutine._id
@@ -245,7 +241,6 @@ export const WeekHeader = ({
     })
 
     const weekBulkWriteResults = await bulkWriteWeeks(currentWeeksUpdates, routineId)
-    console.log({weekBulkWriteResults})
     fetchFlattenedRoutine(routineId)
     setScheduleDnDSelectedWeekNumber(copyToWeekNumber)
   }
@@ -304,7 +299,7 @@ export const WeekHeader = ({
               <Form.Label>Insert Blank Week: </Form.Label>
               <Form.Control
               onClick={clearCurrentWeek}
-              onChange={handleCreateNewAndInsert}
+              onChange={handleCreateBlankAndInsert}
               className='select-input header-select-input'
               as="select">
                 <option selected={true} value='choose' disabled={true}>Choose...</option>

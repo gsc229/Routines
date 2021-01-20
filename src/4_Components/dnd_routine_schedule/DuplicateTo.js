@@ -1,13 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {IoDuplicateOutline} from 'react-icons/io5'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import {createNewSetGroup} from '../../1_Actions/setGroupActions'
 import {createNewExerciseSets} from '../../1_Actions/exerciseSetActions'
 import {numberToDay} from './schedule_helpers/routineScheduleConstructor'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import ToolTip from 'react-bootstrap/Tooltip'
-import Form from 'react-bootstrap/Form'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 
 export const DuplicateTo = ({
@@ -16,15 +12,15 @@ export const DuplicateTo = ({
   createNewExerciseSets,
   createNewSetGroup,
   currentWeeks,
-  clearErrorMessage,
-  set_group_ERROR,
-  exercise_set_ERROR
 }) => {
 
-
-  const duplicate = async () => {
+  
+  const duplicate = async (week, week_number, day_number) => {
     const newSetGroup = {
-      ...set_group
+      ...set_group,
+      week_number,
+      day_number,
+      week
     }
     delete newSetGroup._id
     delete newSetGroup.id
@@ -60,11 +56,12 @@ export const DuplicateTo = ({
         className='duplicate-to-day-dropdown'
         color='white'
         title={`Week: ${week.week_number}`}>
-          {Object.keys(numberToDay).map(num => 
+          {Object.keys(numberToDay).map(dayNum => 
             <NavDropdown.Item
-            key={`${week._id}-day-${num}`}
+            onClick={() => duplicate(week._id, week.week_number, dayNum)}
+            key={`${week._id}-day-${dayNum}`}
             >
-              {numberToDay[num].long}
+              {numberToDay[dayNum].long}
             </NavDropdown.Item>
           )}
         </NavDropdown>

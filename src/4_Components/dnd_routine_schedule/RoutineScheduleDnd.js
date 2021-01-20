@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {saveWeekChanges, setCurrentWeek, setScheduleDnDSelectedWeekNumber, createNewWeek} from '../../1_Actions/weekActions'
+import {saveWeekChanges, setCurrentWeek, setScheduleDnDSelectedWeekNumber} from '../../1_Actions/weekActions'
 import {saveManySetGroupChanges, saveSetGroupChanges} from '../../1_Actions/setGroupActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import {syncWeeksAndSetGroups} from './schedule_helpers/syncWeeksAndSetGroups'
@@ -10,16 +10,13 @@ import {DragDropContext} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
 import Form from 'react-bootstrap/Form'
 import DroppableDay from './DroppableDay'
-import Button from 'react-bootstrap/Button'
 import  ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
 import WeekHeader from './WeekHeader'
 
 export const RoutineScheduleDnd = ({
-  userId,
   currentRoutine,
   currentWeeks,
   currentRoutineSetGroups,
-  createNewWeek,
   currentRoutineSets,
   setCurrentWeek,
   saveSetGroupChanges,
@@ -33,7 +30,6 @@ export const RoutineScheduleDnd = ({
 }) => {
 
   const [routineSchedule, setRoutineSchedule] = useState({})
-  const [weekToDestroy, setWeekToDestroy] = useState('')
   const [modalShow, setModalShow] = useState(false)
 
   
@@ -51,8 +47,6 @@ export const RoutineScheduleDnd = ({
     return false
   } 
 
-  const isCruding = crudingWeek || crudingExerciseSet || crudingExerciseSet
-
   useEffect( async() => {
     await syncWeeksAndSetGroups(currentWeeks, currentRoutineSetGroups, saveWeekChanges, saveManySetGroupChanges)
 
@@ -68,15 +62,7 @@ export const RoutineScheduleDnd = ({
 
   }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumber, currentRoutineSetGroups])
 
-  const addWeek = async () => {
-    const credentials = {
-      user: userId,
-      routine: currentRoutine._id,
-      week_number: currentWeeks.length + 1
-    }
-    createNewWeek(credentials)
-    setScheduleDnDSelectedWeekNumber(currentWeeks.length + 1)
-  }
+  
 
   return (
       <div 
@@ -161,7 +147,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  createNewWeek,
   setCurrentWeek,
   saveSetGroupChanges,
   saveWeekChanges,

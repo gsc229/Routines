@@ -23,7 +23,6 @@ export const ViewSetGroupModal = ({
         const target = key.split("_").join(" ")
         const actual = target.replace('target', 'actual')
         const actual_unit = actual.split(" ").join("_")
-        console.log({target, actual, actual_unit})
         keyValueSets.push(
           {
           target: { key: target, value: exSet[key] },

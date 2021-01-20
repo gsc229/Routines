@@ -41,8 +41,9 @@ export const AttachExerciseToSetGroupCard = ({
         </div>
 
         <AddRemoveButtons
+        allowAllBtns={true}
         setShowAddedAlert={setShowAddedAlert}
-        showNextStepBtnOnCardBtn={true}
+        showNextStepBtnOnCardBtn={false}
         showRemoveExerciseBtn={true}
         shwoAddExerciseBtn={true}
         nextStep={nextStep}

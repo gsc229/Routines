@@ -70,6 +70,7 @@ export const SetGroup = ({
           </OverlayTrigger>
           
           <DuplicateTo
+          set_group={set_group}
           className='schedul-card-control-btn' />
 
           <BsGrid3X3Gap

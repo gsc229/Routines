@@ -71,13 +71,13 @@ const reducer = (state=initialState, action) => {
         ...state,
         currentExerciseSets: [...state.currentExerciseSets, action.payload]
       }
-    case constants.REMOVE_FROM_CURRENT_EXERCISE_SETS:
+    case constants.REMOVE_FROM_CURRENT_EXERCISE_SETS_BY_EX_ID:
       return{
         ...state,
         currentExerciseSets: 
         [
           ...state.currentExerciseSets
-          .filter(set => set.exercise._id ? set.exercise._id !== action.payload.exercise._id : set.exercise !== action.payload.exercise)
+          .filter(set => set.exercise._id ? set.exercise._id !== action.payload : set.exercise !== action.payload)
         ]
       }
     case constants.LOCAL_BULK_WRITE_CURRENT_EXERCISE_SETS:
