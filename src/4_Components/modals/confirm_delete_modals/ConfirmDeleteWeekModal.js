@@ -52,7 +52,7 @@ export const ConfirmDeleteWeekModal = ({
       const writeResponse = await bulkWriteWeeks(weekUpdates, routineId)
       
       if(writeResponse.success){
-        setScheduleDnDSelectedWeekNumber('all')
+        setScheduleDnDSelectedWeekNumber(['all'])
         return setModalShow(false)
       } 
       
@@ -67,7 +67,7 @@ export const ConfirmDeleteWeekModal = ({
     }
 
     if(deleteResponse.success){
-      setScheduleDnDSelectedWeekNumber('all')
+      setScheduleDnDSelectedWeekNumber(['all'])
       setDeleteFailed({
         ...deleteFailed,
         failed: false

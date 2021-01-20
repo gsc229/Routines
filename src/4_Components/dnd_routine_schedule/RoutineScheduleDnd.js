@@ -80,28 +80,55 @@ export const RoutineScheduleDnd = ({
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
-      borderBottom: '1px dotted pink',
-      color: state.isSelected ? 'red' : 'blue',
-      padding: 20,
+      borderBottom: '1px dashed var(--routine-red)',
+      color: 'var(--routine-red)',
+      padding: 10,
+      fontWeight: 'bold',
       cursor: 'pointer'
-    })/* ,
-    control: () => ({
-      // none of react-select's styles are passed to <Control />
-      width: 200,
-    }) */,
+    }),
+    multiValue: (styles) => {
+      return {
+        ...styles,
+        backgroundColor: 'var(--routine-red)',
+        color: 'white'
+      }
+    },
+    multiValueLabel: (styles) => {
+      return{
+        ...styles,
+        color: 'white'
+      }
+    },
+    multiValueRemove: (styles) => {
+      return{
+        ...styles,
+        backgroundColor: 'var(--routine-red)',
+        color: 'white',
+        borderRadius: 0,
+        cursor: 'pointer',
+        ':hover': {
+          backgroundColor: 'var(--gold-fusion)',
+          color: 'white'
+        }
+      }
+    },
     singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
+      const opacity = state.isDisabled ? 0.5 : 1
       const transition = 'opacity 300ms';
-      return { ...provided, opacity, transition };
+      return { ...provided, opacity, transition }
     }
   }
+
+  
+  const animatedComponents = makeAnimated()
 
   return (
       <div 
       className='routine-schedule-dnd'>
 
 
-      <Select      
+      <Select
+      components={animatedComponents}
       styles={customStyles}
       className='mb-3'
       placeholder='All weeks...'
@@ -131,7 +158,6 @@ export const RoutineScheduleDnd = ({
           <div
           key={`week-${weekNumber}`}
           className='week-container'>
-
             <WeekHeader 
             setModalShow={setModalShow}
             routineSchedule={routineSchedule} 
