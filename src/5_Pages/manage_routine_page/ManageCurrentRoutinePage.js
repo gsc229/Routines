@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
 import {createNewWeek} from '../../1_Actions/weekActions'
@@ -22,6 +22,14 @@ export const ViewRoutinePage = ({
   const handleRefresh = () => {
     fetchFlattenedRoutine(currentRoutine._id)
   }
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }, [])
   
   const addWeek = async () => {
     const credentials = {

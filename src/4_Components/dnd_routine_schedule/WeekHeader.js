@@ -265,6 +265,7 @@ export const WeekHeader = ({
                 <Form.Control
                 onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
                 onChange={handleMoveTo}
+                className='select-input header-select-input'
                 as="select">
                   <option selected={true} value='choose' disabled={true}>Move to...</option>
                   {currentWeeks.map(week => {
@@ -284,8 +285,9 @@ export const WeekHeader = ({
               <Form.Control
               onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
               onChange={handleCopyAndInsert}
+              className='select-input header-select-input'
               as="select">
-                <option selected={true} value='choose' disabled={true}>Copy to...</option>
+                <option selected={true} value='choose' disabled={true}>Insert at...</option>
                 {currentWeeks.map(week => {
                 return week.week_number !== currentWeek.week_number &&
                 <option
@@ -303,6 +305,7 @@ export const WeekHeader = ({
               <Form.Control
               onClick={clearCurrentWeek}
               onChange={handleCreateNewAndInsert}
+              className='select-input header-select-input'
               as="select">
                 <option selected={true} value='choose' disabled={true}>Choose...</option>
                 <option 

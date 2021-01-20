@@ -29,7 +29,7 @@ export const SgNameInputForm = ({
 
   useEffect(() => {
 
-    if(!currentSetGroup.name || currentSetGroup.name === autoNameString) setUseAutoGen(true)
+    if(!currentSetGroup.name || currentSetGroup.name.trim() === autoNameString.trim()) setUseAutoGen(true)
 
     if(useAutoGenName){
       localWritingSetGroup('name', autoNameString)
@@ -50,7 +50,7 @@ export const SgNameInputForm = ({
     <Form className='create-set-group-name-input-form'>
       <Form.Group>
         <Form.Label>
-          Add Set Group
+          Set Group Name:
         </Form.Label>
           <InputGroup>
           <Form.Control

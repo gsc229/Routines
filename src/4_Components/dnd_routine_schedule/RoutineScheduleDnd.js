@@ -66,7 +66,7 @@ export const RoutineScheduleDnd = ({
       setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, targetWeek, currentRoutineSets))
     }
 
-  }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumber])
+  }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumber, currentRoutineSetGroups])
 
   const addWeek = async () => {
     const credentials = {
@@ -143,13 +143,6 @@ export const RoutineScheduleDnd = ({
         
         )})}
         </DragDropContext>}
-        {!isCruding && 
-        <Button
-        className='add-week-btn' 
-        onClick={addWeek}
-        variant='primary'>
-          Add Week
-        </Button>}
       </div>
   )
 }
