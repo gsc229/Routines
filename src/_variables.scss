@@ -41,6 +41,8 @@ $orange-yellow: #fdc43fff;
 $maximum-yellow-red: #fdbe39ff;
 $honey-yellow: #fdb833ff;
 
+// when needed in inline styling
 :root{
-  --gold-fusion: $gold-fusion
+  --gold-fusion: #{$gold-fusion};
+  --routine-red: #{$routine-red};
 }

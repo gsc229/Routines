@@ -25,13 +25,13 @@ export const WeekHeader = ({
   crudingWeek,
   crudingSetGroup,
   setScheduleDnDSelectedWeekNumber,
-  scheduleDnDSelectedWeekNumber,
+  scheduleDnDSelectedWeekNumbers,
   fetchFlattenedRoutine,
   clearCurrentWeek
 }) => {
 
 
-  const handleCopyAndInsert = async (e) => {
+  const handleCopyAndInsertWeek = async (e) => {
     const routineId = currentRoutine._id
     const idOfCopiedWeek = currentWeek._id
     let newWeekId
@@ -81,10 +81,11 @@ export const WeekHeader = ({
       newWeekId = weekBulkWriteResults.data.find(wk => wk.copied_from === idOfCopiedWeek)._id
     }
     
+    // create the new set group ojects
     currentRoutineSetGroups.filter(sg => sg.week === idOfCopiedWeek).forEach(sg => {
-      sg.week = newWeekId
-      sg.copied_from = sg._id
-      oldToNewSetGroupIds[sg._id] = ''
+      sg.week = newWeekId // overwrite old week id
+      sg.copied_from = sg._id // keep track of the ols set group id
+      oldToNewSetGroupIds[sg._id] = '' // register the old id in a dictionary
       delete sg.updatedAt
       delete sg.createdAt
       delete sg.exercise_sets
@@ -97,7 +98,12 @@ export const WeekHeader = ({
       })
     })
 
+    if(!bulkSetGroupCommands.length){
+      return fetchFlattenedRoutine(routineId)
+    }
+    // one of these results will have null in the copied_from as it is the original
     const bulkWriteSetGroupsResult = await bulkWriteSetGroups(bulkSetGroupCommands, {routine: routineId})
+    
     if(!bulkWriteSetGroupsResult.success){
       return fetchFlattenedRoutine(routineId)
     }
@@ -105,8 +111,10 @@ export const WeekHeader = ({
     // map old sg ids to new one's for the next bulkwrite
     bulkWriteSetGroupsResult.data.forEach(newSg => oldToNewSetGroupIds[newSg.copied_from] = newSg._id)
 
-    
+    console.log({oldToNewSetGroupIds})
+    // create the new sets
     currentRoutineSets.filter(exSet => exSet.week === idOfCopiedWeek).forEach(exSet => {
+      console.log({oldToNewSetGroupIds}, exSet.set_group ,oldToNewSetGroupIds[exSet.set_group], {exSet})
       exSet.week = newWeekId
       exSet.set_group = oldToNewSetGroupIds[exSet.set_group]
       exSet.exercise = exSet.exercise ? exSet.exercise._id ? exSet.exercise._id : exSet.exercise : null // just in caes the exercise had been populated (only need the _id when creating, not the whole object)
@@ -122,14 +130,21 @@ export const WeekHeader = ({
       })
     })
 
+    console.log({bulkExSetCommands})
+
+    if(!bulkExSetCommands.length){
+      return fetchFlattenedRoutine(routineId)
+    }
+
     const bulkWriteExerciseSetsResult = await bulkWriteExerciseSets(bulkExSetCommands, {week: newWeekId})
-    if(!bulkExSetCommands){
+
+    if(!bulkWriteExerciseSetsResult.success){
       return fetchFlattenedRoutine(routineId)
     }
 
     
     fetchFlattenedRoutine(routineId)
-    setScheduleDnDSelectedWeekNumber(copyToWeekNumber)
+    setScheduleDnDSelectedWeekNumber([copyToWeekNumber])
 
   }
 
@@ -206,7 +221,7 @@ export const WeekHeader = ({
     })
 
     await bulkWriteWeeks(updates,  currentRoutine._id)
-    setScheduleDnDSelectedWeekNumber(destinationWeekNumber)
+    setScheduleDnDSelectedWeekNumber([destinationWeekNumber])
   }
 
 
@@ -242,7 +257,7 @@ export const WeekHeader = ({
 
     const weekBulkWriteResults = await bulkWriteWeeks(currentWeeksUpdates, routineId)
     fetchFlattenedRoutine(routineId)
-    setScheduleDnDSelectedWeekNumber(copyToWeekNumber)
+    setScheduleDnDSelectedWeekNumber([copyToWeekNumber])
   }
 
 
@@ -251,13 +266,24 @@ export const WeekHeader = ({
     
     <div
     className='week-container-header'>
-      <h5>{currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}</h5>
-      <Form className='week-header-form'>  
+      <div className='header-top'>
+        <h5>{currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}</h5>
+        <Button
+          className='delete-week-btn'
+          onClick={() =>{ 
+          setModalShow(true)
+          setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))
+          }}>
+            Delete Week
+        </Button>
+      </div>
+      <Form className='week-header-form'>
         <Form.Row>
             <Col sm='12' md='3'>
               <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label>Move to: </Form.Label>
+                <Form.Label>Move Week To: </Form.Label>
                 <Form.Control
+                size='sm'
                 onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
                 onChange={handleMoveTo}
                 className='select-input header-select-input'
@@ -276,10 +302,11 @@ export const WeekHeader = ({
             </Col>
             <Col sm='12' md='3'>
               <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Label>Copy and insert at: </Form.Label>
+              <Form.Label>Copy Week and Insert: </Form.Label>
               <Form.Control
+              size='sm'
               onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
-              onChange={handleCopyAndInsert}
+              onChange={handleCopyAndInsertWeek}
               className='select-input header-select-input'
               as="select">
                 <option selected={true} value='choose' disabled={true}>Insert at...</option>
@@ -298,6 +325,7 @@ export const WeekHeader = ({
               <Form.Group controlId="exampleForm.ControlSelect1">
               <Form.Label>Insert Blank Week: </Form.Label>
               <Form.Control
+              size='sm'
               onClick={clearCurrentWeek}
               onChange={handleCreateBlankAndInsert}
               className='select-input header-select-input'
@@ -315,16 +343,6 @@ export const WeekHeader = ({
             </Form.Group>
             </Col>
         
-            <Button
-            className='delete-week-btn'
-            onClick={() =>{ 
-            setModalShow(true)
-            setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))
-            }}>
-              Delete Week
-            </Button>
-        
-        
         </Form.Row>
       </Form>
 
@@ -338,7 +356,7 @@ const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
   currentWeek: state.weekReducer.currentWeek,
-  scheduleDnDSelectedWeekNumber: state.weekReducer.scheduleDnDSelectedWeekNumber,
+  scheduleDnDSelectedWeekNumbers: state.weekReducer.scheduleDnDSelectedWeekNumbers,
   currentRoutineSetGroups: state.setGroupReducer.currentRoutineSetGroups,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,

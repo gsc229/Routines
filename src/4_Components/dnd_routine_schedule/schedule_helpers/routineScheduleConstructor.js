@@ -17,8 +17,8 @@ export const routineScheduleConstructor = (currentRoutineSetGroups, currentWeeks
   if(currentRoutineSetGroups){
   
     currentWeeks.forEach((week, index) => {
-                
-      return routineSchedule[week.week_number] = {
+      console.log('week.week_number: ', week.week_number)
+      routineSchedule[week.week_number] = {
         _id: week._id,
         week_number: week.week_number
       }

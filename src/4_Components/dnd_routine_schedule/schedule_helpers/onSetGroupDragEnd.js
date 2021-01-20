@@ -1,5 +1,5 @@
 export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupChanges, setRoutineSchedule) => {
-
+  console.log({result})
   const {destination, source} = result
   if(!destination) return
 
@@ -17,18 +17,21 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
   let sourceWeekId
   let sourceDayName
   [sourceWeek, sourceDay, sourceWeekId, sourceDayName] = sourceCodes
-
+  console.log({destinationWeek, destinationDay, destinationWeekId, destinationDayName})
+  console.log({sourceWeek, sourceDay, sourceWeekId, sourceDayName})
   if(sourceWeek !== destinationWeek){
   const locatedSource = routineSchedule[sourceWeek][sourceDay]
   const locatedDestination = routineSchedule[destinationWeek][destinationDay]
   const sourceItems = [...locatedSource.set_groups]
   const destinationItems = [...locatedDestination.set_groups]
   const [removed] = sourceItems.splice(source.index, 1)
+  console.log('removed before: ', {removed})
   removed.week_number = destinationWeek
   removed.day_number = destinationDay
   removed.order = destination.index
   removed.week = destinationWeekId
   removed.day = destinationDayName
+  console.log('removed after: ', {removed})
   destinationItems.splice(destination.index, 0, removed)
 
   setRoutineSchedule({

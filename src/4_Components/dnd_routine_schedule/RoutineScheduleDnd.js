@@ -12,6 +12,8 @@ import Form from 'react-bootstrap/Form'
 import DroppableDay from './DroppableDay'
 import  ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
 import WeekHeader from './WeekHeader'
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated'
 
 export const RoutineScheduleDnd = ({
   currentRoutine,
@@ -26,12 +28,12 @@ export const RoutineScheduleDnd = ({
   crudingSetGroup,
   crudingExerciseSet,
   setScheduleDnDSelectedWeekNumber,
-  scheduleDnDSelectedWeekNumber
+  scheduleDnDSelectedWeekNumbers
 }) => {
 
   const [routineSchedule, setRoutineSchedule] = useState({})
   const [modalShow, setModalShow] = useState(false)
-
+  
   
   const bulkWrting = () => {
     if(crudingWeek === 'bulk-writing-weeks'){
@@ -53,38 +55,90 @@ export const RoutineScheduleDnd = ({
   }, [])
 
   useEffect(() => {
-    if(scheduleDnDSelectedWeekNumber === 'all'){
+    if(scheduleDnDSelectedWeekNumbers.find( num => num === 'all')){
       setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, currentWeeks, currentRoutineSets))
     } else{
-      const targetWeek = currentWeeks.filter(week=> week.week_number == scheduleDnDSelectedWeekNumber)
-      setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, targetWeek, currentRoutineSets))
+      const targetWeeks = currentWeeks.filter(week=> scheduleDnDSelectedWeekNumbers.find( num => num === week.week_number))
+      setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, targetWeeks, currentRoutineSets))
     }
 
-  }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumber, currentRoutineSetGroups])
+  }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumbers, currentRoutineSetGroups])
+
+  const handleWeekSelect = (newSelections) => {
+    
+    if(newSelections === null){
+      return setScheduleDnDSelectedWeekNumber(['all'])
+    }
+
+    const updatedWeekNums = newSelections.map( selection => selection.value)
+    setScheduleDnDSelectedWeekNumber(updatedWeekNums)
+  }
+
+  const selectOptions = [{label: "All", value: 'all'}]
+  currentWeeks.forEach(week => selectOptions.push({label: `Week: ${week.week_number}`, value: week.week_number}))
+
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: '1px dashed var(--routine-red)',
+      color: 'var(--routine-red)',
+      padding: 10,
+      fontWeight: 'bold',
+      cursor: 'pointer'
+    }),
+    multiValue: (styles) => {
+      return {
+        ...styles,
+        backgroundColor: 'var(--routine-red)',
+        color: 'white'
+      }
+    },
+    multiValueLabel: (styles) => {
+      return{
+        ...styles,
+        color: 'white'
+      }
+    },
+    multiValueRemove: (styles) => {
+      return{
+        ...styles,
+        backgroundColor: 'var(--routine-red)',
+        color: 'white',
+        borderRadius: 0,
+        cursor: 'pointer',
+        ':hover': {
+          backgroundColor: 'var(--gold-fusion)',
+          color: 'white'
+        }
+      }
+    },
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1
+      const transition = 'opacity 300ms';
+      return { ...provided, opacity, transition }
+    }
+  }
 
   
+  const animatedComponents = makeAnimated()
 
   return (
       <div 
       className='routine-schedule-dnd'>
 
-      <Form className='week-selector'>  
-        <Form.Group controlId="exampleForm.ControlSelect1">
-          <Form.Label>Choose Week</Form.Label>
-          <Form.Control
-          onChange={(e) => setScheduleDnDSelectedWeekNumber(e.target.value)}
-          as="select">
-            <option value='all'>All</option>
-            {currentWeeks.map(week => 
-            <option
-            selected={week.week_number == scheduleDnDSelectedWeekNumber}
-            value={week.week_number}
-            key={week._id}>
-              Week {week.week_number}
-            </option>)}
-          </Form.Control>
-        </Form.Group>
-      </Form>
+
+      <Select
+      components={animatedComponents}
+      styles={customStyles}
+      className='mb-3'
+      placeholder='All weeks...'
+      isMulti
+      onChange={handleWeekSelect}
+      options={selectOptions}
+      autoFocus
+      isSearchable/>
+    
+  
       
       {modalShow && <ConfirmDeleteWeekModal setModalShow={setModalShow} modalShow={modalShow} />}
       {!currentRoutineSetGroups && <DarkSpinner />}
@@ -104,7 +158,6 @@ export const RoutineScheduleDnd = ({
           <div
           key={`week-${weekNumber}`}
           className='week-container'>
-
             <WeekHeader 
             setModalShow={setModalShow}
             routineSchedule={routineSchedule} 
@@ -137,7 +190,7 @@ const mapStateToProps = (state) => ({
   userId: state.userReducer.user._id,
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
-  scheduleDnDSelectedWeekNumber: state.weekReducer.scheduleDnDSelectedWeekNumber,
+  scheduleDnDSelectedWeekNumbers: state.weekReducer.scheduleDnDSelectedWeekNumbers,
   currentRoutineSetGroups: state.setGroupReducer.currentRoutineSetGroups,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
