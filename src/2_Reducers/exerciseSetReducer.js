@@ -191,7 +191,7 @@ const reducer = (state=initialState, action) => {
         ...state,
         crudingExerciseSet: false,
         currentExerciseSets: action.payload.data.sort((a, b) => a.order - b.order),
-        currentRoutineSets: routine ? action.payload.data : [...state.currentRoutineSets, ...action.payload.data].sort((a, b) => a - b)
+        currentRoutineSets: routine ? action.payload.data : [...state.currentRoutineSets, ...action.payload.data].sort((a, b) => a.order - b.order)
          
       }
     case constants.BULK_WRITE_EXERCISE_SETS_FAIL:

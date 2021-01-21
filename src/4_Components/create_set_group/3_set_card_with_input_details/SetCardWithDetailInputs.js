@@ -1,26 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {} from '../../../1_Actions/setGroupActions'
 import {addToCurrentExerciseSets,  removeFromCurrentExerciseSetsByExerciseID} from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import IFrame from '../../iframe/IFrame'
-import {} from '../3_form_create_set_group/ConnectedDecrementLabeled'
 import SetGroupInfoForm from '../3_form_create_set_group/SetGroupInfoForm'
 import {ConnectedBtnNextExercise, ConnectedBtnPrevExercise} from '../3_form_create_set_group/ConnectedBtnsCycleChosenExercise'
 export const SetCardDetailInputs = ({
   exercise,
-  currentExerciseSets,
-  currentSetGroup,
-  showNextStepBtn,
-  showNextStepBtnOnCardBtn,
-  showRemoveExerciseBtn,
-  shwoAddExerciseBtn,
-  nextStep,
-  nextStepText
 }) => {
-
-  const selected = currentExerciseSets.find(chosenEx => chosenEx._id === exercise._id)
   
   return (
     <Card 
@@ -66,12 +53,11 @@ export const SetCardDetailInputs = ({
 
 const mapStateToProps = (state) => ({
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets
 })
 
 const mapDispatchToProps = {
   addToCurrentExerciseSets,
-   removeFromCurrentExerciseSetsByExerciseID
+  removeFromCurrentExerciseSetsByExerciseID
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetCardDetailInputs)

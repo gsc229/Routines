@@ -288,15 +288,19 @@ export const WeekHeader = ({
                 onChange={handleMoveTo}
                 className='select-input header-select-input'
                 as="select">
-                  <option selected={true} value='choose' disabled={true}>Move to...</option>
-                  {currentWeeks.map(week => {
-                  return week.week_number !== currentWeek.week_number &&
+                <option selected={true} value='choose' disabled={true}>Move to...</option>
+                {currentWeeks.filter(wk => {
+                  wk.id === currentWeek._id && console.log(`${wk._id} === ${currentWeek._id}`)
+                 return wk._id !== currentWeek._id
+                }).map(week => {
+                  return(
                   <option
                   selected={false}
-                  value={week.week_number}
+                  value={{week_number: week.week_number, weekId: week._id}}
                   key={week._id}>
                     Week {week.week_number}
-                  </option>})}
+                  </option>
+                  )})}
                 </Form.Control>
               </Form.Group>
             </Col>

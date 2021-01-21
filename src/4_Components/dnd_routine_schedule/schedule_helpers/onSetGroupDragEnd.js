@@ -1,8 +1,9 @@
-export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupChanges, setRoutineSchedule) => {
+export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupChanges, setRoutineSchedule, currentRoutineSets, bulkWriteExerciseSets) => {
   console.log({result})
   const {destination, source} = result
+  // no destination
   if(!destination) return
-
+  // dropped back in the same place
   if(destination.droppableId === source.droppableId && destination.index === source.index) return
 
   const destinationCodes = destination.droppableId.split("-")
@@ -19,18 +20,23 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
   [sourceWeek, sourceDay, sourceWeekId, sourceDayName] = sourceCodes
   console.log({destinationWeek, destinationDay, destinationWeekId, destinationDayName})
   console.log({sourceWeek, sourceDay, sourceWeekId, sourceDayName})
+
+  // the week was changed
   if(sourceWeek !== destinationWeek){
   const locatedSource = routineSchedule[sourceWeek][sourceDay]
   const locatedDestination = routineSchedule[destinationWeek][destinationDay]
   const sourceItems = [...locatedSource.set_groups]
   const destinationItems = [...locatedDestination.set_groups]
   const [removed] = sourceItems.splice(source.index, 1)
+  const removedExSetsCopies = []
+  removed.exercise_sets.forEach(set => removedExSetsCopies.push({...set, week: destinationWeekId}))
   console.log('removed before: ', {removed})
   removed.week_number = destinationWeek
   removed.day_number = destinationDay
   removed.order = destination.index
   removed.week = destinationWeekId
   removed.day = destinationDayName
+  removed.exercise_sets = removedExSetsCopies
   console.log('removed after: ', {removed})
   destinationItems.splice(destination.index, 0, removed)
 
@@ -52,11 +58,18 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
         
       }
     })
-    
+  
+  
+  const setGroupResponse = await saveSetGroupChanges(removed._id, removed) 
+  if(!setGroupResponse.success){
+    return
+  }
+  // update the exercise sets on the back end
+  const exSetUpdates = removedExSetsCopies.map(set => ({updateOne: { filter: {_id: set._id}, update: {week: set.week}}})) 
+  console.log({exSetUpdates}) 
+  bulkWriteExerciseSets(exSetUpdates, {routine: removed.routine})
 
-    
-  return saveSetGroupChanges(removed._id, removed) 
- 
+// the week didn't change, but the day did
 } else if(sourceWeek === destinationWeek && (sourceDay !== destinationDay)){
 
 
@@ -87,10 +100,13 @@ export const onSetGroupDragEnd = async (result, routineSchedule, saveSetGroupCha
       }
     }
   })
-
+  
+  
   
   return saveSetGroupChanges(removed._id, removed)
-   
+
+
+   // the order of the set group was changed but not the the week or day
 } else if(sourceWeek === destinationWeek && sourceDay === destinationDay){
     const sameDaySourceAndDestinationLocation = routineSchedule[sourceWeek][sourceDay]
     const copyOfSetGroups = [...sameDaySourceAndDestinationLocation.set_groups]

@@ -42,7 +42,10 @@ export const SubSetModal = ({
 
   const colseConfirmed = () => {
     setModalShow(false)
-    setAlertConfig(false)
+    setAlertConfig({
+      ...alertConfig,
+      show: false
+    })
     clearCreateSetGroupData()
     clearCurrentExerciseSet()
     localWritingCreateSetGroupData('currentStep', 'choose-exercise')
@@ -60,10 +63,7 @@ export const SubSetModal = ({
 
     // if the set groups been created already...
     if(currentSetGroup._id){
-
-      console.log({newSubGroup})
       
-
       const updatesOrInserts = []
 
       newSubGroup.forEach(set => {
@@ -88,7 +88,6 @@ export const SubSetModal = ({
       })
 
       const subGroupResonse = await bulkWriteExerciseSets(updatesOrInserts, {set_group: currentSetGroup._id})
-      console.log({subGroupResonse})
 
         if(!subGroupResonse.success){
           // report the error in the alert
@@ -154,7 +153,7 @@ export const SubSetModal = ({
           {alertConfig.continue_btn && 
           <Button className='continue-btn' variant='success' onClick={() => setAlertConfig(false)}>Continue Working</Button>}
           
-          <Button className='close-btn' onClick={colseConfirmed}>Close</Button>
+          <Button className='close-btn' onTouchStart={colseConfirmed} onClick={colseConfirmed}>Close</Button>
 
         </div>
       </Modal.Body>}
