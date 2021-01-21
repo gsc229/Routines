@@ -1,0 +1,35 @@
+.manage-current-routine-page-container{
+  position: relative;
+  .manage-current-routine-page-header{
+    background-color: $bs-dark;
+    height: fit-content;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+  }
+}
+
+.header-inner{
+  width: 58%;
+  margin: auto;
+  margin-top: 65px;
+  @media screen and (max-width: 992px){
+    width: 90%;
+  }
+  @media screen and (max-width: 1199px){
+    width: 80%;
+  }
+  @media screen and (max-width: 780px){
+    width: 90%;
+  }
+  .search-nav{
+    .nav-item{
+      width: 100%;
+    }
+    .select-container{
+      width: 100%;
+    }
+  }
+}

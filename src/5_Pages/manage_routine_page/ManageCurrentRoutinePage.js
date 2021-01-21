@@ -1,13 +1,15 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
-import {createNewWeek} from '../../1_Actions/weekActions'
+import {createNewWeek, setScheduleDnDSelectedWeekNumber} from '../../1_Actions/weekActions'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
+import Nav from 'react-bootstrap/Nav'
 import RoutineScheduleDnd from '../../4_Components/dnd_routine_schedule/RoutineScheduleDnd'
 import Button from 'react-bootstrap/Button'
 import {FiRefreshCcw} from 'react-icons/fi'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
+import WeekSelector from '../../4_Components/dnd_routine_schedule/WeekSelector'
 
 export const ViewRoutinePage = ({
   currentRoutine, 
@@ -15,8 +17,8 @@ export const ViewRoutinePage = ({
   crudingRoutine,
   fetchFlattenedRoutine, 
   createNewWeek,
-  userId
-  
+  userId,
+  setScheduleDnDSelectedWeekNumber
 }) => {
   
   const handleRefresh = () => {
@@ -58,7 +60,7 @@ export const ViewRoutinePage = ({
   const showWeeks = () => {
     return currentWeeks && currentWeeks.length > 0 && !crudingRoutine &&
       <div>
-        <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
+        
         <RoutineScheduleDnd />
       </div>
   }
@@ -66,8 +68,27 @@ export const ViewRoutinePage = ({
 
   return (
     <Layout>
-      <Container className='page view-routine-container'>
-        <h2>Managing Routine: {currentRoutine.name || 'id' + currentRoutine._id}</h2>
+      <Container className='page manage-current-routine-page-container'>
+      <div 
+        fixed='top'
+        className='manage-current-routine-page-header'>
+        <div className='header-inner'>
+            <h3>
+              Managing Routine: {currentRoutine.name || 'id' + currentRoutine._id} &nbsp;
+            <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
+            </h3>
+            <Nav
+            className='search-nav'>
+              <Nav.Item>
+              <WeekSelector 
+              setScheduleDnDSelectedWeekNumber={setScheduleDnDSelectedWeekNumber}
+              currentWeeks={currentWeeks}/>
+              </Nav.Item>
+            </Nav>
+          </div>
+        </div>
+        
+
         {showWeeks()}
         {noWeeksMessage()}
         {crudingRoutine && <DarkSpinner text='Loading schedule...' />}
@@ -86,7 +107,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchFlattenedRoutine,
-  createNewWeek
+  createNewWeek,
+  setScheduleDnDSelectedWeekNumber
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewRoutinePage)
