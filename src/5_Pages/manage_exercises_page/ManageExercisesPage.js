@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
-import {userExercisesQuery, createNewExercise, clearCurrentExercise} from '../../1_Actions/exerciseActions'
+import {userExercisesQuery, clearCurrentExercise} from '../../1_Actions/exerciseActions'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'

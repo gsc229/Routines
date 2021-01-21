@@ -3,7 +3,6 @@ import Alert from 'react-bootstrap/Alert'
 
 const CloseAlert = ({
   alertConfig
-
 }) => {
 
   return (

@@ -44,7 +44,10 @@ export const BankCard = ({
     // new sets don't have _ids so splice index and recreate the array.
     const copy = [...currentExerciseSets]
     copy.splice(index, 1)
-    localBulkWriteExerciseSets(copy)
+    // prevents deleting more than one while on touch screen
+    setTimeout(() => {
+      localBulkWriteExerciseSets(copy)
+    }, 200)
 
     if(exerciseSet._id){
       await destroyExerciseSet(exerciseSet._id)
@@ -58,14 +61,20 @@ export const BankCard = ({
     localBulkWriteExerciseSets(copy)
   }
 
-  const handleSetTargetsClick = () => {
+  const handleOpenTargetsModal = () => {
     setCurrentExerciseSet(exerciseSet)
-    setModalShow("set-targets")
+    // slow down for touch screen to prevent outside modal close click
+    setTimeout(() => {
+      setModalShow("set-targets")
+    }, 100)
   }
 
-  const handleCreateSubGroupClick = () => {
+  const handleOpenSubGroupModal = () => {
     setCurrentExerciseSet(exerciseSet)
-    setModalShow("sub-group")
+    // slow down for touch screen to prevent outside modal close click
+    setTimeout(() => {
+      setModalShow("sub-group")
+    }, 100)
   }
 
 
@@ -74,9 +83,7 @@ export const BankCard = ({
     style={{border: `2px solid ${color ? color  : '--gold-fusion'}`}}
     className={`bank-card ${snapshot.isDragging && 'bank-card-dragging'}`}>
       
-      <BiPalette 
-      className='color-picker-icon'  
-      onClick={() => setShowPicker(true)}/>
+      
 
       <ColorPickerModal 
       setShowPickerModal={setShowPicker}
@@ -99,28 +106,32 @@ export const BankCard = ({
     <Card.Body>
       <BsGrid3X3Gap className='grabber-icon icon' />
 
+      <BiPalette 
+      className='color-picker-icon icon'  
+      onClick={() => setShowPicker(true)}/>
+
       <OverlayTrigger overlay={<ToolTip>Make a subgroup from this exercise</ToolTip>}>
         <GrObjectGroup
-        onTouchStart={handleCreateSubGroupClick}  
-        onClick={handleCreateSubGroupClick} className='create-subset-icon icon' />
+        onTouchEndCapture={handleOpenSubGroupModal}  
+        onClick={handleOpenSubGroupModal} className='create-subset-icon icon' />
       </OverlayTrigger>
 
       <OverlayTrigger overlay={<ToolTip>Copy {exercise.name}</ToolTip>}>
         <FiCopy 
-        onTouchStart={handleCopy} 
+        onTouchEndCapture={handleCopy} 
         onClick={handleCopy} className='copy-icon icon' />
       </OverlayTrigger>
 
       <OverlayTrigger overlay={<ToolTip>Remove {exercise.name}</ToolTip>}>
         <FiMinusSquare 
-        onTouchStart={handleRemoveOne}
+        onTouchEndCapture={handleRemoveOne}
         onClick={handleRemoveOne} className='remove-icon icon'  />
       </OverlayTrigger>
 
       <OverlayTrigger overlay={<ToolTip>Set {exercise.name} Targets</ToolTip>}>
         <FiTarget 
-        onTouchStart={handleSetTargetsClick}
-        onClick={handleSetTargetsClick} id='target-icon' className='target-icon icon' />
+        onTouchEndCapture={handleOpenTargetsModal}
+        onClick={handleOpenTargetsModal} id='target-icon' className='target-icon icon' />
       </OverlayTrigger>
 
         <Card.Subtitle>
@@ -129,7 +140,7 @@ export const BankCard = ({
             {exercise.name.length > 15 ? exercise.name.substring(0, 15) + '...' : exercise.name}
           </div>
         </Card.Subtitle>
-
+        
         <TargetIcons exerciseSet={exerciseSet} />
 
       </Card.Body>

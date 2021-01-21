@@ -151,11 +151,11 @@ export const WeekHeader = ({
 
 
   const handleMoveTo = async (e) => {
+    console.log({ targetValue: e.target.value.week_number})
     const destinationWeekNumber = JSON.parse(e.target.value)
     const sourceWeekNumber = JSON.parse(currentWeek.week_number)
     const sourceId = currentWeek._id
     const updates = []
-    const updateLog = []
 
     currentWeeks.forEach(wk => {
       if(sourceWeekNumber > destinationWeekNumber){
@@ -166,17 +166,6 @@ export const WeekHeader = ({
               update: {week_number: wk.week_number + 1}
             }
           })
-
-          updateLog.push({
-            updateOne: {
-              filter: {_id: wk._id},
-              update: {week_number: wk.week_number + 1},
-              original: {week_number: wk.week_number},
-              destinationWeekNumber,
-              sourceWeekNumber,
-              sourceId
-            }
-          })
         }
       }
       if(sourceWeekNumber < destinationWeekNumber){
@@ -185,17 +174,6 @@ export const WeekHeader = ({
             updateOne: {
               filter: {_id: wk._id},
               update: {week_number: wk.week_number - 1}
-            }
-          })
-
-          updateLog.push({
-            updateOne: {
-              filter: {_id: wk._id},
-              update: {week_number: wk.week_number - 1},
-              original: {week_number: wk.week_number},
-              destinationWeekNumber,
-              sourceWeekNumber,
-              sourceId
             }
           })
         }
@@ -209,19 +187,8 @@ export const WeekHeader = ({
       }
     })
 
-    updateLog.push({
-      updateOne: {
-        filter: {_id: sourceId},
-        update: {week_number: destinationWeekNumber},
-        original: {week_number: sourceWeekNumber},
-        destinationWeekNumber,
-        sourceWeekNumber,
-        sourceId
-      }
-    })
-
     await bulkWriteWeeks(updates,  currentRoutine._id)
-    setScheduleDnDSelectedWeekNumber([destinationWeekNumber])
+    //setScheduleDnDSelectedWeekNumber([destinationWeekNumber])
   }
 
 
@@ -288,15 +255,20 @@ export const WeekHeader = ({
                 onChange={handleMoveTo}
                 className='select-input header-select-input'
                 as="select">
-                  <option selected={true} value='choose' disabled={true}>Move to...</option>
-                  {currentWeeks.map(week => {
-                  return week.week_number !== currentWeek.week_number &&
+                <option selected={true} value='choose' disabled={true}>Move to...</option>
+                {currentWeeks.filter(wk => {
+                wk.id === currentWeek._id && console.log(`${wk._id} === ${currentWeek._id}`)
+                 return wk._id !== currentWeek._id
+                }).map(week => {
+                  console.log('option: ', {week})
+                  return(
                   <option
                   selected={false}
                   value={week.week_number}
                   key={week._id}>
                     Week {week.week_number}
-                  </option>})}
+                  </option>
+                  )})}
                 </Form.Control>
               </Form.Group>
             </Col>

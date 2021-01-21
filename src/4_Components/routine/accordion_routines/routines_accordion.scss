@@ -1,12 +1,22 @@
-.accordion{
+.routines-bank{
   margin: 20px 0;
   ul{
     list-style: none;
+    button{
+      margin: 10px 0;
+    }
+    li{
+      margin: 5px 0;
+    }
   }
 
   .card{
     border: none;
     margin-bottom: 10px;
+    .card-header{
+      background-color: $jet;
+      padding: 0.45rem;
+    }
   }
 
   .details-and-btns-container{

@@ -23,6 +23,7 @@
   border: 1px dashed $persian-plum;
   margin: 10px auto;
   margin-bottom: 20px;
+  background-color: $persian-plum;
   .week-container-header{
     color: white;
     .header-top{
@@ -62,7 +63,7 @@
 /* ========== DAY ========= */
 .day-container-card{
   border: 2px solid $jet;
-  background-color: $bs-dark;
+  background-color: $spanish-gray;
   margin: 10px 0;
   width: 30%;
   min-height: 200px;

@@ -3,11 +3,13 @@ import { connect } from 'react-redux'
 import {destroyWeek, setScheduleDnDSelectedWeekNumber, bulkWriteWeeks} from '../../../1_Actions/weekActions'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import DarkSpinner from '../../spinners/DarkSpinner'
 
 export const ConfirmDeleteWeekModal = ({
   destroyWeek,
   currentWeeks,
   currentWeek,
+  crudingWeek,
   bulkWriteWeeks,
   modalShow,
   setModalShow,
@@ -30,7 +32,7 @@ export const ConfirmDeleteWeekModal = ({
   confirmingTextObject ? confirmingTextObject = confirmingTextObject : confirmingTextObject = {
   title: <p className='delete-modal-heading-text'>Are you sure you want to delete <span className='delete-modal-heading-name-sapn'>Week: {currentWeek.week_number}</span> ?</p>, 
   paragraph: 
-  "Deleting a week will delete all the set groups connected to that week, but your records for doing the exercises will be saved"}
+  "This will shift later weeks up one week. Deleting a week will delete all the set groups connected to that week, but your records for doing the exercises will be saved"}
 
   const handleDelete = async () => {
     const deleteWeekNumber = currentWeek.week_number
@@ -47,32 +49,27 @@ export const ConfirmDeleteWeekModal = ({
         })
       }
     })
+
     const deleteResponse = await destroyWeek(currentWeek._id)
+    
     if(deleteResponse.success && weekUpdates.length){
+      setModalShow(false)
       const writeResponse = await bulkWriteWeeks(weekUpdates, routineId)
       
       if(writeResponse.success){
         setScheduleDnDSelectedWeekNumber(['all'])
-        return setModalShow(false)
+        return 
       } 
-      
-      return setDeleteFailed({
-        ...deleteFailed,
-        failed: true,
-        paragraph: "Something went wrong syncronizing the weeks. Try the refresh button."
-      })
-
-      
-      
     }
 
     if(deleteResponse.success){
       setScheduleDnDSelectedWeekNumber(['all'])
+      setModalShow(false)
       setDeleteFailed({
         ...deleteFailed,
         failed: false
       })
-      return setModalShow(false)
+      return 
     }
     
     setDeleteFailed({
@@ -90,17 +87,11 @@ export const ConfirmDeleteWeekModal = ({
 
   }
 
-  return (
-    <div className='delete-week-outer-modal-container modal'>
-      {!deleteFailed.failed && 
-        <Modal
-        className='delete-week-modal'
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        size='lg'
-        aria-labelledby={`week-${currentWeek._id}`}
-        centered>
-          <Modal.Header 
+
+  const deleteWeekModalContent = () => {
+    return (
+      <>
+        <Modal.Header 
           className='modal-header delete-week-modal-header'
           closeButton>
             <Modal.Title className='confirm-delete-title' id={`week-${currentWeek._id}`}>
@@ -114,6 +105,22 @@ export const ConfirmDeleteWeekModal = ({
           <Modal.Footer className='modal-footer'>
            <Button onClick={handleDelete} >DELETE WEEK</Button>
           </Modal.Footer>
+      </>
+    )
+  }
+
+  return (
+    <div className='delete-week-outer-modal-container modal'>
+      {!deleteFailed.failed && 
+        <Modal
+        className='delete-week-modal'
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        size='lg'
+        aria-labelledby={`week-${currentWeek._id}`}
+        centered>
+          {crudingWeek !== 'deleting-week' && deleteWeekModalContent()}
+          {crudingWeek === 'deleting-week' && <DarkSpinner text='Deleting Week...' />}
         </Modal>
       }
       {deleteFailed.failed && 
@@ -159,7 +166,8 @@ export const ConfirmDeleteWeekModal = ({
 const mapStateToProps = (state) => ({
   error_message: state.weekReducer.error_message,
   currentWeeks: state.weekReducer.currentWeeks,
-  currentWeek: state.weekReducer.currentWeek
+  currentWeek: state.weekReducer.currentWeek,
+  crudingWeek: state.weekReducer.crudingWeek
 })
 
 const mapDispatchToProps = {

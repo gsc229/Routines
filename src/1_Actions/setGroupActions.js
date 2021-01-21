@@ -81,7 +81,7 @@ export const saveSetGroupChanges = (setGroupId, updates) => dispatch => {
   .then(response => {
     if(response && response.success){
      dispatch({type: constants.UPDATE_SET_GROUP_SUCCESS, payload: response.data})
-     return true
+     return response
     } 
     if(response && response.error_message){
       dispatch({type: constants.UPDATE_SET_GROUP_FAIL, payload: response.error_message})

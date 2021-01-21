@@ -1,16 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {Link} from 'react-router-dom'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import { 
-  ConnectedRestSecondsInput,
-  ConnectedRepsPerSetInput,
-  ConnectedWeightInput, 
-  ConnectedTotalSetsInput,
-} from './ConnectedInputsLabeledForSetGroupAutoGen'
 import ConnectedLabeledDynamicRow from './ConnectedRowDynamicFieldInputDecIncLabeldForGetGroupAutoGen'
-import ConnectedIncrementLabeled from './ConnectedIncrementLabeled'
 import Container  from 'react-bootstrap/Container'
 
 export const PyramidSetForm = () => {

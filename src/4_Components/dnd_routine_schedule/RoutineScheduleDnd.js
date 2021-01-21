@@ -2,17 +2,18 @@ import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {saveWeekChanges, setCurrentWeek, setScheduleDnDSelectedWeekNumber} from '../../1_Actions/weekActions'
 import {saveManySetGroupChanges, saveSetGroupChanges} from '../../1_Actions/setGroupActions'
+import {bulkWriteExerciseSets} from '../../1_Actions/exerciseSetActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import {syncWeeksAndSetGroups} from './schedule_helpers/syncWeeksAndSetGroups'
 import {routineScheduleConstructor} from './schedule_helpers/routineScheduleConstructor'
 import {onSetGroupDragEnd} from './schedule_helpers/onSetGroupDragEnd'
 import {DragDropContext} from 'react-beautiful-dnd'
 import DarkSpinner from '../spinners/DarkSpinner'
-import Form from 'react-bootstrap/Form'
 import DroppableDay from './DroppableDay'
-import  ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
+import ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
 import WeekHeader from './WeekHeader'
 import Select from 'react-select'
+import {customStyles} from './schedule_helpers/selectStyles'
 import makeAnimated from 'react-select/animated'
 
 export const RoutineScheduleDnd = ({
@@ -22,20 +23,21 @@ export const RoutineScheduleDnd = ({
   currentRoutineSets,
   setCurrentWeek,
   saveSetGroupChanges,
-  saveWeekChanges,
-  saveManySetGroupChanges,
   crudingWeek,
   crudingSetGroup,
   crudingExerciseSet,
   setScheduleDnDSelectedWeekNumber,
-  scheduleDnDSelectedWeekNumbers
+  scheduleDnDSelectedWeekNumbers,
+  bulkWriteExerciseSets
 }) => {
 
   const [routineSchedule, setRoutineSchedule] = useState({})
+  const [selectOptions, setSelectOptions] = useState([])
+  const [selectedValues, setSelectedValues] = useState('')
   const [modalShow, setModalShow] = useState(false)
+  const animatedComponents = makeAnimated()
   
-  
-  const bulkWrting = () => {
+  const bulkWrtingNow = () => {
     if(crudingWeek === 'bulk-writing-weeks'){
       return 'Week'
     }
@@ -50,109 +52,76 @@ export const RoutineScheduleDnd = ({
   } 
 
   useEffect( async() => {
-    await syncWeeksAndSetGroups(currentWeeks, currentRoutineSetGroups, saveWeekChanges, saveManySetGroupChanges)
-
+    /* await syncWeeksAndSetGroups(currentWeeks, currentRoutineSetGroups, saveWeekChanges, saveManySetGroupChanges) */
+    
   }, [])
 
   useEffect(() => {
-    if(scheduleDnDSelectedWeekNumbers.find( num => num === 'all')){
+    if(scheduleDnDSelectedWeekNumbers.includes('all')){
       setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, currentWeeks, currentRoutineSets))
     } else{
       const targetWeeks = currentWeeks.filter(week=> scheduleDnDSelectedWeekNumbers.find( num => num === week.week_number))
       setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, targetWeeks, currentRoutineSets))
     }
 
+    const newSelectOptions = [{label: 'All', value: 'all'}] 
+    currentWeeks.forEach(week => newSelectOptions.push({label: `Week: ${week.week_number}`, value: week.week_number}))
+    setSelectOptions(newSelectOptions)
+
+    /* const values = scheduleDnDSelectedWeekNumbers.includes('all') ? [] : Object.keys(routineSchedule).map(weekNum => 
+      ({label: `Week: ${routineSchedule[weekNum].week_number}`, value: routineSchedule[weekNum].week_number}))
+    setSelectedValues(values) */
   }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumbers, currentRoutineSetGroups])
 
+
+
   const handleWeekSelect = (newSelections) => {
-    
+
     if(newSelections === null){
+      setSelectedValues('')
       return setScheduleDnDSelectedWeekNumber(['all'])
     }
 
+    if(newSelections.includes('all')){
+      setSelectedValues([{label: 'All', value: 'all'}])
+    } else{
+      setSelectedValues(newSelections)
+    }
+    
+    newSelections = Array.isArray(newSelections) ? newSelections : [newSelections]
+
     const updatedWeekNums = newSelections.map( selection => selection.value)
     setScheduleDnDSelectedWeekNumber(updatedWeekNums)
+
+
   }
-
-  const selectOptions = [{label: "All", value: 'all'}]
-  currentWeeks.forEach(week => selectOptions.push({label: `Week: ${week.week_number}`, value: week.week_number}))
-
-  const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      borderBottom: '1px dashed var(--routine-red)',
-      color: 'var(--routine-red)',
-      padding: 10,
-      fontWeight: 'bold',
-      cursor: 'pointer'
-    }),
-    multiValue: (styles) => {
-      return {
-        ...styles,
-        backgroundColor: 'var(--routine-red)',
-        color: 'white'
-      }
-    },
-    multiValueLabel: (styles) => {
-      return{
-        ...styles,
-        color: 'white'
-      }
-    },
-    multiValueRemove: (styles) => {
-      return{
-        ...styles,
-        backgroundColor: 'var(--routine-red)',
-        color: 'white',
-        borderRadius: 0,
-        cursor: 'pointer',
-        ':hover': {
-          backgroundColor: 'var(--gold-fusion)',
-          color: 'white'
-        }
-      }
-    },
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1
-      const transition = 'opacity 300ms';
-      return { ...provided, opacity, transition }
-    }
-  }
-
   
-  const animatedComponents = makeAnimated()
+  
 
   return (
       <div 
       className='routine-schedule-dnd'>
 
-
       <Select
+      value={selectedValues}
       components={animatedComponents}
       styles={customStyles}
-      className='mb-3'
+      className='mt-3 mb-3'
       placeholder='All weeks...'
-      isMulti
       onChange={handleWeekSelect}
       options={selectOptions}
+      isMulti
       autoFocus
       isSearchable/>
-    
-  
       
       {modalShow && <ConfirmDeleteWeekModal setModalShow={setModalShow} modalShow={modalShow} />}
       {!currentRoutineSetGroups && <DarkSpinner />}
-      {crudingWeek === 'creating-week' && <DarkSpinner text='Creating week...' />}
-      {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
-      {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
       {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
-      {bulkWrting() && <DarkSpinner text={`Saving ${bulkWrting()} Changes...`} />}
-      
 
 
-      {currentRoutineSetGroups && !crudingWeek && !bulkWrting() &&
+      {currentRoutineSetGroups  && crudingSetGroup !== 'updating-many-set-groups' &&
       <DragDropContext 
-       onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule)}>
+       onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule, currentRoutineSets, bulkWriteExerciseSets)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
         return(
           <div
@@ -162,22 +131,29 @@ export const RoutineScheduleDnd = ({
             setModalShow={setModalShow}
             routineSchedule={routineSchedule} 
             weekNumber={weekNumber} />
-
-            <div
-              className='week-container-row'>
-              {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
-                return dayNumber !== "_id" && dayNumber !== "week_number" && (
-                  <DroppableDay 
-                  key={weekNumber+dayNumber}
-                  routineSchedule={routineSchedule}
-                  setCurrentWeek={setCurrentWeek}
-                  currentRoutine={currentRoutine}
-                  name={name}
-                  weekNumber={weekNumber}
-                  dayNumber={dayNumber}/>
-                )
-              })}
-            </div>
+            
+            {crudingWeek === 'creating-week' && <DarkSpinner text='Creating week...' />}
+            {crudingWeek === 'deleting-week' && <DarkSpinner text="Deleting Week" />}
+            {crudingWeek === 'updating-week' && <DarkSpinner text='Syncing Schedule...' />}
+            {bulkWrtingNow() && <DarkSpinner text={`Saving ${bulkWrtingNow()} Changes...`} />}
+            
+            {!crudingWeek &&
+              <div
+                className='week-container-row'>
+                {Object.entries(routineSchedule[weekNumber]).map(([dayNumber, name]) => {
+                  return dayNumber !== "_id" && dayNumber !== "week_number" && (
+                    <DroppableDay 
+                    key={weekNumber+dayNumber}
+                    routineSchedule={routineSchedule}
+                    setCurrentWeek={setCurrentWeek}
+                    currentRoutine={currentRoutine}
+                    name={name}
+                    weekNumber={weekNumber}
+                    dayNumber={dayNumber}/>
+                  )
+                  })}
+                </div>
+              }
           </div>
         
         )})}
@@ -204,6 +180,7 @@ const mapDispatchToProps = {
   saveSetGroupChanges,
   saveWeekChanges,
   saveManySetGroupChanges,
+  bulkWriteExerciseSets,
   clearErrorMessage,
   setScheduleDnDSelectedWeekNumber
 }
