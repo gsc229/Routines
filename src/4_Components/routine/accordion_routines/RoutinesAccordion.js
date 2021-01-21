@@ -79,11 +79,6 @@ export const RoutinesAccordion = ({
   const showDetails = (routine) => {
     return (
       <ul className='list-group'>
-        <Button 
-        onClick={() => {
-          setModalShow(true)
-          setRoutineForDeletion(routine)
-        }}>DELETE ROUTINE</Button>
         <li><strong>Category:</strong> {routine.category ? routine.category : 'none chosen'}</li>
         <li><strong>Difficulty: </strong>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</li>
         <li><strong>Muscle Group: </strong>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</li>
@@ -94,6 +89,12 @@ export const RoutinesAccordion = ({
         <li><strong>Description: </strong>
           {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
         </li>
+        <a
+        href='#'
+        onClick={() => {
+          setModalShow(true)
+          setRoutineForDeletion(routine)
+        }}>DELETE ROUTINE</a>
       </ul>  
     )
   }
@@ -121,7 +122,7 @@ export const RoutinesAccordion = ({
       {userRoutines && userRoutines.map(routine=>
         {return (
         <Card bg="dark" key={routine._id}>
-          <Card.Header style={{display: 'flex', alignItems: 'center', position: 'relative'}}>
+          <Card.Header>
             <Accordion.Toggle
             disabled={editingMode}
             as={Button} 
