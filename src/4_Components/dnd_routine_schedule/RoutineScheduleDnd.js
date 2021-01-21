@@ -107,7 +107,7 @@ export const RoutineScheduleDnd = ({
       components={animatedComponents}
       styles={customStyles}
       className='mt-3 mb-3'
-      placeholder='All weeks...'
+      placeholder='Filter weeks...'
       onChange={handleWeekSelect}
       options={selectOptions}
       isMulti
