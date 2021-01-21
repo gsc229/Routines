@@ -143,8 +143,8 @@ export const WeekHeader = ({
     }
 
     
-    fetchFlattenedRoutine(routineId)
-    setScheduleDnDSelectedWeekNumber([copyToWeekNumber])
+    /* fetchFlattenedRoutine(routineId)
+    setScheduleDnDSelectedWeekNumber([copyToWeekNumber]) */
 
   }
 
@@ -158,35 +158,38 @@ export const WeekHeader = ({
     const updates = []
 
     currentWeeks.forEach(wk => {
-      if(sourceWeekNumber > destinationWeekNumber){
-        if(wk.week_number >= destinationWeekNumber && wk.week_number < sourceWeekNumber && wk._id !== sourceId){
-          updates.push({
-            updateOne: {
-              filter: {_id: wk._id},
-              update: {week_number: wk.week_number + 1}
-            }
-          })
-        }
-      }
-      if(sourceWeekNumber < destinationWeekNumber){
-        if(wk.week_number > sourceWeekNumber && wk.week_number <= destinationWeekNumber && wk._id !== sourceId){
+
+      console.log({week: wk._id, week_number: wk.week_number, sourceWeekNumber, destinationWeekNumber})
+
+      if(wk._id === sourceId){
+        console.log('if wk._id === sourceId: ', {week: wk._id, sourceId})
+        updates.push({
+          updateOne: {
+            filter: {_id: sourceId},
+            update: {week_number: destinationWeekNumber}
+          }
+        })
+      } else if( wk.week_number > sourceWeekNumber && wk.week_number <= destinationWeekNumber){
+        console.log('if wk.week_number > sourceWeekNumber && wk.week_number <= destinationWeekNumber', {week: wk._id,sourceWeekNumber, week_number: wk.week_number, destinationWeekNumber})
           updates.push({
             updateOne: {
               filter: {_id: wk._id},
               update: {week_number: wk.week_number - 1}
             }
           })
-        }
+      } else if(wk.week_number >= destinationWeekNumber &&  wk.week_number < sourceWeekNumber ){
+        console.log('if wk.week_number >= destinationWeekNumber &&  wk.weeek_number < sourceWeekNumber', {week: wk._id, destinationWeekNumber, week_number: wk.week_number, sourceWeekNumber })
+          updates.push({
+            updateOne: {
+              filter: {_id: wk._id},
+              update: {week_number: wk.week_number + 1}
+            }
+          })
       }
     })
 
-    updates.push({
-      updateOne: {
-        filter: {_id: sourceId},
-        update: {week_number: destinationWeekNumber}
-      }
-    })
-
+    
+    console.log({updates})
     await bulkWriteWeeks(updates,  currentRoutine._id)
     //setScheduleDnDSelectedWeekNumber([destinationWeekNumber])
   }
@@ -223,8 +226,8 @@ export const WeekHeader = ({
     })
 
     const weekBulkWriteResults = await bulkWriteWeeks(currentWeeksUpdates, routineId)
-    fetchFlattenedRoutine(routineId)
-    setScheduleDnDSelectedWeekNumber([copyToWeekNumber])
+    //fetchFlattenedRoutine(routineId)
+    //setScheduleDnDSelectedWeekNumber([copyToWeekNumber])
   }
 
 
@@ -257,10 +260,8 @@ export const WeekHeader = ({
                 as="select">
                 <option selected={true} value='choose' disabled={true}>Move to...</option>
                 {currentWeeks.filter(wk => {
-                wk.id === currentWeek._id && console.log(`${wk._id} === ${currentWeek._id}`)
                  return wk._id !== currentWeek._id
                 }).map(week => {
-                  console.log('option: ', {week})
                   return(
                   <option
                   selected={false}

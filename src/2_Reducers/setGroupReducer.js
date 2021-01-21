@@ -160,6 +160,7 @@ const reducer = (state=initialState, action) => {
   case constants.BULK_WRITE_SET_GROUPS_SUCCESS:
     return{
       ...state,
+      crudingSetGroup: false,
       currentRoutineSetGroups: action.payload.data
     }
   case constants.BULK_WRITE_SET_GROUPS_FAIL:{

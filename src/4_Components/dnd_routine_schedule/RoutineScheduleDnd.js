@@ -4,7 +4,6 @@ import {saveWeekChanges, setCurrentWeek, setScheduleDnDSelectedWeekNumber} from 
 import {saveManySetGroupChanges, saveSetGroupChanges} from '../../1_Actions/setGroupActions'
 import {bulkWriteExerciseSets} from '../../1_Actions/exerciseSetActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
-import {syncWeeksAndSetGroups} from './schedule_helpers/syncWeeksAndSetGroups'
 import {routineScheduleConstructor} from './schedule_helpers/routineScheduleConstructor'
 import {onSetGroupDragEnd} from './schedule_helpers/onSetGroupDragEnd'
 import {DragDropContext} from 'react-beautiful-dnd'
@@ -12,9 +11,6 @@ import DarkSpinner from '../spinners/DarkSpinner'
 import DroppableDay from './DroppableDay'
 import ConfirmDeleteWeekModal from '../modals/confirm_delete_modals/ConfirmDeleteWeekModal'
 import WeekHeader from './WeekHeader'
-import Select from 'react-select'
-import {customStyles} from './schedule_helpers/selectStyles'
-import makeAnimated from 'react-select/animated'
 
 export const RoutineScheduleDnd = ({
   currentRoutine,
@@ -26,16 +22,12 @@ export const RoutineScheduleDnd = ({
   crudingWeek,
   crudingSetGroup,
   crudingExerciseSet,
-  setScheduleDnDSelectedWeekNumber,
   scheduleDnDSelectedWeekNumbers,
   bulkWriteExerciseSets
 }) => {
 
   const [routineSchedule, setRoutineSchedule] = useState({})
-  const [selectOptions, setSelectOptions] = useState([])
-  const [selectedValues, setSelectedValues] = useState('')
   const [modalShow, setModalShow] = useState(false)
-  const animatedComponents = makeAnimated()
   
   const bulkWrtingNow = () => {
     if(crudingWeek === 'bulk-writing-weeks'){
@@ -51,11 +43,6 @@ export const RoutineScheduleDnd = ({
     return false
   } 
 
-  useEffect( async() => {
-    /* await syncWeeksAndSetGroups(currentWeeks, currentRoutineSetGroups, saveWeekChanges, saveManySetGroupChanges) */
-    
-  }, [])
-
   useEffect(() => {
     if(scheduleDnDSelectedWeekNumbers.includes('all')){
       setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, currentWeeks, currentRoutineSets))
@@ -64,60 +51,14 @@ export const RoutineScheduleDnd = ({
       setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, targetWeeks, currentRoutineSets))
     }
 
-    const newSelectOptions = [{label: 'All', value: 'all'}] 
-    currentWeeks.forEach(week => newSelectOptions.push({label: `Week: ${week.week_number}`, value: week.week_number}))
-    setSelectOptions(newSelectOptions)
-
-    /* const values = scheduleDnDSelectedWeekNumbers.includes('all') ? [] : Object.keys(routineSchedule).map(weekNum => 
-      ({label: `Week: ${routineSchedule[weekNum].week_number}`, value: routineSchedule[weekNum].week_number}))
-    setSelectedValues(values) */
   }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumbers, currentRoutineSetGroups])
 
-
-
-  const handleWeekSelect = (newSelections) => {
-
-    if(newSelections === null){
-      setSelectedValues('')
-      return setScheduleDnDSelectedWeekNumber(['all'])
-    }
-
-    if(newSelections.includes('all')){
-      setSelectedValues([{label: 'All', value: 'all'}])
-    } else{
-      setSelectedValues(newSelections)
-    }
-    
-    newSelections = Array.isArray(newSelections) ? newSelections : [newSelections]
-
-    const updatedWeekNums = newSelections.map( selection => selection.value)
-    setScheduleDnDSelectedWeekNumber(updatedWeekNums)
-
-
-  }
-  
-  
-
   return (
-      <div 
-      className='routine-schedule-dnd'>
-
-      <Select
-      value={selectedValues}
-      components={animatedComponents}
-      styles={customStyles}
-      className='mt-3 mb-3'
-      placeholder='All weeks...'
-      onChange={handleWeekSelect}
-      options={selectOptions}
-      isMulti
-      autoFocus
-      isSearchable/>
-      
+  <div 
+    className='routine-schedule-dnd'>
       {modalShow && <ConfirmDeleteWeekModal setModalShow={setModalShow} modalShow={modalShow} />}
       {!currentRoutineSetGroups && <DarkSpinner />}
       {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
-
 
       {currentRoutineSetGroups  && crudingSetGroup !== 'updating-many-set-groups' &&
       <DragDropContext 
@@ -155,10 +96,10 @@ export const RoutineScheduleDnd = ({
                 </div>
               }
           </div>
-        
         )})}
-        </DragDropContext>}
-      </div>
+        </DragDropContext>
+      }
+    </div>
   )
 }
 
