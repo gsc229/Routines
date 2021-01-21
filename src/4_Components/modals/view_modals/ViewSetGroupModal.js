@@ -1,9 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import Modal from 'react-bootstrap/Modal'
 import {Link} from 'react-router-dom'
-import Button from 'react-bootstrap/Button'
 
 export const ViewSetGroupModal = ({
   currentSetGroup,
