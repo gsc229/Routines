@@ -12,11 +12,17 @@ import Row from 'react-bootstrap/Row'
 const BankCardDropZone = ({
   currentExerciseSets,
   currentSetGroup,
+  droppableId='bank-card-drop-zone',
+  direction='horizontal',
+  zoneContainerIndex,
+  zoneExSets,
+  flexDirection
 }) => {
 
 
   const {set_group_type} = currentSetGroup
   const {min, max} = minAndMaxAllowedExercises(set_group_type)
+
   const minMaxMessage = () => {
 
     const common = <>Exercises you choose for your <strong><i>{set_group_type} Set</i></strong> will be displayed here...</>
@@ -32,39 +38,31 @@ const BankCardDropZone = ({
 
   return (
     <Droppable
-    direction='horizontal'
-    key={'bank-card-drop-zone'}
-    droppableId={'bank-card-drop-zone'}>
+    direction={direction}
+    key={droppableId}
+    droppableId={droppableId}>
+
     {(provided, snapshopt) => {
       
       return(
-        <Container
-        className={`chosen-exercises-bank ${snapshopt.isDraggingOver && 'exercise-bank-dragover'}`}>
-          <div className='chosen-exerciese-bank-header'>
-            <h4>Chosen Exercises:</h4>
-            
-          </div>
-          
-          <Row 
+        <div
+        className={`chosen-exercises-bank ${snapshopt.isDraggingOver && 'exercise-bank-dragover'}`}>          
+          <div 
           {...provided.droppableProps}
-          ref={provided.innerRef}
-          id='bank-body'
-          className='bank-body'>
-            {!currentExerciseSets.length && 
-              minMaxMessage()
-            }
-            {currentExerciseSets.map((exerciseSet, index) => {
-
+          id={droppableId}
+          className='drop-zone-row'
+          style={{flexDirection}}
+          ref={provided.innerRef}>
+            {zoneExSets.map((exerciseSet, index) => {
               return (
               <BankCardDraggable
-              key={`${exerciseSet._id}-${index}`} 
+              key={`${exerciseSet._id}-${index + zoneContainerIndex}`} 
               exerciseSet={exerciseSet} 
-              index={index}  />)
+              index={index + zoneContainerIndex}  />)
             })}
           {provided.placeholder}
-          </Row>
-
-      </Container>
+          </div>
+      </div>
       
       )}}
       

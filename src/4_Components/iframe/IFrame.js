@@ -17,9 +17,6 @@ const IFrame = ({
   const removed = purifiedResults.removed
   const error_message = purifiedResults.error_message
   const betweenTags = purifiedIframe[0] === '<' && purifiedIframe[purifiedIframe.length - 1] === '>' 
-
-  console.log({removed, purifiedIframe ,iframeString, error_message})
-  console.log(betweenTags)
   const getEmbed = () => {
     return purifiedIframe &&
       <ResponsiveEmbed className="embeded-video" aspectRatio="16by9">

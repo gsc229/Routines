@@ -7,10 +7,11 @@ export const customStyles = {
     fontWeight: 'bold',
     cursor: 'pointer'
   }),
-  control: (provided) => ({
+  control: (provided, isFocused) => ({
     ...provided,
     width: '100%',
-    color: 'var(--routine-red)'
+    color: 'var(--routine-red)',
+    border: isFocused ? 'var(--russian-green)' : '2px solid var(--routine-red)'
   }),
   multiValue: (styles) => {
     return {
