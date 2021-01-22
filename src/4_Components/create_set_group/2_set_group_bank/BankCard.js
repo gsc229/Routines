@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroyExerciseSet, localBulkWriteExerciseSets, setCurrentExerciseSet} from '../../../1_Actions/exerciseSetActions'
+import {destroyExerciseSet, localBulkWriteExerciseSets, setCurrentExerciseSet, createSingleExerciseSet} from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
@@ -21,7 +21,9 @@ export const BankCard = ({
   localBulkWriteExerciseSets,
   setCurrentExerciseSet,
   destroyExerciseSet,
-  snapshot
+  snapshot,
+  createSetGroupData,
+  createSingleExerciseSet
 }) => {
 
   const [modalShow, setModalShow] = useState(false)
@@ -54,11 +56,23 @@ export const BankCard = ({
     }
   }
 
-  const handleCopy = () => {
-    const copy = [...currentExerciseSets]
-    copy.splice(index, 0, exerciseSet)
-    currentExerciseSets.splice(index, 0, exerciseSet)
-    localBulkWriteExerciseSets(copy)
+  const handleCopy = async () => {
+    const copySet = {...exerciseSet}
+    delete copySet._id
+    delete copySet.id
+    const copySets = [...currentExerciseSets]
+    copySets.splice(index, 0, exerciseSet)
+
+    if(createSetGroupData.mode === 'editing'){
+      const createResponse = await createSingleExerciseSet(copySet)
+    } else{
+      
+      setTimeout(() => {
+        localBulkWriteExerciseSets(copySets)
+      }, 500);
+    }
+
+
   }
 
   const handleOpenTargetsModal = () => {
@@ -118,7 +132,7 @@ export const BankCard = ({
 
       <OverlayTrigger overlay={<ToolTip>Copy {exercise.name}</ToolTip>}>
         <FiCopy 
-        onTouchEndCapture={handleCopy} 
+        onTouchEnd={handleCopy} 
         onClick={handleCopy} className='copy-icon icon' />
       </OverlayTrigger>
 
@@ -149,13 +163,15 @@ export const BankCard = ({
 }
 
 const mapStateToProps = (state) => ({
-  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets  
+  currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
+  createSetGroupData: state.setGroupReducer.createSetGroupData 
 })
 
 const mapDispatchToProps = {
   localBulkWriteExerciseSets,
   setCurrentExerciseSet,
-  destroyExerciseSet
+  destroyExerciseSet,
+  createSingleExerciseSet
   
 }
 
