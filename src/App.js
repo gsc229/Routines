@@ -9,7 +9,6 @@ import PublicLandingPage from './5_Pages/landing_page/LandingPage'
 import SignIn from './7_Auth/SignIn'
 import SignUp from './7_Auth/SignUp'
 import UserDashBoard from './5_Pages/user_dashboard_page/UserDashBoardPage'
-import Schedule from './4_Components/calendar/Calendar'
 import ManageRoutinesPage from './5_Pages/manage_routines_page/ManageRoutinesPage'
 import CreateOrEditRoutinePage from './5_Pages/create_routine_page/CreateOrEditRoutinePage'
 import ManageCurrentRoutinePage from './5_Pages/manage_routine_page/ManageCurrentRoutinePage'
@@ -17,6 +16,7 @@ import CreateOrEditExercisePage from './5_Pages/create_exercise_page/CreateOrEdi
 import CreateSetGroupPage from './5_Pages/create_set_group_page/CreateSetGroupPage'
 import ManageExercisesPage from './5_Pages/manage_exercises_page/ManageExercisesPage'
 import BrowseExercisesPage from './5_Pages/browse_exercises_page/BrowseExercisesPage'
+import SchedulePage from './5_Pages/schedule_page/SchedulePage'
 
 function App({
   loggedIn,
@@ -66,7 +66,7 @@ function App({
       }
 
         <Route exact path="/schedule">
-          <Schedule />
+          <SchedulePage />
         </Route>
         <Route exact path="/manage-routines" component={ManageRoutinesPage} />
         <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
