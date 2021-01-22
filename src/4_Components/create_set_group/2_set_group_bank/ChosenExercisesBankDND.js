@@ -73,63 +73,43 @@ export const ChosenExercisesBankDND = ({
       direction={vertical ? 'vertical' : 'horizontal'}
       flexDirection={vertical ? 'column' : 'row'}
       droppableId={`bank-card-drop-zone-${i}`}
-      zoneExSets={initialRowItems[i]} 
+      zoneExSets={nextSlice} 
       zoneContainerIndex={nextZoneContainerIndex} />)
     }
       setRowItems(initialRowItems)
       setDropZones(initialDropZones)
 
-  }, [dropZonesContainerElement])
+  }, [dropZonesContainerElement, bankCardElement])
+
 
   useEffect(() => {
-
-  }, [])
-
-  useEffect(() => {
-    if(dndDimensions.rows !== 1){
-      let {rows, columns} = dndDimensions
-      let vertical = false
-      if(rows === currentExerciseSets.length){
-        columns = currentExerciseSets.length
-        rows = 1
-        vertical = true
-      }
-      const newDropZones = []
-      for(let i = 0; i < rows; i ++){
-        const nextZoneContainerIndex = i * columns
-        newDropZones.push(
-        <BankCardDropZone
-        key={`dropzone-key-${i}`}
-        direction={vertical ? 'vertical' : 'horizontal'}
-        flexDirection={vertical ? 'column' : 'row'}
-        droppableId={`bank-card-drop-zone-${i}`}
-        zoneExSets={rowItems[i]} 
-        zoneContainerIndex={nextZoneContainerIndex} />)
-      }
-      setDropZones(newDropZones)
+    let {rows, columns} = dndDimensions
+    let vertical = false
+    if(rows === currentExerciseSets.length){
+      columns = currentExerciseSets.length
+      rows = 1
+      vertical = true
     }
+
+    const newDropZones = []
+    for(let i = 0; i < numRows; i++){
+      const nextSlice = currentExerciseSets.slice(i * maxColumns, (i + 1) * maxColumns)
+      const nextZoneContainerIndex = i * columns
+      newDropZones.push(
+      <BankCardDropZone
+      key={`dropzone-key-${i}`}
+      direction={vertical ? 'vertical' : 'horizontal'}
+      flexDirection={vertical ? 'column' : 'row'}
+      droppableId={`bank-card-drop-zone-${i}`}
+      zoneExSets={nextSlice} 
+      zoneContainerIndex={nextZoneContainerIndex} />)
+    }
+    setDropZones(newDropZones)
   }, [dndDimensions, currentExerciseSets])
   
-  /* const handleDraggingUpdate = (dragUpdate) => {
-    const {destination, source} = dragUpdate
-    console.log({dragUpdate})
-    
-    if(source.droppableId !== destination.droppableId){
-      const sourceRow =  JSON.parse(source.droppableId.split('-').pop())
-      const destinationRow = JSON.parse(destination.droppableId.split('-').pop())
-      console.log({destination, source, sourceRow, destinationRow})
-      const copyItem = {...rowItems[sourceRow][source.index], order: destination.index}
-      setRowItems({
-        ...rowItems,
-        [sourceRow]: [...rowItems[sourceRow].splice(source.index, 1)],
-        [destinationRow]: [...rowItems[destinationRow].splice(destination.index, 0, )]
-      })
-    }
-  } */
   
   return (
     <DragDropContext
-    /* onDragUpdate={(dragUpdate) => dragUpdate.destination && handleDraggingUpdate(dragUpdate)} */
     onDragEnd={result => onBankCardDragEnd(result, localBulkWriteExerciseSets, currentExerciseSets, createSetGroupData.mode, bulkWriteExerciseSets)}>
       <div className='chosen-exerciese-bank-header'>
         <h4>Chosen Exercises:</h4>
