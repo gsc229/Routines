@@ -10,7 +10,6 @@ import Row from 'react-bootstrap/Row'
 
 
 const BankCardDropZone = ({
-  currentExerciseSets,
   currentSetGroup,
   droppableId='bank-card-drop-zone',
   direction='horizontal',
@@ -18,7 +17,6 @@ const BankCardDropZone = ({
   zoneExSets,
   flexDirection
 }) => {
-
 
   const {set_group_type} = currentSetGroup
   const {min, max} = minAndMaxAllowedExercises(set_group_type)
@@ -66,7 +64,7 @@ const BankCardDropZone = ({
       
       )}}
       
-    </Droppable>
+     </Droppable>
   )
 }
 

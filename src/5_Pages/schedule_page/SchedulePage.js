@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Container from 'react-bootstrap/Container'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
-import Calendar from '../../4_Components/calendar/SchedulePageCalendar'
+import Calendar from '../../4_Components/schedule_calendar/SchedulePageCalendar'
 
 export const SchedulePage = (props) => {
   return (

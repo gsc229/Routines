@@ -47,6 +47,7 @@
   }
 
   .schedule-week-container{
+    
     .view-week-btn{
       width: fit-content;
       margin-bottom: 0;
@@ -60,6 +61,8 @@
     justify-content: space-evenly;
     border-top: 1px solid black;
     border-left: 1px solid black;
+    border: 1px solid red;
+    position: relative;
   }
   
   .day{

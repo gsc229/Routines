@@ -1,4 +1,4 @@
-export default function buildCalendar(value){
+export default function buildCalendar(value, currentRoutines){
     const startDay = value.clone().startOf("month").startOf("week")
     const endDay = value.clone().endOf("month").endOf("week")
     const day = startDay.clone().subtract(1, "day")

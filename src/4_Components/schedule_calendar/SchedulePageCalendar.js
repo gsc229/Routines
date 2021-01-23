@@ -1,13 +1,18 @@
 import React, {useState, useEffect, useRef, useLayoutEffect} from 'react'
+import {connect} from 'react-redux'
+import {fetchRoutines} from '../../1_Actions/routineActions'
 import moment from 'moment'
-import buildCalendar from './build'
-import {dayStyles, beforeToday, weekStyles} from './styles'
-import CalendarHeader from './CalendarHeader'
+import buildCalendar from '../calendar/build'
+import {dayStyles, beforeToday, weekStyles} from '../calendar/styles'
+import CalendarHeader from '../calendar/CalendarHeader'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
-import {useComputedStyles} from '../../custom_hooks/useEleComputedStyles'
-import { RiHome6Fill } from 'react-icons/ri'
 
-const Calendar = ({calendarId, className, routine}) => {
+const ScheduleCalendar = ({
+  className,
+  fetchRoutines,
+  userId,
+  userRoutines
+}) => {
   const dayRef = useRef(null)
   const [dayWidth, setDayWidth] = useState('')
   const [calendar, setCalendar] = useState([])
@@ -30,7 +35,7 @@ const Calendar = ({calendarId, className, routine}) => {
     return `clamp( ${ minFontSizeRem }rem, ${ yAxisIntersection }rem + ${ slope * 100 }vw, ${ maxFontSizeRem }rem )`;
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const dayEle = document.querySelector('.day')
     if(dayRef.current){
       const dayEleWidth = dayEle && getComputedStyle(dayEle).width
@@ -41,6 +46,7 @@ const Calendar = ({calendarId, className, routine}) => {
 
   useEffect(()=>{
     setCalendar(buildCalendar(value))
+    fetchRoutines(`?user=${userId}&populate_one=weeks`)
   },[value])
 
 
@@ -50,8 +56,7 @@ const Calendar = ({calendarId, className, routine}) => {
     className={`schedule-page-calendar ${className}`}>
       <CalendarHeader 
       value={value} 
-      setValue={setValue} 
-      routine={routine} />      
+      setValue={setValue}/>      
       {
       calendar.map((week, index) => 
         <div className='schedule-week-container'>
@@ -76,8 +81,22 @@ const Calendar = ({calendarId, className, routine}) => {
         </div>
         </div>)
       }
+      <div style={{color: 'white'}}>{JSON.stringify(userRoutines, '', 2)}</div>
     </div>
   )
 }
 
-export default Calendar
+const mapStateToProps = (state) => {
+  return{
+    userRoutines: state.routineReducer.userRoutines,
+    userId: state.userReducer.user._id
+  }
+}
+
+const mapDispatchToProps = {
+  fetchRoutines
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScheduleCalendar)
