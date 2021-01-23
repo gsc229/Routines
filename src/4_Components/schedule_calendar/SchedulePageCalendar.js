@@ -6,6 +6,7 @@ import buildCalendar from '../calendar/build'
 import {dayStyles, beforeToday, weekStyles} from '../calendar/styles'
 import CalendarHeader from '../calendar/CalendarHeader'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
+import RoutineSections from './RoutineSections'
 
 const ScheduleCalendar = ({
   className,
@@ -14,6 +15,7 @@ const ScheduleCalendar = ({
   userRoutines
 }) => {
   const dayRef = useRef(null)
+  const [weekWidth, setWeekWidth] = useState('')
   const [dayWidth, setDayWidth] = useState('')
   const [calendar, setCalendar] = useState([])
   const [value, setValue] = useState(moment())
@@ -37,9 +39,12 @@ const ScheduleCalendar = ({
 
   useLayoutEffect(() => {
     const dayEle = document.querySelector('.day')
+    const weekContainerEle = document.querySelector('.week')
     if(dayRef.current){
-      const dayEleWidth = dayEle && getComputedStyle(dayEle).width
+      const dayEleWidth = dayEle && JSON.parse(getComputedStyle(dayEle).width.replace(/[px]/g, ''))
+      const weekContEleWidth = weekContainerEle && JSON.parse(getComputedStyle(weekContainerEle).width.replace(/[px]/g, ''))
       setDayWidth(dayEleWidth)
+      setWeekWidth(weekContEleWidth)
     }
     setFontSize(clampBuilder(350, 1200, .6, 1.2))
   }, [width])
@@ -63,18 +68,20 @@ const ScheduleCalendar = ({
           <h6 
           style={{fontSize: fontSize}}
           className="view-week-btn">View</h6>
+          <h6>WEEK WIDTH: {weekWidth} &nbsp; DAY WIDTH: {dayWidth} </h6> 
           <div 
           key={index} 
           className={weekStyles(week) + " week" }>
-          
+          <RoutineSections />   
           {week.map(day=> 
           <div
           ref={dayRef}
           key={day._d}
-          style={{height: `${dayWidth}`}}
+          style={{height: `${dayWidth}px`}}
           onClick={() => !beforeToday(day) && setValue(day)}
           className={dayStyles(day, value) + " day"}>
             <p>{day.format("D")}</p>
+            
           </div>
           )}
   
