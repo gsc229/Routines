@@ -126,7 +126,7 @@ export const RoutineInfoForm = ({
           controlId="completeRoutineForm.DifficultyScale">
             <Form.Label 
             className='difficulty-range-label'>
-              Difficulty Range 
+              Difficulty Range &nbsp;
               <span>
                 {difficulty_scale ? difficulty_scale : 0}
               </span>

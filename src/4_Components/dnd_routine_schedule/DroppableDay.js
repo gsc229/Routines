@@ -62,7 +62,7 @@ export const DroppableDay = ({
           <Card.Header>
             <div
             className='day-header'>
-              <h6>{dayKeyLong[dayNumber]} &nbsp;&nbsp;W: {weekNumber}</h6>
+              <h6>W: {weekNumber} &nbsp;&nbsp; Day: {dayNumber}</h6>
               <Link 
               onClick={handleAddSetsClick}
               to={

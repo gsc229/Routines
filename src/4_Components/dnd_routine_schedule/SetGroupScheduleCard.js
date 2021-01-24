@@ -25,7 +25,7 @@ export const SetGroup = ({
 
   const [modalShow, setModalShow] = useState(false)
   const [deletaModalShow, setDeleteModalShow] = useState(false)
-  const redirectLink = `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${weekNumber}/day-${dayNumber}-${numberToDay[dayNumber].short}`
+  const redirectLink = `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${weekNumber}/day-${dayNumber}}`
   
   
 

@@ -124,7 +124,7 @@ export const CreateOrEditExerciseSet = ({
         show={modalShow}/>
         <div className='create-set-group-page-header'>
           <h2>Create Set Group for {currentRoutine.name}</h2>
-          <h6>{numberToDay[currentSetGroup.day_number].long}, Week {currentSetGroup.week_number}</h6>
+          <h6>Week {currentSetGroup.week_number}, Day {currentSetGroup.day_number}</h6>
           <Link 
           onClick={modalShowLogic}>
             <FaRegCalendarAlt /><FaRegHandPointLeft /> return to schedule

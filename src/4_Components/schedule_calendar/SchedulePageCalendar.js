@@ -10,13 +10,15 @@ import CalendarHeader from '../calendar/CalendarHeader'
 import randomColor from 'randomcolor'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import DaySection from './DaySection'
+import DarkSpinner from '../spinners/DarkSpinner'
 
 
 const ScheduleCalendar = ({
   className,
   fetchRoutines,
   userId,
-  userRoutines
+  userRoutines,
+  crudingRoutine
 }) => {
 
   
@@ -33,6 +35,14 @@ const ScheduleCalendar = ({
   const dayEle = document.querySelector('.day')
   const weekContainerEle = document.querySelector('.week')
 
+  useEffect(() => {
+    const fetchUserRoutines = async () => {
+      await fetchRoutines(`?user=${userId}&populate_one=weeks&populate_two=set_groups`)
+    }
+
+    fetchUserRoutines()
+  }, [])
+
   useLayoutEffect(() => {
     if(dayRef.current){
       const dayEleWidth = dayEle && JSON.parse(getComputedStyle(dayEle).width.replace(/[px]/g, ''))
@@ -48,9 +58,7 @@ const ScheduleCalendar = ({
     setFontSize(clampBuilder(350, 1200, .6, 1.2))
   }, [width, dayEle, weekContainerEle])
 
-  useEffect(() => {
-    fetchRoutines(`?user=${userId}&populate_one=weeks&populate_two=set_groups`)
-  }, [])
+  
 
   useEffect(() => {
     const newRoutineNamesColors = {}
@@ -82,43 +90,48 @@ const ScheduleCalendar = ({
     return `clamp( ${ minFontSizeRem }rem, ${ yAxisIntersection }rem + ${ slope * 100 }vw, ${ maxFontSizeRem }rem )`;
   }
 
+  
 
   return (
-    <div 
-    style={{fontSize: fontSize}}
-    className={`schedule-page-calendar ${className}`}>
-      <CalendarHeader 
-      value={value} 
-      setValue={setValue}/>      
-      {
-      calendar.map((week, index) => 
-        <div className='schedule-week-container'>
-          <h6 
-          style={{fontSize: '12px'}}
-          className="view-week-btn">View</h6>
-          {/* {isDev && <h6>WEEK WIDTH: {weekWidth} &nbsp; DAY WIDTH: {dayWidth} WINDOW: {width}</h6> } */}
-          <div 
-          key={index} 
-          className={weekStyles(week) + " week" }>
-          {/* <RoutineSections  dateSetGroups={dateSetGroups}/>  */}  
-          {week.map(day=> 
-          <div
-          ref={dayRef}
-          key={day._d}
-          style={{height: `${dayWidth}px`}}
-          /* onClick={() => !beforeToday(day) && setValue(day)} */
-          className={dayStyles(day, value) + " day"}>
-            <p>{day.format("D")}</p>
-            {dateSetGroups && dateSetGroups[day.format('MM-DD-YYYY')] &&
-            <DaySection 
-            routineNamesColors={routineNamesColors}
-            dateSetGroups={dateSetGroups[day.format('MM-DD-YYYY')]} />}
+    <div className='schedule-wrapper'>
+      {crudingRoutine === 'fetching-routines' && <DarkSpinner text='Loading Schedule...' />}
+      {!crudingRoutine && 
+      <div 
+      style={{fontSize: fontSize}}
+      className={`schedule-page-calendar ${className}`}>
+        <CalendarHeader 
+        value={value} 
+        setValue={setValue}/>      
+        {
+        calendar.map((week, index) => 
+          <div className='schedule-week-container'>
+            <h6 
+            style={{fontSize: '12px'}}
+            className="view-week-btn">View Week</h6>
+            {/* {isDev && <h6>WEEK WIDTH: {weekWidth} &nbsp; DAY WIDTH: {dayWidth} WINDOW: {width}</h6> } */}
+            <div 
+            key={index} 
+            className={weekStyles(week) + " week" }>
+            {/* <RoutineSections  dateSetGroups={dateSetGroups}/>  */}  
+            {week.map(day=> 
+            <div
+            ref={dayRef}
+            key={day._d}
+            style={{height: `${dayWidth}px`}}
+            /* onClick={() => !beforeToday(day) && setValue(day)} */
+            className={dayStyles(day, value) + " day"}>
+              <p>{day.format("D")}</p>
+              {dateSetGroups && dateSetGroups[day.format('MM-DD-YYYY')] &&
+              <DaySection 
+              routineNamesColors={routineNamesColors}
+              dateSetGroups={dateSetGroups[day.format('MM-DD-YYYY')]} />}
+            </div>
+            )}
+    
           </div>
-          )}
-  
-        </div>
-        </div>)
-      }
+          </div>)
+          }
+      </div>}
     </div>
   )
 }
@@ -126,7 +139,8 @@ const ScheduleCalendar = ({
 const mapStateToProps = (state) => {
   return{
     userRoutines: state.routineReducer.userRoutines,
-    userId: state.userReducer.user._id
+    userId: state.userReducer.user._id,
+    crudingRoutine: state.routineReducer.crudingRoutine
   }
 }
 

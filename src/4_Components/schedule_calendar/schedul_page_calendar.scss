@@ -91,11 +91,13 @@
       margin: 0;
     }
     .day-sections{
-      border: 1px solid lime;
       position: relative;
       display: flex;
       flex-wrap: wrap;
       width: 100%;
+      .tool-tip-title{
+        color: $routine-red;
+      }
       .day-section{
         height: .8em;
         width: .8em;
