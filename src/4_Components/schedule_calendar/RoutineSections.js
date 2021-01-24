@@ -2,23 +2,42 @@ import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
 
+
 export const RoutineSections = ({
-  userRoutines
+  dateSetGroups
 }) => {
+
+
   return (
     <div className='routine-sections'>
       <div 
       className='routine-section'
-      style={{backgroundColor: 'red'}}></div>
+      style={{backgroundColor: 'red'}}>
+        <div className="day-section">
+          
+        </div>
+      </div>
       <div 
       className='routine-section'
-      style={{backgroundColor: 'blue'}}></div>
+      style={{backgroundColor: 'blue'}}>
+        <div className="day-section">
+          
+        </div>
+      </div>
       <div 
       className='routine-section'
-      style={{backgroundColor: 'yellow'}}></div>
+      style={{backgroundColor: 'yellow'}}>
+        <div className="day-section">
+          
+        </div>
+      </div>
       <div 
       className='routine-section'
-      style={{backgroundColor: 'orange'}}></div>
+      style={{backgroundColor: 'orange'}}>
+        <div className="day-section">
+          
+        </div>
+      </div>
     </div>
   )
 }

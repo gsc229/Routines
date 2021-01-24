@@ -67,7 +67,7 @@
     position: relative;
     .routine-sections{
       //border: 1px solid lime;
-      position: absolute;
+      //position: absolute;
       width: 100%;
       top: 1.5em;
       z-index: 10;
@@ -87,6 +87,27 @@
     color: black;
     font-weight: bold;
     cursor: pointer;
+    position: relative;
+    p{
+      margin: 0;
+    }
+    .day-sections{
+      border: 1px solid lime;
+      position: relative;
+      top: 0;
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      z-index: 10;
+      .day-section{
+        max-height: 1em;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        font-size: .4em;
+        margin: 2px;
+      }
+    }
   }
   
   .today{
