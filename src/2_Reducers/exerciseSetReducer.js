@@ -229,7 +229,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingExerciseSet: false,
-        currentRoutineSets: action.payload.exercise_sets
+        currentRoutineSets: action.payload.exercise_sets.sort((a, b) => a.order - b.order)
       }
     case constants.FETCH_FLATTENED_ROUTINE_FAIL:
       return{

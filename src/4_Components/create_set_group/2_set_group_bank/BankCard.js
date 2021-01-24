@@ -25,7 +25,6 @@ export const BankCard = ({
   createSetGroupData,
   createSingleExerciseSet
 }) => {
-
   const [modalShow, setModalShow] = useState(false)
   const [showPicker, setShowPicker] = useState(false)
 

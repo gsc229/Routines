@@ -40,7 +40,7 @@ const CalendarHeader = ({value, setValue, routine, fetchFlattenedRoutine}) => {
           Edit Schedule
         </Link>
       </div>}
-      <Navbar style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} value='dark' bg='dark'>
+      <Navbar style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} bg='dark'>
         <div className="calendar-header-top">
           <h6
             onClick={() => setValue(prevMonth)}
