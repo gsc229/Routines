@@ -18,6 +18,8 @@ const ScheduleCalendar = ({
   userId,
   userRoutines
 }) => {
+
+  
   const dayRef = useRef(null)
   const [weekWidth, setWeekWidth] = useState('')
   const [dateSetGroups, setDateSetGroups] = useState({})
@@ -92,9 +94,9 @@ const ScheduleCalendar = ({
       calendar.map((week, index) => 
         <div className='schedule-week-container'>
           <h6 
-          style={{fontSize: fontSize}}
+          style={{fontSize: '12px'}}
           className="view-week-btn">View</h6>
-          {isDev && <h6>WEEK WIDTH: {weekWidth} &nbsp; DAY WIDTH: {dayWidth} WINDOW: {width}</h6> }
+          {/* {isDev && <h6>WEEK WIDTH: {weekWidth} &nbsp; DAY WIDTH: {dayWidth} WINDOW: {width}</h6> } */}
           <div 
           key={index} 
           className={weekStyles(week) + " week" }>

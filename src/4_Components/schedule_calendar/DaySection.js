@@ -19,13 +19,6 @@ export const DaySection = ({
     setCurrentSetGroup(sg)
   }
 
-  const viewSetGroupModal = (sg) => {
-    <ViewSetGroupModal 
-    redirectLink={`/create-set-group/${routineNamesColors[sg.routine].name }/${sg.week_number}/day-${sg.day_number}-${sg.day}`}
-    setModalShow={setModalShow} 
-    modalShow={modalShow} />
-  }
-
   return (
     <div className='day-sections'>
       
