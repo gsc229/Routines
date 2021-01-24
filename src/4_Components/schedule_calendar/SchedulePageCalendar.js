@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef, useLayoutEffect} from 'react'
+import {isDev} from '../../config/config'
 import {connect} from 'react-redux'
 import {fetchRoutines} from '../../1_Actions/routineActions'
 import moment from 'moment'
@@ -17,11 +18,10 @@ const ScheduleCalendar = ({
   userId,
   userRoutines
 }) => {
-
   const dayRef = useRef(null)
   const [weekWidth, setWeekWidth] = useState('')
   const [dateSetGroups, setDateSetGroups] = useState({})
-  const [routineColors, setRoutineColors] = useState({})
+  const [routineNamesColors, setRoutineNamesColors] = useState({})
   const [dayWidth, setDayWidth] = useState(100)
   const [calendar, setCalendar] = useState([])
   const [value, setValue] = useState(moment())
@@ -46,17 +46,25 @@ const ScheduleCalendar = ({
     setFontSize(clampBuilder(350, 1200, .6, 1.2))
   }, [width, dayEle, weekContainerEle])
 
+  useEffect(() => {
+    fetchRoutines(`?user=${userId}&populate_one=weeks&populate_two=set_groups`)
+  }, [])
+
+  useEffect(() => {
+    const newRoutineNamesColors = {}
+    userRoutines.forEach(routine => {
+      newRoutineNamesColors[routine._id] = {}
+      newRoutineNamesColors[routine._id].name = routine.name
+      routine.color ? newRoutineNamesColors[routine._id].color = routine.color : newRoutineNamesColors[routine._id].color = randomColor()
+    })
+    setRoutineNamesColors(newRoutineNamesColors)    
+    setDateSetGroups(mapSetGroupsToDates(userRoutines && userRoutines))
+  }, [userRoutines])
 
   useEffect(()=>{
-    fetchRoutines(`?user=${userId}&populate_one=weeks&populate_two=set_groups`)
-    const newRoutineColors ={}
-    userRoutines.forEach(routine => routine.color ? routine.color : newRoutineColors[routine._id] = randomColor())
-    setRoutineColors(newRoutineColors)
-    setDateSetGroups(mapSetGroupsToDates(userRoutines && userRoutines))
     setCalendar(buildCalendar(value, userRoutines))
   },[value])
 
-  console.log(routineColors)
   // controls font size for different viewport sizes
   // Takes the viewport widths in pixels and the font sizes in rem
   function clampBuilder( minWidthPx, maxWidthPx, minFontSizeRem, maxFontSizeRem ) {
@@ -86,7 +94,7 @@ const ScheduleCalendar = ({
           <h6 
           style={{fontSize: fontSize}}
           className="view-week-btn">View</h6>
-          <h6>WEEK WIDTH: {weekWidth} &nbsp; DAY WIDTH: {dayWidth} WINDOW: {width}</h6> 
+          {isDev && <h6>WEEK WIDTH: {weekWidth} &nbsp; DAY WIDTH: {dayWidth} WINDOW: {width}</h6> }
           <div 
           key={index} 
           className={weekStyles(week) + " week" }>
@@ -96,13 +104,12 @@ const ScheduleCalendar = ({
           ref={dayRef}
           key={day._d}
           style={{height: `${dayWidth}px`}}
-          onClick={() => !beforeToday(day) && setValue(day)}
+          /* onClick={() => !beforeToday(day) && setValue(day)} */
           className={dayStyles(day, value) + " day"}>
-            {console.log({day: day.format('MM-DD-YYYY')})}
             <p>{day.format("D")}</p>
             {dateSetGroups && dateSetGroups[day.format('MM-DD-YYYY')] &&
             <DaySection 
-            routineColors={routineColors}
+            routineNamesColors={routineNamesColors}
             dateSetGroups={dateSetGroups[day.format('MM-DD-YYYY')]} />}
           </div>
           )}
@@ -110,7 +117,6 @@ const ScheduleCalendar = ({
         </div>
         </div>)
       }
-      <div style={{color: 'white'}}>{JSON.stringify(userRoutines, '', 2)}</div>
     </div>
   )
 }

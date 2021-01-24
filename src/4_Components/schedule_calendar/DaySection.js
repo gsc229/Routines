@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import {setCurrentSetGroup} from '../../1_Actions/setGroupActions'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
-import ViewSetGroupModa from '../modals/view_modals/ViewSetGroupModal'
+import ViewSetGroupModal from '../modals/view_modals/ViewSetGroupModal'
 
 export const DaySection = ({
   dateSetGroups,
-  routineColors,
+  routineNamesColors,
   setCurrentSetGroup
 }) => {
 
@@ -18,18 +18,32 @@ export const DaySection = ({
     setModalShow(true)
     setCurrentSetGroup(sg)
   }
+
+  const viewSetGroupModal = (sg) => {
+    <ViewSetGroupModal 
+    redirectLink={`/create-set-group/${routineNamesColors[sg.routine].name }/${sg.week_number}/day-${sg.day_number}-${sg.day}`}
+    setModalShow={setModalShow} 
+    modalShow={modalShow} />
+  }
+
   return (
     <div className='day-sections'>
-      <ViewSetGroupModa setModalShow={setModalShow} modalShow={modalShow} />
+      
       {dateSetGroups && dateSetGroups.sort((a, b) => a.routine - b.routine).map(sg => {
         return(
-          <OverlayTrigger overlay={<ToolTip>{sg.name}</ToolTip>}>
-            <div
-            onClick={() => handleClick(sg)}
-            className='day-section'
-            style={{backgroundColor: routineColors[sg.routine]}}>
-            </div>
-          </OverlayTrigger>
+          <>
+            <ViewSetGroupModal 
+            redirectLink={`/create-set-group/${routineNamesColors[sg.routine].name }/${sg.week_number}/day-${sg.day_number}-${sg.day}`}
+            setModalShow={setModalShow} 
+            modalShow={modalShow} />
+            <OverlayTrigger overlay={<ToolTip>{routineNamesColors[sg.routine].name + ':'} <br/> {sg.name}</ToolTip>}>
+              <div
+                onClick={() => handleClick(sg)}
+                className='day-section'
+                style={{backgroundColor: routineNamesColors[sg.routine].color}}>
+              </div>
+            </OverlayTrigger>
+          </>
         )
       })}
     </div>
