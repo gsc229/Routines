@@ -59,7 +59,7 @@ export const DuplicateTo = ({
             onClick={() => duplicate(week._id, week.week_number, dayNum)}
             key={`${week._id}-day-${dayNum}`}
             >
-              {numberToDay[dayNum].long}
+              Day {dayNum}
             </NavDropdown.Item>
           )}
         </NavDropdown>

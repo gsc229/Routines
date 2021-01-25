@@ -1,0 +1,44 @@
+.routine-color-legend{
+  display: flex;
+  .legend-wrapper{
+    padding: 0;
+    width: 100%;
+  }
+  .header-name-color-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    height: 15px;
+    transition: height .05s linear;
+    .name-and-day-marker{
+      display: flex;
+      .day-marker{
+        height: .8em;
+        width: .8em;
+        border-radius: 50%;
+        margin: 2px;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+    }
+
+    .slider-container{
+      width: 300px;
+      opacity: 0;
+      transition: opacity 5s linear;
+      a{
+        padding: 0;
+        margin: 5px 0;
+      }
+    }
+
+  }
+  .showing-picker{
+    height: 100px;
+    .showing-picker-slider{
+      opacity: 1;
+      transition: opacity 5s linear;
+    }
+  }
+}

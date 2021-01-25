@@ -3,6 +3,7 @@ import {updateRoutine, createRoutine, getRoutines, getRoutineById, getFlattenedR
 
 const generalErrorMessage = "Something went wrong with the request."
 
+
 export const setCurrentRoutine = (routine) => dispatch => {
   dispatch({type: constants.SET_CURRENT_ROUTINE, payload: routine})
 }
@@ -17,6 +18,10 @@ export const clearCurrentRoutine = () => dispatch => {
 
 export const clearRoutineSearchResults = () => dispatch => {
   dispatch({type: constants.CLEAR_ROUTINE_SEARCH_RESULTS})
+}
+
+export const changeColor = (routineNameColors={}) => dispatch => {
+  dispatch({type: constants.SET_ROUTINE_NAMES_COLORS, payload: routineNameColors})
 }
 
 // ASYNC 

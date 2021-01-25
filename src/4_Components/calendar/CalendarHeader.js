@@ -3,8 +3,13 @@ import {connect} from 'react-redux'
 import Navbar from 'react-bootstrap/Navbar'
 import {Link} from 'react-router-dom'
 import {setCurrentRoutine, fetchFlattenedRoutine} from '../../1_Actions/routineActions'
+import ColorLegend from './RoutineColorLegend'
 
-const CalendarHeader = ({value, setValue, routine, fetchFlattenedRoutine}) => {
+const CalendarHeader = ({
+  value, 
+  setValue, 
+  routine,
+  fetchFlattenedRoutine}) => {
 
   function currMonthName(){
     return value.format("MMMM")
@@ -31,7 +36,7 @@ const CalendarHeader = ({value, setValue, routine, fetchFlattenedRoutine}) => {
   
   return (
     <div style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} className='calendar-header'>
-      
+      <ColorLegend />
       {routine && 
       <div className='view-routine-link-container'>
         <Link 

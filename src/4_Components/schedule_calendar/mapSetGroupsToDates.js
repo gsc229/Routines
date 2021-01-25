@@ -4,30 +4,29 @@ const mapSetGroupsToDates = (userRoutines) => {
   const format = 'MM-DD-YYYY'
   const dateSetGroups = {}
 
-  userRoutines && userRoutines.forEach(routine => {
+  userRoutines && 
+  userRoutines.forEach(routine => {
 
-    const startDate = moment(routine.start_date)
-    console.log({startDate: startDate.format(format)})
-
-    console.log({routine})
-
-    console.log({weeks: routine.weeks.sort((a, b) => a.week_number - b.week_number)})
-
-    routine.weeks.sort((a,b) => a.week_number = b.week_number).forEach(week => {
-      console.log(week.set_groups.sort((a, b) => a.day - b.day))
-      week.set_groups.sort((a, b) => a.day - b.day).forEach(sg => {
-        console.log(startDate.add(sg.day_number - 1, 'day').format(format))
-        const sgDate = startDate.add(sg.day_number - 1, 'day').format(format)
+    const routineStartDate = moment(routine.start_date)
+    routine.weeks && 
+    routine.weeks
+    .sort((a, b) => a.week_number - b.week_number)
+    .forEach((week, idx) => {
+      const weekStartDate = week.week_number > 1 ? routineStartDate.add(1,'week') : routineStartDate
+      week.set_groups && 
+      week.set_groups
+      .sort((a, b) => a.order - b.order)
+      .forEach(sg => {
+        const weekStartCopy = weekStartDate.clone()
+        const sgDate = weekStartCopy.add(sg.day_number, 'day').format(format)
         if(!dateSetGroups[sgDate]){
           dateSetGroups[sgDate] = []
         }
         dateSetGroups[sgDate] = [...dateSetGroups[sgDate], sg]
       })
     })
-
   })
 
-  console.log({dateSetGroups})
   return dateSetGroups
 }
 

@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges, destroyRoutine} from '../../../1_Actions/routineActions'
+import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges} from '../../../1_Actions/routineActions'
+import moment from 'moment'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
@@ -84,7 +85,7 @@ export const RoutinesAccordion = ({
         <li><strong>Muscle Group: </strong>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</li>
         <li><strong>Body Part: </strong>{routine.body_part ? routine.body_part : 'none chosen'}</li>
         <li><strong>Target Muscle: </strong>{routine.target_muscle ? routine.target_muscle : 'none chosen'}</li>
-        <li><strong>Start Date: </strong>{routine.start_date ? routine.start_date : 'none chosen'}</li>
+        <li><strong>Start Date: </strong>{routine.start_date ? moment(routine.start_date ).format('MMMM DD, YYYY') : 'none chosen'}</li>
         <li><strong>End Date: </strong>{routine.end_date ? routine.end_date : 'n/a'}</li>
         <li><strong>Description: </strong>
           {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
