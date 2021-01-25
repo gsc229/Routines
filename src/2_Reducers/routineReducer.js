@@ -1,4 +1,15 @@
 import * as constants from '../1_Actions'
+import randomColor from 'randomcolor'
+
+const colorize = (routines) => {
+  const newRoutineNamesColors = {}
+  routines.forEach(routine => {
+    newRoutineNamesColors[routine._id] = {}
+    newRoutineNamesColors[routine._id].name = routine.name
+    routine.color ? newRoutineNamesColors[routine._id].color = routine.color : newRoutineNamesColors[routine._id].color = randomColor()
+  })
+  return newRoutineNamesColors
+}
 
 const initialState = {
   crudingRoutine: false,
@@ -8,6 +19,7 @@ const initialState = {
   routinePagination: null,
   routineSearchResults: [],
   userRoutines: [], // [{}]
+  routineNamesColors: {},
   currentRoutineName: '', 
   currentRoutine: {
     user: null,
@@ -52,6 +64,12 @@ const reducer = (state=initialState, action) => {
         currentRoutine: initialState.currentRoutine,
         currentRoutineName: ''
       }
+    case constants.SET_ROUTINE_NAMES_COLORS:
+      return{
+        ...state,
+        routineNamesColors: action.payload
+      }
+    // Async
     case constants.FETCHING_ROUTINES:
       return {
         ...state,
@@ -67,6 +85,7 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         crudingRoutine: false,
+        routineNamesColors: colorize(action.payload.data),
         userRoutines: action.payload.data,
         routinePagination: action.payload.routinePagination
       }

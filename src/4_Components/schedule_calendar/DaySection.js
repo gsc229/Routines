@@ -11,8 +11,6 @@ export const DaySection = ({
   setCurrentSetGroup
 }) => {
 
-  console.log({dateSetGroups})
-
   const [modalShow, setModalShow] = useState(false)
   const handleClick = (sg) => {
     setModalShow(true)
@@ -42,7 +40,7 @@ export const DaySection = ({
             </ToolTip>}>
               <div
                 onClick={() => handleClick(sg)}
-                className='day-section'
+                className='day-marker'
                 style={{backgroundColor: routineNamesColors[sg.routine].color}}>
               </div>
             </OverlayTrigger>

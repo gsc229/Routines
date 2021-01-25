@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef, useLayoutEffect} from 'react'
-import {isDev} from '../../config/config'
 import {connect} from 'react-redux'
 import {fetchRoutines} from '../../1_Actions/routineActions'
 import moment from 'moment'
@@ -7,7 +6,6 @@ import buildCalendar from './build'
 import mapSetGroupsToDates from './mapSetGroupsToDates'
 import {dayStyles, beforeToday, weekStyles} from '../calendar/styles'
 import CalendarHeader from '../calendar/CalendarHeader'
-import randomColor from 'randomcolor'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import DaySection from './DaySection'
 import DarkSpinner from '../spinners/DarkSpinner'
@@ -18,6 +16,7 @@ const ScheduleCalendar = ({
   fetchRoutines,
   userId,
   userRoutines,
+  routineNamesColors,
   crudingRoutine
 }) => {
 
@@ -25,7 +24,6 @@ const ScheduleCalendar = ({
   const dayRef = useRef(null)
   const [weekWidth, setWeekWidth] = useState('')
   const [dateSetGroups, setDateSetGroups] = useState({})
-  const [routineNamesColors, setRoutineNamesColors] = useState({})
   const [dayWidth, setDayWidth] = useState(100)
   const [calendar, setCalendar] = useState([])
   const [value, setValue] = useState(moment())
@@ -43,8 +41,16 @@ const ScheduleCalendar = ({
     fetchUserRoutines()
   }, [])
 
-  useLayoutEffect(() => {
-    if(dayRef.current){
+  useEffect(() => {  
+    userRoutines && setDateSetGroups(mapSetGroupsToDates(userRoutines))
+  }, [userRoutines])
+
+  useEffect(()=>{
+    userRoutines && setCalendar(buildCalendar(value, userRoutines))
+  },[value])
+
+  useEffect(() => {
+    if(dayEle){
       const dayEleWidth = dayEle && JSON.parse(getComputedStyle(dayEle).width.replace(/[px]/g, ''))
       const weekContEleWidth = weekContainerEle && JSON.parse(getComputedStyle(weekContainerEle).width.replace(/[px]/g, ''))
       setDayWidth(dayEleWidth)
@@ -57,23 +63,6 @@ const ScheduleCalendar = ({
     }
     setFontSize(clampBuilder(350, 1200, .6, 1.2))
   }, [width, dayEle, weekContainerEle])
-
-  
-
-  useEffect(() => {
-    const newRoutineNamesColors = {}
-    userRoutines.forEach(routine => {
-      newRoutineNamesColors[routine._id] = {}
-      newRoutineNamesColors[routine._id].name = routine.name
-      routine.color ? newRoutineNamesColors[routine._id].color = routine.color : newRoutineNamesColors[routine._id].color = randomColor()
-    })
-    setRoutineNamesColors(newRoutineNamesColors)    
-    setDateSetGroups(mapSetGroupsToDates(userRoutines && userRoutines))
-  }, [userRoutines])
-
-  useEffect(()=>{
-    setCalendar(buildCalendar(value, userRoutines))
-  },[value])
 
   // controls font size for different viewport sizes
   // Takes the viewport widths in pixels and the font sizes in rem
@@ -90,7 +79,7 @@ const ScheduleCalendar = ({
     return `clamp( ${ minFontSizeRem }rem, ${ yAxisIntersection }rem + ${ slope * 100 }vw, ${ maxFontSizeRem }rem )`;
   }
 
-  
+  console.log({calendar})
 
   return (
     <div className='schedule-wrapper'>
@@ -99,12 +88,15 @@ const ScheduleCalendar = ({
       <div 
       style={{fontSize: fontSize}}
       className={`schedule-page-calendar ${className}`}>
-        <CalendarHeader 
+        <CalendarHeader
+        routineNamesColors={routineNamesColors}
         value={value} 
         setValue={setValue}/>      
         {
         calendar.map((week, index) => 
-          <div className='schedule-week-container'>
+          <div 
+          key={`schedule-calendar-week-${index + 1}`}
+          className='schedule-week-container'>
             <h6 
             style={{fontSize: '12px'}}
             className="view-week-btn">View Week</h6>
@@ -112,7 +104,6 @@ const ScheduleCalendar = ({
             <div 
             key={index} 
             className={weekStyles(week) + " week" }>
-            {/* <RoutineSections  dateSetGroups={dateSetGroups}/>  */}  
             {week.map(day=> 
             <div
             ref={dayRef}
@@ -136,13 +127,13 @@ const ScheduleCalendar = ({
   )
 }
 
-const mapStateToProps = (state) => {
-  return{
-    userRoutines: state.routineReducer.userRoutines,
-    userId: state.userReducer.user._id,
-    crudingRoutine: state.routineReducer.crudingRoutine
-  }
-}
+const mapStateToProps = (state) => ({
+  userRoutines: state.routineReducer.userRoutines,
+  routineNamesColors: state.routineReducer.routineNamesColors,
+  userId: state.userReducer.user._id,
+  crudingRoutine: state.routineReducer.crudingRoutine
+})
+
 
 const mapDispatchToProps = {
   fetchRoutines
