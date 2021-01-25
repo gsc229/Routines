@@ -49,20 +49,6 @@ const ScheduleCalendar = ({
     userRoutines && setCalendar(buildCalendar(value, userRoutines))
   },[value])
 
-  useEffect(() => {
-    if(dayEle){
-      const dayEleWidth = dayEle && JSON.parse(getComputedStyle(dayEle).width.replace(/[px]/g, ''))
-      const weekContEleWidth = weekContainerEle && JSON.parse(getComputedStyle(weekContainerEle).width.replace(/[px]/g, ''))
-      setDayWidth(dayEleWidth)
-      setWeekWidth(weekContEleWidth)
-    } else{
-      const dayEleWidth = width * 0.0845
-      const weekContEleWidth = weekContainerEle && JSON.parse(getComputedStyle(weekContainerEle).width.replace(/[px]/g, ''))
-      setDayWidth(dayEleWidth)
-      setWeekWidth(weekContEleWidth)
-    }
-    setFontSize(clampBuilder(350, 1200, .6, 1.2))
-  }, [width, dayEle, weekContainerEle])
 
   // controls font size for different viewport sizes
   // Takes the viewport widths in pixels and the font sizes in rem
@@ -108,8 +94,6 @@ const ScheduleCalendar = ({
             <div
             ref={dayRef}
             key={day._d}
-            style={{height: `${dayWidth}px`}}
-            /* onClick={() => !beforeToday(day) && setValue(day)} */
             className={dayStyles(day, value) + " day"}>
               <p>{day.format("D")}</p>
               {dateSetGroups && dateSetGroups[day.format('MM-DD-YYYY')] &&
