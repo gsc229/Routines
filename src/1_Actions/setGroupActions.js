@@ -6,6 +6,10 @@ export const setCurrentSetGroup = (setGroup) => dispatch => {
   dispatch({type: constants.SET_CURRENT_SET_GROUP, payload: setGroup})
 }
 
+export const setCurrentSetGroups = (setGroups) => dispatch => {
+  dispatch({type: constants.SET_CURRENT_SET_GROUPS, payload: setGroups})
+}
+
 export const localWritingSetGroup = (key, value) => dispatch => {
   dispatch({type: constants.WRITING_CURRENT_SET_GROUP, payload: {key, value}})
 }

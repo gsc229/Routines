@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {setCurrentSetGroup} from '../../1_Actions/setGroupActions'
+import {setCurrentSetGroup, setCurrentSetGroups} from '../../1_Actions/setGroupActions'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
 import ViewSetGroupModal from '../modals/view_modals/ViewSetGroupModal'
@@ -33,7 +33,7 @@ export const DaySection = ({
             overlay={
             <ToolTip>
               <div 
-              style={{color: 'var(--routine-red)', fontWeight: 'bold'}}
+              style={{color: routineNamesColors[sg.routine].color, fontWeight: 'bold'}}
               className='tool-tip-title'>
                 {routineNamesColors[sg.routine].name + ':'}
               </div>{sg.name}

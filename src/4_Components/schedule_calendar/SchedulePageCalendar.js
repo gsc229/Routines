@@ -1,15 +1,16 @@
-import React, {useState, useEffect, useRef, useLayoutEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 import {fetchRoutines} from '../../1_Actions/routineActions'
+import {setCurrentSetGroups} from '../../1_Actions/setGroupActions'
 import moment from 'moment'
 import buildCalendar from './build'
 import mapSetGroupsToDates from './mapSetGroupsToDates'
 import {dayStyles, beforeToday, weekStyles} from '../calendar/styles'
 import CalendarHeader from '../calendar/CalendarHeader'
-import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import DaySection from './DaySection'
 import DarkSpinner from '../spinners/DarkSpinner'
-
+import {useWindowSize} from '../../custom_hooks/useWindowSize'
 
 const ScheduleCalendar = ({
   className,
@@ -17,27 +18,20 @@ const ScheduleCalendar = ({
   userId,
   userRoutines,
   routineNamesColors,
-  crudingRoutine
+  crudingRoutine,
+  setCurrentSetGroups
 }) => {
 
-  
-  const dayRef = useRef(null)
-  const [weekWidth, setWeekWidth] = useState('')
+  const history = useHistory()
   const [dateSetGroups, setDateSetGroups] = useState({})
-  const [dayWidth, setDayWidth] = useState(100)
   const [calendar, setCalendar] = useState([])
   const [value, setValue] = useState(moment())
-  const [fontSize, setFontSize] = useState('12px')
-  const {width} = useWindowSize()
-
-  const dayEle = document.querySelector('.day')
-  const weekContainerEle = document.querySelector('.week')
+  const{width} = useWindowSize()
 
   useEffect(() => {
     const fetchUserRoutines = async () => {
       await fetchRoutines(`?user=${userId}&populate_one=weeks&populate_two=set_groups`)
     }
-
     fetchUserRoutines()
   }, [])
 
@@ -65,14 +59,18 @@ const ScheduleCalendar = ({
     return `clamp( ${ minFontSizeRem }rem, ${ yAxisIntersection }rem + ${ slope * 100 }vw, ${ maxFontSizeRem }rem )`;
   }
 
-  console.log({calendar})
+  const handleDayClick = (setGroups) => {
+    history.push('/execute-sets')
+    setCurrentSetGroups(setGroups)
+  }
+
 
   return (
     <div className='schedule-wrapper'>
       {crudingRoutine === 'fetching-routines' && <DarkSpinner text='Loading Schedule...' />}
       {!crudingRoutine && 
-      <div 
-      style={{fontSize: fontSize}}
+      <div
+      style={{fontSize: clampBuilder(400, 1200, .6, 1)}}
       className={`schedule-page-calendar ${className}`}>
         <CalendarHeader
         routineNamesColors={routineNamesColors}
@@ -83,29 +81,42 @@ const ScheduleCalendar = ({
           <div 
           key={`schedule-calendar-week-${index + 1}`}
           className='schedule-week-container'>
-            <h6 
-            style={{fontSize: '12px'}}
+            <h6
+            style={{fontSize: clampBuilder(400, 1200, .6, .8)}}
             className="view-week-btn">View Week</h6>
             {/* {isDev && <h6>WEEK WIDTH: {weekWidth} &nbsp; DAY WIDTH: {dayWidth} WINDOW: {width}</h6> } */}
             <div 
             key={index} 
             className={weekStyles(week) + " week" }>
-            {week.map(day=> 
+            {week.map(day=>{
+            const dayHasSets = dateSetGroups[day.format('MM-DD-YYYY')]
+            return dayHasSets ?
+              <div
+              onClick={() => width <= 400 && handleDayClick(dateSetGroups[day.format('MM-DD-YYYY')])}
+              key={day._d}
+              className={dayStyles(day, value) + " day"}>
+                <p>{day.format("D")}</p>
+                {dateSetGroups && dateSetGroups[day.format('MM-DD-YYYY')] &&
+                <DaySection 
+                routineNamesColors={routineNamesColors}
+                dateSetGroups={dateSetGroups[day.format('MM-DD-YYYY')]} />}
+                {width >= 400 &&
+                <div
+                onClick={() => handleDayClick(dateSetGroups[day.format('MM-DD-YYYY')])} 
+                style={{fontSize: clampBuilder(400, 1200, .6, 1)}}
+                className="execute-sets">Execute</div>}
+              </div>
+            :
             <div
-            ref={dayRef}
-            key={day._d}
-            className={dayStyles(day, value) + " day"}>
-              <p>{day.format("D")}</p>
-              {dateSetGroups && dateSetGroups[day.format('MM-DD-YYYY')] &&
-              <DaySection 
-              routineNamesColors={routineNamesColors}
-              dateSetGroups={dateSetGroups[day.format('MM-DD-YYYY')]} />}
+              key={day._d}
+              className={dayStyles(day, value) + " day day-no-sets"}>
+                <p>{day.format("D")}</p>
             </div>
-            )}
+            })}
     
           </div>
           </div>)
-          }
+        }
       </div>}
     </div>
   )
@@ -120,7 +131,8 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = {
-  fetchRoutines
+  fetchRoutines,
+  setCurrentSetGroups
 }
 
 
