@@ -6,6 +6,7 @@ import {setCurrentRoutine, fetchFlattenedRoutine} from '../../1_Actions/routineA
 import ColorLegend from './RoutineColorLegend'
 
 const CalendarHeader = ({
+  singleRoutine=false,
   value, 
   setValue, 
   routine,
@@ -36,7 +37,7 @@ const CalendarHeader = ({
   
   return (
     <div style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} className='calendar-header'>
-      <ColorLegend />
+      <ColorLegend singleRoutine={singleRoutine} />
       {routine && 
       <div className='view-routine-link-container'>
         <Link 

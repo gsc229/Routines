@@ -72,9 +72,9 @@ export const RoutinesAccordion = ({
     history.push('/create-routine')
   }
 
-  const handleToggle = () => {
+  const handleToggle = (routine) => {
     setEditingMode(false)
-    clearCurrentRoutine()
+    setCurrentRoutine(routine)
   }
 
   const showDetails = (routine) => {
@@ -127,7 +127,7 @@ export const RoutinesAccordion = ({
             <Accordion.Toggle
             disabled={editingMode}
             as={Button} 
-            onClick={handleToggle}
+            onClick={() => handleToggle(routine)}
             style={{width: '100%', display: 'flex', justifyContent: 'center', postion: 'relative'}} 
             eventKey={routine._id} >
               {routine.name}

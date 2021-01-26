@@ -16,7 +16,11 @@ const Calendar = ({calendarId, className, routine}) => {
 
   return (
     <div className={`main-calendar ${className}`}>
-      <CalendarHeader value={value} setValue={setValue} routine={routine} />      
+      <CalendarHeader 
+      singleRoutine={true}
+      value={value} 
+      setValue={setValue} 
+      routine={routine} />      
       {
       calendar.map((week, index) => 
         <div key={index} className={weekStyles(week) + " week" }>

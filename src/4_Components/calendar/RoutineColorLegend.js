@@ -2,22 +2,25 @@ import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {changeColor, saveRoutineChanges} from '../../1_Actions/routineActions'
 import {updateRoutine} from '../../3_APIs/routinesApi'
-import ChromePickerModal from '../modals/color_picker_modal/ChromePickerModal'
-import {ChromePicker, SliderPicker} from 'react-color'
+import {SliderPicker} from 'react-color'
 import Link from 'react-bootstrap/NavLink'
 
 
 
 export const RoutineColorLegend = ({
+  singleRoutine=false,
   routineNamesColors,
   changeColor,
+  currentRoutine,
   saveRoutineChanges
 }) => {
 
+  if(singleRoutine){
+    routineNamesColors = { [currentRoutine._id]: routineNamesColors[currentRoutine._id] }
+  }
+
   const [showPicker, setShowPicker] = useState(false)
   const [initialNamesColors, setInitialNamesColors] = useState(routineNamesColors)
-  console.log({initialNamesColors})
-  console.log({routineNamesColors})
   const persistColorChanges = (routineId) => {
     if(initialNamesColors[routineId].color !== routineNamesColors[routineId].color){
       updateRoutine(routineId, {color: routineNamesColors[routineId].color })
@@ -59,7 +62,6 @@ export const RoutineColorLegend = ({
 
   return (
     <div className="routine-color-legend">
-        
         {/* <ChromePicker onChangeComplete={(color) => console.log({color})} /> */}
        <div className='legend-wrapper'>
         {Object.keys(routineNamesColors)
@@ -99,7 +101,8 @@ export const RoutineColorLegend = ({
 
 const mapStateToProps = (state) => ({
   userRoutines: state.routineReducer.userRoutines,
-  routineNamesColors: state.routineReducer.routineNamesColors
+  routineNamesColors: state.routineReducer.routineNamesColors,
+  currentRoutine: state.routineReducer.currentRoutine
 })
 
 const mapDispatchToProps = {
