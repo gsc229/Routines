@@ -1,20 +1,32 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {setCurrentSetGroup, setCurrentSetGroups} from '../../1_Actions/setGroupActions'
+import {setFlattenedRoutine} from '../../1_Actions/routineActions'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
 import ViewSetGroupModal from '../modals/view_modals/ViewSetGroupModal'
 
 export const DaySection = ({
   dateSetGroups,
+  userRoutines,
   routineNamesColors,
-  setCurrentSetGroup
+  setCurrentSetGroup,
+  setFlattenedRoutine
 }) => {
 
   const [modalShow, setModalShow] = useState(false)
+
   const handleClick = (sg) => {
-    setModalShow(true)
+    const selectedRoutine = {...userRoutines.find(routine => routine._id === sg.routine)}
+    const flattenedRoutine = {
+      routine: selectedRoutine,
+      weeks: selectedRoutine.weeks,
+      set_groups: selectedRoutine.set_groups,
+      exercise_sets: selectedRoutine.exercise_sets
+    }
+    setFlattenedRoutine(flattenedRoutine)
     setCurrentSetGroup(sg)
+    setModalShow(true)
   }
 
   return (
@@ -56,7 +68,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  setCurrentSetGroup
+  setCurrentSetGroup,
+  setFlattenedRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DaySection)

@@ -15,10 +15,9 @@ export const RoutineColorLegend = ({
   saveRoutineChanges
 }) => {
 
-  if(singleRoutine){
+  if(singleRoutine && currentRoutine && currentRoutine._id){
     routineNamesColors = { [currentRoutine._id]: routineNamesColors[currentRoutine._id] }
   }
-
   const [showPicker, setShowPicker] = useState(false)
   const [initialNamesColors, setInitialNamesColors] = useState(routineNamesColors)
   const persistColorChanges = (routineId) => {
@@ -94,7 +93,6 @@ export const RoutineColorLegend = ({
           </div>}
         </div>)}
       </div>
-
     </div>
   )
 }

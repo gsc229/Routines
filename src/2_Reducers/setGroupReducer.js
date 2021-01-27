@@ -86,6 +86,12 @@ const reducer = (state=initialState, action) => {
       ...state,
       currentSetGroups: action.payload
     }
+  case constants.SET_FLATTENED_ROUTINE:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      currentRoutineSetGroups: action.payload.set_groups
+    }
   case  constants.WRITING_CURRENT_SET_GROUP: 
     return{
       ...state,

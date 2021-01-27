@@ -18,7 +18,7 @@ const initialState = {
   error_message: '',
   routinePagination: null,
   routineSearchResults: [],
-  userRoutines: [], // [{}]
+  userExerciseSets: [],
   routineNamesColors: {},
   currentRoutineName: '', 
   currentRoutine: {
@@ -68,6 +68,12 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         routineNamesColors: action.payload
+      }
+    case constants.SET_FLATTENED_ROUTINE:
+      return{
+        ...state,
+        crudingRoutine: false,
+        currentRoutine: action.payload.routine
       }
     // Async
     case constants.FETCHING_ROUTINES:

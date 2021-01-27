@@ -30,7 +30,7 @@ const ScheduleCalendar = ({
 
   useEffect(() => {
     const fetchUserRoutines = async () => {
-      await fetchRoutines(`?user=${userId}&populate_one=weeks&populate_two=set_groups`)
+      await fetchRoutines(`?user=${userId}&populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`)
     }
     fetchUserRoutines()
   }, [])

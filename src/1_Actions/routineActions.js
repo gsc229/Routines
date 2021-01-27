@@ -24,6 +24,12 @@ export const changeColor = (routineNameColors={}) => dispatch => {
   dispatch({type: constants.SET_ROUTINE_NAMES_COLORS, payload: routineNameColors})
 }
 
+export const setFlattenedRoutine = (flattenedRoutine) => dispatch => {
+  
+  dispatch({type: constants.SET_FLATTENED_ROUTINE, payload: flattenedRoutine})
+      
+}
+
 // ASYNC 
 
 export const fetchRoutines = (queryString) => dispatch => {

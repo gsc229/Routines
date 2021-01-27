@@ -34,6 +34,12 @@ const reducer = (state=initialState, action) => {
         ...state,
         scheduleDnDSelectedWeekNumbers: action.payload
       }
+    case constants.SET_FLATTENED_ROUTINE:
+      return{
+        ...state,
+        crudingWeek: false,
+        currentWeeks: action.payload.weeks.sort((a, b) => a.week_number - b.week_number)
+      }
     case constants.CLEAR_CURRENT_WEEK:
       return{
         ...state,
