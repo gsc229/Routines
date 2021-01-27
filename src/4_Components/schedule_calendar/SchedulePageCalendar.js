@@ -41,7 +41,7 @@ const ScheduleCalendar = ({
 
   useEffect(()=>{
     userRoutines && setCalendar(buildCalendar(value, userRoutines))
-  },[value])
+  },[value, userRoutines])
 
 
   // controls font size for different viewport sizes
@@ -89,15 +89,16 @@ const ScheduleCalendar = ({
             key={index} 
             className={weekStyles(week) + " week" }>
             {week.map(day=>{
+            
             const dayHasSets = dateSetGroups[day.format('MM-DD-YYYY')]
             return dayHasSets ?
               <div
-              onClick={() => width <= 400 && handleDayClick(dateSetGroups[day.format('MM-DD-YYYY')])}
+              onClick={() => handleDayClick(dateSetGroups[day.format('MM-DD-YYYY')])}
               key={day._d}
               className={dayStyles(day, value) + " day"}>
                 <p>{day.format("D")}</p>
                 {dateSetGroups && dateSetGroups[day.format('MM-DD-YYYY')] &&
-                <DaySection 
+                <DaySection
                 routineNamesColors={routineNamesColors}
                 dateSetGroups={dateSetGroups[day.format('MM-DD-YYYY')]} />}
                 {width >= 400 &&

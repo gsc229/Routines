@@ -32,18 +32,18 @@ function App({
 }) {
 
   
-  useEffect(() => {
-    const error_message = `${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}` 
-    if(error_message && environment ==='development'){
-      alert(`${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}`)
-    }
+useEffect(() => {
+  const error_message = `${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}` 
+  if(error_message && environment ==='development'){
+    alert(`${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}`)
+  }
 
-    if(error_message){
-      setTimeout(() => clearErrorMessage(), 4000)
-    }
-    
-  }, 
-  [user_ERROR,routine_ERROR,week_ERROR,set_group_ERROR,exercise_set_ERROR,exercise_ERROR])
+  if(error_message){
+    setTimeout(() => clearErrorMessage(), 4000)
+  }
+  
+}, 
+[user_ERROR,routine_ERROR,week_ERROR,set_group_ERROR,exercise_set_ERROR,exercise_ERROR])
 
 
 
@@ -73,7 +73,7 @@ function App({
         <Route exact path="/manage-routines" component={ManageRoutinesPage} />
         <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
         <Route exact path="/view-routine/:routineId/:routineName" component={ManageCurrentRoutinePage} />
-        <Route exact path='/execute-sets' component={ExecuteSetsPage} />
+        <Route  path='/execute-sets' component={ExecuteSetsPage} />
         <Route exact path="/create-exercise" component={CreateOrEditExercisePage} />
         <Route exact path="/manage-exercises" component={ManageExercisesPage} />
         <Route exact path="/browse-exercises" component={BrowseExercisesPage} />

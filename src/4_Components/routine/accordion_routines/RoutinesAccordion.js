@@ -32,7 +32,8 @@ export const RoutinesAccordion = ({
 
   const spinnerText = {
     'fetching-routines': 'Loading...',
-    'deleting-routine': 'Deleting Routine...'
+    'deleting-routine': 'Deleting Routine...',
+    'updating': 'Saving Routine...'
   }
 
   useEffect(() => {
@@ -113,7 +114,6 @@ export const RoutinesAccordion = ({
   }
 
 
-
   return (
     <Accordion /* defaultActiveKey={userRoutines[0]._id} */ className="routines-bank">
 
@@ -165,7 +165,7 @@ export const RoutinesAccordion = ({
               </div>
               {!editingMode && !showSpinner &&  
               showDetails(routine)}
-              {showSpinner && <DarkSpinner style={{marginBottom: '50px', height: '300px'}} />}
+              {showSpinner && <DarkSpinner  style={{marginBottom: '50px', height: '300px'}} />}
 
               {editingMode && currentRoutine._id === routine._id && !crudingRoutine &&
               <CreateRoutineForm 

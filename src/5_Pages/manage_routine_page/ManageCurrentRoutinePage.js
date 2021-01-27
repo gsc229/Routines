@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
+import {windowScrollTop} from '../../utils/windowScroll'
 import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
 import {createNewWeek, setScheduleDnDSelectedWeekNumber} from '../../1_Actions/weekActions'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
@@ -26,11 +27,7 @@ export const ViewRoutinePage = ({
   }
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    })
+    windowScrollTop()
   }, [])
   
   const addWeek = async () => {
@@ -39,7 +36,6 @@ export const ViewRoutinePage = ({
       routine: currentRoutine._id,
       week_number: currentWeeks.length + 1
     }
-    console.log({credentials})
     createNewWeek(credentials)
 
   }

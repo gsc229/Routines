@@ -16,7 +16,8 @@ export const DaySection = ({
 
   const [modalShow, setModalShow] = useState(false)
 
-  const handleClick = (sg) => {
+  const handleClick = (sg) => { 
+
     const selectedRoutine = {...userRoutines.find(routine => routine._id === sg.routine)}
     const flattenedRoutine = {
       routine: selectedRoutine,
@@ -30,7 +31,9 @@ export const DaySection = ({
   }
 
   return (
-    <div className='day-sections'>
+    <div 
+    onClick={e => e.stopPropagation()}
+    className='day-sections'>
       
       {dateSetGroups && dateSetGroups.sort((a, b) => a.routine - b.routine).map(sg => {
         return(
@@ -51,7 +54,7 @@ export const DaySection = ({
               </div>{sg.name}
             </ToolTip>}>
               <div
-                onClick={() => handleClick(sg)}
+                onClick={ () => handleClick(sg) }
                 className='day-marker'
                 style={{backgroundColor: routineNamesColors[sg.routine].color}}>
               </div>

@@ -74,10 +74,11 @@
       width: 100%;
       color: black;
       font-weight: bold;
+      z-index: 1;
       cursor: pointer;
       position: relative;
       &:hover{
-        border: 2px solid $routine-red;
+        background-color: $routine-red;
       }
       p{
         margin: 0;
@@ -89,6 +90,7 @@
         display: flex;
         flex-wrap: wrap;
         margin-bottom: 20px;
+        z-index: 99;
         .tool-tip-title{
           color: $routine-red;
         }
@@ -97,6 +99,9 @@
           width: 1vw;
           border-radius: 50%;
           margin: 2px;
+          position: relative;
+          cursor: pointer;
+          z-index: 100;
         }
       }
       .execute-sets{
@@ -111,7 +116,7 @@
     .day-no-sets{
       cursor: default;
       &:hover{
-      border: none;
+      background-color: whitesmoke;
       border-right: 1px solid black;
       }
     }

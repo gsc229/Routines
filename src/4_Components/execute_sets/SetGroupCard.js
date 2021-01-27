@@ -5,14 +5,19 @@ import Card from 'react-bootstrap/Card'
 export const SetGroupCard = ({
   setGroup,
   setCurrentSetGroup,
-  onClick
-
+  onClick,
+  routineNamesColors
 }) => {
+
+  const backgroundColor = routineNamesColors[setGroup.routine].color ? routineNamesColors[setGroup.routine].color : 'var(--routine-red)'
+
+
   return (
     <Card
+    style={{backgroundColor: 'var(--jet)', padding: '5px'}}
     onClick={onClick}
     className='set-group-card'>
-      <Card.Header>
+      <Card.Header style={{backgroundColor}}>
         <h6>{setGroup.name}</h6>
       </Card.Header>
     </Card>
@@ -20,7 +25,7 @@ export const SetGroupCard = ({
 }
 
 const mapStateToProps = (state) => ({
-  
+  routineNamesColors: state.routineReducer.routineNamesColors
 })
 
 const mapDispatchToProps = {

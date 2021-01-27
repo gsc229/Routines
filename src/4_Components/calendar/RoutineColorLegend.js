@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {changeColor, saveRoutineChanges} from '../../1_Actions/routineActions'
+import {changeColor} from '../../1_Actions/routineActions'
 import {updateRoutine} from '../../3_APIs/routinesApi'
 import {SliderPicker} from 'react-color'
 import Link from 'react-bootstrap/NavLink'
@@ -12,7 +12,7 @@ export const RoutineColorLegend = ({
   routineNamesColors,
   changeColor,
   currentRoutine,
-  saveRoutineChanges
+  userRoutines
 }) => {
 
   if(singleRoutine && currentRoutine && currentRoutine._id){
@@ -20,6 +20,8 @@ export const RoutineColorLegend = ({
   }
   const [showPicker, setShowPicker] = useState(false)
   const [initialNamesColors, setInitialNamesColors] = useState(routineNamesColors)
+
+  
   const persistColorChanges = (routineId) => {
     if(initialNamesColors[routineId].color !== routineNamesColors[routineId].color){
       updateRoutine(routineId, {color: routineNamesColors[routineId].color })
@@ -104,8 +106,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  changeColor,
-  saveRoutineChanges
+  changeColor
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineColorLegend)
