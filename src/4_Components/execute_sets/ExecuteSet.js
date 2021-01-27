@@ -3,14 +3,12 @@ import { connect } from 'react-redux'
 import {isDev} from '../../config/config'
 import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
 import {Link, useParams} from 'react-router-dom'
+import NavLink from 'react-bootstrap/NavLink'
 
 export const ExecuteSet = ({
   currentExerciseSets,
-  currentSetGroup,
-  currentRoutine,
   currentExerciseSet,
-  setCurrentExerciseSet,
-  saveExerciseSetChanges
+  setCurrentExerciseSet
 }) => {
   
 
@@ -19,9 +17,10 @@ export const ExecuteSet = ({
   const {routineName, setGroupId, order} = params
   const [currentOrderNum, setCurrentOrderNum] = useState(JSON.parse(order))
   const [nextPath, setNextPath] = useState()
+  const [prevPath, setPrevPath] = useState()
   const nextSet = currentExerciseSets.find(set => set.order === currentOrderNum + 1)
+  const prevSet = currentOrderNum > 0 ? currentExerciseSets.find(set => set.order === currentOrderNum - 1) : null
 
-  console.log({order, nextSet, currentExerciseSet})
 
   useEffect(() => {
     setCurrentOrderNum(JSON.parse(order))
@@ -43,6 +42,15 @@ export const ExecuteSet = ({
   
   setNextPath(newNextPath)
 
+  const newPrevPath = prevSet &&
+  '/execute-sets/'
+  .concat(`${routineName}/`)
+  .concat(`${setGroupId}/`)
+  .concat(`${prevSet.exercise.name ? prevSet.exercise.name.replace(/\s/g, '') : prevSet.exercise._id}/`)
+  .concat(`${prevSet.order}`) 
+  
+  setPrevPath(newPrevPath)
+
 
   }, [currentOrderNum])
 
@@ -50,11 +58,22 @@ export const ExecuteSet = ({
   return (
     <div className='execute-set'>
       <div className="ex-set-navs">
-        {nextSet && 
-        <Link 
-        to={nextPath}>
-          Next Exercise
-        </Link>}
+        <div className='link-container'>
+          <NavLink
+          disabled={!prevSet}
+          as={Link}
+          to={prevPath || 'nowhere'} >
+            Previous Exercise
+          </NavLink>
+        </div>
+        <div className='link-container'>
+          <NavLink
+          disabled={!nextSet}
+          as={Link}
+          to={nextPath || 'nowhere'}>
+            Next Exercise
+          </NavLink>
+        </div>
       </div>
       <div className="execute-set-card">
         {currentExerciseSet.exercise.name|| 'No Name'}
