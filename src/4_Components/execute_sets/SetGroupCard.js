@@ -14,7 +14,6 @@ export const SetGroupCard = ({
 
   return (
     <Card
-    style={{backgroundColor: 'var(--jet)', padding: '5px'}}
     onClick={onClick}
     className='set-group-card'>
       <Card.Header style={{backgroundColor}}>

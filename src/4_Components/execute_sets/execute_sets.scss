@@ -14,5 +14,10 @@
   .ex-set-navs{
     display: flex;
     justify-content: space-between;
+    .link-container{
+      a:hover{
+        color: red;
+      }
+    }
   }
 }

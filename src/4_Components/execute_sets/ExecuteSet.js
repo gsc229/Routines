@@ -82,7 +82,7 @@ export const ExecuteSet = ({
 
 
 
-      {isDev && <div style={{color: 'white'}}><br></br><br></br>{JSON.stringify(currentExerciseSets, null, 4)}</div>}
+      {isDev && <div style={{color: 'white'}}><br></br><br></br>{JSON.stringify(currentExerciseSet, null, 4)}</div>}
     </div>
   )
 }
