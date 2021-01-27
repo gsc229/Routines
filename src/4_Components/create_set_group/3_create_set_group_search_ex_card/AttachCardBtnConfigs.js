@@ -94,6 +94,10 @@ export const AddRemoveBtnConfigs = ({
       exercise,
       order: currentExerciseSets.length
     }
+
+    delete newExSet._id
+    delete newExSet.updatedAt
+    delete newExSet.createdAt
     
     if(currentSetGroup._id){
         console.log(exercise)
