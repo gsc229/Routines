@@ -3,18 +3,19 @@ import { connect } from 'react-redux'
 import {isDev} from '../../config/config'
 import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
 import {pathConstructor} from './pathConstructor'
-import {selectStyles} from './selectStyles'
+import {selectStyles, controlStyles} from './selectStyles'
 import {Link, useParams, useHistory} from 'react-router-dom'
 import NavLink from 'react-bootstrap/NavLink'
 import {PointLeftIcon} from '../icons/Icons'
-import Select from 'react-select'
+import Select, {components} from 'react-select'
 import makeAnimated from 'react-select/animated'
 const animatedComponents = makeAnimated()
 
 export const ExecuteSetNavs = ({
   currentExerciseSets,
   currentExerciseSet,
-  setCurrentExerciseSet
+  setCurrentExerciseSet,
+  routineNamesColors
 }) => {
   
   const params = useParams()
@@ -27,12 +28,12 @@ export const ExecuteSetNavs = ({
   currentExerciseSets
   .sort((a, b) => a.order - b.order)
   .map(set => set.exercise.name ? 
-    {value: pathConstructor(routineName, set.set_group, set), label: `${set.exercise.name} - ${set.order}`} : 
+    {value: pathConstructor(routineName, set.set_group, set), label: `Set ${set.order} - ${set.exercise.name}`} : 
     {value: pathConstructor(routineName, set.set_group, set), label: `Set ${set.order}` }
   )
 
   const [currentOrderNum, setCurrentOrderNum] = useState(JSON.parse(order))
-  const currentSelectValue = {vlaue: currentPath, label: `${currentExerciseName} - ${currentOrderNum}`}
+  const currentSelectValue = {vlaue: currentPath, label: `Set ${currentOrderNum} - ${currentExerciseName}`}
   const [nextPath, setNextPath] = useState()
   const [prevPath, setPrevPath] = useState()
   const nextSet = currentExerciseSets.find(set => set.order === currentOrderNum + 1)
@@ -65,6 +66,22 @@ export const ExecuteSetNavs = ({
     history.push(selectObj.value)
   }
 
+  const controlStyles = {
+    borderRadius: '4px',
+    padding: '10px',
+    background: routineNamesColors[currentExerciseSet.routine].color,
+    color: 'white',
+  };
+
+  console.log({controlStyles})
+
+  const ControlComponent = props => (
+    <div style={controlStyles}>
+      {<p>{routineNamesColors[currentExerciseSet.routine].name}</p>}
+      <components.Control {...props} />
+    </div>
+  );
+
 
   return (
     <div className="ex-set-navs">
@@ -76,7 +93,7 @@ export const ExecuteSetNavs = ({
         <Select
           styles={selectStyles}
           value={currentSelectValue}
-          components={animatedComponents}
+          components={{animatedComponents, Control: ControlComponent}}
           placeholder='Select set...'
           onChange={handleSetSelect}
           options={selectOptions}
@@ -110,7 +127,8 @@ const mapStateToProps = (state) => ({
   currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
   currentRoutine: state.routineReducer.currentRoutine,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
-  userRoutines: state.routineReducer.userRoutines
+  userRoutines: state.routineReducer.userRoutines,
+  routineNamesColors: state.routineReducer.routineNamesColors
 })
 
 const mapDispatchToProps = {

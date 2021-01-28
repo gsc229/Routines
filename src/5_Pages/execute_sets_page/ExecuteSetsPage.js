@@ -16,7 +16,7 @@ export const ExecuteSetsPage = ({
 
   const location = useLocation()
   const history = useHistory()
-  console.log({currentSetGroup})
+  
   useEffect(() => {
     windowScrollTop()
     clearCurrentSetGroup()

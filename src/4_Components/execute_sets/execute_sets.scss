@@ -13,12 +13,25 @@
 .execute-set{
   .execute-set-inner{
     margin-top: 20px;
-    border: 1px solid red;
     .inner-header{
       display: flex;
       justify-content: center;
       align-items: center;
       margin-bottom: 20px;
+      .btn-text-container{
+        display: flex;
+        align-items: center;
+        height: 25px;
+        position: relative;
+        .point-left-icon{
+          position: relative;
+          bottom: 2px;
+        }
+        .eye-icon{
+          position: relative;
+          bottom: 1px;
+        }
+      }
     }
     .instruction-card-container{
       display: flex;

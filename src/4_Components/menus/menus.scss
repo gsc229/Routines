@@ -1,6 +1,11 @@
 .navbar{
   border-bottom: 1px solid $spanish-gray;
   .navbar-brand{
-    color: $routine-red
+    color: $routine-red;
+    position: relative;
+    .weight-lift-up-icon{
+      position: relative;
+      bottom: 4px;
+    }
   }
 }

@@ -9,16 +9,17 @@ export const SetGroupCard = ({
   routineNamesColors
 }) => {
 
-  const backgroundColor = routineNamesColors[setGroup.routine].color ? routineNamesColors[setGroup.routine].color : 'var(--routine-red)'
+  const color = routineNamesColors[setGroup.routine].color ? routineNamesColors[setGroup.routine].color : 'var(--routine-red)'
 
 
   return (
     <Card
     onClick={onClick}
     className='set-group-card'>
-      <Card.Header style={{backgroundColor}}>
+      <Card.Header style={{color, backgroundColor: 'var(--bs-dark)'}}>{routineNamesColors[setGroup.routine].name}</Card.Header>
+      <Card.Body>
         <h6>{setGroup.name}</h6>
-      </Card.Header>
+      </Card.Body>
     </Card>
   )
 }
