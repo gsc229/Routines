@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {isDev} from '../../config/config'
 import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
 import {pathConstructor} from './pathConstructor'
+import {selectStyles} from './selectStyles'
 import {Link, useParams, useHistory} from 'react-router-dom'
 import NavLink from 'react-bootstrap/NavLink'
 import {PointLeftIcon} from '../icons/Icons'
@@ -21,19 +22,22 @@ export const ExecuteSetNavs = ({
   const {routineName, setGroupId, order} = params
   const currentPath = pathConstructor(routineName, currentExerciseSet.set_group, currentExerciseSet)
   const currentExerciseName = currentExerciseSet.exercise.name ? currentExerciseSet.exercise.name : 'no name'
-  console.log({currentPath, currentExerciseName})
-  const [selectOptions, setSelectOptions] = useState(
-    currentExerciseSets.map(set => set.exercise.name ? 
-      {value: pathConstructor(routineName, set.set_group, set), label: set.exercise.name} : 
-      {value: pathConstructor(routineName, set.set_group, set), label: `Set ${set.order}` })
+ 
+  const selectOptions =
+  currentExerciseSets
+  .sort((a, b) => a.order - b.order)
+  .map(set => set.exercise.name ? 
+    {value: pathConstructor(routineName, set.set_group, set), label: `${set.exercise.name} - ${set.order}`} : 
+    {value: pathConstructor(routineName, set.set_group, set), label: `Set ${set.order}` }
   )
-  
+
   const [currentOrderNum, setCurrentOrderNum] = useState(JSON.parse(order))
+  const currentSelectValue = {vlaue: currentPath, label: `${currentExerciseName} - ${currentOrderNum}`}
   const [nextPath, setNextPath] = useState()
   const [prevPath, setPrevPath] = useState()
   const nextSet = currentExerciseSets.find(set => set.order === currentOrderNum + 1)
   const prevSet = currentOrderNum > 0 ? currentExerciseSets.find(set => set.order === currentOrderNum - 1) : null
-
+  
   useEffect(() => {
     setCurrentOrderNum(JSON.parse(order))
   }, [order])
@@ -70,7 +74,8 @@ export const ExecuteSetNavs = ({
       </div>
       <div className="select-container">
         <Select
-          value={{vlaue: currentPath, label: currentExerciseName}}
+          styles={selectStyles}
+          value={currentSelectValue}
           components={animatedComponents}
           placeholder='Select set...'
           onChange={handleSetSelect}
@@ -95,7 +100,7 @@ export const ExecuteSetNavs = ({
           </NavLink>
         </div>
       </div>
-      {isDev && <div style={{color: 'white'}}><br></br><br></br>{JSON.stringify(currentExerciseSet, null, 4)}</div>}
+      {/* {isDev && <div style={{color: 'white'}}><br></br><br></br>{JSON.stringify(currentExerciseSet, null, 4)}</div>} */}
     </div>
   )
 }

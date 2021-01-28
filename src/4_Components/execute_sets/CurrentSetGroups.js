@@ -49,10 +49,10 @@ export const CurrentSetGroups = ({
             key={setGroup._id}
             onClick={() => handleCardClick(setGroup)}
             setGroup={setGroup} />
-            
+
         )}
       </div>
-      {isDev && <p style={{color: 'white'}}>{JSON.stringify(currentSetGroups, null, 2)}</p>}
+      {/* {isDev && <p style={{color: 'white'}}>{JSON.stringify(currentSetGroups, null, 2)}</p>} */}
     </div>
   )
 }

@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Navbar from 'react-bootstrap/Navbar'
 import {Link} from 'react-router-dom'
 import {setCurrentRoutine, fetchFlattenedRoutine} from '../../1_Actions/routineActions'
+import fontSizeClamp from '../../utils/clampBuilder'
 import ColorLegend from './RoutineColorLegend'
 
 const CalendarHeader = ({
@@ -36,8 +37,8 @@ const CalendarHeader = ({
   const dayOfWeek = ["Su","Mo","Tu","We","Th","Fr","Sa"] 
   
   return (
-    <div style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} className='calendar-header'>
-      <ColorLegend singleRoutine={singleRoutine} />
+    <div style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px', border: '1px solid var(--routine-red)'}} className='calendar-header'>
+      {/* <ColorLegend singleRoutine={singleRoutine} /> */}
       {routine && 
       <div className='view-routine-link-container'>
         <Link 
@@ -53,7 +54,7 @@ const CalendarHeader = ({
             className='prev-month  arrow'>
               {String.fromCharCode(171)}
           </h6>
-          <div>{currMonthName()} {currYear()}</div>
+          <div style={{fontSize: fontSizeClamp(300, 1200, 1, 1.5)}}>{currMonthName()} {currYear()}</div>
           <h6 
             onClick={() => setValue(nextMonth)}
             className="next-month arrow">

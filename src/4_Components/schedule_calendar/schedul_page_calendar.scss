@@ -2,6 +2,7 @@
   border-bottom: 1px solid black;
   .calendar-header{
     color: white;
+    margin-top: 15px;
     .view-routine-link-container{
       display: flex;
       justify-content: center;
@@ -97,6 +98,8 @@
         .day-marker{
           height: 1vw;
           width: 1vw;
+          min-height: 8px;
+          min-width: 8px;
           border-radius: 50%;
           margin: 2px;
           position: relative;

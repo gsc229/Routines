@@ -3,11 +3,13 @@ import {connect} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {fetchRoutines} from '../../1_Actions/routineActions'
 import {setCurrentSetGroups} from '../../1_Actions/setGroupActions'
+import fontClamp from '../../utils/clampBuilder'
 import moment from 'moment'
 import buildCalendar from './build'
 import mapSetGroupsToDates from './mapSetGroupsToDates'
 import {dayStyles, beforeToday, weekStyles} from '../calendar/styles'
 import CalendarHeader from '../calendar/CalendarHeader'
+import RoutineColorLegend from '../calendar/RoutineColorLegend'
 import DaySection from './DaySection'
 import DarkSpinner from '../spinners/DarkSpinner'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
@@ -26,7 +28,7 @@ const ScheduleCalendar = ({
   const [dateSetGroups, setDateSetGroups] = useState({})
   const [calendar, setCalendar] = useState([])
   const [value, setValue] = useState(moment())
-  const{width} = useWindowSize()
+  const{width, height} = useWindowSize()
 
   useEffect(() => {
     const fetchUserRoutines = async () => {
@@ -43,22 +45,6 @@ const ScheduleCalendar = ({
     userRoutines && setCalendar(buildCalendar(value, userRoutines))
   },[value, userRoutines])
 
-
-  // controls font size for different viewport sizes
-  // Takes the viewport widths in pixels and the font sizes in rem
-  function clampBuilder( minWidthPx, maxWidthPx, minFontSizeRem, maxFontSizeRem ) {
-    const root = document.querySelector( "html" );
-    const pixelsPerRem = Number( getComputedStyle( root ).fontSize.slice( 0,-2 ) );
-  
-    const minWidth = minWidthPx / pixelsPerRem;
-    const maxWidth = maxWidthPx / pixelsPerRem;
-  
-    const slope = ( maxFontSizeRem - minFontSizeRem ) / ( maxWidth - minWidth );
-    const yAxisIntersection = -minWidth * slope + minFontSizeRem
-  
-    return `clamp( ${ minFontSizeRem }rem, ${ yAxisIntersection }rem + ${ slope * 100 }vw, ${ maxFontSizeRem }rem )`;
-  }
-
   const handleDayClick = (setGroups) => {
     history.push('/execute-sets')
     setCurrentSetGroups(setGroups)
@@ -70,8 +56,9 @@ const ScheduleCalendar = ({
       {crudingRoutine === 'fetching-routines' && <DarkSpinner text='Loading Schedule...' />}
       {!crudingRoutine && 
       <div
-      style={{fontSize: clampBuilder(400, 1200, .6, 1)}}
+      style={{fontSize: fontClamp(400, 1200, .6, 1)}}
       className={`schedule-page-calendar ${className}`}>
+        <RoutineColorLegend singleRoutine={false} />
         <CalendarHeader
         routineNamesColors={routineNamesColors}
         value={value} 
@@ -81,9 +68,9 @@ const ScheduleCalendar = ({
           <div 
           key={`schedule-calendar-week-${index + 1}`}
           className='schedule-week-container'>
-            <h6
-            style={{fontSize: clampBuilder(400, 1200, .6, .8)}}
-            className="view-week-btn">View Week</h6>
+            {/* <h6
+            style={{fontSize: fontClamp(400, 1200, .6, .8)}}
+            className="view-week-btn">View Week</h6> */}
             {/* {isDev && <h6>WEEK WIDTH: {weekWidth} &nbsp; DAY WIDTH: {dayWidth} WINDOW: {width}</h6> } */}
             <div 
             key={index} 
@@ -99,12 +86,13 @@ const ScheduleCalendar = ({
                 <p>{day.format("D")}</p>
                 {dateSetGroups && dateSetGroups[day.format('MM-DD-YYYY')] &&
                 <DaySection
+                windowSize={{height, width}}
                 routineNamesColors={routineNamesColors}
                 dateSetGroups={dateSetGroups[day.format('MM-DD-YYYY')]} />}
                 {width >= 400 &&
                 <div
                 onClick={() => handleDayClick(dateSetGroups[day.format('MM-DD-YYYY')])} 
-                style={{fontSize: clampBuilder(400, 1200, .6, 1)}}
+                style={{fontSize: fontClamp(400, 1200, .6, 1)}}
                 className="execute-sets">Execute</div>}
               </div>
             :

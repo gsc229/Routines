@@ -10,7 +10,8 @@ export const ViewSetGroupModal = ({
   setModalShow,
   currentExerciseSets,
   redirectLink,
-  localWritingCreateSetGroupData
+  localWritingCreateSetGroupData,
+  showEditLink=true
 }) => {
 
   const getTargetsAndActual = (exSet) => {
@@ -53,12 +54,13 @@ export const ViewSetGroupModal = ({
       closeButton>
         <div className='heading-and-edit-link'>
           <h5>Set Name: {currentSetGroup.name}</h5>
+          {showEditLink && 
           <Link
           onClick={handleEditClick}
           className='edit-link' 
           to={redirectLink}>
             Edit Set
-          </Link>
+          </Link>}
         </div>
       </Modal.Header>
       <Modal.Body className='modal-body view-set-group-modal-body'>
