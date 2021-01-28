@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {useParams} from 'react-router-dom'
+import {successGifLinks} from '../../utils/randomGifs'
 import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
 import {getExSetActiveFields} from '../../utils/getExSetActiveFields'
+import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import ExecuteSetNavs from './ExecuteSetNavs'
 import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard'
 import Button from 'react-bootstrap/Button'
@@ -10,19 +12,32 @@ import RecordSetInput from './RecordSetInput'
 import {EyeIcon, PointLeftIcon} from '../icons/Icons'
 
 export const ExecuteSet = ({
-  currentExerciseSet
+  currentExerciseSet,
+  saveExerciseSetChanges
 }) => {
-  const {setDate} = useParams()
+  
+  const {width} = useWindowSize()
   const [instructionShow, setInstructionShow] = useState(false)
   const [targets, setTargets]  = useState([])
   const [targetsToActuals, setTargetsToActuals] = useState({})
+  const [updateSuccess, setUpdateSuccess] = useState(false)
+  
   
   useEffect(() => {
     const activeFields = getExSetActiveFields(currentExerciseSet)
-
     setTargets(activeFields.activeTargets)
     setTargetsToActuals(activeFields.targetToActuals)
   }, [currentExerciseSet])
+
+  const handleSubmit = async() => {
+    const updateResult = await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
+    if(updateResult.success){
+      setUpdateSuccess(true)
+      setTimeout(() => {
+        setUpdateSuccess(false)
+      }, 3000)
+    }
+  }
 
   return (
     <div className='execute-set'>
@@ -45,7 +60,7 @@ export const ExecuteSet = ({
           </Button>
         </div>
 
-       {!instructionShow &&
+       {!instructionShow && !updateSuccess &&
         <div className="inputs-and-targets-container">
           <div className='inputs-container'>
           {targets.map(target => 
@@ -58,6 +73,19 @@ export const ExecuteSet = ({
               </div>  
             )}
           </div>
+          <Button
+          onClick={handleSubmit}
+          variant='success'
+          className='submit-btn'>Submit</Button>
+        </div>}
+
+        {!instructionShow && updateSuccess && 
+        <div 
+        style={{display: 'flex'}}
+        className='update-success-container'>
+          <img
+          style={{margin: 'auto', maxWidth: `${width - 50}px`}}
+          src={successGifLinks[Math.floor(Math.random() * successGifLinks.length)]}></img>
         </div>}
 
       {instructionShow &&
