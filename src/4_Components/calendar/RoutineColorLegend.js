@@ -46,7 +46,7 @@ export const RoutineColorLegend = ({
     } else{
       persistColorChanges(routineId)
       setShowPicker(false)
-      setTimeout(() => { setShowPicker(routineId)}, 50)
+      setTimeout(() => { setShowPicker(routineId)}, 40)
     }
   }
 

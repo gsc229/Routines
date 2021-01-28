@@ -90,11 +90,11 @@ const ScheduleCalendar = ({
                 windowSize={{height, width}}
                 routineNamesColors={routineNamesColors}
                 dateSetGroups={dateSetGroups[formattedDay]} />}
-                {width >= 400 &&
+                {/* {width >= 400 &&
                 <div
                 onClick={() => handleDayClick(dateSetGroups[formattedDay])} 
                 style={{fontSize: fontClamp(400, 1200, .6, 1)}}
-                className="execute-sets">Execute</div>}
+                className="execute-sets">Perform Exercises</div>} */}
               </div>
             :
             <div

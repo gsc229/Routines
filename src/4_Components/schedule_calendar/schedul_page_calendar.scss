@@ -1,5 +1,6 @@
 .schedule-page-calendar{
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $spanish-gray;
+  background-color: $bs-dark;
   .calendar-header{
     color: white;
     margin-top: 15px;
@@ -64,23 +65,23 @@
       display: flex;
       justify-content: space-evenly;
       height: 15vmin;
-      border-top: 1px solid black;
-      border-left: 1px solid black;
+      border-top: 1px solid $spanish-gray;
+      border-left: 1px solid $spanish-gray;
       position: relative;
     }
     
     .day{
-      border-right: 1px solid black;
-      background-color: whitesmoke;
+      border-right: 1px solid $spanish-gray;
+      //background-color: whitesmoke;
       width: 100%;
-      color: black;
+      color: $spanish-gray;
       font-weight: bold;
       z-index: 1;
       cursor: pointer;
       position: relative;
-      &:hover{
+      /* &:hover{
         background-color: white;
-      }
+      } */
       p{
         margin: 0;
         margin-bottom: 5px;
@@ -111,17 +112,16 @@
         position: absolute;
         width: 100%;
         bottom: 0;
-        background-color: $routine-red;
-        color: white;
+        color: $routine-red;
         text-align: center;
       }
     }
     .day-no-sets{
       cursor: default;
-      &:hover{
+      /* &:hover{
       background-color: whitesmoke;
       border-right: 1px solid black;
-      }
+      } */
     }
 
   }
@@ -139,7 +139,7 @@
   }
   
   .selected{
-    background-color: $routine-red;
+    //background-color: $routine-red;
     color: white;
   }
 }
