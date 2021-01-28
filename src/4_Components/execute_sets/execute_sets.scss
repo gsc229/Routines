@@ -14,9 +14,32 @@
   .ex-set-navs{
     display: flex;
     justify-content: space-between;
-    .link-container{
-      a:hover{
-        color: red;
+    flex-direction: column;
+    .back-to-set-groups-container{
+      margin-bottom: 10px;
+      position: relative;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      .icon{
+        position: relative;
+        bottom: 2px;
+      }
+    }
+    .select-container{
+      margin-bottom: 10px;
+    }
+    .links-container{
+      display: flex;
+      justify-content: space-between;
+      .link-container{
+        .nav-link{
+          padding: 0;
+        }
+        .nav-link:hover{
+          color: red;
+        }
       }
     }
   }

@@ -197,7 +197,6 @@ export const WeekHeader = ({
 
   const handleCreateBlankAndInsert = async (e) => {
     const copyToWeekNumber = JSON.parse(e.target.value)
-    alert(`Insert Blank at ${copyToWeekNumber}`)
     const routineId = currentRoutine._id
     // currentWeek will have been reset
     const blankWeek = 
