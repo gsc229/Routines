@@ -4,7 +4,6 @@ import Card from 'react-bootstrap/Card'
 
 export const SetGroupCard = ({
   setGroup,
-  setCurrentSetGroup,
   onClick,
   routineNamesColors
 }) => {
@@ -14,9 +13,11 @@ export const SetGroupCard = ({
 
   return (
     <Card
+    style={{borderColor: color}}
     onClick={onClick}
     className='set-group-card'>
-      <Card.Header style={{color, backgroundColor: 'var(--bs-dark)'}}>{routineNamesColors[setGroup.routine].name}</Card.Header>
+      <Card.Header 
+      style={{color}}>{routineNamesColors[setGroup.routine].name}</Card.Header>
       <Card.Body>
         <h6>{setGroup.name}</h6>
       </Card.Body>

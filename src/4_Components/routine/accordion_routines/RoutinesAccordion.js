@@ -113,6 +113,18 @@ export const RoutinesAccordion = ({
     )
   }
 
+const getToggleStyles = (routineColor) => {
+  return{
+    width: '100%', 
+    display: 'flex', 
+    justifyContent: 'center', 
+    postion: 'relative',
+    backgroundColor: 'var(--bs-dark)', 
+    color: routineColor ? routineColor : 'var(--routine-red)',
+    //backgroundColor: routineColor ? routineColor : 'var(--routine-red)',
+    borderColor: routineColor ? routineColor : 'var(--routine-red)',
+  }
+} 
 
   return (
     <Accordion /* defaultActiveKey={userRoutines[0]._id} */ className="routines-bank">
@@ -128,7 +140,7 @@ export const RoutinesAccordion = ({
             disabled={editingMode}
             as={Button} 
             onClick={() => handleToggle(routine)}
-            style={{width: '100%', display: 'flex', justifyContent: 'center', postion: 'relative'}} 
+            style={getToggleStyles(routine.color)} 
             eventKey={routine._id} >
               {routine.name}
             </Accordion.Toggle>

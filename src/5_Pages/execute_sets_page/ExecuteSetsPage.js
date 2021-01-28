@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
-import { Route, useLocation, useHistory } from 'react-router-dom'
+import { Route, useLocation, useHistory, useParams, useRouteMatch } from 'react-router-dom'
+import moment from 'moment'
 import {clearCurrentSetGroup} from '../../1_Actions/setGroupActions'
 import {windowScrollTop} from '../../utils/windowScroll'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
@@ -16,7 +17,11 @@ export const ExecuteSetsPage = ({
 
   const location = useLocation()
   const history = useHistory()
+  const params = useParams()
+  const match = useRouteMatch()
   
+  const daysDate = moment(params.setDate).format('LL')
+
   useEffect(() => {
     windowScrollTop()
     clearCurrentSetGroup()
@@ -31,22 +36,28 @@ export const ExecuteSetsPage = ({
     if(!routinesAreFlattend){
       return history.push('/schedule')
     }
+
   }, [])
 
   return (
-      <LayoutOne showTop={false}>
-        <Container 
-        className='page execute-sets-page'>
-          {location.pathname === '/execute-sets' && <CurrentSetGroups />}
-          {currentSetGroup.name && 
-          <Route 
-          exact 
-          path='/execute-sets/:routineName/:setGroupId/:exerciseName/:order' 
-          render={() => 
-            <ExecuteSet />}  
-          />}
-        </Container>
-      </LayoutOne>
+    <LayoutOne showTop={false}>
+      <Container 
+      className='page execute-sets-page'>      
+      <div 
+      style={{color: 'var(--spanish-gray)'}}
+      className="days-date-container">
+        <p>{daysDate}</p>
+      </div>
+        {match.url === location.pathname && <CurrentSetGroups />}
+        {currentSetGroup.name && 
+        <Route 
+        exact 
+        path='/execute-sets/:setDate/:routineName/:setGroupId/:exerciseName/:order' 
+        render={() => 
+          <ExecuteSet />}  
+        />}
+      </Container>
+    </LayoutOne>
   )
 }
 

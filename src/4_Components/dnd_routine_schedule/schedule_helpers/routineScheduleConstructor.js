@@ -17,7 +17,6 @@ export const routineScheduleConstructor = (currentRoutineSetGroups, currentWeeks
   if(currentRoutineSetGroups){
   
     currentWeeks.forEach((week, index) => {
-      console.log('week.week_number: ', week.week_number)
       routineSchedule[week.week_number] = {
         _id: week._id,
         week_number: week.week_number
@@ -30,7 +29,7 @@ export const routineScheduleConstructor = (currentRoutineSetGroups, currentWeeks
       return set_group
     }) 
 
-    console.log({routineSchedule, mergedSetsIntoSetGroups})
+    
     Object.keys(routineSchedule).map(key => {
       for(let j = 1; j <= 7; j++ ){
         routineSchedule[key][j] = {

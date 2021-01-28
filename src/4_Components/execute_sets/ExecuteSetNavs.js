@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {isDev} from '../../config/config'
+import moment from 'moment'
 import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
 import {pathConstructor} from './pathConstructor'
-import {selectStyles, controlStyles} from './selectStyles'
+import {selectStyles} from './selectStyles'
 import {Link, useParams, useHistory} from 'react-router-dom'
 import NavLink from 'react-bootstrap/NavLink'
 import {PointLeftIcon} from '../icons/Icons'
 import Select, {components} from 'react-select'
 import makeAnimated from 'react-select/animated'
-const animatedComponents = makeAnimated()
 
 export const ExecuteSetNavs = ({
   currentExerciseSets,
@@ -18,18 +18,22 @@ export const ExecuteSetNavs = ({
   routineNamesColors
 }) => {
   
+  const routineColor = routineNamesColors[currentExerciseSet.routine].color ? routineNamesColors[currentExerciseSet.routine].color : 'var(--routine-red)'
+
+
   const params = useParams()
   const history = useHistory()
-  const {routineName, setGroupId, order} = params
-  const currentPath = pathConstructor(routineName, currentExerciseSet.set_group, currentExerciseSet)
+
+  const {setDate, routineName, setGroupId, order} = params
+  const currentPath = pathConstructor(setDate, routineName, currentExerciseSet.set_group, currentExerciseSet)
   const currentExerciseName = currentExerciseSet.exercise.name ? currentExerciseSet.exercise.name : 'no name'
  
   const selectOptions =
   currentExerciseSets
   .sort((a, b) => a.order - b.order)
   .map(set => set.exercise.name ? 
-    {value: pathConstructor(routineName, set.set_group, set), label: `Set ${set.order} - ${set.exercise.name}`} : 
-    {value: pathConstructor(routineName, set.set_group, set), label: `Set ${set.order}` }
+    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order} - ${set.exercise.name}`} : 
+    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order}` }
   )
 
   const [currentOrderNum, setCurrentOrderNum] = useState(JSON.parse(order))
@@ -50,11 +54,11 @@ export const ExecuteSetNavs = ({
     }
 
 
-  const newNextPath = nextSet && pathConstructor(routineName, setGroupId, nextSet)
+  const newNextPath = nextSet && pathConstructor(setDate, routineName, setGroupId, nextSet)
 
   setNextPath(newNextPath)
 
-  const newPrevPath = prevSet && pathConstructor(routineName, setGroupId, prevSet)
+  const newPrevPath = prevSet && pathConstructor(setDate, routineName, setGroupId, prevSet)
 
   setPrevPath(newPrevPath)
 
@@ -69,11 +73,9 @@ export const ExecuteSetNavs = ({
   const controlStyles = {
     borderRadius: '4px',
     padding: '10px',
-    background: routineNamesColors[currentExerciseSet.routine].color,
-    color: 'white',
+    color: routineColor,
+    border: `1px solid ${routineColor}`
   };
-
-  console.log({controlStyles})
 
   const ControlComponent = props => (
     <div style={controlStyles}>
@@ -85,7 +87,9 @@ export const ExecuteSetNavs = ({
 
   return (
     <div className="ex-set-navs">
-      <div onClick={() => history.push('/execute-sets')}  className="back-to-set-groups-container">
+      <div 
+      onClick={() => history.push(`/execute-sets/${setDate}`)}  
+      className="back-to-container back-to-set-groups-container">
         <PointLeftIcon />
         &nbsp; All Set Groups
       </div>
@@ -93,7 +97,7 @@ export const ExecuteSetNavs = ({
         <Select
           styles={selectStyles}
           value={currentSelectValue}
-          components={{animatedComponents, Control: ControlComponent}}
+          components={{Control: ControlComponent}}
           placeholder='Select set...'
           onChange={handleSetSelect}
           options={selectOptions}

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
-import {useHistory} from 'react-router-dom'
+import {useHistory, Redirect} from 'react-router-dom'
 import {fetchRoutines} from '../../1_Actions/routineActions'
 import {setCurrentSetGroups} from '../../1_Actions/setGroupActions'
 import fontClamp from '../../utils/clampBuilder'
@@ -45,9 +45,10 @@ const ScheduleCalendar = ({
     userRoutines && setCalendar(buildCalendar(value, userRoutines))
   },[value, userRoutines])
 
-  const handleDayClick = (setGroups) => {
-    history.push('/execute-sets')
+  const handleDayClick = (setGroups, date) => {
+    history.push(`/execute-sets/${date}`)
     setCurrentSetGroups(setGroups)
+    //return <Redirect to={`/execute-sets/${date}`} />
   }
 
 
@@ -76,22 +77,22 @@ const ScheduleCalendar = ({
             key={index} 
             className={weekStyles(week) + " week" }>
             {week.map(day=>{
-            
-            const dayHasSets = dateSetGroups[day.format('MM-DD-YYYY')]
+            const formattedDay =   day.format('MM-DD-YYYY')
+            const dayHasSets = dateSetGroups[formattedDay]
             return dayHasSets ?
               <div
-              onClick={() => handleDayClick(dateSetGroups[day.format('MM-DD-YYYY')])}
+              onClick={() => handleDayClick(dateSetGroups[formattedDay], formattedDay)}
               key={day._d}
               className={dayStyles(day, value) + " day"}>
                 <p>{day.format("D")}</p>
-                {dateSetGroups && dateSetGroups[day.format('MM-DD-YYYY')] &&
+                {dateSetGroups && dateSetGroups[formattedDay] &&
                 <DaySection
                 windowSize={{height, width}}
                 routineNamesColors={routineNamesColors}
-                dateSetGroups={dateSetGroups[day.format('MM-DD-YYYY')]} />}
+                dateSetGroups={dateSetGroups[formattedDay]} />}
                 {width >= 400 &&
                 <div
-                onClick={() => handleDayClick(dateSetGroups[day.format('MM-DD-YYYY')])} 
+                onClick={() => handleDayClick(dateSetGroups[formattedDay])} 
                 style={{fontSize: fontClamp(400, 1200, .6, 1)}}
                 className="execute-sets">Execute</div>}
               </div>

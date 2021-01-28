@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
+import {useParams} from 'react-router-dom'
 import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
 import {getExSetActiveFields} from '../../utils/getExSetActiveFields'
 import ExecuteSetNavs from './ExecuteSetNavs'
@@ -9,18 +10,16 @@ import RecordSetInput from './RecordSetInput'
 import {EyeIcon, PointLeftIcon} from '../icons/Icons'
 
 export const ExecuteSet = ({
-  currentExerciseSets,
-  currentExerciseSet,
-  setCurrentExerciseSet
+  currentExerciseSet
 }) => {
-
+  const {setDate} = useParams()
   const [instructionShow, setInstructionShow] = useState(false)
   const [targets, setTargets]  = useState([])
   const [targetsToActuals, setTargetsToActuals] = useState({})
   
   useEffect(() => {
     const activeFields = getExSetActiveFields(currentExerciseSet)
-    console.log({activeFields})
+
     setTargets(activeFields.activeTargets)
     setTargetsToActuals(activeFields.targetToActuals)
   }, [currentExerciseSet])
@@ -50,7 +49,9 @@ export const ExecuteSet = ({
         <div className="inputs-and-targets-container">
           <div className='inputs-container'>
           {targets.map(target => 
-              <div className='target-container'>
+              <div 
+              key={target.field_name}
+              className='target-container'>
                 <RecordSetInput 
                 field={targetsToActuals[target.field_name].field_name}
                 labelText={`${target.name}: ${target.value}`} />

@@ -73,7 +73,7 @@ useEffect(() => {
         <Route exact path="/manage-routines" component={ManageRoutinesPage} />
         <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
         <Route exact path="/view-routine/:routineId/:routineName" component={ManageCurrentRoutinePage} />
-        <Route  path='/execute-sets' component={ExecuteSetsPage} />
+        <Route  path='/execute-sets/:setDate' component={ExecuteSetsPage} />
         <Route exact path="/create-exercise" component={CreateOrEditExercisePage} />
         <Route exact path="/manage-exercises" component={ManageExercisesPage} />
         <Route exact path="/browse-exercises" component={BrowseExercisesPage} />

@@ -3,9 +3,31 @@
   .set-group-card{
     background-color: $bs-dark;
     cursor: pointer;
+    max-width: 500px;
+    margin-bottom: 20px;
     .card-header{
-      background-color: $routine-red;
+      background-color: $jet;
     }
+    .card-body{
+      background-color: $bs-dark;
+    }
+  }
+}
+
+.back-to-container{
+  margin-bottom: 10px;
+  position: relative;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid $routine-red;
+  padding: 15px;
+  border-radius: 4px;
+  background-color: $jet;
+  .icon{
+    position: relative;
+    bottom: 2px;
   }
 }
 
@@ -47,18 +69,6 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  .back-to-set-groups-container{
-    margin-bottom: 10px;
-    position: relative;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    width: fit-content;
-    .icon{
-      position: relative;
-      bottom: 2px;
-    }
-  }
   .select-container{
     margin-bottom: 10px;
   }

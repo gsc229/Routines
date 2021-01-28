@@ -249,7 +249,7 @@ export const WeekHeader = ({
       <Form className='week-header-form'>
         <Form.Row>
             <Col sm='12' md='3'>
-              <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Group controlId={`move-week-select-${weekNumber}`}>
                 <Form.Label>Move Week To: </Form.Label>
                 <Form.Control
                 size='sm'
@@ -273,7 +273,7 @@ export const WeekHeader = ({
               </Form.Group>
             </Col>
             <Col sm='12' md='3'>
-              <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Group controlId={`copy-week-select-${weekNumber}`}>
               <Form.Label>Copy Week and Insert: </Form.Label>
               <Form.Control
               size='sm'
@@ -294,7 +294,7 @@ export const WeekHeader = ({
             </Form.Group>
             </Col>
             <Col sm='12' md='3'>
-              <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Group controlId={`insert-blank-week-${weekNumber}`}>
               <Form.Label>Insert Blank Week: </Form.Label>
               <Form.Control
               size='sm'

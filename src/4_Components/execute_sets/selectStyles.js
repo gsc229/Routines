@@ -1,5 +1,5 @@
 export const selectStyles = {
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+  option: (styles, {isSelected }) => {
     return{
       ...styles,
       color: isSelected
