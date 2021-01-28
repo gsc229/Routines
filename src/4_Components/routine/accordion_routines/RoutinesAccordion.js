@@ -32,7 +32,8 @@ export const RoutinesAccordion = ({
 
   const spinnerText = {
     'fetching-routines': 'Loading...',
-    'deleting-routine': 'Deleting Routine...'
+    'deleting-routine': 'Deleting Routine...',
+    'updating': 'Saving Routine...'
   }
 
   useEffect(() => {
@@ -72,9 +73,9 @@ export const RoutinesAccordion = ({
     history.push('/create-routine')
   }
 
-  const handleToggle = () => {
+  const handleToggle = (routine) => {
     setEditingMode(false)
-    clearCurrentRoutine()
+    setCurrentRoutine(routine)
   }
 
   const showDetails = (routine) => {
@@ -112,7 +113,18 @@ export const RoutinesAccordion = ({
     )
   }
 
-
+const getToggleStyles = (routineColor) => {
+  return{
+    width: '100%', 
+    display: 'flex', 
+    justifyContent: 'center', 
+    postion: 'relative',
+    backgroundColor: 'var(--bs-dark)', 
+    color: routineColor ? routineColor : 'var(--routine-red)',
+    //backgroundColor: routineColor ? routineColor : 'var(--routine-red)',
+    borderColor: routineColor ? routineColor : 'var(--routine-red)',
+  }
+} 
 
   return (
     <Accordion /* defaultActiveKey={userRoutines[0]._id} */ className="routines-bank">
@@ -127,8 +139,8 @@ export const RoutinesAccordion = ({
             <Accordion.Toggle
             disabled={editingMode}
             as={Button} 
-            onClick={handleToggle}
-            style={{width: '100%', display: 'flex', justifyContent: 'center', postion: 'relative'}} 
+            onClick={() => handleToggle(routine)}
+            style={getToggleStyles(routine.color)} 
             eventKey={routine._id} >
               {routine.name}
             </Accordion.Toggle>
@@ -165,7 +177,7 @@ export const RoutinesAccordion = ({
               </div>
               {!editingMode && !showSpinner &&  
               showDetails(routine)}
-              {showSpinner && <DarkSpinner style={{marginBottom: '50px', height: '300px'}} />}
+              {showSpinner && <DarkSpinner  style={{marginBottom: '50px', height: '300px'}} />}
 
               {editingMode && currentRoutine._id === routine._id && !crudingRoutine &&
               <CreateRoutineForm 

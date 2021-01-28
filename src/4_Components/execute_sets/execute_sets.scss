@@ -1,0 +1,87 @@
+.current-sets{
+  //background-color: lightblue;
+  .set-group-card{
+    background-color: $bs-dark;
+    cursor: pointer;
+    max-width: 500px;
+    margin-bottom: 20px;
+    .card-header{
+      background-color: $jet;
+    }
+    .card-body{
+      background-color: $bs-dark;
+    }
+  }
+}
+
+.back-to-container{
+  margin-bottom: 10px;
+  position: relative;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid $routine-red;
+  padding: 15px;
+  border-radius: 4px;
+  background-color: $jet;
+  .icon{
+    position: relative;
+    bottom: 2px;
+  }
+}
+
+
+.execute-set{
+  .execute-set-inner{
+    margin-top: 20px;
+    .inner-header{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      .btn-text-container{
+        display: flex;
+        align-items: center;
+        height: 25px;
+        position: relative;
+        .point-left-icon{
+          position: relative;
+          bottom: 2px;
+        }
+        .eye-icon{
+          position: relative;
+          bottom: 1px;
+        }
+      }
+    }
+    .instruction-card-container{
+      display: flex;
+      .card{
+        margin: auto;
+      }
+    }
+  }
+}
+
+
+.ex-set-navs{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  .select-container{
+    margin-bottom: 10px;
+  }
+  .links-container{
+    display: flex;
+    justify-content: space-between;
+    .link-container{
+      .nav-link{
+        padding: 0;
+      }
+      .nav-link:hover{
+        color: red;
+      }
+    }
+  }
+}

@@ -8,7 +8,9 @@ import Calendar from '../../4_Components/schedule_calendar/SchedulePageCalendar'
 export const SchedulePage = (props) => {
   return (
     <LayoutOne showTop={false}>
-      <Container className='page manage-routines container'>
+      <Container 
+      style={{minHeight: 'fit-content'}}
+      className='page manage-routines container'>
         <Calendar />
       </Container>
     </LayoutOne>

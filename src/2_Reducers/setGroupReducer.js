@@ -53,6 +53,7 @@ const initialState = {
     rest_time_increase: "",
     rest_time_decrease: ""
   },
+  currentSetGroups: [],
   currentRoutineSetGroups: [],
   currentSetGroup: {
     routine: null, //required
@@ -79,6 +80,17 @@ const reducer = (state=initialState, action) => {
     return{
       ...state,
       currentSetGroup: action.payload
+    }
+  case constants.SET_CURRENT_SET_GROUPS:
+    return{
+      ...state,
+      currentSetGroups: action.payload
+    }
+  case constants.SET_FLATTENED_ROUTINE:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      currentRoutineSetGroups: action.payload.set_groups
     }
   case  constants.WRITING_CURRENT_SET_GROUP: 
     return{
@@ -256,9 +268,6 @@ const reducer = (state=initialState, action) => {
         .filter(setGroup => setGroup.week !== weekId)
       ]
     }
-
-
-
   case constants.CLEAR_ERROR_MESSAGE:
     return{
       ...state,

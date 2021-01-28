@@ -1,31 +1,48 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {setCurrentSetGroup} from '../../1_Actions/setGroupActions'
+import {setFlattenedRoutine} from '../../1_Actions/routineActions'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
 import ViewSetGroupModal from '../modals/view_modals/ViewSetGroupModal'
 
 export const DaySection = ({
   dateSetGroups,
+  userRoutines,
   routineNamesColors,
-  setCurrentSetGroup
+  setCurrentSetGroup,
+  setFlattenedRoutine,
+  windowSize
 }) => {
 
   const [modalShow, setModalShow] = useState(false)
-  const handleClick = (sg) => {
-    setModalShow(true)
+  const {width} = windowSize
+  const handleClick = (sg) => { 
+
+    const selectedRoutine = {...userRoutines.find(routine => routine._id === sg.routine)}
+    const flattenedRoutine = {
+      routine: selectedRoutine,
+      weeks: selectedRoutine.weeks,
+      set_groups: selectedRoutine.set_groups,
+      exercise_sets: selectedRoutine.exercise_sets
+    }
+    setFlattenedRoutine(flattenedRoutine)
     setCurrentSetGroup(sg)
+    setModalShow(true)
   }
 
   return (
-    <div className='day-sections'>
+    <div 
+    onClick={e => width >= 400 && e.stopPropagation()}
+    className='day-sections'>
       
       {dateSetGroups && dateSetGroups.sort((a, b) => a.routine - b.routine).map(sg => {
         return(
           <div 
           key={sg._id}
           className='day-section-wrapper'>
-            <ViewSetGroupModal 
+            <ViewSetGroupModal
+            showEditLink={false}
             redirectLink={`/create-set-group/${routineNamesColors[sg.routine].name }/${sg.week_number}/day-${sg.day_number}-${sg.day}`}
             setModalShow={setModalShow} 
             modalShow={modalShow} />
@@ -33,13 +50,13 @@ export const DaySection = ({
             overlay={
             <ToolTip>
               <div 
-              style={{color: 'var(--routine-red)', fontWeight: 'bold'}}
+              style={{color: routineNamesColors[sg.routine].color, fontWeight: 'bold'}}
               className='tool-tip-title'>
                 {routineNamesColors[sg.routine].name + ':'}
               </div>{sg.name}
             </ToolTip>}>
               <div
-                onClick={() => handleClick(sg)}
+                onClick={ () => width >= 400 && handleClick(sg) }
                 className='day-marker'
                 style={{backgroundColor: routineNamesColors[sg.routine].color}}>
               </div>
@@ -56,7 +73,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  setCurrentSetGroup
+  setCurrentSetGroup,
+  setFlattenedRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DaySection)

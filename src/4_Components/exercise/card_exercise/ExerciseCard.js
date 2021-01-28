@@ -9,7 +9,8 @@ import IFrame from '../../iframe/IFrame'
 
 export const ExerciseCard = ({
   exercise,
-  setCurrentExercise
+  setCurrentExercise,
+  showEditBtn=true
 }) => {
 
   const handleEditClick = () => {
@@ -24,7 +25,8 @@ export const ExerciseCard = ({
     style={{ width: '18rem' }}>
       <Card.Header>
         <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
-        <Card.Link onClick={handleEditClick} as={Link} to='/create-exercise'>Edit</Card.Link>
+        {showEditBtn && 
+        <Card.Link onClick={handleEditClick} as={Link} to='/create-exercise'>Edit</Card.Link>}
       </Card.Header>
       <Card.Body>
         <Card.Title>

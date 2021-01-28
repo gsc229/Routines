@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useState} from 'react'
 import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed'
 import {purifyIframe} from './sanitizeHTML'
 
@@ -11,16 +11,19 @@ const IFrame = ({
   show_default_error_message=true
 }) => {
   
-  
   const purifiedResults = purifyIframe(iframeString) 
   const purifiedIframe = purifiedResults.purifiedIframe
   const removed = purifiedResults.removed
   const error_message = purifiedResults.error_message
   const betweenTags = purifiedIframe[0] === '<' && purifiedIframe[purifiedIframe.length - 1] === '>' 
+  
+  
   const getEmbed = () => {
     return purifiedIframe &&
-      <ResponsiveEmbed className="embeded-video" aspectRatio="16by9">
-        <div dangerouslySetInnerHTML={{__html: purifiedIframe}} />
+      <ResponsiveEmbed
+      className="embeded-video" aspectRatio="16by9">
+        <div
+        dangerouslySetInnerHTML={{__html: purifiedIframe}} />
       </ResponsiveEmbed>
 
   }

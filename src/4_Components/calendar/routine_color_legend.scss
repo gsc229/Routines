@@ -10,7 +10,7 @@
     flex-direction: column;
     font-size: 12px;
     height: 15px;
-    transition: height .05s linear;
+    transition: height .04s linear;
     .name-and-day-marker{
       display: flex;
       .day-marker{
@@ -26,7 +26,8 @@
     .slider-container{
       width: 300px;
       opacity: 0;
-      transition: opacity 5s linear;
+      background-color: $bs-dark;
+      z-index: 10;
       a{
         padding: 0;
         margin: 5px 0;
@@ -38,7 +39,6 @@
     height: 100px;
     .showing-picker-slider{
       opacity: 1;
-      transition: opacity 5s linear;
     }
   }
 }

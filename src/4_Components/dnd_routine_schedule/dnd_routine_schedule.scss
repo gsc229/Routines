@@ -110,42 +110,86 @@
   border: 1px solid $routine-red;
   .set-group-schedule-card-header{
     padding-left: 4px;
-    padding-right: 4px;
+    padding-right: 0;
     display: flex;
     justify-content: space-between;
     background-color: $routine-red;
     .view-copy-move-btns-conainer{
+      //background-color: orange;
+      display: flex;
       cursor: auto;
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
       position: relative;
-      
-      
-      .schedul-card-control-btn{
-        cursor: pointer;
-      }
-      #schedule-card-grabber-icon{
-        cursor: grab;
-      }
-      .duplicate-to{
-        margin: 0;
-        .schedule-card-select-input{
-          height: 20px;
-          font-size: 12px;
+      margin-left: 5px;
+      .view-duplicate-here-to{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 20px;
+        flex-wrap: wrap;
+        width: 80%;
+        .view-here-container{
+          //background-color: hotpink;
+          width: 30%;
+          display: flex;
+          justify-content: space-between;
+          margin-left: 5px;
+          .schedul-card-control-btn{
+            cursor: pointer;
+          }
+        }
+        .duplicate-to-container{
+          //background-color: lightblue;
+          .duplicate-to{
+            margin: auto;
+          }
+        }
+
+        @media screen and (max-width: 420px){
+          .duplicate-to-container{
+            margin-top: 10px;
+          }
+          .view-here-container{
+            //background-color: hotpink;
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+          }
         }
       }
+
+      .grabber-container{
+        //background-color:  lime;
+        width: fit-content;
+        height: fit-content;
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        .schedule-card-grabber{
+          cursor: grab;
+        } 
+      }
+      /* @media screen and (max-width: 390px){
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        .schedule-card-grabber{
+          position: absolute;
+          right: 0;
+          margin-right: 5px;
+        }
+      } */
+      
+      
+    
     }
-    #duplicate-to-week-dropdown{
+    /* #duplicate-to-week-dropdown{
       color: white;
       .nav-item{
         background-color: white;
-      }
-
-      
-      
-    }
+      } 
+    } */
     
     .duplicate-to-day-dropdown{
       background-color: white;
@@ -189,13 +233,9 @@
     
   }
 
-
-
-
-
   .set-group-schedule-card-body{
     position: relative;
-    #set-group-card-delete-icon{
+    .set-group-card-delete-icon{
       position: absolute;
       right: 2px;
       bottom: 2px;

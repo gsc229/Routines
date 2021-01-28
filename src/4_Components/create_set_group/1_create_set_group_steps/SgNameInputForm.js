@@ -18,7 +18,7 @@ export const SgNameInputForm = ({
   const firstThreeNames = []
 
   currentExerciseSets.forEach(set => firstThreeNames.length < 3 && firstThreeNames.indexOf(set.exercise.name) === -1 && firstThreeNames.push(set.exercise.name))
-  console.log({firstThreeNames})
+  
   const firstSet = firstThreeNames[0] 
   const secondSet = firstThreeNames[1] 
   const thirdSet = firstThreeNames[2] 

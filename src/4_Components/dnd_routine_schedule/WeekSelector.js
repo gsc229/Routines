@@ -17,12 +17,11 @@ export const WeekSelector = ({
   const animatedComponents = makeAnimated()
 
   useEffect(() => {
-
     const newSelectOptions = [{label: 'All', value: 'all'}] 
     currentWeeks.forEach(week => newSelectOptions.push({label: `Week: ${week.week_number}`, value: week.week_number}))
     setSelectOptions(newSelectOptions)
 
-  }, [])
+  }, [currentWeeks])
 
   
 

@@ -18,7 +18,8 @@ const initialState = {
   error_message: '',
   routinePagination: null,
   routineSearchResults: [],
-  userRoutines: [], // [{}]
+  userExerciseSets: [],
+  userRoutines: [],
   routineNamesColors: {},
   currentRoutineName: '', 
   currentRoutine: {
@@ -68,6 +69,12 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         routineNamesColors: action.payload
+      }
+    case constants.SET_FLATTENED_ROUTINE:
+      return{
+        ...state,
+        crudingRoutine: false,
+        currentRoutine: action.payload.routine
       }
     // Async
     case constants.FETCHING_ROUTINES:
@@ -155,8 +162,15 @@ const reducer = (state=initialState, action) => {
         crudingRoutine: false,
         unsavedChanges: false,
         currentRoutine: action.payload,
+        routineNamesColors: {
+          ...state.routineNamesColors,
+          [action.payload._id]: {
+            name: action.payload.name,
+            color: action.payload.color
+          }
+        },
         currentRoutineName: action.payload.name,
-        userRoutines: state.userRoutines.map(routine => routine._id === action.payload._id ? action.payload : routine)
+        userRoutines: [...state.userRoutines.map(routine => routine._id === action.payload._id ? action.payload : routine)]
       }
     case constants.UPDATE_ROUTINE_FAIL:
       return{

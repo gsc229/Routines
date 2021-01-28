@@ -17,7 +17,6 @@ export const ChosenExercisesBankDND = ({
   
   const {height, width} = useWindowSize()
   const [dropZoneSets, setDropZoneSets] = useState([])
-  const [dropZones, setDropZones] = useState([])
 
   const [dndDimensions, setDndDimensions] = useState({
     dropZonesContainer: {},
@@ -36,9 +35,10 @@ export const ChosenExercisesBankDND = ({
   //dndDimensions.columns are initialized a 1 to allow a dropZone element to be rendered to the screen which are used in determing the number of columns
   const maxColumns =  Math.floor(dropZonesContainerWidth / bankCardWidth) 
   const numRows = Math.ceil(currentExerciseSets.length / maxColumns)
-
+  
   useEffect(() => {
       setDndDimensions({
+        ...dndDimensions,
         dropZonesContainer: {
           width: dropZonesContainerWidth
         },
@@ -50,66 +50,45 @@ export const ChosenExercisesBankDND = ({
       })
       // initialize the drop zones with the max number of columns according to dropZoneContainerWidth and
       // fill them to the maxColumns number moving remainters to the next column
-      let {rows, columns} = dndDimensions
-      let vertical = false
-      if(rows === currentExerciseSets.length){
+      let initialRowItems = {}
+      let initialDropZoneSets = []
+
+      if(maxColumns === 1){
+        initialRowItems[0] = currentExerciseSets.sort((a, b) => a.order - b.order)
+        initialDropZoneSets = currentExerciseSets
         setDndDimensions({
           ...dndDimensions,
-          columns: currentExerciseSets.length,
+          columns: 1,
           rows: 1,
           vertical: true
         })
-      }
-  
-      const initialDropZones = []
-      const initialRowItems = {}
-      const initialDropZoneSets = []
+      } else{
       
-      for(let i = 0; i < numRows; i++){
-        const nextSlice = currentExerciseSets.sort((a, b) => a.order - b.order).slice(i * maxColumns, (i + 1) * maxColumns)
-        initialRowItems[i] = nextSlice
-        initialDropZoneSets.push(nextSlice)
-        const nextZoneContainerIndex = i * columns
-        /* initialDropZones.push(
-        <BankCardDropZone
-        key={`dropzone-key-${i}`}
-        direction={vertical ? 'vertical' : 'horizontal'}
-        flexDirection={vertical ? 'column' : 'row'}
-        droppableId={`bank-card-drop-zone-${i}`}
-        zoneExSets={nextSlice} 
-        zoneContainerIndex={nextZoneContainerIndex} />) */
+        for(let i = 0; i < numRows; i++){
+          const nextSlice = currentExerciseSets.sort((a, b) => a.order - b.order).slice(i * maxColumns, (i + 1) * maxColumns)
+          initialRowItems[i] = nextSlice
+          initialDropZoneSets.push(nextSlice)
+        }
+
+        setDndDimensions({
+          ...dndDimensions,
+          dropZonesContainer: {
+            width: dropZonesContainerWidth
+          },
+          bankCard: {
+            width: bankCardWidth
+          },
+          columns: maxColumns,
+          rows: numRows,
+          vertical: false
+        })
+
       }
-        setDropZoneSets(initialDropZoneSets)
-        setDropZones(initialDropZones)
+      setDropZoneSets(initialDropZoneSets)
     
 
   }, [dropZonesContainerElement, bankCardElement, currentExerciseSets, width])
 
-
-  /* useEffect(() => {
-    let {rows, columns} = dndDimensions
-    let vertical = false
-    if(rows === currentExerciseSets.length){
-      columns = currentExerciseSets.length
-      rows = 1
-      vertical = true
-    }
-
-    const newDropZones = []
-    for(let i = 0; i < numRows; i++){
-      const nextSlice = currentExerciseSets.slice(i * maxColumns, (i + 1) * maxColumns)
-      const nextZoneContainerIndex = i * columns
-      newDropZones.push(
-      <BankCardDropZone
-      key={`dropzone-key-${i}`}
-      direction={vertical ? 'vertical' : 'horizontal'}
-      flexDirection={vertical ? 'column' : 'row'}
-      droppableId={`bank-card-drop-zone-${i}`}
-      zoneExSets={nextSlice} 
-      zoneContainerIndex={nextZoneContainerIndex} />)
-    }
-    setDropZones(newDropZones)
-  }, [dndDimensions, currentExerciseSets]) */
   
   
   return (
@@ -118,12 +97,21 @@ export const ChosenExercisesBankDND = ({
       <div className='chosen-exerciese-bank-header'>
         <h4>Chosen Exercises:</h4>
         {isDev && 
-        <DevComponent dndDimensions={dndDimensions} windowHeight={height} windowWidth={width} currentExerciseSets={currentExerciseSets} />}
+        <DevComponent maxColumns={maxColumns} dndDimensions={dndDimensions} windowHeight={height} windowWidth={width} dropZoneSets={dropZoneSets} currentExerciseSets={currentExerciseSets} />}
       </div>
       <div 
       style={{display: 'flex', flexDirection: 'column'}}
       className='drop-zones-container'>
-        {dropZoneSets.length > 0 && dropZoneSets.map((sets, idx )=> {
+        {/* Initial 'dummy' render */}
+        {dropZoneSets.length === 0 && 
+        <BankCardDropZone 
+        key={`dropzone-initial-key-0`}
+        direction='horizontal'
+        droppableId={`bank-card-initial-zone-0`}
+        zoneExSets={[currentExerciseSets[0]]}
+        zoneContainerIndex={0}/>}
+        
+        {dropZoneSets.length > 0 && !dndDimensions.vertical && dropZoneSets.map((sets, idx )=> {
           const {vertical, columns} = dndDimensions
           const nextZoneContainerIndex = idx * columns
           return(
@@ -136,6 +124,17 @@ export const ChosenExercisesBankDND = ({
             zoneContainerIndex={nextZoneContainerIndex} />
           )
         })}
+
+        {dropZoneSets.length === currentExerciseSets.length && dndDimensions.vertical && 
+          <BankCardDropZone
+          key={`dropzone-key-${0}`}
+          direction={dndDimensions.vertical ? 'vertical' : 'horizontal'}
+          flexDirection={dndDimensions.vertical ? 'column' : 'row'}
+          droppableId={`bank-card-drop-zone-${0}`}
+          zoneExSets={currentExerciseSets} 
+          zoneContainerIndex={0} />}
+          
+    
       </div>
     </DragDropContext>
   )

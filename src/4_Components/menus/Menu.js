@@ -5,7 +5,6 @@ import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import {logout} from '../../1_Actions/userActions'
 import {Link, useLocation} from 'react-router-dom'
-
 const Menu = ({logout}) => {
   
   const pathname = useLocation().pathname
@@ -17,17 +16,19 @@ const Menu = ({logout}) => {
   return (
     <div className="menu main-menu" style={{marginBottom: '56px'}}>
       <Navbar fixed='top' expand="lg"  variant='dark' bg='dark'/* bg="dark" variant="dark" */>
-        <Navbar.Brand as={Link} to="/">Routines</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          Routines
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
         <Nav>
           <Nav.Link active={isActivePath('/schedule')} as={Link} to='/schedule'>Schedule</Nav.Link>
-          <Nav.Link active={isActivePath('/goals')} as={Link} to="/goals">Goals</Nav.Link>
+          {/* <Nav.Link active={isActivePath('/goals')} as={Link} to="/goals">Goals</Nav.Link> */}
           <Nav.Link active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">Manage Routines</Nav.Link>
           <NavDropdown active={isActivePath('dropdown')} title='Workout Routines' aria-labelledby="navbarDropdown">
             <NavDropdown.Item active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">My Saved Routines</NavDropdown.Item>
             <NavDropdown.Item active={isActivePath('/create-routine')} as={Link} to="/create-routine">Create New Routine</NavDropdown.Item>
-            <NavDropdown.Item active={isActivePath('/find-routine')} as={Link} to="/find-routine">Find Routines</NavDropdown.Item>
+            {/* <NavDropdown.Item active={isActivePath('/find-routine')} as={Link} to="/find-routine">Find Routines</NavDropdown.Item> */}
             <NavDropdown.Item><hr className="dropdown-divider" /></NavDropdown.Item>
             <NavDropdown.Item active={isActivePath('/manage-exercises')} as={Link} to="/manage-exercises">My Exercises</NavDropdown.Item>
             <NavDropdown.Item active={isActivePath('/browse-exercises')} as={Link} to="/browse-exercises">Browse Exercises</NavDropdown.Item>

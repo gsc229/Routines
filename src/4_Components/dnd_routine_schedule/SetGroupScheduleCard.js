@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import {setCurrentSetGroup} from '../../1_Actions/setGroupActions'
 import {numberToDay} from '../../4_Components/dnd_routine_schedule/schedule_helpers/routineScheduleConstructor'
 import Card from 'react-bootstrap/Card'
-import {BsGrid3X3Gap} from 'react-icons/bs'
-import {BsEye} from 'react-icons/bs'
+import {BsGrid3X3Gap, BsEye} from 'react-icons/bs'
 import {RiDeleteBin5Line} from 'react-icons/ri'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
@@ -22,7 +21,6 @@ export const SetGroup = ({
   currentRoutine
 }) => {
 
-  console.log({dayNumber})
   const [modalShow, setModalShow] = useState(false)
   const [deletaModalShow, setDeleteModalShow] = useState(false)
   const redirectLink = `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${weekNumber}/day-${dayNumber}}`
@@ -53,32 +51,41 @@ export const SetGroup = ({
       className='set-group-schedule-card-header'>
 
         <div className='view-copy-move-btns-conainer'>
-          <OverlayTrigger 
-          overlay={<ToolTip>View full details</ToolTip>}>
-          <BsEye
-          className='schedul-card-control-btn'
-          onClick={handleViewSetGroup} 
-          />
-          </OverlayTrigger>
+          <div className='view-duplicate-here-to'>
 
-          <OverlayTrigger overlay={<ToolTip>Duplicate here</ToolTip>}>
-          <div 
-          className='schedul-card-control-btn' >
-            <DuplicateHereBtn
-            set_group={set_group}/>
+            <div className='view-here-container'>
+
+              <div
+              className='schedul-card-control-btn'>
+                <OverlayTrigger 
+                overlay={<ToolTip>View full details</ToolTip>}>
+                <BsEye
+                onClick={handleViewSetGroup} />
+                </OverlayTrigger>
+              </div>
+    
+              <div
+              className='schedul-card-control-btn'>
+                <OverlayTrigger overlay={<ToolTip>Duplicate here</ToolTip>}>
+                  <DuplicateHereBtn
+                  set_group={set_group}/>
+                </OverlayTrigger>
+              </div>
+            </div>
+
+            <div className='duplicate-to-container'>
+              <DuplicateTo
+              set_group={set_group}
+              className='schedul-card-control-btn duplicate-to' />
+            </div>
+
           </div>
-          </OverlayTrigger>
-          
-          <DuplicateTo
-          set_group={set_group}
-          className='schedul-card-control-btn' />
 
-          <BsGrid3X3Gap
-          id='schedule-card-grabber-icon'
-          className='schedul-card-control-btn' />
-
-          
-
+          <div className='grabber-container'>
+            <BsGrid3X3Gap
+            className='schedul-card-control-btn schedule-card-grabber' />
+          </div>
+         
         </div>
 
       </Card.Header>
@@ -88,9 +95,9 @@ export const SetGroup = ({
         <OverlayTrigger 
         overlay={<ToolTip>Delete set group</ToolTip>}>
           <RiDeleteBin5Line
-          className='schedul-card-control-btn' 
+          className='schedul-card-control-btn set-group-card-delete-icon' 
           onClick={() => setDeleteModalShow(true)}
-          id='set-group-card-delete-icon'/>
+          />
         </OverlayTrigger>
       </Card.Body>
     </Card>

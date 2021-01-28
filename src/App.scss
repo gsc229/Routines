@@ -54,7 +54,6 @@ h1{
 }
 
 .page{
-  min-height: 1000px;
   margin-bottom: 300px;
 }
 
@@ -109,8 +108,10 @@ h1{
 @import './4_Components/create_set_group/3_set_card_with_input_details/set_card_detail_inputs.scss';
 @import './4_Components/create_set_group/3_targets_and_subgroups/target_setter_and_subgroups.scss';
 @import './4_Components/create_set_group/3_targets_and_subgroups/edit_set_modal.scss';
-
 @import './4_Components/saved_set_groups/find_saved_set_group.scss';
+
+// Eexecute Set Group
+@import './4_Components/execute_sets/execute_sets.scss';
 
 // Week 
 @import './4_Components/week/week_template.scss';

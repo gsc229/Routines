@@ -2,9 +2,11 @@ import React from 'react'
 
 const DevComponent = ({
   dndDimensions,
+  maxColumns,
   windowHeight,
   windowWidth,
   currentExerciseSets,
+  dropZoneSets
 }) => {
 
   const numColumns = Math.floor(dndDimensions.dropZonesContainer.width / dndDimensions.bankCard.width)
@@ -31,7 +33,7 @@ const DevComponent = ({
           <h6>
             NO. ROWS : {numRows}
           </h6> */}
-    {JSON.stringify(dndDimensions,null, '\t')}
+    {JSON.stringify({...dndDimensions, maxColumns, dropZones: dropZoneSets.length},null, 4)}
 </div>
   )
 }
