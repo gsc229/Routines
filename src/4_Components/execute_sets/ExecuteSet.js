@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {successGifLinks} from '../../utils/randomGifs'
-import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
+import {setCurrentExerciseSet} from '../../1_Actions/exerciseSetActions'
 import {getExSetActiveFields} from '../../utils/getExSetActiveFields'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import ExecuteSetNavs from './ExecuteSetNavs'
@@ -9,7 +9,6 @@ import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard
 import Button from 'react-bootstrap/Button'
 import {EyeIcon, PointLeftIcon} from '../icons/Icons'
 import RecordInputs from './RecordInputs'
-import NavLink from 'react-bootstrap/NavLink'
 
 export const ExecuteSet = ({
   currentExerciseSet,
@@ -21,7 +20,6 @@ export const ExecuteSet = ({
   const [instructionShow, setInstructionShow] = useState(false)
   const [targets, setTargets]  = useState([])
   const [targetsToActuals, setTargetsToActuals] = useState({})
-  const [editingMode, setEditingMode] = useState(false)
   const [updateSuccess, setUpdateSuccess] = useState(false)
   const [sessionSaved, setSessionSaved] = useState(false)
   
@@ -31,6 +29,7 @@ export const ExecuteSet = ({
     setTargets(activeFields.activeTargets)
     setTargetsToActuals(activeFields.targetToActuals)
     setSessionSaved(false)
+    
   }, [currentExerciseSet])
 
   
@@ -38,7 +37,7 @@ export const ExecuteSet = ({
 
   return (
     <div className='execute-set'>
-      <ExecuteSetNavs />
+      {!instructionShow && <ExecuteSetNavs />}
       <div className="execute-set-inner">
 
         {!sessionSaved && 

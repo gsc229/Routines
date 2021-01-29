@@ -31,7 +31,7 @@ export const RecordInputs = ({
 
   }, [currentExerciseSet._id])
 
-  
+  console.log({originalActuals})
   const handleSubmit = async() => {
     const updateResult = await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
     if(updateResult.success){
@@ -90,6 +90,7 @@ export const RecordInputs = ({
 
           <div className='submit-and-cancel-btns'>
             <Button
+            size='sm'
             disabled={!acutalsHaveChanged()}
             onClick={handleSubmit}
             variant='outline-success' 
@@ -97,6 +98,7 @@ export const RecordInputs = ({
               Submit
             </Button>
             <Button
+            size='sm'
             disabled={!acutalsHaveChanged()}
             onClick={handleCancel}
             variant='outline-primary'
