@@ -1,6 +1,5 @@
 export const successGifLinks = [
   'https://media.giphy.com/media/a0h7sAqON67nO/giphy.gif',
-  'https://media.giphy.com/media/zaqclXyLz3Uoo/giphy.gif',
   'https://media.giphy.com/media/nXxOjZrbnbRxS/giphy.gif',
   'https://media.giphy.com/media/37nRXpCEP9H1f1WVrb/giphy-downsized.gif',
   'https://media.giphy.com/media/oGO1MPNUVbbk4/giphy.gif',

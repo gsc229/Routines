@@ -32,12 +32,12 @@ export const ExecuteSetNavs = ({
   currentExerciseSets
   .sort((a, b) => a.order - b.order)
   .map(set => set.exercise.name ? 
-    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order} - ${set.exercise.name}`} : 
-    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order}` }
+    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order + 1} - ${set.exercise.name}`} : 
+    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order + 1}` }
   )
 
   const [currentOrderNum, setCurrentOrderNum] = useState(JSON.parse(order))
-  const currentSelectValue = {vlaue: currentPath, label: `Set ${currentOrderNum} - ${currentExerciseName}`}
+  const currentSelectValue = {vlaue: currentPath, label: `Set ${currentOrderNum + 1} - ${currentExerciseName}`}
   const [nextPath, setNextPath] = useState()
   const [prevPath, setPrevPath] = useState()
   const nextSet = currentExerciseSets.find(set => set.order === currentOrderNum + 1)

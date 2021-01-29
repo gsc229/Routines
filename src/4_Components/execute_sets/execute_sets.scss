@@ -1,9 +1,10 @@
 .current-sets{
   //background-color: lightblue;
+  max-width: 500px;
+  margin: auto;
   .set-group-card{
     background-color: $bs-dark;
     cursor: pointer;
-    max-width: 500px;
     margin-bottom: 20px;
     .card-header{
       background-color: $jet;
@@ -25,6 +26,7 @@
   padding: 15px;
   border-radius: 4px;
   background-color: $jet;
+  cursor: pointer;
   .icon{
     position: relative;
     bottom: 2px;
@@ -33,9 +35,12 @@
 
 
 .execute-set{
+  max-width: 500px;
+  margin: auto;
   .execute-set-inner{
     margin-top: 20px;
-    .inner-header{
+
+    .instruction-btn-container{
       display: flex;
       justify-content: center;
       align-items: center;
@@ -55,6 +60,61 @@
         }
       }
     }
+
+    .not-recorded-span{
+      font-style: italic;
+    }
+
+    .revising-or-saved-container{
+      .list{
+        list-style: none;
+        li{
+          margin-bottom: 10px;
+          padding: 10px;
+        }
+      }
+    }
+
+    .inputs-and-targets-revising-container{
+      .inputs-list{
+
+        .editing-mode-list-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          //padding: 0 10px;
+          margin-bottom: 7px;
+          position: relative;
+          .edit-button{
+            margin: 12px;
+          }
+          .done-btn{
+            position: relative;
+            top: 18px;
+            margin-left: 10px;
+          }
+        }
+
+        
+      }
+    }
+
+    .inputs-and-targets-saved-container{
+      .targets-and-actuals-list{
+     
+        li{
+          
+          div{
+            margin: 5px;
+          }
+          .revise-btn{
+            margin-top: 1rem;
+          }
+
+        }
+      }
+    }
+
     .instruction-card-container{
       display: flex;
       .card{

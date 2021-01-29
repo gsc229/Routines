@@ -34,7 +34,13 @@ const ScheduleCalendar = ({
     const fetchUserRoutines = async () => {
       await fetchRoutines(`?user=${userId}&populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`)
     }
-    fetchUserRoutines()
+    // test if the routines are flattened. If not it fetch them
+    // notes: If it's not flattened it means routines may have been updated from manage routine operations
+    //        Manage rotuine page operations do not fetch all routines as flattened. This schedule requres all rotuines to be flattend.
+    if(!userRoutines[0].exercise_sets){
+      fetchUserRoutines()
+    }
+
   }, [])
 
   useEffect(() => {  
