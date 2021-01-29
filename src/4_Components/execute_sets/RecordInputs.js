@@ -15,7 +15,7 @@ export const RecordInputs = ({
 }) => {
 
 
-  const [targetIsEditMode, setTargetIsEditMode] = useState({}) // true or false
+  const [editingActual, setEditingActual] = useState(null) // true or false
   const [originalActuals, setOriginalActuals] = useState([])
 
   useEffect(() => {
@@ -23,14 +23,14 @@ export const RecordInputs = ({
     const initialTargetStates = {}
     const originals = []
 
-    targets.forEach(target => {
+    /* targets.forEach(target => {
       const actualObj = targetsToActuals[target.field_name]
       initialTargetStates[actualObj.name] = false
       originals.push(actualObj)
 
     })
 
-    setTargetIsEditMode(initialTargetStates)
+    setEditingActual(initialTargetStates) */
     setOriginalActuals(originals)
   }, [currentExerciseSet._id])
 
@@ -69,12 +69,12 @@ export const RecordInputs = ({
   }
 
   console.log({originalActuals})
-  console.log({targets, targetsToActuals, actualsComplete: actualsComplete(), targetIsEditMode, actualsHaveChanged: acutalsHaveChanged()})
+  console.log({targets, targetsToActuals, actualsComplete: actualsComplete(), editingActual, actualsHaveChanged: acutalsHaveChanged()})
 
   return (
 
     <div className="revising-or-saved-container inputs-and-targets-revising-container">
-      
+
         <ul className='list inputs-list'>
 
           {targets.map(target =>{ 
@@ -84,7 +84,7 @@ export const RecordInputs = ({
             
             const labelText = <div>{target.name}: {target.value} <br/> {actualName}: </div>
 
-            return targetIsEditMode[actualName]
+            return editingActual === actualName 
 
             ? // <<<<<<<<<
 
@@ -95,7 +95,7 @@ export const RecordInputs = ({
               field={targetsToActuals[target.field_name].field_name}
               labelText={labelText} />
               <Button
-              onClick={() => setTargetIsEditMode({...targetIsEditMode, [actualName]: false })}
+              onClick={() => setEditingActual(null)}
               variant='outline-primary'
               className='done-btn'>
                 Done
@@ -119,7 +119,7 @@ export const RecordInputs = ({
                   </div> 
                 </div>
                 <Button
-                onClick={() => setTargetIsEditMode({...targetIsEditMode, [actualName]: true })}
+                onClick={() => setEditingActual(actualName)}
                 variant='outline-primary'
                 className='edit-button'>
                   Edit

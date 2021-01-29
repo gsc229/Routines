@@ -85,15 +85,15 @@ export const ExecuteSet = ({
 
             return(
               <li
+              key={target.field_name}
               style={{border: `1px dotted ${routineColor ? routineColor : 'var(--routine-red)'}`}} 
               className='list-item target-and-result'>
                 <div 
-                key={target.field_name}
                 className='target-container'>
                   {target.name}: {target.value}
                 </div>  
                 <div 
-                key={target.field_name}
+                
                 className='result-container'>
                   {actualName}: {actualValue}
                 </div> 
