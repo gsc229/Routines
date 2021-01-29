@@ -38,16 +38,17 @@
   max-width: 500px;
   margin: auto;
   .execute-set-inner{
-    margin-top: 20px;
+    //margin-top: 20px;
 
     .instruction-btn-container{
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 20px;
+      margin: 10px 0;
       .btn-text-container{
         display: flex;
         align-items: center;
+        justify-content: center;
         height: 25px;
         position: relative;
         .point-left-icon{
@@ -75,16 +76,16 @@
       }
     }
 
-    .inputs-and-targets-revising-container{
-      .inputs-list{
-
-        .editing-mode-list-item {
+  .inputs-and-targets-revising-container{
+    .inputs-list{
+      .inputs-list-list-item{
+        //padding: 0 10px;
+        margin-bottom: 7px;
+        position: relative;
+        .list-item-top{
           display: flex;
           align-items: center;
           justify-content: space-between;
-          //padding: 0 10px;
-          margin-bottom: 7px;
-          position: relative;
           .edit-button{
             margin: 12px;
           }
@@ -93,11 +94,48 @@
             top: 18px;
             margin-left: 10px;
           }
+
+        }
+        .list-item-bottom{
+          margin-top: 10px;
+          height: 1px;
+          opacity: 0;
+          transition: height .3s linear, opacity .2s linear;
+          //transition: .8s opacity linear;
         }
 
-        
+        .show-list-item-bottom{
+          height: 50px;
+          opacity: 1;
+          transition: height .3s linear, opacity .6s ease-in-out;
+        }
+
+
       }
     }
+
+    .submit-and-cancel-btns{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      .submit-all-btn{
+        animation: fadeIn ease 2s;
+        -webkit-animation: fadeIn ease 2s;
+        -moz-animation: fadeIn ease 2s;
+        -o-animation: fadeIn ease 2s;
+        -ms-animation: fadeIn ease 2s;
+      }
+
+    }
+  }
+
+
+
+
+  
+
+    
+    
 
     .inputs-and-targets-saved-container{
       .targets-and-actuals-list{
@@ -138,9 +176,13 @@
     .link-container{
       .nav-link{
         padding: 0;
+        color: $russian-green;
       }
       .nav-link:hover{
         color: red;
+      }
+      .disabled{
+        color: $spanish-gray;
       }
     }
   }

@@ -1,6 +1,8 @@
 .schedule-page-calendar{
-  border-bottom: 1px solid $spanish-gray;
-  background-color: $bs-dark;
+  border-bottom: 1px solid $bs-dark;
+  background-color: $jet;
+  padding: 10px;
+  border-radius: 4px;
   .calendar-header{
     color: white;
     margin-top: 15px;
@@ -65,13 +67,13 @@
       display: flex;
       justify-content: space-evenly;
       height: 15vmin;
-      border-top: 1px solid $spanish-gray;
-      border-left: 1px solid $spanish-gray;
+      border-top: 1px solid $bs-dark;
+      border-left: 1px solid $bs-dark;
       position: relative;
     }
     
     .day{
-      border-right: 1px solid $spanish-gray;
+      border-right: 1px solid $bs-dark;
       //background-color: whitesmoke;
       width: 100%;
       color: $spanish-gray;

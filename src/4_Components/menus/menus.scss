@@ -8,4 +8,13 @@
       bottom: 4px;
     }
   }
+  .dropdown{
+    background-color: $bs-dark;
+    .dropdown-menu{
+      background-color: $bs-dark;
+      .dropdown-item{
+        color: white;
+      }
+    }
+  }
 }

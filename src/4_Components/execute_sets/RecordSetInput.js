@@ -14,9 +14,10 @@ export const RecordSetInput = ({
 
   return (
     <Form.Group>
+      {labelText && 
       <Form.Label>
         {labelText}
-      </Form.Label>
+      </Form.Label>}
       <InputputGroup>
         <Form.Control
           type='number'

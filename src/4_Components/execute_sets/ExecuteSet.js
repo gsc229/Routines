@@ -9,7 +9,7 @@ import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard
 import Button from 'react-bootstrap/Button'
 import {EyeIcon, PointLeftIcon} from '../icons/Icons'
 import RecordInputs from './RecordInputs'
-
+import NavLink from 'react-bootstrap/NavLink'
 
 export const ExecuteSet = ({
   currentExerciseSet,
@@ -46,7 +46,9 @@ export const ExecuteSet = ({
         <div className='instruction-btn-container'>
 
           <Button
-            variant={instructionShow ? 'success' : 'outline-info'}
+            size='sm'
+            block
+            variant={instructionShow ? 'outline-success' : 'outline-info'}
             onClick={() => setInstructionShow(!instructionShow)}>
             {
             instructionShow ? 
@@ -104,7 +106,7 @@ export const ExecuteSet = ({
         </ul>
 
         <div className='revise-btn-and-success-messge'>
-          <p>Your set has been submitted</p>
+          <p>Your set has been submitted!</p>
           <Button
           onClick={() => setSessionSaved(false)}
           variant='outline-warning'

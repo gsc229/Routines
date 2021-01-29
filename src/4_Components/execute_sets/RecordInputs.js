@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
+import {saveExerciseSetChanges, setCurrentExerciseSet} from '../../1_Actions/exerciseSetActions'
 import RecordSetInput from './RecordSetInput'
 import Button from 'react-bootstrap/Button'
+import NavLink from 'react-bootstrap/NavLink'
 
 export const RecordInputs = ({
   currentExerciseSet,
   saveExerciseSetChanges,
+  setCurrentExerciseSet,
   targets, 
   targetsToActuals,
   routineColor,
@@ -15,23 +17,18 @@ export const RecordInputs = ({
 }) => {
 
 
-  const [editingActual, setEditingActual] = useState(null) // true or false
+  const [editingActual, setEditingActual] = useState(null) 
   const [originalActuals, setOriginalActuals] = useState([])
 
   useEffect(() => {
-    
-    const initialTargetStates = {}
+
     const originals = []
-
-    /* targets.forEach(target => {
+    targets.forEach(target => {
       const actualObj = targetsToActuals[target.field_name]
-      initialTargetStates[actualObj.name] = false
       originals.push(actualObj)
-
-    })
-
-    setEditingActual(initialTargetStates) */
+    }) 
     setOriginalActuals(originals)
+
   }, [currentExerciseSet._id])
 
   
@@ -44,6 +41,19 @@ export const RecordInputs = ({
         setSessionSaved(true)
       }, 3000)
     }
+  }
+
+  const handleCancel = () => {
+    const revertedSet = {...currentExerciseSet}
+
+    for(const actual of originalActuals){
+      if(actual.value === 'not recorded') actual.value = null
+      revertedSet[actual.field_name] = actual.value
+    }
+
+    setCurrentExerciseSet(revertedSet)
+    setEditingActual(null)
+
   }
 
   const actualsComplete = () => {
@@ -59,8 +69,10 @@ export const RecordInputs = ({
   const acutalsHaveChanged = () => {
 
     for(const actual of originalActuals){
-    
-      if(actual.value !== currentExerciseSet[actual.field_name]){
+      
+      const currentSetActual = currentExerciseSet[actual.field_name] 
+
+      if(actual.value !== currentSetActual){
         return true
       }
     }
@@ -68,12 +80,32 @@ export const RecordInputs = ({
     return false
   }
 
-  console.log({originalActuals})
+  console.log({originalActuals, currentExerciseSet})
   console.log({targets, targetsToActuals, actualsComplete: actualsComplete(), editingActual, actualsHaveChanged: acutalsHaveChanged()})
 
   return (
 
     <div className="revising-or-saved-container inputs-and-targets-revising-container">
+        
+
+          <div className='submit-and-cancel-btns'>
+            <Button
+            disabled={!acutalsHaveChanged()}
+            onClick={handleSubmit}
+            variant='outline-success' 
+            className='submit-all-btn'>
+              Submit
+            </Button>
+            <Button
+            disabled={!acutalsHaveChanged()}
+            onClick={handleCancel}
+            variant='outline-primary'
+            className='submit-all-btn'>
+              Cancel
+            </Button>
+
+          </div>
+        
 
         <ul className='list inputs-list'>
 
@@ -82,62 +114,55 @@ export const RecordInputs = ({
             const actualName = targetsToActuals[target.field_name].name
             const actualValue = targetsToActuals[target.field_name].value 
             
-            const labelText = <div>{target.name}: {target.value} <br/> {actualName}: </div>
+            const labelText = ''
 
-            return editingActual === actualName 
-
-            ? // <<<<<<<<<
-
-            <li 
-            key={target.field_name}
-            className='list-item editing-mode-list-item  target-input-container'>
-              <RecordSetInput
-              field={targetsToActuals[target.field_name].field_name}
-              labelText={labelText} />
-              <Button
-              onClick={() => setEditingActual(null)}
-              variant='outline-primary'
-              className='done-btn'>
-                Done
-              </Button>
-            </li>  
-              // ↑ Edit Mode ↑
-            : // <<<<<<<<<< 
-              // ↓ Not Edit Mode ↓ 
+            return( 
             <li
             key={target.field_name}
             style={{border: `1px dotted ${routineColor ? routineColor : 'var(--routine-red)'}`}} 
-            className='list-item editing-mode-list-item target-and-result-outer'>
-                <div className='target-and-result'>
-                  <div 
-                  className='target-container'>
-                    {target.name}: {target.value}
-                  </div>  
-                  <div 
-                  className='result-container'>
-                    {actualName}: {actualValue !== 'not recorded' ? actualValue : <span className='not-recorded-span'>{actualValue}</span>}
-                  </div> 
+            className='list-item inputs-list-list-item'>
+                <div className='list-item-top'>
+
+                  <div className='target-and-result'>
+                    <div 
+                    className='target-container'>
+                      {target.name}: {target.value}
+                    </div>  
+                    <div 
+                    className='result-container'>
+                      {actualName}: {actualValue !== null ? actualValue : <span className='not-recorded-span'>not recorded</span>}
+                    </div>
+                  </div>
+                  
+                  {editingActual !== actualName && 
+                  <NavLink
+                  to=''
+                  onClick={() => setEditingActual(actualName)}
+                  className='edit-button'>
+                    Edit
+                  </NavLink>}
+
+                  {editingActual === actualName && 
+                  <NavLink
+                  to=''
+                  onClick={() => setEditingActual(false)}
+                  className='edit-button'>
+                    Done
+                  </NavLink>}
+
                 </div>
-                <Button
-                onClick={() => setEditingActual(actualName)}
-                variant='outline-primary'
-                className='edit-button'>
-                  Edit
-                </Button>
+
+                <div className={`list-item-bottom  ${editingActual === actualName ? 'show-list-item-bottom' : ''}`}>
+                  <RecordSetInput
+                  field={targetsToActuals[target.field_name].field_name}
+                  labelText={labelText} />
+                </div>
             </li>
 
+            )
           })}
 
         </ul>
-
-        {actualsComplete()  && acutalsHaveChanged() &&
-        <Button
-        disabled={!actualsComplete() || !acutalsHaveChanged()}
-        onClick={handleSubmit}
-        variant={actualsComplete()  && acutalsHaveChanged() ? 'outline-success' : 'outline-secondary'}
-        className='submit-all-btn'>
-          Submit
-        </Button>}
         
       </div>
   )
@@ -148,7 +173,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  saveExerciseSetChanges
+  saveExerciseSetChanges,
+  setCurrentExerciseSet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecordInputs)
