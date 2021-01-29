@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {isDev} from '../../config/config'
-import moment from 'moment'
 import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
 import {pathConstructor} from './pathConstructor'
 import {selectStyles} from './selectStyles'
@@ -9,7 +7,6 @@ import {Link, useParams, useHistory} from 'react-router-dom'
 import NavLink from 'react-bootstrap/NavLink'
 import {PointLeftIcon} from '../icons/Icons'
 import Select, {components} from 'react-select'
-import makeAnimated from 'react-select/animated'
 
 export const ExecuteSetNavs = ({
   currentExerciseSets,
@@ -32,12 +29,12 @@ export const ExecuteSetNavs = ({
   currentExerciseSets
   .sort((a, b) => a.order - b.order)
   .map(set => set.exercise.name ? 
-    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order} - ${set.exercise.name}`} : 
-    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order}` }
+    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order + 1} - ${set.exercise.name}`} : 
+    {value: pathConstructor(setDate, routineName, set.set_group, set), label: `Set ${set.order + 1}` }
   )
 
   const [currentOrderNum, setCurrentOrderNum] = useState(JSON.parse(order))
-  const currentSelectValue = {vlaue: currentPath, label: `Set ${currentOrderNum} - ${currentExerciseName}`}
+  const currentSelectValue = {vlaue: currentPath, label: `Set ${currentOrderNum + 1} - ${currentExerciseName}`}
   const [nextPath, setNextPath] = useState()
   const [prevPath, setPrevPath] = useState()
   const nextSet = currentExerciseSets.find(set => set.order === currentOrderNum + 1)
@@ -121,7 +118,6 @@ export const ExecuteSetNavs = ({
           </NavLink>
         </div>
       </div>
-      {/* {isDev && <div style={{color: 'white'}}><br></br><br></br>{JSON.stringify(currentExerciseSet, null, 4)}</div>} */}
     </div>
   )
 }

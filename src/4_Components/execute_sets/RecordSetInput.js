@@ -8,17 +8,20 @@ export const RecordSetInput = ({
   field,
   labelText,
   placeholder,
-  localWritingExerciseSet
+  localWritingExerciseSet,
+  currentExerciseSet
 }) => {
 
   return (
     <Form.Group>
+      {labelText && 
       <Form.Label>
         {labelText}
-      </Form.Label>
+      </Form.Label>}
       <InputputGroup>
         <Form.Control
           type='number'
+          value={currentExerciseSet[field] || ''}
           min={0}
           name={field}
           placeholder={placeholder || 'Enter actual...'}
@@ -31,7 +34,7 @@ export const RecordSetInput = ({
 }
 
 const mapStateToProps = (state) => ({
-  
+  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet
 })
 
 const mapDispatchToProps = {
