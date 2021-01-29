@@ -30,7 +30,7 @@ export const ExecuteSet = ({
     setTargetsToActuals(activeFields.targetToActuals)
     setSessionSaved(false)
     
-  }, [currentExerciseSet])
+  }, [currentExerciseSet._id])
 
   
 

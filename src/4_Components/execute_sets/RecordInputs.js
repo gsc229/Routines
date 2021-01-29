@@ -21,15 +21,16 @@ export const RecordInputs = ({
   const [originalActuals, setOriginalActuals] = useState([])
 
   useEffect(() => {
-
+    alert(JSON.stringify(targets, null, 2))
     const originals = []
     targets.forEach(target => {
       const actualObj = targetsToActuals[target.field_name]
+      console.log({targets, actualObj})
       originals.push(actualObj)
     }) 
     setOriginalActuals(originals)
 
-  }, [currentExerciseSet._id])
+  }, [targets])
 
   console.log({originalActuals})
   const handleSubmit = async() => {
