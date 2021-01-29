@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {successGifLinks} from '../../utils/randomGifs'
-import {setCurrentExerciseSet} from '../../1_Actions/exerciseSetActions'
+import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
 import {getExSetActiveFields} from '../../utils/getExSetActiveFields'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import ExecuteSetNavs from './ExecuteSetNavs'
@@ -12,7 +12,8 @@ import RecordInputs from './RecordInputs'
 
 export const ExecuteSet = ({
   currentExerciseSet,
-  routineNamesColors
+  routineNamesColors,
+  saveExerciseSetChanges
 }) => {
 
   const routineColor = routineNamesColors[currentExerciseSet.routine].color
@@ -30,7 +31,7 @@ export const ExecuteSet = ({
     setTargetsToActuals(activeFields.targetToActuals)
     setSessionSaved(false)
     
-  }, [currentExerciseSet._id])
+  }, [currentExerciseSet._id, currentExerciseSet.updatedAt])
 
   
 
@@ -145,7 +146,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  setCurrentExerciseSet
+  setCurrentExerciseSet,
+  saveExerciseSetChanges
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExecuteSet)

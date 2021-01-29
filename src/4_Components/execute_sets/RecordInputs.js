@@ -20,19 +20,22 @@ export const RecordInputs = ({
   const [editingActual, setEditingActual] = useState(null) 
   const [originalActuals, setOriginalActuals] = useState([])
 
-  useEffect(() => {
-    alert(JSON.stringify(targets, null, 2))
+  const getOriginalActuals = () => {
     const originals = []
     targets.forEach(target => {
       const actualObj = targetsToActuals[target.field_name]
       console.log({targets, actualObj})
       originals.push(actualObj)
-    }) 
-    setOriginalActuals(originals)
+    })
+    return originals
+  }
+
+  useEffect(() => {
+     
+    setOriginalActuals(getOriginalActuals())
 
   }, [targets])
 
-  console.log({originalActuals})
   const handleSubmit = async() => {
     const updateResult = await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
     if(updateResult.success){
@@ -42,6 +45,7 @@ export const RecordInputs = ({
         setSessionSaved(true)
       }, 3000)
     }
+
   }
 
   const handleCancel = () => {
@@ -81,9 +85,6 @@ export const RecordInputs = ({
     return false
   }
 
-  console.log({originalActuals, currentExerciseSet})
-  console.log({targets, targetsToActuals, actualsComplete: actualsComplete(), editingActual, actualsHaveChanged: acutalsHaveChanged()})
-
   return (
 
     <div className="revising-or-saved-container inputs-and-targets-revising-container">
@@ -94,7 +95,7 @@ export const RecordInputs = ({
             size='sm'
             disabled={!acutalsHaveChanged()}
             onClick={handleSubmit}
-            variant='outline-success' 
+            variant={acutalsHaveChanged() ? 'outline-success' : 'outline-secondary' }
             className='submit-all-btn'>
               Submit
             </Button>
@@ -102,7 +103,7 @@ export const RecordInputs = ({
             size='sm'
             disabled={!acutalsHaveChanged()}
             onClick={handleCancel}
-            variant='outline-primary'
+            variant={acutalsHaveChanged() ? 'outline-primary' : 'outline-secondary' }
             className='submit-all-btn'>
               Cancel
             </Button>
@@ -116,8 +117,7 @@ export const RecordInputs = ({
 
             const actualName = targetsToActuals[target.field_name].name
             const actualValue = targetsToActuals[target.field_name].value 
-            
-            const labelText = ''
+            const actualField = targetsToActuals[target.field_name].field_name
 
             return( 
             <li
@@ -133,7 +133,7 @@ export const RecordInputs = ({
                     </div>  
                     <div 
                     className='result-container'>
-                      {actualName}: {actualValue !== null ? actualValue : <span className='not-recorded-span'>not recorded</span>}
+                      {actualName}: {currentExerciseSet[actualField] !== null ? currentExerciseSet[actualField] : <span className='not-recorded-span'>not recorded</span>}
                     </div>
                   </div>
                   
@@ -157,8 +157,7 @@ export const RecordInputs = ({
 
                 <div className={`list-item-bottom  ${editingActual === actualName ? 'show-list-item-bottom' : ''}`}>
                   <RecordSetInput
-                  field={targetsToActuals[target.field_name].field_name}
-                  labelText={labelText} />
+                  field={targetsToActuals[target.field_name].field_name} />
                 </div>
             </li>
 
