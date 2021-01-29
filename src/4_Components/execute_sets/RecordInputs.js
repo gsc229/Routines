@@ -70,10 +70,7 @@ export const RecordInputs = ({
 
     for(const actual of originalActuals){
       
-      const currentSetActual = 
-      currentExerciseSet[actual.field_name] === null 
-      ? 'not recorded'
-      : currentExerciseSet[actual.field_name]
+      const currentSetActual = currentExerciseSet[actual.field_name] 
 
       if(actual.value !== currentSetActual){
         return true
@@ -166,23 +163,6 @@ export const RecordInputs = ({
           })}
 
         </ul>
-
-        <div className='submit-and-cancel-btns'>
-          <Button
-          disabled={!acutalsHaveChanged()}
-          onClick={handleSubmit}
-          variant='outline-success' 
-          className='submit-all-btn'>
-            Submit
-          </Button>
-          <Button
-          disabled={!acutalsHaveChanged()}
-          onClick={handleCancel}
-          variant='outline-primary'
-          className='submit-all-btn'>
-            Cancel
-          </Button>
-        </div>
         
       </div>
   )
