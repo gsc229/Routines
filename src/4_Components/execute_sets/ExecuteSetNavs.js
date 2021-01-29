@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {isDev} from '../../config/config'
-import moment from 'moment'
 import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
 import {pathConstructor} from './pathConstructor'
 import {selectStyles} from './selectStyles'
@@ -9,7 +7,6 @@ import {Link, useParams, useHistory} from 'react-router-dom'
 import NavLink from 'react-bootstrap/NavLink'
 import {PointLeftIcon} from '../icons/Icons'
 import Select, {components} from 'react-select'
-import makeAnimated from 'react-select/animated'
 
 export const ExecuteSetNavs = ({
   currentExerciseSets,
@@ -121,7 +118,6 @@ export const ExecuteSetNavs = ({
           </NavLink>
         </div>
       </div>
-      {/* {isDev && <div style={{color: 'white'}}><br></br><br></br>{JSON.stringify(currentExerciseSet, null, 4)}</div>} */}
     </div>
   )
 }

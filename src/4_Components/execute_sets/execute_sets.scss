@@ -38,16 +38,17 @@
   max-width: 500px;
   margin: auto;
   .execute-set-inner{
-    margin-top: 20px;
+    //margin-top: 20px;
 
     .instruction-btn-container{
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 20px;
+      margin: 10px 0;
       .btn-text-container{
         display: flex;
         align-items: center;
+        justify-content: center;
         height: 25px;
         position: relative;
         .point-left-icon{
@@ -75,8 +76,7 @@
       }
     }
 
-  
-
+  .inputs-and-targets-revising-container{
     .inputs-list{
       .inputs-list-list-item{
         //padding: 0 10px;
@@ -113,6 +113,28 @@
 
       }
     }
+
+    .submit-and-cancel-btns{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      .submit-all-btn{
+        animation: fadeIn ease 2s;
+        -webkit-animation: fadeIn ease 2s;
+        -moz-animation: fadeIn ease 2s;
+        -o-animation: fadeIn ease 2s;
+        -ms-animation: fadeIn ease 2s;
+      }
+
+    }
+  }
+
+
+
+
+  
+
+    
     
 
     .inputs-and-targets-saved-container{
@@ -154,9 +176,13 @@
     .link-container{
       .nav-link{
         padding: 0;
+        color: $russian-green;
       }
       .nav-link:hover{
         color: red;
+      }
+      .disabled{
+        color: $spanish-gray;
       }
     }
   }

@@ -2,7 +2,7 @@ export const upperCaseIfyField = (field) => {
   return field.split('_').map(word => word[0].toUpperCase() + word.slice(1, word.length)).join(' ')
 }
 
-export const getExSetActiveFields = (currentExerciseSet, noValueStr='not recorded') => {
+export const getExSetActiveFields = (currentExerciseSet, noValueStr=null) => {
   const activeTargets = []
   const activeActuals = []
   const targetToActuals = {}

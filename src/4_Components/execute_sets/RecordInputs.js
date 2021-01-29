@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
+import {saveExerciseSetChanges, setCurrentExerciseSet} from '../../1_Actions/exerciseSetActions'
 import RecordSetInput from './RecordSetInput'
 import Button from 'react-bootstrap/Button'
+import NavLink from 'react-bootstrap/NavLink'
 
 export const RecordInputs = ({
   currentExerciseSet,
   saveExerciseSetChanges,
+  setCurrentExerciseSet,
   targets, 
   targetsToActuals,
   routineColor,
@@ -19,9 +21,14 @@ export const RecordInputs = ({
   const [originalActuals, setOriginalActuals] = useState([])
 
   useEffect(() => {
+
     const originals = []
-    
+    targets.forEach(target => {
+      const actualObj = targetsToActuals[target.field_name]
+      originals.push(actualObj)
+    }) 
     setOriginalActuals(originals)
+
   }, [currentExerciseSet._id])
 
   
@@ -34,6 +41,19 @@ export const RecordInputs = ({
         setSessionSaved(true)
       }, 3000)
     }
+  }
+
+  const handleCancel = () => {
+    const revertedSet = {...currentExerciseSet}
+
+    for(const actual of originalActuals){
+      if(actual.value === 'not recorded') actual.value = null
+      revertedSet[actual.field_name] = actual.value
+    }
+
+    setCurrentExerciseSet(revertedSet)
+    setEditingActual(null)
+
   }
 
   const actualsComplete = () => {
@@ -49,8 +69,13 @@ export const RecordInputs = ({
   const acutalsHaveChanged = () => {
 
     for(const actual of originalActuals){
-    
-      if(actual.value !== currentExerciseSet[actual.field_name]){
+      
+      const currentSetActual = 
+      currentExerciseSet[actual.field_name] === null 
+      ? 'not recorded'
+      : currentExerciseSet[actual.field_name]
+
+      if(actual.value !== currentSetActual){
         return true
       }
     }
@@ -58,12 +83,32 @@ export const RecordInputs = ({
     return false
   }
 
-  console.log({originalActuals})
+  console.log({originalActuals, currentExerciseSet})
   console.log({targets, targetsToActuals, actualsComplete: actualsComplete(), editingActual, actualsHaveChanged: acutalsHaveChanged()})
 
   return (
 
     <div className="revising-or-saved-container inputs-and-targets-revising-container">
+        
+
+          <div className='submit-and-cancel-btns'>
+            <Button
+            disabled={!acutalsHaveChanged()}
+            onClick={handleSubmit}
+            variant='outline-success' 
+            className='submit-all-btn'>
+              Submit
+            </Button>
+            <Button
+            disabled={!acutalsHaveChanged()}
+            onClick={handleCancel}
+            variant='outline-primary'
+            className='submit-all-btn'>
+              Cancel
+            </Button>
+
+          </div>
+        
 
         <ul className='list inputs-list'>
 
@@ -88,25 +133,25 @@ export const RecordInputs = ({
                     </div>  
                     <div 
                     className='result-container'>
-                      {actualName}: {actualValue !== 'not recorded' ? actualValue : <span className='not-recorded-span'>{actualValue}</span>}
+                      {actualName}: {actualValue !== null ? actualValue : <span className='not-recorded-span'>not recorded</span>}
                     </div>
                   </div>
                   
                   {editingActual !== actualName && 
-                  <Button
+                  <NavLink
+                  to=''
                   onClick={() => setEditingActual(actualName)}
-                  variant='outline-primary'
                   className='edit-button'>
                     Edit
-                  </Button>}
+                  </NavLink>}
 
                   {editingActual === actualName && 
-                  <Button
+                  <NavLink
+                  to=''
                   onClick={() => setEditingActual(false)}
-                  variant='outline-success'
                   className='edit-button'>
                     Done
-                  </Button>}
+                  </NavLink>}
 
                 </div>
 
@@ -115,8 +160,6 @@ export const RecordInputs = ({
                   field={targetsToActuals[target.field_name].field_name}
                   labelText={labelText} />
                 </div>
-
-
             </li>
 
             )
@@ -124,14 +167,22 @@ export const RecordInputs = ({
 
         </ul>
 
-        {actualsComplete()  && acutalsHaveChanged() &&
-        <Button
-        disabled={!actualsComplete() || !acutalsHaveChanged()}
-        onClick={handleSubmit}
-        variant={actualsComplete()  && acutalsHaveChanged() ? 'outline-success' : 'outline-secondary'}
-        className='submit-all-btn'>
-          Submit
-        </Button>}
+        <div className='submit-and-cancel-btns'>
+          <Button
+          disabled={!acutalsHaveChanged()}
+          onClick={handleSubmit}
+          variant='outline-success' 
+          className='submit-all-btn'>
+            Submit
+          </Button>
+          <Button
+          disabled={!acutalsHaveChanged()}
+          onClick={handleCancel}
+          variant='outline-primary'
+          className='submit-all-btn'>
+            Cancel
+          </Button>
+        </div>
         
       </div>
   )
@@ -142,7 +193,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  saveExerciseSetChanges
+  saveExerciseSetChanges,
+  setCurrentExerciseSet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecordInputs)
