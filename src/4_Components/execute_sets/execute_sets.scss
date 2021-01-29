@@ -75,16 +75,17 @@
       }
     }
 
-    .inputs-and-targets-revising-container{
-      .inputs-list{
+  
 
-        .editing-mode-list-item {
+    .inputs-list{
+      .inputs-list-list-item{
+        //padding: 0 10px;
+        margin-bottom: 7px;
+        position: relative;
+        .list-item-top{
           display: flex;
           align-items: center;
           justify-content: space-between;
-          //padding: 0 10px;
-          margin-bottom: 7px;
-          position: relative;
           .edit-button{
             margin: 12px;
           }
@@ -93,11 +94,25 @@
             top: 18px;
             margin-left: 10px;
           }
+
+        }
+        .list-item-bottom{
+          height: 1px;
+          opacity: 0;
+          transition: height .3s linear, opacity .2s linear;
+          //transition: .8s opacity linear;
         }
 
-        
+        .show-list-item-bottom{
+          height: 50px;
+          opacity: 1;
+          transition: height .3s linear, opacity .5s ease-in-out;
+        }
+
+
       }
     }
+    
 
     .inputs-and-targets-saved-container{
       .targets-and-actuals-list{

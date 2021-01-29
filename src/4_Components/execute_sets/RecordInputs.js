@@ -15,22 +15,13 @@ export const RecordInputs = ({
 }) => {
 
 
-  const [editingActual, setEditingActual] = useState(null) // true or false
+  const [editingActual, setEditingActual] = useState(null) 
   const [originalActuals, setOriginalActuals] = useState([])
 
   useEffect(() => {
     
     const initialTargetStates = {}
     const originals = []
-
-    /* targets.forEach(target => {
-      const actualObj = targetsToActuals[target.field_name]
-      initialTargetStates[actualObj.name] = false
-      originals.push(actualObj)
-
-    })
-
-    setEditingActual(initialTargetStates) */
     setOriginalActuals(originals)
   }, [currentExerciseSet._id])
 
@@ -82,50 +73,54 @@ export const RecordInputs = ({
             const actualName = targetsToActuals[target.field_name].name
             const actualValue = targetsToActuals[target.field_name].value 
             
-            const labelText = <div>{target.name}: {target.value} <br/> {actualName}: </div>
+            const labelText = ''
 
-            return editingActual === actualName 
-
-            ? // <<<<<<<<<
-
-            <li 
-            key={target.field_name}
-            className='list-item editing-mode-list-item  target-input-container'>
-              <RecordSetInput
-              field={targetsToActuals[target.field_name].field_name}
-              labelText={labelText} />
-              <Button
-              onClick={() => setEditingActual(null)}
-              variant='outline-primary'
-              className='done-btn'>
-                Done
-              </Button>
-            </li>  
-              // ↑ Edit Mode ↑
-            : // <<<<<<<<<< 
-              // ↓ Not Edit Mode ↓ 
+            return( 
             <li
             key={target.field_name}
             style={{border: `1px dotted ${routineColor ? routineColor : 'var(--routine-red)'}`}} 
-            className='list-item editing-mode-list-item target-and-result-outer'>
-                <div className='target-and-result'>
-                  <div 
-                  className='target-container'>
-                    {target.name}: {target.value}
-                  </div>  
-                  <div 
-                  className='result-container'>
-                    {actualName}: {actualValue !== 'not recorded' ? actualValue : <span className='not-recorded-span'>{actualValue}</span>}
-                  </div> 
+            className='list-item inputs-list-list-item'>
+                <div className='list-item-top'>
+
+                  <div className='target-and-result'>
+                    <div 
+                    className='target-container'>
+                      {target.name}: {target.value}
+                    </div>  
+                    <div 
+                    className='result-container'>
+                      {actualName}: {actualValue !== 'not recorded' ? actualValue : <span className='not-recorded-span'>{actualValue}</span>}
+                    </div>
+                  </div>
+                  
+                  {editingActual !== actualName && 
+                  <Button
+                  onClick={() => setEditingActual(actualName)}
+                  variant='outline-primary'
+                  className='edit-button'>
+                    Edit
+                  </Button>}
+
+                  {editingActual === actualName && 
+                  <Button
+                  onClick={() => setEditingActual(false)}
+                  variant='outline-primary'
+                  className='edit-button'>
+                    Done
+                  </Button>}
+
                 </div>
-                <Button
-                onClick={() => setEditingActual(actualName)}
-                variant='outline-primary'
-                className='edit-button'>
-                  Edit
-                </Button>
+
+                <div className={`list-item-bottom  ${editingActual === actualName ? 'show-list-item-bottom' : ''}`}>
+                  <RecordSetInput
+                  field={targetsToActuals[target.field_name].field_name}
+                  labelText={labelText} />
+                </div>
+
+
             </li>
 
+            )
           })}
 
         </ul>
