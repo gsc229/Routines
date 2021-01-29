@@ -19,9 +19,8 @@ export const RecordInputs = ({
   const [originalActuals, setOriginalActuals] = useState([])
 
   useEffect(() => {
-    
-    const initialTargetStates = {}
     const originals = []
+    
     setOriginalActuals(originals)
   }, [currentExerciseSet._id])
 
@@ -104,7 +103,7 @@ export const RecordInputs = ({
                   {editingActual === actualName && 
                   <Button
                   onClick={() => setEditingActual(false)}
-                  variant='outline-primary'
+                  variant='outline-success'
                   className='edit-button'>
                     Done
                   </Button>}

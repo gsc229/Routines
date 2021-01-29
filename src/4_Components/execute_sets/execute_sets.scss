@@ -97,6 +97,7 @@
 
         }
         .list-item-bottom{
+          margin-top: 10px;
           height: 1px;
           opacity: 0;
           transition: height .3s linear, opacity .2s linear;
@@ -106,7 +107,7 @@
         .show-list-item-bottom{
           height: 50px;
           opacity: 1;
-          transition: height .3s linear, opacity .5s ease-in-out;
+          transition: height .3s linear, opacity .6s ease-in-out;
         }
 
 
