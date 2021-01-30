@@ -67,14 +67,14 @@
       display: flex;
       justify-content: space-evenly;
       height: 15vmin;
-      border-top: 1px solid $bs-dark;
-      border-left: 1px solid $bs-dark;
+      border-top: 2px solid $jet;
+      border-left: 2px solid $jet;
       position: relative;
     }
     
     .day{
-      border-right: 1px solid $bs-dark;
-      //background-color: whitesmoke;
+      border-right: 2px solid $jet;
+      background-color: $bs-dark;
       width: 100%;
       color: $spanish-gray;
       font-weight: bold;
@@ -88,7 +88,7 @@
         margin: 0;
         margin-bottom: 5px;
         padding-left: 2px;
-        padding-top: 2px;
+        //padding-top: 2px;
       }
       .day-sections{
         display: flex;
@@ -101,8 +101,8 @@
         .day-marker{
           height: 1vw;
           width: 1vw;
-          min-height: 8px;
-          min-width: 8px;
+          min-height: 2px;
+          min-width: 2px;
           border-radius: 50%;
           margin: 2px;
           position: relative;

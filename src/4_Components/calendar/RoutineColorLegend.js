@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {changeColor} from '../../1_Actions/routineActions'
 import {updateRoutine} from '../../3_APIs/routinesApi'
@@ -8,18 +8,24 @@ import Link from 'react-bootstrap/NavLink'
 
 
 export const RoutineColorLegend = ({
-  singleRoutine=false,
+  isSingleRoutine=false,
   routineNamesColors,
   changeColor,
-  currentRoutine,
-  userRoutines
+  currentRoutine
 }) => {
 
-  if(singleRoutine && currentRoutine && currentRoutine._id){
-    routineNamesColors = { [currentRoutine._id]: routineNamesColors[currentRoutine._id] }
-  }
+  
+  
+
   const [showPicker, setShowPicker] = useState(false)
   const [initialNamesColors, setInitialNamesColors] = useState(routineNamesColors)
+
+  useEffect(() => {
+    if(isSingleRoutine && currentRoutine && currentRoutine._id){
+      setInitialNamesColors({ [currentRoutine._id]: routineNamesColors[currentRoutine._id] })
+    }
+
+  }, [])
 
   
   const persistColorChanges = (routineId) => {
@@ -52,6 +58,7 @@ export const RoutineColorLegend = ({
 
 
   const handleColorChange = (color, routineId) => {
+    console.log({routineNamesColors})
     changeColor({
       ...routineNamesColors,
       [routineId]: {
@@ -65,22 +72,22 @@ export const RoutineColorLegend = ({
     <div className="routine-color-legend">
         {/* <ChromePicker onChangeComplete={(color) => console.log({color})} /> */}
        <div className='legend-wrapper'>
-        {Object.keys(routineNamesColors)
+        {Object.keys(initialNamesColors)
         .map(routineId => 
         <div
         key={`legend-${routineId}`}
         className={`header-name-color-container ${showPicker === routineId && 'showing-picker'}`}>
           {/* <ChromePickerModal
-          currentColor={routineNamesColors[routineId].color}
+          currentColor={initialNamesColors[routineId].color}
           showPicker={showPicker} 
           setShowPicker={setShowPicker} 
           handleColorPick={(color) => handleColorChange(color, routineId)} /> */}
 
           <div className='name-and-day-marker'>
-            {routineNamesColors[routineId].name}: 
+            {initialNamesColors[routineId].name}: 
             <div
             onClick={() => handleShowPicker(routineId)}
-            style={{backgroundColor: routineNamesColors[routineId].color}} 
+            style={{backgroundColor: initialNamesColors[routineId].color}} 
             className="day-marker">
             </div>
           </div> 
@@ -90,7 +97,7 @@ export const RoutineColorLegend = ({
           className={`slider-container ${showPicker === routineId && 'showing-picker-slider'}`}>
             <Link  onClick={() => handleDoneClick(routineId)}>Done</Link>
             <SliderPicker
-            color={routineNamesColors[routineId].color} 
+            color={initialNamesColors[routineId].color} 
             onChangeComplete={(color) => handleColorChange(color, routineId)} />
           </div>}
         </div>)}

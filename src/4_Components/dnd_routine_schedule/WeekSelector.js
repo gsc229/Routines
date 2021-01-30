@@ -48,18 +48,18 @@ export const WeekSelector = ({
 
   return (
     <div 
-      className='select-container'>
-        <Select
-        value={selectedValues}
-        components={animatedComponents}
-        styles={customStyles}
-        placeholder='Filter weeks...'
-        onChange={handleWeekSelect}
-        options={selectOptions}
-        isMulti
-        autoFocus
-        isSearchable/>
-      </div>
+    className='select-container'>
+      <Select
+      value={selectedValues}
+      components={animatedComponents}
+      styles={customStyles}
+      placeholder='Filter weeks...'
+      onChange={handleWeekSelect}
+      options={selectOptions}
+      isMulti
+      autoFocus
+      isSearchable/>
+    </div>
   )
 }
 

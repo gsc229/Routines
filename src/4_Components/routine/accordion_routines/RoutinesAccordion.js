@@ -9,7 +9,8 @@ import Button from 'react-bootstrap/Button'
 import ToolTip from 'react-bootstrap/Tooltip'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import {TiEdit} from 'react-icons/ti'
-import Calendar from '../../calendar/Calendar'
+import Calendar from '../../calendar/SingleRoutineCalendar'
+import ScheduleCalendar from '../../schedule_calendar/SchedulePageCalendar'
 import SaveDiscardExpandBtnGroup from '../../buttons/SaveDiscardExpandBtnGroup'
 import CreateRoutineForm from '../form_routine/RoutineInfoForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
@@ -186,10 +187,13 @@ const getToggleStyles = (routineColor) => {
               showFinishLaterBtn={false}
               showHeader={false} />}
             </div>
+
             {!editingMode && 
             <Calendar
+            isSingleRoutine={true}
             routine={routine}
-            className='manage-routines-calendar' />   }     
+            className='manage-routines-calendar' />   }   
+
             </Card.Body>}
           </Accordion.Collapse>
         </Card>)})}

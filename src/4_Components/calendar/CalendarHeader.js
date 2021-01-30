@@ -38,7 +38,6 @@ const CalendarHeader = ({
   
   return (
     <div style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px', border: '1px solid var(--routine-red)'}} className='calendar-header'>
-      {/* <ColorLegend singleRoutine={singleRoutine} /> */}
       {routine && 
       <div className='view-routine-link-container'>
         <Link 
