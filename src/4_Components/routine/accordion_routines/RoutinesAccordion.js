@@ -87,24 +87,32 @@ export const RoutinesAccordion = ({
 
   const showDetails = (routine) => {
     return (
-      <ul className='list-group'>
-        <li style={routineDescStyles}><strong>Category:</strong> {routine.category ? routine.category : 'none chosen'}</li>
-        <li style={routineDescStyles}><strong>Difficulty: </strong>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</li>
-        <li style={routineDescStyles}><strong>Muscle Group: </strong>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</li>
-        <li style={routineDescStyles}><strong>Body Part: </strong>{routine.body_part ? routine.body_part : 'none chosen'}</li>
-        <li style={routineDescStyles}><strong>Target Muscle: </strong>{routine.target_muscle ? routine.target_muscle : 'none chosen'}</li>
-        <li style={routineDescStyles}><strong>Start Date: </strong>{routine.start_date ? moment(routine.start_date ).format('MMMM DD, YYYY') : 'none chosen'}</li>
-        <li style={routineDescStyles}><strong>End Date: </strong>{routine.end_date ? routine.end_date : 'n/a'}</li>
-        <li style={routineDescStyles}><strong>Description: </strong>
-          {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
-        </li>
+      <div className='list-group-container'>
+        <div className='first-two-lists'>
+          <ul className='list-group'>
+            <li style={routineDescStyles}><strong>Category:</strong><span> {routine.category ? routine.category : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>Muscle Group: </strong><span>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>Target Muscle: </strong><span>{routine.target_muscle ? routine.target_muscle : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>End Date: </strong><span>{routine.end_date ? routine.end_date : 'n/a'}</span></li>
+          </ul> 
+          <ul className='list-group'>
+            <li style={routineDescStyles}><strong>Difficulty: </strong><span>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>Body Part: </strong><span>{routine.body_part ? routine.body_part : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>Start Date: </strong><span>{routine.start_date ? moment(routine.start_date ).format('MMMM DD, YYYY') : 'none chosen'}</span></li>
+          </ul>
+        </div>
+        <ul className='list-group'>
+          <li style={routineDescStyles}><strong>Description:</strong><span>
+            {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
+          </span></li>
+        </ul> 
         <a
-        href='#'
-        onClick={() => {
-          setModalShow(true)
-          setRoutineForDeletion(routine)
-        }}>DELETE ROUTINE</a>
-      </ul>  
+          href='#'
+          onClick={() => {
+            setModalShow(true)
+            setRoutineForDeletion(routine)
+          }}>DELETE ROUTINE</a> 
+      </div>
     )
   }
 
@@ -182,8 +190,11 @@ const getToggleStyles = (routineColor) => {
               />}
 
               </div>
+              
+              {/* renders list-group */}
               {!editingMode && !showSpinner &&  
               showDetails(routine)}
+
               {showSpinner && <DarkSpinner  style={{marginBottom: '50px', height: '300px'}} />}
 
               {editingMode && currentRoutine._id === routine._id && !crudingRoutine &&
