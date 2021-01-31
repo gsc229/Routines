@@ -6,6 +6,11 @@
   .calendar-header{
     color: white;
     margin-top: 15px;
+    .navbar{
+      border-bottom: none;
+      padding: 0;
+      margin-bottom: 5px;
+    }
     .view-routine-link-container{
       display: flex;
       justify-content: center;

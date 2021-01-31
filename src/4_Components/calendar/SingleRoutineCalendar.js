@@ -10,7 +10,6 @@ import RoutineColorLegend from './RoutineColorLegend'
 import ScheduleWeek from '../schedule_calendar/ScheduleWeek'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 
-
 const SingleRoutineCalendar = ({
   className, 
   routine,
@@ -42,7 +41,7 @@ const SingleRoutineCalendar = ({
     <div className={`single-rouitne-calendar ${className}`}>
 
       <RoutineColorLegend 
-      isSingleRoutine={isSingleRoutine} />
+      isSingleRoutine={false} />
 
       <CalendarHeader 
       singleRoutine={isSingleRoutine}

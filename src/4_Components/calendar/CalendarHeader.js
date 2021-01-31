@@ -4,7 +4,6 @@ import Navbar from 'react-bootstrap/Navbar'
 import {Link} from 'react-router-dom'
 import {setCurrentRoutine, fetchFlattenedRoutine} from '../../1_Actions/routineActions'
 import fontSizeClamp from '../../utils/clampBuilder'
-import ColorLegend from './RoutineColorLegend'
 
 const CalendarHeader = ({
   singleRoutine=false,
@@ -37,32 +36,45 @@ const CalendarHeader = ({
   const dayOfWeek = ["Su","Mo","Tu","We","Th","Fr","Sa"] 
   
   return (
-    <div style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px', border: '1px solid var(--routine-red)'}} className='calendar-header'>
+    <div 
+    style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} 
+    className='calendar-header'>
       {routine && 
-      <div className='view-routine-link-container'>
+      <div 
+      className='view-routine-link-container'>
         <Link 
+        style={{fontSize: fontSizeClamp(300, 1200, .7, 1.5)}}
         onClick={handleEditScheduleClick}
         className='view-routine-link' to={`/view-routine/${routine._id}/${routine.slug || routine.name}`} >
-          Edit Schedule
+          Edit
         </Link>
       </div>}
-      <Navbar style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} bg='dark'>
-        <div className="calendar-header-top">
+      <Navbar 
+      style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} 
+      bg='dark'>
+        <div 
+        className="calendar-header-top">
           <h6
-            onClick={() => setValue(prevMonth)}
-            className='prev-month  arrow'>
+          onClick={() => setValue(prevMonth)}
+          className='prev-month  arrow'>
               {String.fromCharCode(171)}
           </h6>
-          <div style={{fontSize: fontSizeClamp(300, 1200, 1, 1.5)}}>{currMonthName()} {currYear()}</div>
+          <div 
+          style={{fontSize: fontSizeClamp(300, 1200, .8, 1.5)}}>{currMonthName()} {currYear()}</div>
           <h6 
-            onClick={() => setValue(nextMonth)}
-            className="next-month arrow">
-              {String.fromCharCode(187)}
+          onClick={() => setValue(nextMonth)}
+          className="next-month arrow">
+            {String.fromCharCode(187)}
           </h6>
         </div>
       </Navbar>
-      <div className="calendar-header-bottom">
-        {dayOfWeek.map(day => <h6 key={day}>{day}</h6>)}
+      <div 
+      className="calendar-header-bottom">
+        {dayOfWeek.map(day => 
+          <h6 
+          style={{fontSize: fontSizeClamp(300, 1200, .8, 1.5)}}
+          key={day}>{day}</h6>
+        )}
       </div>
     </div>
   )
