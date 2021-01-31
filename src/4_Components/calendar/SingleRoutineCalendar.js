@@ -52,7 +52,8 @@ const SingleRoutineCalendar = ({
       {
       calendar.map((week, index) => {
       return( 
-      <ScheduleWeek 
+      <ScheduleWeek
+      showEditLink={true}
       key={`week-${index}`} 
       value={value}
       height={height}

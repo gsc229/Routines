@@ -27,7 +27,7 @@ export const ManageRoutinesPage = ({
   useEffect(() => {
     
     const fetchUserRoutines = async () => {
-      await fetchRoutines(`?user=${userId}&populate_weeks=true&populate_set_groups=true`)
+      await fetchRoutines(`?user=${userId}&populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`)
     }
 
     fetchUserRoutines()

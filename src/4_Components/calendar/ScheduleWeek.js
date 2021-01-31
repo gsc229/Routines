@@ -10,6 +10,7 @@ const ScheduleWeek = ({
   routineNamesColors,
   isSingleRoutine=false,
   handleDayClick,
+  showEditLink=false,
   routine,
   value,
   height,
@@ -35,6 +36,7 @@ const ScheduleWeek = ({
         <p>{day.format("D")}</p>
         {daySetGroups &&
         <DaySection
+        showEditLink={showEditLink}
         windowSize={{height, width}}
         routineNamesColors={routineNamesColors}
         dateSetGroups={daySetGroups} />}
