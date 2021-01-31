@@ -20,6 +20,8 @@ export const RoutineColorLegend = ({
   useEffect(() => {
     if(isSingleRoutine && currentRoutine && currentRoutine._id){
       setInitialNamesColors({ [currentRoutine._id]: routineNamesColors[currentRoutine._id] })
+    } else{
+      setInitialNamesColors(routineNamesColors)
     }
 
   }, [showPicker])
@@ -55,7 +57,6 @@ export const RoutineColorLegend = ({
 
 
   const handleColorChange = (color, routineId) => {
-    console.log({routineNamesColors})
     changeColor({
       ...routineNamesColors,
       [routineId]: {
@@ -81,10 +82,10 @@ export const RoutineColorLegend = ({
           handleColorPick={(color) => handleColorChange(color, routineId)} /> */}
 
           <div className='name-and-day-marker'>
-            {initialNamesColors[routineId].name}: 
+            {routineNamesColors[routineId].name}: 
             <div
             onClick={() => handleShowPicker(routineId)}
-            style={{backgroundColor: initialNamesColors[routineId].color}} 
+            style={{backgroundColor: routineNamesColors[routineId].color}} 
             className="day-marker">
             </div>
           </div> 
@@ -92,9 +93,12 @@ export const RoutineColorLegend = ({
           {showPicker === routineId && 
           <div
           className={`slider-container ${showPicker === routineId && 'showing-picker-slider'}`}>
-            <Link  onClick={() => handleDoneClick(routineId)}>Done</Link>
+            <Link  
+            onClick={() => handleDoneClick(routineId)}>
+              Done
+            </Link>
             <SliderPicker
-            color={initialNamesColors[routineId].color} 
+            color={routineNamesColors[routineId].color} 
             onChangeComplete={(color) => handleColorChange(color, routineId)} />
           </div>}
         </div>)}
