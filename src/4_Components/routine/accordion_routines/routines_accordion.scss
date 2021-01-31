@@ -1,7 +1,7 @@
 .routines-bank{
   margin: 20px 0;
   ul{
-    list-style: none;
+    //list-style-type: disc;
     button{
       margin: 10px 0;
     }
@@ -17,11 +17,40 @@
       background-color: $jet;
       padding: 0.45rem;
     }
+    .card-body{
+      padding: 8px;
+    }
   }
 
   .details-and-btns-container{
     display: flex;
     justify-content: space-between;
+    .list-group-container{
+      width: 100%;
+    }
+    .first-two-lists{
+      width: 60%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .list-group{
+      li{
+        display: flex;
+        flex-direction: column;
+        margin-right: 15px;
+        min-width: 100px;
+        strong{
+          color: $orange-yellow;
+        }
+        span{
+          margin-left: 2px;
+        }
+      }
+      a{
+        width: 100%;
+      }
+    }
     .spinner{
       margin: auto;
     }

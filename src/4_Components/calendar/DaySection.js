@@ -12,6 +12,7 @@ export const DaySection = ({
   routineNamesColors,
   setCurrentSetGroup,
   setFlattenedRoutine,
+  showEditLink=false,
   windowSize
 }) => {
 
@@ -28,7 +29,7 @@ export const DaySection = ({
     }
     setFlattenedRoutine(flattenedRoutine)
     setCurrentSetGroup(sg)
-    setModalShow(true)
+    setModalShow(sg._id)
   }
 
   return (
@@ -42,10 +43,10 @@ export const DaySection = ({
           key={sg._id}
           className='day-section-wrapper'>
             <ViewSetGroupModal
-            showEditLink={false}
+            showEditLink={showEditLink}
             redirectLink={`/create-set-group/${routineNamesColors[sg.routine].name }/${sg.week_number}/day-${sg.day_number}-${sg.day}`}
             setModalShow={setModalShow} 
-            modalShow={modalShow} />
+            modalShow={modalShow === sg._id} />
             <OverlayTrigger 
             overlay={
             <ToolTip>

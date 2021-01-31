@@ -1,20 +1,28 @@
-.main-calendar{
+.single-rouitne-calendar{
   border-bottom: 1px solid black;
   border-radius: 2px;
   height: 100%;
+  margin-top: 20px;
   .calendar-header{
-    background-color: $bs-dark;
     color: white;
-    
+    margin-top: 15px;
+    padding: 0;
+    .navbar{
+      border-bottom: none;
+      padding: 0;
+      margin: 10px 0;
+    }
     .view-routine-link-container{
       display: flex;
       justify-content: center;
       .view-routine-link{
-        margin-right: 20px;
+        margin: auto;
         padding: 5px;
         background-color: $routine-red;
         color: whitesmoke;
-        border-radius: 50px;
+        width: 50%;
+        text-align: center;
+        border-radius: 5px;
         padding: 3px 10px 3px 10px;
         margin-top: 10px;
       }
@@ -29,15 +37,45 @@
     align-items: center;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+    .arrow{
+      //background-color: lightcoral;
+      cursor: pointer;
+      position: relative;
+      font-size: 25px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
 
   .calendar-header-bottom{
     display: flex;
     color: darkgray;
     justify-content: space-between;
-    background-color:  $routine-red;
     h6{
       margin: auto;
+    }
+  }
+  
+  
+// ↑↑↑↑↑↑ Header
+  .day-sections{
+    display: flex;
+    flex-wrap: wrap;
+    //margin-bottom: 20px;
+    z-index: 99;
+    .tool-tip-title{
+      color: $routine-red;
+    }
+    .day-marker{
+      height: 1vw;
+      width: 1vw;
+      min-height: 2px;
+      min-width: 2px;
+      border-radius: 50%;
+      margin: 2px;
+      position: relative;
+      cursor: pointer;
+      z-index: 100;
     }
   }
   
@@ -53,14 +91,18 @@
   .week{
     display: flex;
     justify-content: space-evenly;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
+    border-top: 2px solid $jet;
+    border-left: 2px solid $jet;
   }
   
   .day{
     width: 17%;
-    border-right: 1px solid black;
+    border-right: 2px solid $jet;
+    min-height: 40px;
     cursor: pointer;
+    p{
+      margin: 0;
+    }
   }
   
   .today{

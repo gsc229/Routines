@@ -1,19 +1,21 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import {useHistory} from 'react-router-dom'
-import {clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges} from '../../../1_Actions/routineActions'
+import { useHistory } from 'react-router-dom'
+import { clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges } from '../../../1_Actions/routineActions'
 import moment from 'moment'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import ToolTip from 'react-bootstrap/Tooltip'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import {TiEdit} from 'react-icons/ti'
-import Calendar from '../../calendar/Calendar'
+import { TiEdit } from 'react-icons/ti'
+import Calendar from '../../calendar/SingleRoutineCalendar'
 import SaveDiscardExpandBtnGroup from '../../buttons/SaveDiscardExpandBtnGroup'
 import CreateRoutineForm from '../form_routine/RoutineInfoForm'
 import DarkSpinner from '../../spinners/DarkSpinner'
 import ConfirmDeleteRoutineModal from '../../modals/confirm_delete_modals/ConfirmDeleteRoutineModal'
+import fontsizeClamp from '../../../utils/clampBuilder'
+
 
 
 export const RoutinesAccordion = ({
@@ -22,7 +24,8 @@ export const RoutinesAccordion = ({
   clearCurrentRoutine, 
   setCurrentRoutine,
   saveRoutineChanges,
-  crudingRoutine
+  crudingRoutine,
+  routineNamesColors
 }) => {
 
   const [editingMode, setEditingMode] = useState(false)
@@ -68,7 +71,6 @@ export const RoutinesAccordion = ({
   }
 
   const editInCreatePage = (routine) => {
-    console.log({routine})
     if(currentRoutine._id !== routine._id) setCurrentRoutine(routine)
     history.push('/create-routine')
   }
@@ -78,26 +80,39 @@ export const RoutinesAccordion = ({
     setCurrentRoutine(routine)
   }
 
+
+  const routineDescStyles = {
+    fontSize: fontsizeClamp(450, 800, .8, 1)
+  }
+
   const showDetails = (routine) => {
     return (
-      <ul className='list-group'>
-        <li><strong>Category:</strong> {routine.category ? routine.category : 'none chosen'}</li>
-        <li><strong>Difficulty: </strong>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</li>
-        <li><strong>Muscle Group: </strong>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</li>
-        <li><strong>Body Part: </strong>{routine.body_part ? routine.body_part : 'none chosen'}</li>
-        <li><strong>Target Muscle: </strong>{routine.target_muscle ? routine.target_muscle : 'none chosen'}</li>
-        <li><strong>Start Date: </strong>{routine.start_date ? moment(routine.start_date ).format('MMMM DD, YYYY') : 'none chosen'}</li>
-        <li><strong>End Date: </strong>{routine.end_date ? routine.end_date : 'n/a'}</li>
-        <li><strong>Description: </strong>
-          {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
-        </li>
+      <div className='list-group-container'>
+        <div className='first-two-lists'>
+          <ul className='list-group'>
+            <li style={routineDescStyles}><strong>Category:</strong><span> {routine.category ? routine.category : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>Muscle Group: </strong><span>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>Target Muscle: </strong><span>{routine.target_muscle ? routine.target_muscle : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>End Date: </strong><span>{routine.end_date ? routine.end_date : 'n/a'}</span></li>
+          </ul> 
+          <ul className='list-group'>
+            <li style={routineDescStyles}><strong>Difficulty: </strong><span>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>Body Part: </strong><span>{routine.body_part ? routine.body_part : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong>Start Date: </strong><span>{routine.start_date ? moment(routine.start_date ).format('MMMM DD, YYYY') : 'none chosen'}</span></li>
+          </ul>
+        </div>
+        <ul className='list-group'>
+          <li style={routineDescStyles}><strong>Description:</strong><span>
+            {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
+          </span></li>
+        </ul> 
         <a
-        href='#'
-        onClick={() => {
-          setModalShow(true)
-          setRoutineForDeletion(routine)
-        }}>DELETE ROUTINE</a>
-      </ul>  
+          href='#'
+          onClick={() => {
+            setModalShow(true)
+            setRoutineForDeletion(routine)
+          }}>DELETE ROUTINE</a> 
+      </div>
     )
   }
 
@@ -140,7 +155,7 @@ const getToggleStyles = (routineColor) => {
             disabled={editingMode}
             as={Button} 
             onClick={() => handleToggle(routine)}
-            style={getToggleStyles(routine.color)} 
+            style={getToggleStyles(routineNamesColors[routine._id].color)} 
             eventKey={routine._id} >
               {routine.name}
             </Accordion.Toggle>
@@ -175,8 +190,11 @@ const getToggleStyles = (routineColor) => {
               />}
 
               </div>
+              
+              {/* renders list-group */}
               {!editingMode && !showSpinner &&  
               showDetails(routine)}
+
               {showSpinner && <DarkSpinner  style={{marginBottom: '50px', height: '300px'}} />}
 
               {editingMode && currentRoutine._id === routine._id && !crudingRoutine &&
@@ -186,10 +204,13 @@ const getToggleStyles = (routineColor) => {
               showFinishLaterBtn={false}
               showHeader={false} />}
             </div>
+
             {!editingMode && 
             <Calendar
+            isSingleRoutine={true}
             routine={routine}
-            className='manage-routines-calendar' />   }     
+            className='manage-routines-calendar' />   }   
+
             </Card.Body>}
           </Accordion.Collapse>
         </Card>)})}
@@ -200,7 +221,8 @@ const getToggleStyles = (routineColor) => {
 const mapStateToProps = (state) => ({
   userRoutines: state.routineReducer.userRoutines,
   currentRoutine: state.routineReducer.currentRoutine,
-  crudingRoutine: state.routineReducer.crudingRoutine
+  crudingRoutine: state.routineReducer.crudingRoutine,
+  routineNamesColors: state.routineReducer.routineNamesColors
 })
 
 const mapDispatchToProps = {

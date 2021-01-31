@@ -14,6 +14,13 @@
       background-color: $bs-dark;
       .dropdown-item{
         color: white;
+        &:hover{
+          color: $routine-red;
+          font-weight: bold;
+        }
+      }
+      .active:hover{
+        color: white;
       }
     }
   }

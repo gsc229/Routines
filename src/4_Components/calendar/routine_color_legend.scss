@@ -1,13 +1,14 @@
 .routine-color-legend{
-  display: flex;
   .legend-wrapper{
     padding: 0;
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
   }
-  .header-name-color-container{
-    width: 100%;
+  .name-and-slider-container{
+    //background-color: lightblue;
     display: flex;
     flex-direction: column;
+    margin-right: 20px;
     font-size: 12px;
     height: 15px;
     transition: height .04s linear;
@@ -24,9 +25,9 @@
     }
 
     .slider-container{
-      width: 300px;
+      max-width: 300px;
+      min-width: 220px;
       opacity: 0;
-      background-color: $bs-dark;
       z-index: 10;
       a{
         padding: 0;

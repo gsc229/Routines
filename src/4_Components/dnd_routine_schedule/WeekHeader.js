@@ -257,13 +257,12 @@ export const WeekHeader = ({
                 onChange={handleMoveTo}
                 className='select-input header-select-input'
                 as="select">
-                <option selected={true} value='choose' disabled={true}>Move to...</option>
+                <option value='choose' disabled={true}>Move to...</option>
                 {currentWeeks.filter(wk => {
                  return wk._id !== currentWeek._id
                 }).map(week => {
                   return(
                   <option
-                  selected={false}
                   value={week.week_number}
                   key={week._id}>
                     Week {week.week_number}
@@ -281,11 +280,10 @@ export const WeekHeader = ({
               onChange={handleCopyAndInsertWeek}
               className='select-input header-select-input'
               as="select">
-                <option selected={true} value='choose' disabled={true}>Insert at...</option>
+                <option value='choose' disabled={true}>Insert at...</option>
                 {currentWeeks.map(week => {
                 return week.week_number !== currentWeek.week_number &&
                 <option
-                selected={false}
                 value={week.week_number}
                 key={week._id}>
                   Week {week.week_number}
@@ -302,7 +300,7 @@ export const WeekHeader = ({
               onChange={handleCreateBlankAndInsert}
               className='select-input header-select-input'
               as="select">
-                <option selected={true} value='choose' disabled={true}>Choose...</option>
+                <option value='choose' disabled={true}>Choose...</option>
                 <option 
                 value={weekNumber}>
                   Here
