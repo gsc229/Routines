@@ -74,7 +74,7 @@ export const RoutineColorLegend = ({
         .map(routineId => 
         <div
         key={`legend-${routineId}`}
-        className={`header-name-color-container ${showPicker === routineId && 'showing-picker'}`}>
+        className={`name-and-slider-container ${showPicker === routineId && 'showing-picker'}`}>
           {/* <ChromePickerModal
           currentColor={initialNamesColors[routineId].color}
           showPicker={showPicker} 
