@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
-import Button from 'react-bootstrap/Button'
-import {Link, NavLink} from 'react-router-dom'
 import Nav from 'react-bootstrap/Nav'
 
 const NextExerciseBtn = ({

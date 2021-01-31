@@ -45,6 +45,13 @@ const SetTypeExplanation = ({
   return (
       <div className='type-explanation-and-use-btn'>
 
+        <div className={`title-and-content ${hide && 'hide'}`}>
+          <h3 className='type-title'>
+            {type} {type !== "Manual" && 'Set Group'}
+          </h3>
+          {typeExplanation[type]}
+        </div>
+
         {currentStep !== 'choose-type' && 
         <span 
         className={hide ? 'span-on-hide' : 'span-on-show'} 
@@ -52,15 +59,14 @@ const SetTypeExplanation = ({
           {hide ? 'show description' : 'hide description'}
         </span>}
 
-        <div className={`title-and-content ${hide && 'hide'}`}>
-          <h2 className='type-title'>{type} {type !== "Manual" && 'Set Group'}</h2>
-          {typeExplanation[type]}
-        </div>
         {currentStep === "choose-type" &&
         <Button
         disabled={currentStep !== 'choose-type'}
         onClick={handleTypeChoiceClick}
-        className='use-set-type-btn'>Use {type} Sets</Button>}
+        className='use-set-type-btn'>
+          Use {type} Sets
+        </Button>}
+
       </div>
   )
 }

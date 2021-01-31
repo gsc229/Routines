@@ -33,8 +33,6 @@ export const CreateSetGroupSteps = ({
       <SetTypeExplanation type={set_group_type} />
       <StepNavs />
       {currentStep === 'choose-exercise' && <SetGroupSearchExercise />}
-      {currentStep === 'enter-info' && <EnterSetInfo />}
-      {currentStep === 'preview-set-group' && <PreviewSetGroup />}
     </div>
   )
 }

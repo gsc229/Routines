@@ -13,13 +13,11 @@ export const SetGroupSearchExercise = ({
   currentSetGroup
 }) => {
 
- 
-
   return (
     <div className='set-group-exercise-search'>
       
-     
-      <ChosenExercisesBankDND />
+      {currentExerciseSets.length > 0 && <ChosenExercisesBankDND />}
+
       <SearchExercisesForm />
 
       {crudingExercise === 'fetching' &&

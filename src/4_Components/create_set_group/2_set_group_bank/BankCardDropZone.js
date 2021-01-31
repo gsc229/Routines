@@ -54,7 +54,7 @@ const BankCardDropZone = ({
             {zoneExSets.map((exerciseSet, index) => {
               return (
               <BankCardDraggable
-              key={`${exerciseSet._id}-${index + zoneContainerIndex}`} 
+              key={`bankCardDraggable-${index + zoneContainerIndex}`} 
               exerciseSet={exerciseSet} 
               index={index + zoneContainerIndex}  />)
             })}

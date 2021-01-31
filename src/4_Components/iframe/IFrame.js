@@ -25,7 +25,6 @@ const IFrame = ({
         <div
         dangerouslySetInnerHTML={{__html: purifiedIframe}} />
       </ResponsiveEmbed>
-
   }
 
   const formValidationErrorMessage = () => {

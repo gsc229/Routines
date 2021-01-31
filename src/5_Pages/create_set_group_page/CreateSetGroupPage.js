@@ -67,7 +67,7 @@ export const CreateOrEditExerciseSet = ({
 
 
     if(!persistedSetGroup || !currentSetGroup._id){
-      return <p>You have not yet saved this set group.</p>
+      return <p>You haven't saved this set group.</p>
     } else{
       const changes = {
         type: persistedSetGroup.set_group_type !== currentSetGroup.set_group_type ? <p><span>Set Group Type:</span><br/> {persistedSetGroup.set_group_type} <FaRegHandPointRight /> {currentSetGroup.set_group_type}</p> : null,
@@ -125,10 +125,12 @@ export const CreateOrEditExerciseSet = ({
         <div className='create-set-group-page-header'>
           <h2>Create Set Group for {currentRoutine.name}</h2>
           <h6>Week {currentSetGroup.week_number}, Day {currentSetGroup.day_number}</h6>
-          <Link 
-          onClick={modalShowLogic}>
-            <FaRegCalendarAlt /><FaRegHandPointLeft /> return to schedule
-          </Link>
+          <div className='link-container'>
+            <Link 
+            onClick={modalShowLogic}>
+              <FaRegCalendarAlt />&nbsp;<FaRegHandPointLeft />&nbsp;<span>Back to Schedule</span>
+            </Link>
+          </div>
         </div>
         <Tabs
           className='create-set-group-tabs'
@@ -138,9 +140,9 @@ export const CreateOrEditExerciseSet = ({
           <Tab eventKey="exercise" title="Create A New Set Group">
             <CreateSetGroupSteps />
           </Tab>
-          <Tab eventKey="set" title="Use A Saved Set Group">
+          {/* <Tab eventKey="set" title="Use A Saved Set Group">
             <FindSavedSetGroup />
-          </Tab>
+          </Tab> */}
         </Tabs>
 
       </Container>
