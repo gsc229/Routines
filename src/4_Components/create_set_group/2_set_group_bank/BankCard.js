@@ -41,7 +41,8 @@ export const BankCard = ({
     setShowPicker(false)
   }
 
-  const handleRemoveOne = async () => {
+  const handleRemoveOne = async (e) => {
+    e.preventDefault()
     // new sets don't have _ids so splice index and recreate the array.
     const copy = [...currentExerciseSets]
     copy.splice(index, 1)
@@ -55,7 +56,8 @@ export const BankCard = ({
     }
   }
 
-  const handleCopy = async () => {
+  const handleCopy = async (e) => {
+    e.preventDefault()
     const copySet = {...exerciseSet}
     delete copySet._id
     delete copySet.id
@@ -65,29 +67,26 @@ export const BankCard = ({
     if(createSetGroupData.mode === 'editing'){
       const createResponse = await createSingleExerciseSet(copySet)
     } else{
-      
-      setTimeout(() => {
         localBulkWriteExerciseSets(copySets)
-      }, 500);
     }
 
 
   }
 
-  const handleOpenTargetsModal = () => {
+  const handleOpenTargetsModal = (e) => {
+    e.preventDefault()
     setCurrentExerciseSet(exerciseSet)
     // slow down for touch screen to prevent outside modal close click
-    setTimeout(() => {
-      setModalShow("set-targets")
-    }, 100)
+    
+      setModalShow(`set-targets-${exerciseSet._id || index}`)
+ 
   }
 
-  const handleOpenSubGroupModal = () => {
+  const handleOpenSubGroupModal = (e) => {
+    e.preventDefault()
     setCurrentExerciseSet(exerciseSet)
     // slow down for touch screen to prevent outside modal close click
-    setTimeout(() => {
-      setModalShow("sub-group")
-    }, 100)
+    setModalShow(`sub-group-${exerciseSet._id || index}`)
   }
 
 
@@ -95,24 +94,22 @@ export const BankCard = ({
     <Card
     style={{border: `2px solid ${color ? color  : '--gold-fusion'}`}}
     className={`bank-card ${snapshot.isDragging && 'bank-card-dragging'}`}>
-      
-      
 
       <ColorPickerModal 
       setShowPickerModal={setShowPicker}
       handleColorPick={handleColorPick}
       showPickerModal={showPicker}/>
       
-      {modalShow === "set-targets" &&
+      {modalShow === `set-targets-${exerciseSet._id || index}` &&
       <EditSetModal
       index={index}
-      modalShow={modalShow==="set-targets"} 
+      modalShow={modalShow===`set-targets-${exerciseSet._id || index}`} 
       setModalShow={setModalShow} />}
 
-      {modalShow === "sub-group" &&
+      {modalShow === `sub-group-${exerciseSet._id || index}` &&
       <SubGroupModal
       index={index}
-      modalShow={modalShow==="sub-group"} 
+      modalShow={modalShow===`sub-group-${exerciseSet._id || index}`} 
       setModalShow={setModalShow} />}
 
 
@@ -125,7 +122,7 @@ export const BankCard = ({
 
       <OverlayTrigger overlay={<ToolTip>Make a subgroup from this exercise</ToolTip>}>
         <GrObjectGroup
-        onTouchEndCapture={handleOpenSubGroupModal}  
+        onTouchEnd={handleOpenSubGroupModal}  
         onClick={handleOpenSubGroupModal} className='create-subset-icon icon' />
       </OverlayTrigger>
 

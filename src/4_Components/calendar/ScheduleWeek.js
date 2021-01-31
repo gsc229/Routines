@@ -16,9 +16,7 @@ const ScheduleWeek = ({
   height,
   width
 }) => {
-
   
-
   return (
     <div 
     className={weekStyles(week) + " week" }>
@@ -27,10 +25,10 @@ const ScheduleWeek = ({
     const daySetGroups = dateSetGroups[formattedDay] && isSingleRoutine 
     ? dateSetGroups[formattedDay].filter(sg => sg.routine === routine._id)
     : dateSetGroups[formattedDay]
-    
+
     return daySetGroups ?
       <div
-      onClick={() => handleDayClick(daySetGroups[formattedDay], formattedDay)}
+      onClick={() => handleDayClick(daySetGroups, formattedDay)}
       key={day._d}
       className={dayStyles(day, value) + " day"}>
         <p>{day.format("D")}</p>
