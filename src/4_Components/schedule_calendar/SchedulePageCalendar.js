@@ -10,7 +10,7 @@ import mapSetGroupsToDates from './mapSetGroupsToDates'
 import {dayStyles, beforeToday, weekStyles} from '../calendar/styles'
 import CalendarHeader from '../calendar/CalendarHeader'
 import RoutineColorLegend from '../calendar/RoutineColorLegend'
-import DaySection from './DaySection'
+import ScheduleWeek from '../calendar/ScheduleWeek'
 import DarkSpinner from '../spinners/DarkSpinner'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 
@@ -79,34 +79,16 @@ const ScheduleCalendar = ({
           <div 
           key={`schedule-calendar-week-${index + 1}`}
           className='schedule-week-container'>
-            <div 
-            key={index} 
-            className={weekStyles(week) + " week" }>
-            {week.map(day=>{
-            const formattedDay =   day.format('MM-DD-YYYY')
-            const dayHasSets = dateSetGroups[formattedDay]
-            return dayHasSets ?
-              <div
-              onClick={() => handleDayClick(dateSetGroups[formattedDay], formattedDay)}
-              key={day._d}
-              className={dayStyles(day, value) + " day"}>
-                <p>{day.format("D")}</p>
-                {dateSetGroups && dateSetGroups[formattedDay] &&
-                <DaySection
-                windowSize={{height, width}}
-                routineNamesColors={routineNamesColors}
-                dateSetGroups={dateSetGroups[formattedDay]} />}
-              </div>
-            : // ↑ Day has sets ↑ - ↓ Day has no sets ↓ 
-              <div
-                key={day._d}
-                className={dayStyles(day, value) + " day day-no-sets"}>
-                  <p>{day.format("D")}</p>
-              </div>
-
-            })}
-    
-          </div>
+            <ScheduleWeek 
+            key={`week-${index}`} 
+            value={value}
+            height={height}
+            width={width}
+            routineNamesColors={routineNamesColors} 
+            week={week} 
+            dateSetGroups={dateSetGroups}
+            handleDayClick={handleDayClick}
+            />
           </div>)
         }
       </div>}

@@ -8,6 +8,7 @@ const ScheduleWeek = ({
   week,
   dateSetGroups,
   routineNamesColors,
+  isSingleRoutine=false,
   handleDayClick,
   routine,
   value,
@@ -22,7 +23,10 @@ const ScheduleWeek = ({
     className={weekStyles(week) + " week" }>
     {week.map(day=>{
     const formattedDay = day.format('MM-DD-YYYY')
-    const daySetGroups = dateSetGroups[formattedDay] && dateSetGroups[formattedDay].filter(sg => sg.routine === routine._id)
+    const daySetGroups = dateSetGroups[formattedDay] && isSingleRoutine 
+    ? dateSetGroups[formattedDay].filter(sg => sg.routine === routine._id)
+    : dateSetGroups[formattedDay]
+    
     return daySetGroups ?
       <div
       onClick={() => handleDayClick(daySetGroups[formattedDay], formattedDay)}

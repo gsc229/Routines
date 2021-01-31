@@ -7,7 +7,7 @@ import {dayStyles, beforeToday, weekStyles} from './styles'
 import mapSetGroupsToDates from '../schedule_calendar/mapSetGroupsToDates'
 import CalendarHeader from './CalendarHeader'
 import RoutineColorLegend from './RoutineColorLegend'
-import ScheduleWeek from '../schedule_calendar/ScheduleWeek'
+import ScheduleWeek from './ScheduleWeek'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 
 const SingleRoutineCalendar = ({
