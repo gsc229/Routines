@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row'
 import { FaPlus } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import { clearCurrentRoutine, fetchRoutines } from '../../1_Actions/routineActions'
-import RoutinesAccordion from '../../4_Components/routine/accordion_routines/RoutinesAccordion'
+import RoutinesAccordion from '../../4_Components/manage_routines/accordion_routines/RoutinesAccordion'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 
