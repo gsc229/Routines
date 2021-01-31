@@ -43,7 +43,7 @@ const CalendarHeader = ({
       <div 
       className='view-routine-link-container'>
         <Link 
-        style={{fontSize: fontSizeClamp(300, 1200, .7, 1.5)}}
+        style={{fontSize: fontSizeClamp(300, 1200, .7, 1)}}
         onClick={handleEditScheduleClick}
         className='view-routine-link' to={`/view-routine/${routine._id}/${routine.slug || routine.name}`} >
           Edit

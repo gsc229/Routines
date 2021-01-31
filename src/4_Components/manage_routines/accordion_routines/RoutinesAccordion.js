@@ -16,8 +16,6 @@ import DarkSpinner from '../../spinners/DarkSpinner'
 import ConfirmDeleteRoutineModal from '../../modals/confirm_delete_modals/ConfirmDeleteRoutineModal'
 import fontsizeClamp from '../../../utils/clampBuilder'
 
-
-
 export const RoutinesAccordion = ({
   userRoutines,
   currentRoutine,
