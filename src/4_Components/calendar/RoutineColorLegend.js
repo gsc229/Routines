@@ -14,9 +14,6 @@ export const RoutineColorLegend = ({
   currentRoutine
 }) => {
 
-  
-  
-
   const [showPicker, setShowPicker] = useState(false)
   const [initialNamesColors, setInitialNamesColors] = useState(routineNamesColors)
 
@@ -25,7 +22,7 @@ export const RoutineColorLegend = ({
       setInitialNamesColors({ [currentRoutine._id]: routineNamesColors[currentRoutine._id] })
     }
 
-  }, [])
+  }, [showPicker])
 
   
   const persistColorChanges = (routineId) => {

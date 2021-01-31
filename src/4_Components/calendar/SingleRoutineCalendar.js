@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
-import {fetchRoutines, fetchFlattenedRoutine} from '../../1_Actions/routineActions'
 import {setCurrentSetGroups} from '../../1_Actions/setGroupActions'
 import moment from 'moment'
 import buildCalendar from './build'
@@ -13,15 +12,12 @@ import {useWindowSize} from '../../custom_hooks/useWindowSize'
 
 
 const SingleRoutineCalendar = ({
-  calendarId, 
   className, 
   routine,
   isSingleRoutine=true,
   routineNamesColors,
   userRoutines,
-  setCurrentSetGroups,
-  fetchRoutines,
-  userId
+  setCurrentSetGroups
 }) => {
 
   const [calendar, setCalendar] = useState([])
@@ -39,12 +35,8 @@ const SingleRoutineCalendar = ({
 
 
   const handleDayClick = (setGroups, date) => {
-    //history.push(`/execute-sets/${date}`)
     setCurrentSetGroups(setGroups)
-    //return <Redirect to={`/execute-sets/${date}`} />
   }
-
-  console.log({calendar, value, dateSetGroups})
 
   return (
     <div className={`single-rouitne-calendar ${className}`}>
@@ -86,8 +78,7 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = {
-  setCurrentSetGroups,
-  fetchRoutines
+  setCurrentSetGroups
 }
 
 

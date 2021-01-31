@@ -19,8 +19,6 @@ export const ManageRoutinesPage = ({
   userRoutines
 }) => {
 
-  
-
   const handleNewClick = () => {
      clearCurrentRoutine()
      history.push('/create-routine')

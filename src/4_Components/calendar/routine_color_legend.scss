@@ -24,7 +24,7 @@
     }
 
     .slider-container{
-      width: 300px;
+      max-width: 300px;
       opacity: 0;
       background-color: $bs-dark;
       z-index: 10;

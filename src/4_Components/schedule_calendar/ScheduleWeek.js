@@ -8,7 +8,6 @@ const ScheduleWeek = ({
   week,
   dateSetGroups,
   routineNamesColors,
-  currentRouitne,
   handleDayClick,
   routine,
   value,
@@ -24,7 +23,6 @@ const ScheduleWeek = ({
     {week.map(day=>{
     const formattedDay = day.format('MM-DD-YYYY')
     const daySetGroups = dateSetGroups[formattedDay] && dateSetGroups[formattedDay].filter(sg => sg.routine === routine._id)
-    console.log({dateSetGroups, daySetGroups, routine})
     return daySetGroups ?
       <div
       onClick={() => handleDayClick(daySetGroups[formattedDay], formattedDay)}
@@ -51,8 +49,7 @@ const ScheduleWeek = ({
 const mapStateToProps = (state) => ({
   routineNamesColors: state.routineReducer.routineNamesColors,
   userRoutines: state.routineReducer.userRoutines,
-  userId: state.userReducer.user._id,
-  currentRoutine: state.routineReducer.currentRouitne
+  userId: state.userReducer.user._id
 })
 
 

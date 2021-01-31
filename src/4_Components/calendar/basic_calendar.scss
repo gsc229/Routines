@@ -6,7 +6,7 @@
   .calendar-header{
     background-color: $bs-dark;
     color: white;
-    
+    margin-top: 10px;
     .view-routine-link-container{
       display: flex;
       justify-content: center;
@@ -75,13 +75,13 @@
   .week{
     display: flex;
     justify-content: space-evenly;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
+    border-top: 2px solid $jet;
+    border-left: 2px solid $jet;
   }
   
   .day{
     width: 17%;
-    border-right: 1px solid black;
+    border-right: 2px solid $jet;
     cursor: pointer;
     p{
       margin: 0;

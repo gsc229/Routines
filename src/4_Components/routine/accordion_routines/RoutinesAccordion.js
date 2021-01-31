@@ -23,7 +23,8 @@ export const RoutinesAccordion = ({
   clearCurrentRoutine, 
   setCurrentRoutine,
   saveRoutineChanges,
-  crudingRoutine
+  crudingRoutine,
+  routineNamesColors
 }) => {
 
   const [editingMode, setEditingMode] = useState(false)
@@ -69,7 +70,6 @@ export const RoutinesAccordion = ({
   }
 
   const editInCreatePage = (routine) => {
-    console.log({routine})
     if(currentRoutine._id !== routine._id) setCurrentRoutine(routine)
     history.push('/create-routine')
   }
@@ -141,7 +141,7 @@ const getToggleStyles = (routineColor) => {
             disabled={editingMode}
             as={Button} 
             onClick={() => handleToggle(routine)}
-            style={getToggleStyles(routine.color)} 
+            style={getToggleStyles(routineNamesColors[routine._id].color)} 
             eventKey={routine._id} >
               {routine.name}
             </Accordion.Toggle>
@@ -204,7 +204,8 @@ const getToggleStyles = (routineColor) => {
 const mapStateToProps = (state) => ({
   userRoutines: state.routineReducer.userRoutines,
   currentRoutine: state.routineReducer.currentRoutine,
-  crudingRoutine: state.routineReducer.crudingRoutine
+  crudingRoutine: state.routineReducer.crudingRoutine,
+  routineNamesColors: state.routineReducer.routineNamesColors
 })
 
 const mapDispatchToProps = {
