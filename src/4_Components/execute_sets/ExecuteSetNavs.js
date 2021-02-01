@@ -5,14 +5,18 @@ import {pathConstructor} from './pathConstructor'
 import {selectStyles} from './selectStyles'
 import {Link, useParams, useHistory} from 'react-router-dom'
 import NavLink from 'react-bootstrap/NavLink'
-import {PointLeftIcon} from '../icons/Icons'
 import Select, {components} from 'react-select'
+import Button from 'react-bootstrap/Button'
+import {EyeIcon, PointLeftIcon} from '../icons/Icons'
 
 export const ExecuteSetNavs = ({
   currentExerciseSets,
   currentExerciseSet,
   setCurrentExerciseSet,
-  routineNamesColors
+  routineNamesColors,
+  setInstructionShow,
+  instructionShow,
+  sessionSaved
 }) => {
   
   const routineColor = routineNamesColors[currentExerciseSet.routine].color ? routineNamesColors[currentExerciseSet.routine].color : 'var(--routine-red)'
@@ -84,40 +88,64 @@ export const ExecuteSetNavs = ({
 
   return (
     <div className="ex-set-navs">
-      <div 
-      onClick={() => history.push(`/execute-sets/${setDate}`)}  
-      className="back-to-container back-to-set-groups-container">
-        <PointLeftIcon />
-        &nbsp; All Set Groups
-      </div>
-      <div className="select-container">
-        <Select
-          styles={selectStyles}
-          value={currentSelectValue}
-          components={{Control: ControlComponent}}
-          placeholder='Select set...'
-          onChange={handleSetSelect}
-          options={selectOptions}
-          autoFocus/>
-      </div>
-      <div className='links-container'>
-        <div className='link-container'>
-          <NavLink
-          disabled={!prevSet}
-          as={Link}
-          to={prevPath || 'nowhere'} >
-            Previous Set
-          </NavLink>
-        </div>
-        <div className='link-container'>
-          <NavLink
-          disabled={!nextSet}
-          as={Link}
-          to={nextPath || 'nowhere'}>
-            Next Set
-          </NavLink>
-        </div>
-      </div>
+
+      {!sessionSaved && 
+        
+        <div className='instruction-btn-container'>
+
+          <Button
+            size='sm'
+            block
+            variant={instructionShow ? 'outline-success' : 'outline-info'}
+            onClick={() => setInstructionShow(!instructionShow)}>
+            {
+            instructionShow ? 
+            <div 
+            className='btn-text-container'>
+              <PointLeftIcon />&nbsp; Back to record
+            </div>
+            : 
+            <div 
+            className='btn-text-container'>
+              <EyeIcon />&nbsp; Instructions
+            </div>}
+
+          </Button>
+
+        </div>}
+
+        {!instructionShow && 
+        <div className='navs-bottom'>
+          <div className="select-container">
+            <Select
+              styles={selectStyles}
+              value={currentSelectValue}
+              components={{Control: ControlComponent}}
+              placeholder='Select set...'
+              onChange={handleSetSelect}
+              options={selectOptions}
+              autoFocus/>
+          </div>
+          <div className='links-container'>
+            <div className='link-container'>
+              <NavLink
+              disabled={!prevSet}
+              as={Link}
+              to={prevPath || 'nowhere'} >
+                Previous Set
+              </NavLink>
+            </div>
+            <div className='link-container'>
+              <NavLink
+              disabled={!nextSet}
+              as={Link}
+              to={nextPath || 'nowhere'}>
+                Next Set
+              </NavLink>
+            </div>
+          </div>
+        </div>}
+
     </div>
   )
 }

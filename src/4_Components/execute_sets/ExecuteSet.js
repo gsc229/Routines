@@ -7,13 +7,13 @@ import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import ExecuteSetNavs from './ExecuteSetNavs'
 import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard'
 import Button from 'react-bootstrap/Button'
-import {EyeIcon, PointLeftIcon} from '../icons/Icons'
 import RecordInputs from './RecordInputs'
 
 export const ExecuteSet = ({
   currentExerciseSet,
   routineNamesColors,
-  saveExerciseSetChanges
+  saveExerciseSetChanges,
+  setCurrentPage
 }) => {
 
   const routineColor = routineNamesColors[currentExerciseSet.routine].color
@@ -34,37 +34,18 @@ export const ExecuteSet = ({
   }, [currentExerciseSet._id, currentExerciseSet.updatedAt])
 
   
-
+  useEffect(() => {
+    setCurrentPage('execute-set')
+  }, [])
 
   return (
     <div className='execute-set'>
-      {!instructionShow && <ExecuteSetNavs />}
+      <ExecuteSetNavs 
+      sessionSaved={sessionSaved}
+      setInstructionShow={setInstructionShow}
+      instructionShow={instructionShow}  />
+
       <div className="execute-set-inner">
-
-        {!sessionSaved && 
-        
-        <div className='instruction-btn-container'>
-
-          <Button
-            size='sm'
-            block
-            variant={instructionShow ? 'outline-success' : 'outline-info'}
-            onClick={() => setInstructionShow(!instructionShow)}>
-            {
-            instructionShow ? 
-            <div 
-            className='btn-text-container'>
-              <PointLeftIcon />&nbsp; Back to record
-            </div>
-            : 
-            <div 
-            className='btn-text-container'>
-              <EyeIcon />&nbsp; Instructions
-            </div>}
-
-          </Button>
-
-        </div>}
 
        {!instructionShow && !updateSuccess && !sessionSaved &&
        <RecordInputs

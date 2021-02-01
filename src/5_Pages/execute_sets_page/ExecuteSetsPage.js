@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import { Route, useLocation, useHistory, useParams, useRouteMatch } from 'react-router-dom'
 import moment from 'moment'
@@ -8,6 +8,7 @@ import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import CurrentSetGroups from '../../4_Components/execute_sets/CurrentSetGroups'
 import ExecuteSet from '../../4_Components/execute_sets/ExecuteSet'
+import {PointLeftIcon, CalendarIcon} from '../../4_Components/icons/Icons'
 
 export const ExecuteSetsPage = ({
   userRoutines,
@@ -17,10 +18,10 @@ export const ExecuteSetsPage = ({
 
   const location = useLocation()
   const history = useHistory()
-  const params = useParams()
+  const {setDate} = useParams()
   const match = useRouteMatch()
-  
-  const daysDate = moment(params.setDate).format('LL')
+  const daysDate = moment(setDate).format('LL')
+  const [currentPage, setCurrentPage] = useState('all-set-groups')
 
   useEffect(() => {
     windowScrollTop()
@@ -48,14 +49,33 @@ export const ExecuteSetsPage = ({
       className="days-date-container">
         <p>{daysDate}</p>
       </div>
-        {match.url === location.pathname && <CurrentSetGroups />}
-        {currentSetGroup.name && 
-        <Route 
-        exact 
-        path='/execute-sets/:setDate/:routineName/:setGroupId/:exerciseName/:order' 
-        render={() => 
-          <ExecuteSet />}  
-        />}
+
+      <div className='page-navs'>
+        <div 
+        onClick={() => history.push(`/schedule`)}  
+        className="back-to-container back-to-schedule-container">
+          <CalendarIcon />
+          &nbsp; Schedule
+        </div>
+  
+        {currentPage === 'execute-set' && 
+        <div 
+        onClick={() => history.push(`/execute-sets/${setDate}`)}  
+        className="back-to-container back-to-set-groups-container">
+          <PointLeftIcon />
+          &nbsp; All Set Groups
+        </div>}
+      </div>
+
+      {match.url === location.pathname && <CurrentSetGroups setCurrentPage={setCurrentPage} />}
+
+      {currentSetGroup.name && 
+      <Route 
+      exact 
+      path='/execute-sets/:setDate/:routineName/:setGroupId/:exerciseName/:order' 
+      render={() => <ExecuteSet setCurrentPage={setCurrentPage} />}  
+      />}
+
       </Container>
     </LayoutOne>
   )

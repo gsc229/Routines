@@ -1,3 +1,20 @@
+.page-navs{
+  .back-to-container{
+    margin-bottom: 10px;
+    margin-right: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    cursor: pointer;
+    .icon{
+      position: relative;
+      bottom: 2px;
+    }
+  }
+}
+
+
 .current-sets{
   //background-color: lightblue;
   max-width: 500px;
@@ -15,52 +32,15 @@
   }
 }
 
-.back-to-container{
-  margin-bottom: 10px;
-  position: relative;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  border: 1px solid $routine-red;
-  padding: 15px;
-  border-radius: 4px;
-  background-color: $jet;
-  cursor: pointer;
-  .icon{
-    position: relative;
-    bottom: 2px;
-  }
-}
+
 
 
 .execute-set{
   max-width: 500px;
   margin: auto;
+
   .execute-set-inner{
     //margin-top: 20px;
-
-    .instruction-btn-container{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 10px 0;
-      .btn-text-container{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 25px;
-        position: relative;
-        .point-left-icon{
-          position: relative;
-          bottom: 2px;
-        }
-        .eye-icon{
-          position: relative;
-          bottom: 1px;
-        }
-      }
-    }
 
     .not-recorded-span{
       font-style: italic;
@@ -129,14 +109,6 @@
     }
   }
 
-
-
-
-  
-
-    
-    
-
     .inputs-and-targets-saved-container{
       .targets-and-actuals-list{
      
@@ -167,6 +139,27 @@
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  .instruction-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    .btn-text-container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 25px;
+      position: relative;
+      .point-left-icon{
+        position: relative;
+        bottom: 2px;
+      }
+      .eye-icon{
+        position: relative;
+        bottom: 1px;
+      }
+    }
+  }
   .select-container{
     margin-bottom: 10px;
   }
