@@ -37,6 +37,7 @@ const initialState = {
 }
 
 const reducer = (state=initialState, action) => {
+
   switch(action.type){
     case constants.SET_CURRENT_ROUTINE:
       return{
@@ -202,6 +203,46 @@ const reducer = (state=initialState, action) => {
       ...state,
       error_message: ''
     }
+
+    /* ASCYN Interdependent */
+    case constants.UPDATE_WEEK_SUCCESS:
+      return{
+        ...state,
+        userRoutines: [
+          ...state.userRoutines,
+          state.userRoutines
+          .find(rt => rt._id === action.payload.routine).weeks
+          .map(week => week._id === action.payload._id ? action.payload : week)
+          .sort((a, b) => a.week_number - b.week_number)
+        ]
+      }
+    case constants.UPDATE_SET_GROUP_SUCCESS:
+
+      console.log('routineReducer UPDATE SG success', action.payload)
+
+      return{
+        ...state,
+        userRoutines: [
+          ...state.userRoutines,
+          state.userRoutines
+          .find(rt => rt._id === action.payload.routine).set_groups
+          .map(setGroup => setGroup._id === action.payload._id ? action.payload : setGroup)
+          .sort((a, b) => a.week_number - b.week_number)
+        ]
+      }
+    case constants.UPDATE_EXERCISE_SET_SUCCESS:
+      return{
+        ...state,
+        userRoutines: [
+          ...state.userRoutines,
+          state.userRoutines
+          .find(rt => rt._id === action.payload.routine).exercise_sets
+          .map(setGroup => setGroup._id === action.payload._id ? action.payload : setGroup)
+          .sort((a, b) => a.week_number - b.week_number)
+        ]
+      }
+
+
     case constants.LOG_OUT:
       return {...initialState}
 

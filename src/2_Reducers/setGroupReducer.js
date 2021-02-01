@@ -86,12 +86,6 @@ const reducer = (state=initialState, action) => {
       ...state,
       currentSetGroups: action.payload
     }
-  case constants.SET_FLATTENED_ROUTINE:
-    return{
-      ...state,
-      crudingSetGroup: false,
-      currentRoutineSetGroups: action.payload.set_groups
-    }
   case  constants.WRITING_CURRENT_SET_GROUP: 
     return{
       ...state,
@@ -123,6 +117,13 @@ const reducer = (state=initialState, action) => {
       ...state,
       lockedInType: action.payload
     }
+  /* NON ASYNC Interdependent */
+  case constants.SET_FLATTENED_ROUTINE:
+    return{
+      ...state,
+      crudingSetGroup: false,
+      currentRoutineSetGroups: action.payload.set_groups
+  }
   /* ASYNC ACTIONS */
   case constants.FETCHING_SET_GROUPS:
     return{
@@ -239,9 +240,7 @@ const reducer = (state=initialState, action) => {
         .filter(setGroup => setGroup._id !== setGroupId)
       ]
     }
-  
-
-  // interdependant actions
+  // interdependent actions
   case constants.FETCHING_FLATTENED_ROUTINE:
     return{
       ...state,

@@ -66,12 +66,6 @@ const reducer = (state=initialState, action) => {
         ...state,
         currentExerciseSet: action.payload
       }
-    case constants.SET_FLATTENED_ROUTINE:
-      return{
-        ...state,
-        crudingExerciseSet: false,
-        currentRoutineSets: action.payload.exercise_sets.sort((a, b) => a.order - b.order)
-      }
     case constants.ADD_TO_CURRENT_EXERCISE_SETS:
       return{
         ...state,
@@ -118,9 +112,14 @@ const reducer = (state=initialState, action) => {
         ...state,
         currentExerciseSets: initialState.currentExerciseSets
       }
-
+    /* NON ASNYC Interdependent */
+    case constants.SET_FLATTENED_ROUTINE:
+      return{
+        ...state,
+        crudingExerciseSet: false,
+        currentRoutineSets: action.payload.exercise_sets.sort((a, b) => a.order - b.order)
+      }
     /* ASYNC   */
-
     // single set
     case constants.CREATING_EXERCISE_SET:
       return{
@@ -225,7 +224,7 @@ const reducer = (state=initialState, action) => {
         error_message: action.payload
       }
     
-    // interdependant
+    // interdependent
     case constants.FETCHING_FLATTENED_ROUTINE:
       return{
         ...state,

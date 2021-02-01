@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Navbar from 'react-bootstrap/Navbar'
 import {Link} from 'react-router-dom'
-import {setCurrentRoutine, fetchFlattenedRoutine} from '../../1_Actions/routineActions'
+import {setCurrentRoutine, fetchFlattenedRoutine, setFlattenedRoutine} from '../../1_Actions/routineActions'
 import fontSizeClamp from '../../utils/clampBuilder'
 
 const CalendarHeader = ({
@@ -10,6 +10,7 @@ const CalendarHeader = ({
   value, 
   setValue, 
   routine,
+  setFlattenedRoutine,
   fetchFlattenedRoutine}) => {
 
   function currMonthName(){
@@ -28,9 +29,12 @@ const CalendarHeader = ({
    return value.clone().add(1, "month").startOf('month')
   }
 
-
   const handleEditScheduleClick = () => {
-    fetchFlattenedRoutine(routine._id)
+    //fetchFlattenedRoutine(routine._id)
+    const weeks = routine.weeks
+    const set_groups = routine.set_groups
+    const exercise_sets = routine.exercise_sets
+    setFlattenedRoutine({routine, weeks, set_groups, exercise_sets})
   }
 
   const dayOfWeek = ["Su","Mo","Tu","We","Th","Fr","Sa"] 
@@ -88,7 +92,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setCurrentRoutine,
-  fetchFlattenedRoutine
+  fetchFlattenedRoutine,
+  setFlattenedRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarHeader)

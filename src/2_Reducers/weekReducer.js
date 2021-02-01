@@ -34,12 +34,6 @@ const reducer = (state=initialState, action) => {
         ...state,
         scheduleDnDSelectedWeekNumbers: action.payload
       }
-    case constants.SET_FLATTENED_ROUTINE:
-      return{
-        ...state,
-        crudingWeek: false,
-        currentWeeks: action.payload.weeks.sort((a, b) => a.week_number - b.week_number)
-      }
     case constants.CLEAR_CURRENT_WEEK:
       return{
         ...state,
@@ -58,9 +52,15 @@ const reducer = (state=initialState, action) => {
         ...state,
         error_message: ''
       }
-
-    /* ASYCN ACTIONS */
-    // interdependant
+    /* NON ASYNC Interdependent */
+    case constants.SET_FLATTENED_ROUTINE:
+      return{
+        ...state,
+        crudingWeek: false,
+        currentWeeks: action.payload.weeks.sort((a, b) => a.week_number - b.week_number)
+    }
+    /* ASYNC ACTIONS */
+    // interdependent
     case constants.FETCHING_FLATTENED_ROUTINE:
       return{
         ...state,
@@ -78,7 +78,7 @@ const reducer = (state=initialState, action) => {
         crudingWeek: false,
         error_message: action.payload
       }
-    // independant
+    // independent
     case constants.FETCHING_WEEKS:
       return{
         ...state,
@@ -192,11 +192,6 @@ const reducer = (state=initialState, action) => {
         crudingWeek: false,
         error_message: action.payload
       }
-
-
-
-
-
 
     case constants.LOG_OUT:
       return initialState
