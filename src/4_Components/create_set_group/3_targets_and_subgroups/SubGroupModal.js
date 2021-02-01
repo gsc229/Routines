@@ -40,7 +40,8 @@ export const SubSetModal = ({
     })
   }
 
-  const colseConfirmed = () => {
+  const closeConfirmed = (e) => {
+    e.preventDefault()
     setModalShow(false)
     setAlertConfig({
       ...alertConfig,
@@ -49,11 +50,9 @@ export const SubSetModal = ({
     clearCreateSetGroupData()
     clearCurrentExerciseSet()
     localWritingCreateSetGroupData('currentStep', 'choose-exercise')
-    
   }
 
   const buildSubGroup = async () => {
-
     const firstId = currentExerciseSet._id
     delete currentExerciseSet._id
     const newSubGroup = createSetGroupLocal(currentSetGroup, createSetGroupData, currentExerciseSet)
@@ -83,11 +82,10 @@ export const SubSetModal = ({
               }
             })
           }
-
-        
       })
 
-      const subGroupResonse = await bulkWriteExerciseSets(updatesOrInserts, {set_group: currentSetGroup._id})
+      const subGroupResonse = 
+      await bulkWriteExerciseSets(updatesOrInserts, {set_group: currentSetGroup._id})
 
         if(!subGroupResonse.success){
           // report the error in the alert
@@ -117,7 +115,6 @@ export const SubSetModal = ({
     
     }
     // do this if it's a new setGroup
-
     currentSetsCopy.splice(index, 1, ...newSubGroup)
     localBulkWriteExerciseSets(currentSetsCopy)
     setModalShow(false)
@@ -153,7 +150,7 @@ export const SubSetModal = ({
           {alertConfig.continue_btn && 
           <Button className='continue-btn' variant='success' onClick={() => setAlertConfig(false)}>Continue Working</Button>}
           
-          <Button className='close-btn' onTouchStart={colseConfirmed} onClick={colseConfirmed}>Close</Button>
+          <Button className='close-btn' onTouchStart={closeConfirmed} onClick={closeConfirmed}>Close</Button>
 
         </div>
       </Modal.Body>}

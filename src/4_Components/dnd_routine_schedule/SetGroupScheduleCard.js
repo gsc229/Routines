@@ -23,9 +23,7 @@ export const SetGroup = ({
 
   const [modalShow, setModalShow] = useState(false)
   const [deletaModalShow, setDeleteModalShow] = useState(false)
-  const redirectLink = `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${weekNumber}/day-${dayNumber}}`
-  
-  
+  const redirectLink = `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name.replace(/[\s]/g, '')}/week-${weekNumber}/day-${dayNumber}}`
 
   const handleViewSetGroup = () => {
     setCurrentSetGroup(set_group)
@@ -34,6 +32,7 @@ export const SetGroup = ({
 
   return (
     <Card
+    style={{border: `2px solid ${currentRoutine.color || 'var(--routine-red)'}` }}
     text={!isDragging && 'white'}
     className="set-group-schedule-card">
       {modalShow && 
@@ -42,12 +41,14 @@ export const SetGroup = ({
       redirectLink={redirectLink}
       setModalShow={setModalShow} 
       modalShow={modalShow}/>}
+      
       <ConfirmDeleteModal  
       setGroup={set_group}
       modalShow={deletaModalShow}
       setModalShow={setDeleteModalShow}
       />
       <Card.Header
+      style={{backgroundColor: isDragging ? currentRoutine.color || 'white' : 'var(--jet)'}}
       className='set-group-schedule-card-header'>
 
         <div className='view-copy-move-btns-conainer'>
@@ -56,7 +57,7 @@ export const SetGroup = ({
             <div className='view-here-container'>
 
               <div
-              className='schedul-card-control-btn'>
+              className='schedule-card-control-btn'>
                 <OverlayTrigger 
                 overlay={<ToolTip>View full details</ToolTip>}>
                 <BsEye
@@ -65,7 +66,7 @@ export const SetGroup = ({
               </div>
     
               <div
-              className='schedul-card-control-btn'>
+              className='schedule-card-control-btn'>
                 <OverlayTrigger overlay={<ToolTip>Duplicate here</ToolTip>}>
                   <DuplicateHereBtn
                   set_group={set_group}/>
@@ -76,26 +77,26 @@ export const SetGroup = ({
             <div className='duplicate-to-container'>
               <DuplicateTo
               set_group={set_group}
-              className='schedul-card-control-btn duplicate-to' />
+              className='schedule-card-control-btn duplicate-to' />
             </div>
 
           </div>
 
           <div className='grabber-container'>
             <BsGrid3X3Gap
-            className='schedul-card-control-btn schedule-card-grabber' />
+            className='schedule-card-control-btn schedule-card-grabber' />
           </div>
          
         </div>
 
       </Card.Header>
       <Card.Body
-        className='set-group-schedule-card-body'>
+      className='set-group-schedule-card-body'>
         <Card.Subtitle>{set_group.name ? set_group.name : 'no name'}</Card.Subtitle>
         <OverlayTrigger 
         overlay={<ToolTip>Delete set group</ToolTip>}>
           <RiDeleteBin5Line
-          className='schedul-card-control-btn set-group-card-delete-icon' 
+          className='schedule-card-control-btn set-group-card-delete-icon' 
           onClick={() => setDeleteModalShow(true)}
           />
         </OverlayTrigger>

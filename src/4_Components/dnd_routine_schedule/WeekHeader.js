@@ -6,7 +6,9 @@ import {bulkWriteExerciseSets} from '../../1_Actions/exerciseSetActions'
 import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row'
 import  Col  from 'react-bootstrap/Col'
+import fontSizeClamp from '../../utils/clampBuilder'
 
 export const WeekHeader = ({
   routineSchedule,
@@ -110,11 +112,8 @@ export const WeekHeader = ({
 
     // map old sg ids to new one's for the next bulkwrite
     bulkWriteSetGroupsResult.data.forEach(newSg => oldToNewSetGroupIds[newSg.copied_from] = newSg._id)
-
-    console.log({oldToNewSetGroupIds})
     // create the new sets
     currentRoutineSets.filter(exSet => exSet.week === idOfCopiedWeek).forEach(exSet => {
-      console.log({oldToNewSetGroupIds}, exSet.set_group ,oldToNewSetGroupIds[exSet.set_group], {exSet})
       exSet.week = newWeekId
       exSet.set_group = oldToNewSetGroupIds[exSet.set_group]
       exSet.exercise = exSet.exercise ? exSet.exercise._id ? exSet.exercise._id : exSet.exercise : null // just in caes the exercise had been populated (only need the _id when creating, not the whole object)
@@ -130,8 +129,6 @@ export const WeekHeader = ({
       })
     })
 
-    console.log({bulkExSetCommands})
-
     if(!bulkExSetCommands.length){
       return fetchFlattenedRoutine(routineId)
     }
@@ -141,17 +138,9 @@ export const WeekHeader = ({
     if(!bulkWriteExerciseSetsResult.success){
       return fetchFlattenedRoutine(routineId)
     }
-
-    
-    /* fetchFlattenedRoutine(routineId)
-    setScheduleDnDSelectedWeekNumber([copyToWeekNumber]) */
-
   }
 
-
-
   const handleMoveTo = async (e) => {
-    console.log({ targetValue: e.target.value.week_number})
     const destinationWeekNumber = JSON.parse(e.target.value)
     const sourceWeekNumber = JSON.parse(currentWeek.week_number)
     const sourceId = currentWeek._id
@@ -159,10 +148,8 @@ export const WeekHeader = ({
 
     currentWeeks.forEach(wk => {
 
-      console.log({week: wk._id, week_number: wk.week_number, sourceWeekNumber, destinationWeekNumber})
-
       if(wk._id === sourceId){
-        console.log('if wk._id === sourceId: ', {week: wk._id, sourceId})
+
         updates.push({
           updateOne: {
             filter: {_id: sourceId},
@@ -170,7 +157,7 @@ export const WeekHeader = ({
           }
         })
       } else if( wk.week_number > sourceWeekNumber && wk.week_number <= destinationWeekNumber){
-        console.log('if wk.week_number > sourceWeekNumber && wk.week_number <= destinationWeekNumber', {week: wk._id,sourceWeekNumber, week_number: wk.week_number, destinationWeekNumber})
+        
           updates.push({
             updateOne: {
               filter: {_id: wk._id},
@@ -178,7 +165,7 @@ export const WeekHeader = ({
             }
           })
       } else if(wk.week_number >= destinationWeekNumber &&  wk.week_number < sourceWeekNumber ){
-        console.log('if wk.week_number >= destinationWeekNumber &&  wk.weeek_number < sourceWeekNumber', {week: wk._id, destinationWeekNumber, week_number: wk.week_number, sourceWeekNumber })
+      
           updates.push({
             updateOne: {
               filter: {_id: wk._id},
@@ -187,9 +174,6 @@ export const WeekHeader = ({
           })
       }
     })
-
-    
-    console.log({updates})
     await bulkWriteWeeks(updates,  currentRoutine._id)
     //setScheduleDnDSelectedWeekNumber([destinationWeekNumber])
   }
@@ -225,8 +209,6 @@ export const WeekHeader = ({
     })
 
     const weekBulkWriteResults = await bulkWriteWeeks(currentWeeksUpdates, routineId)
-    //fetchFlattenedRoutine(routineId)
-    //setScheduleDnDSelectedWeekNumber([copyToWeekNumber])
   }
 
 
@@ -235,17 +217,25 @@ export const WeekHeader = ({
     
     <div
     className='week-container-header'>
-      <div className='header-top'>
-        <h5>{currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}</h5>
-        <Button
-          className='delete-week-btn'
-          onClick={() =>{ 
-          setModalShow(true)
-          setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))
-          }}>
-            Delete Week
-        </Button>
-      </div>
+      <Row className='header-top'>
+        <Col sm='12' md='6'>
+          <h5 
+          style={{fontSize: fontSizeClamp(400, 1000, 1, 1.3), color: currentRoutine.color || 'white'}}>
+            {currentRoutine.name} - Week: {routineSchedule[weekNumber].week_number}
+          </h5>
+        </Col>
+        <Col sm='12' md='6'>
+          <Button
+            size='sm'
+            className='delete-week-btn'
+            onClick={() =>{ 
+            setModalShow(true)
+            setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))
+            }}>
+              Delete Week
+          </Button>
+        </Col>
+      </Row>
       <Form className='week-header-form'>
         <Form.Row>
             <Col sm='12' md='3'>

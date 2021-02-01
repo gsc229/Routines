@@ -1,6 +1,14 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroyExerciseSet, localBulkWriteExerciseSets, setCurrentExerciseSet, createSingleExerciseSet} from '../../../1_Actions/exerciseSetActions'
+import {
+  destroyExerciseSet, 
+  localBulkWriteExerciseSets, 
+  setCurrentExerciseSet, 
+  createSingleExerciseSet, 
+  saveExerciseSetChanges,
+  clearCurrentExerciseSet
+} 
+from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
@@ -9,7 +17,7 @@ import {BsGrid3X3Gap} from 'react-icons/bs'
 import {FiTarget} from 'react-icons/fi'
 import {GrObjectGroup} from 'react-icons/gr'
 import TargetIcons from './TargetIcons'
-import EditSetModal from '../3_targets_and_subgroups/SetTargetsModal'
+import SetTargetsModal from '../3_targets_and_subgroups/SetTargetsModal'
 import SubGroupModal from '../3_targets_and_subgroups/SubGroupModal'
 import ColorPickerModal from '../../modals/color_picker_modal/ColorPickerModal'
 import {BiPalette} from 'react-icons/bi'
@@ -17,14 +25,18 @@ import {BiPalette} from 'react-icons/bi'
 export const BankCard = ({
   exerciseSet,
   index,
-  currentExerciseSets, 
+  currentExerciseSets,
+  currentExerciseSet, 
   localBulkWriteExerciseSets,
   setCurrentExerciseSet,
   destroyExerciseSet,
   snapshot,
   createSetGroupData,
-  createSingleExerciseSet
+  createSingleExerciseSet,
+  saveExerciseSetChanges,
+  clearCurrentExerciseSet
 }) => {
+
   const [modalShow, setModalShow] = useState(false)
   const [showPicker, setShowPicker] = useState(false)
 
@@ -41,7 +53,13 @@ export const BankCard = ({
     setShowPicker(false)
   }
 
-  const handleRemoveOne = async () => {
+  const handleFinishedSettingTargets = async () => {
+    await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
+    setModalShow(false)
+  }
+
+  const handleRemoveOne = async (e) => {
+    e.preventDefault()
     // new sets don't have _ids so splice index and recreate the array.
     const copy = [...currentExerciseSets]
     copy.splice(index, 1)
@@ -55,7 +73,8 @@ export const BankCard = ({
     }
   }
 
-  const handleCopy = async () => {
+  const handleCopy = async (e) => {
+    e.preventDefault()
     const copySet = {...exerciseSet}
     delete copySet._id
     delete copySet.id
@@ -65,29 +84,24 @@ export const BankCard = ({
     if(createSetGroupData.mode === 'editing'){
       const createResponse = await createSingleExerciseSet(copySet)
     } else{
-      
-      setTimeout(() => {
         localBulkWriteExerciseSets(copySets)
-      }, 500);
     }
-
-
   }
 
-  const handleOpenTargetsModal = () => {
+  const handleOpenTargetsModal = (e) => {
+    e.preventDefault()
     setCurrentExerciseSet(exerciseSet)
     // slow down for touch screen to prevent outside modal close click
-    setTimeout(() => {
-      setModalShow("set-targets")
-    }, 100)
+    
+      setModalShow(`set-targets-${exerciseSet._id || index}`)
+ 
   }
 
-  const handleOpenSubGroupModal = () => {
+  const handleOpenSubGroupModal = (e) => {
+    e.preventDefault()
     setCurrentExerciseSet(exerciseSet)
     // slow down for touch screen to prevent outside modal close click
-    setTimeout(() => {
-      setModalShow("sub-group")
-    }, 100)
+    setModalShow(`sub-group-${exerciseSet._id || index}`)
   }
 
 
@@ -95,24 +109,23 @@ export const BankCard = ({
     <Card
     style={{border: `2px solid ${color ? color  : '--gold-fusion'}`}}
     className={`bank-card ${snapshot.isDragging && 'bank-card-dragging'}`}>
-      
-      
 
       <ColorPickerModal 
       setShowPickerModal={setShowPicker}
       handleColorPick={handleColorPick}
       showPickerModal={showPicker}/>
       
-      {modalShow === "set-targets" &&
-      <EditSetModal
+      {modalShow === `set-targets-${exerciseSet._id || index}` &&
+      <SetTargetsModal
+      handleFinishedSettingTargets={handleFinishedSettingTargets}
       index={index}
-      modalShow={modalShow==="set-targets"} 
+      modalShow={modalShow===`set-targets-${exerciseSet._id || index}`} 
       setModalShow={setModalShow} />}
 
-      {modalShow === "sub-group" &&
+      {modalShow === `sub-group-${exerciseSet._id || index}` &&
       <SubGroupModal
       index={index}
-      modalShow={modalShow==="sub-group"} 
+      modalShow={modalShow===`sub-group-${exerciseSet._id || index}`} 
       setModalShow={setModalShow} />}
 
 
@@ -125,7 +138,7 @@ export const BankCard = ({
 
       <OverlayTrigger overlay={<ToolTip>Make a subgroup from this exercise</ToolTip>}>
         <GrObjectGroup
-        onTouchEndCapture={handleOpenSubGroupModal}  
+        onTouchEnd={handleOpenSubGroupModal}  
         onClick={handleOpenSubGroupModal} className='create-subset-icon icon' />
       </OverlayTrigger>
 
@@ -163,6 +176,7 @@ export const BankCard = ({
 
 const mapStateToProps = (state) => ({
   currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
+  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
   createSetGroupData: state.setGroupReducer.createSetGroupData 
 })
 
@@ -170,8 +184,9 @@ const mapDispatchToProps = {
   localBulkWriteExerciseSets,
   setCurrentExerciseSet,
   destroyExerciseSet,
-  createSingleExerciseSet
-  
+  createSingleExerciseSet,
+  saveExerciseSetChanges,
+  clearCurrentExerciseSet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BankCard)

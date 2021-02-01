@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {clearCurrentExerciseSet, saveExerciseSetChanges} from '../../../1_Actions/exerciseSetActions'
 import Modal from 'react-bootstrap/Modal'
 import CloseAlert from './CloseAlert'
 import Button from 'react-bootstrap/Button'
@@ -10,8 +9,7 @@ export const SetTargetsModal = ({
   modalShow,
   setModalShow,
   currentExerciseSet,
-  saveExerciseSetChanges,
-  clearCurrentExerciseSet
+  handleFinishedSettingTargets
 }) => {
 
   const [alertConfig, setAlertConfig] = useState({
@@ -38,11 +36,7 @@ export const SetTargetsModal = ({
   }
 
 
-  const handleFinishedSettingTargets = async () => {
-    await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
-    setModalShow(false)
-    clearCurrentExerciseSet()
-  }
+  
 
   return (
     <Modal
@@ -95,8 +89,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  clearCurrentExerciseSet,
-  saveExerciseSetChanges
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetTargetsModal)

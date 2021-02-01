@@ -32,7 +32,7 @@ const mapSetGroupsToDates = (userRoutines) => {
       })
     })
   })
-  console.log({dateSetGroups})
+  
   return dateSetGroups
 }
 

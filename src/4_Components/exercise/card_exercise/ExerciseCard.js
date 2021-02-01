@@ -10,7 +10,8 @@ import IFrame from '../../iframe/IFrame'
 export const ExerciseCard = ({
   exercise,
   setCurrentExercise,
-  showEditBtn=true
+  showEditBtn=true,
+  cardWidth='18rem'
 }) => {
 
   const handleEditClick = () => {
@@ -22,7 +23,7 @@ export const ExerciseCard = ({
     className="mb-2 exercise-card"
     bg="dark"
     text='white'
-    style={{ width: '18rem' }}>
+    style={{ width: cardWidth }}>
       <Card.Header>
         <span className={`${exercise.muscle_group}-color`}>{exercise.muscle_group}</span>
         {showEditBtn && 

@@ -1,3 +1,19 @@
+.page-navs{
+  .back-to-container{
+    margin-bottom: 10px;
+    margin-right: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    cursor: pointer;
+    .icon{
+      position: relative;
+      bottom: 2px;
+    }
+  }
+}
+
 .current-sets{
   //background-color: lightblue;
   max-width: 500px;
@@ -15,52 +31,12 @@
   }
 }
 
-.back-to-container{
-  margin-bottom: 10px;
-  position: relative;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  border: 1px solid $routine-red;
-  padding: 15px;
-  border-radius: 4px;
-  background-color: $jet;
-  cursor: pointer;
-  .icon{
-    position: relative;
-    bottom: 2px;
-  }
-}
-
-
 .execute-set{
   max-width: 500px;
   margin: auto;
+
   .execute-set-inner{
     //margin-top: 20px;
-
-    .instruction-btn-container{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 10px 0;
-      .btn-text-container{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 25px;
-        position: relative;
-        .point-left-icon{
-          position: relative;
-          bottom: 2px;
-        }
-        .eye-icon{
-          position: relative;
-          bottom: 1px;
-        }
-      }
-    }
 
     .not-recorded-span{
       font-style: italic;
@@ -109,8 +85,6 @@
           opacity: 1;
           transition: height .3s linear, opacity .6s ease-in-out;
         }
-
-
       }
     }
 
@@ -125,54 +99,69 @@
         -o-animation: fadeIn ease 2s;
         -ms-animation: fadeIn ease 2s;
       }
-
     }
   }
 
-
-
-
-  
-
-    
-    
-
     .inputs-and-targets-saved-container{
       .targets-and-actuals-list{
-     
         li{
-          
           div{
             margin: 5px;
           }
           .revise-btn{
             margin-top: 1rem;
           }
-
         }
       }
     }
 
+    .update-success-container{
+      margin-top: 10px;
+    }
+
     .instruction-card-container{
       display: flex;
-      .card{
+      .exercise-card{
         margin: auto;
+        width: 100%;
       }
     }
+
+
   }
 }
-
-
 .ex-set-navs{
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  .instruction-btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    .btn-text-container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 25px;
+      position: relative;
+      .point-left-icon{
+        position: relative;
+        bottom: 2px;
+      }
+      .eye-icon{
+        position: relative;
+        bottom: 1px;
+      }
+    }
+  }
   .select-container{
     margin-bottom: 10px;
   }
   .links-container{
     display: flex;
     justify-content: space-between;
+    margin: 10px 0;
     .link-container{
       .nav-link{
         padding: 0;

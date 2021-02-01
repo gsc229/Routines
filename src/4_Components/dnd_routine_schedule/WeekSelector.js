@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import Container from 'react-bootstrap/Container'
 import Select from 'react-select'
 import {customStyles} from './schedule_helpers/selectStyles'
 import makeAnimated from 'react-select/animated'
@@ -9,6 +8,7 @@ import makeAnimated from 'react-select/animated'
 
 export const WeekSelector = ({
   setScheduleDnDSelectedWeekNumber,
+  currentRoutine,
   currentWeeks
 }) => {
 
@@ -52,7 +52,7 @@ export const WeekSelector = ({
       <Select
       value={selectedValues}
       components={animatedComponents}
-      styles={customStyles}
+      styles={customStyles(currentRoutine.color)}
       placeholder='Filter weeks...'
       onChange={handleWeekSelect}
       options={selectOptions}
@@ -64,7 +64,7 @@ export const WeekSelector = ({
 }
 
 const mapStateToProps = (state) => ({
-  
+ currentRoutine: state.routineReducer.currentRoutine 
 })
 
 const mapDispatchToProps = {

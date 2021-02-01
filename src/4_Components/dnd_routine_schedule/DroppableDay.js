@@ -59,11 +59,15 @@ export const DroppableDay = ({
       return(
         <Card              
         className={`day-container-card ${snapshot.isDraggingOver && 'day-container-card-hovering'}`}>
-          <Card.Header>
+          <Card.Header style={{backgroundColor: snapshot.isDraggingOver ? currentRoutine.color || 'white' : 'var(--jet)'}}>
             <div
             className='day-header'>
-              <h6>W: {weekNumber} &nbsp;&nbsp; Day: {dayNumber}</h6>
-              <Link 
+              <h6 
+              style={{color: snapshot.isDraggingOver ? 'white' : currentRoutine.color || 'white'}} >
+                W: {weekNumber} &nbsp;&nbsp; Day: {dayNumber}
+              </h6>
+              <Link
+              style={{backgroundColor: currentRoutine.color || ''}} 
               onClick={handleAddSetsClick}
               to={
                 `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${routineSchedule[weekNumber].week_number}/day-${dayNumber}-${dayKey[dayNumber]}`}>

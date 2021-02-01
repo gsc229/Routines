@@ -31,10 +31,6 @@ export const SearchExercisesForm = ({
     publicExercisesQuery(queryString)
   }
 
-  
-  
-  console.log({queryString})
-
   const handleTextInput = (e) => {
     let newStr = e.target.value.length ? "name=" + e.target.value : ""
     setQueryTextInputValue(newStr)
@@ -47,9 +43,6 @@ export const SearchExercisesForm = ({
       setQueryCheckBoxValues(queryCheckBoxValues.filter(val => val !== e.target.value))
     }
   }
-  console.log({queryCheckBoxValues, queryTextInputValue})
-
-
 
   return (
     <Form onSubmit={submitSearch} className='search-exercises-form'>
@@ -141,34 +134,34 @@ export const SearchExercisesForm = ({
               label="Shoulders"
               name="muscle_group"
               value="muscle_group[in]=Shoulders"
-              id="muscle_group3"
+              id="muscle_group4"
             />
               <Form.Check
               onClick={handleCheckValue}
               label="Legs"
               name="muscle_group"
               value="muscle_group[in]=Legs"
-              id="muscle_group1"
+              id="muscle_group5"
             />
             <Form.Check
               onClick={handleCheckValue}
               label="Calves"
               name="muscle_group"
               value="muscle_group[in]=Calves"
-              id="muscle_group2"
+              id="muscle_group6"
             />
             <Form.Check
               onClick={handleCheckValue}
               label="Full Body"
               name="muscle_group"
               value="muscle_group[in]=Full Body"
-              id="muscle_group3"
+              id="muscle_group7"
             />
             <Form.Check
               label="Multiple Major Muscle Groups"
               name="muscle_group"
               value="muscle_group[in]=Multiple Major Muscle Groups"
-              id="muscle_group3"
+              id="muscle_group8"
             />
           </div>
         </Col>

@@ -35,10 +35,13 @@
       flex-wrap: wrap;
     }
     .list-group{
+      //background-color: lightcoral;
       li{
+        //background-color: lightblue;
         display: flex;
         flex-direction: column;
-        margin-right: 15px;
+        margin: 0;
+        margin-right: 10px;
         min-width: 100px;
         strong{
           color: $orange-yellow;

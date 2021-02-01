@@ -1,5 +1,11 @@
+.container-fluid{
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .manage-current-routine-page-container{
   position: relative;
+  padding: 0;
   .manage-current-routine-page-header{
     background-color: $bs-dark;
     height: fit-content;
@@ -8,6 +14,9 @@
     left: 0;
     top: 0;
     z-index: 10;
+    .title-container{
+      margin-bottom: 20px;
+    }
   }
 }
 

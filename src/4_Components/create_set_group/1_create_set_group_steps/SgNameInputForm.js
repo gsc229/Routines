@@ -66,7 +66,7 @@ export const SgNameInputForm = ({
             checked={useAutoGenName}
             onChange={handlChooseAutoGen} />
             </OverlayTrigger>
-            <InputGroup.Text >Auto Getnerate Name</InputGroup.Text>
+            <InputGroup.Text >Auto</InputGroup.Text>
           </InputGroup.Append>
           </InputGroup>
       </Form.Group>

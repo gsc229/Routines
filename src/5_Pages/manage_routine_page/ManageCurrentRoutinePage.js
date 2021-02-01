@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button'
 import {FiRefreshCcw} from 'react-icons/fi'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 import WeekSelector from '../../4_Components/dnd_routine_schedule/WeekSelector'
+import fontSizeClamp from '../../utils/clampBuilder'
 
 export const ViewRoutinePage = ({
   currentRoutine, 
@@ -69,10 +70,15 @@ export const ViewRoutinePage = ({
         fixed='top'
         className='manage-current-routine-page-header'>
         <div className='header-inner'>
-            <h3>
-              Managing Routine: {currentRoutine.name || 'id' + currentRoutine._id} &nbsp;
-            <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
-            </h3>
+            <div 
+            style={{fontSize: fontSizeClamp(400, 1000, 1.2, 1.5)}}
+            className='title-container'>
+              <h2 style={{fontSize: 'inherit'}} >Managing Routine:</h2>
+              <h2 style={{fontSize: 'inherit', color: currentRoutine.color || 'var(--routine-red)'}} >
+               {currentRoutine.name} &nbsp;
+              <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
+              </h2>
+            </div>
             <Nav
             className='search-nav'>
               <Nav.Item>

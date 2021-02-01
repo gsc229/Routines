@@ -6,7 +6,6 @@ export const purifyIframe = (iframeString) => {
 
   const regex = RegExp(/https:\/\/www\.youtube\.com/g)
   
-
   DOMpurify.addHook('afterSanitizeAttributes', function(node){
     let iframe = document.createElement('iframe')
     iframe.src = node.getAttribute('src')  

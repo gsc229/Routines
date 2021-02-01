@@ -51,7 +51,7 @@ const DynamicFieldInput = ({
 
 
 DynamicFieldInput.propTypes = {
-  field: PropTypes.oneOf(['reps_per_set', 'target_weight', 'target_time', 'target_distance', 'total_sets']).isRequired
+  field: PropTypes.oneOf(['reps_per_set', 'target_weight', 'target_time', 'target_reps', 'target_distance', 'total_sets']).isRequired
 }
 
 

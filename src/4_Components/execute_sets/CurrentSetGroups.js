@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import {isDev} from '../../config/config'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import {pathConstructor} from './pathConstructor'
 import { setCurrentRoutine } from '../../1_Actions/routineActions'
 import {setCurrentSetGroup} from '../../1_Actions/setGroupActions'
@@ -15,8 +15,8 @@ export const CurrentSetGroups = ({
   setCurrentRoutine,
   currentSetGroups,
   userRoutines,
-  setCurrentSetGroup
-
+  setCurrentSetGroup,
+  setCurrentPage
 }) => {
   
 
@@ -24,15 +24,15 @@ export const CurrentSetGroups = ({
   const params = useParams()
 
   const handleCardClick = (setGroup) => {
+    console.log({setGroup})
     const routine = userRoutines.find(routine => routine._id === setGroup.routine)
     const routineName = routine.slug ? routine.slug : routine.name
     const setGroupExSets = routine.exercise_sets.filter(set => set.set_group === setGroup._id)
-    const firstSet = setGroupExSets.find(set => set.order === 0)
+    const firstSet = setGroupExSets.find(set => set.order === 0) || setGroupExSets[0]
+    console.log({firstSet, setGroupExSets})
     const path =  pathConstructor( params.setDate, routineName, setGroup._id, firstSet)
-
     history
     .push(path)
-
     setCurrentRoutine(routine)
     setCurrentSetGroup(setGroup)
     setCurrentExerciseSets(setGroupExSets)
@@ -40,14 +40,13 @@ export const CurrentSetGroups = ({
 
   }
 
+  useEffect(() => {
+    setCurrentPage('all-set-groups')
+  }, [])
+
   return (
     <div className='current-sets'>
-      <div 
-      onClick={() => history.push(`/schedule`)}  
-      className="back-to-container back-to-schedule-container">
-        <PointLeftIcon />
-        &nbsp; Back to schedule
-      </div>
+
       <div className="sets-bank">
         {currentSetGroups.length > 0 && currentSetGroups.map(setGroup => 
               

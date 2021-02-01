@@ -6,7 +6,7 @@
 .routine-schedule-dnd{
   background-color: $bs-dark;
   border-radius: 4px;
-  padding-top: 100px;
+  padding-top: 120px;
   @media screen and (max-width: 780px){
     padding-top: 110px;
   }
@@ -24,12 +24,7 @@
   .week-container-header{
     color: white;
     .header-top{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      h5{
-        margin: 20px 0;
-      }
+      margin: 20px 0;
     }
     .week-header-form{
       width: 100%;
@@ -82,11 +77,10 @@
   }
 
   .card-header{
-    background-color: $bs-dark;
+    background-color: $jet;
     color: whitesmoke;
     a{
       color: whitesmoke;
-      background-color: $routine-red;
       border-radius: 50px;
       padding: 0px 10px 0px 10px;
     }
@@ -107,13 +101,11 @@
   margin: 5px auto;
   cursor: grab;
   background-color: $bs-dark;
-  border: 1px solid $routine-red;
   .set-group-schedule-card-header{
     padding-left: 4px;
     padding-right: 0;
     display: flex;
     justify-content: space-between;
-    background-color: $routine-red;
     .view-copy-move-btns-conainer{
       //background-color: orange;
       display: flex;
@@ -134,7 +126,7 @@
           display: flex;
           justify-content: space-between;
           margin-left: 5px;
-          .schedul-card-control-btn{
+          .schedule-card-control-btn{
             cursor: pointer;
           }
         }

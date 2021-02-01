@@ -46,7 +46,6 @@ export const DuplicateTo = ({
     <NavDropdown 
     color='white'
     title='Duplicate to'
-    id='duplicate-to-week-dropdown'
     className='duplicate-to'>
       {currentWeeks.map(week => 
         <NavDropdown
