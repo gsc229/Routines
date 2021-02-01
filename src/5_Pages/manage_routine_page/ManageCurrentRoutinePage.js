@@ -71,10 +71,10 @@ export const ViewRoutinePage = ({
         className='manage-current-routine-page-header'>
         <div className='header-inner'>
             <div 
-            style={{fontSize: fontSizeClamp(400, 1000, 1, 1.5)}}
+            style={{fontSize: fontSizeClamp(400, 1000, 1.2, 1.5)}}
             className='title-container'>
               <h2 style={{fontSize: 'inherit'}} >Managing Routine:</h2>
-              <h2 style={{fontSize: 'inherit'}} >
+              <h2 style={{fontSize: 'inherit', color: currentRoutine.color || 'var(--routine-red)'}} >
                {currentRoutine.name} &nbsp;
               <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
               </h2>
