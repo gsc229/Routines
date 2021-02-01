@@ -18,6 +18,9 @@
           color: $routine-red;
           font-weight: bold;
         }
+        &:active{
+          color: white;
+        }
       }
       .active:hover{
         color: white;

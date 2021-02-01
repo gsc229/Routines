@@ -42,7 +42,9 @@ export const DaySection = ({
       
       {daySetGroups && daySetGroups.sort((a, b) => a.routine - b.routine).map(sg => {
         const startDate = moment(userRoutines.find(rt => rt._id === sg.routine).start_date)
-        const dayNumber = day.diff(startDate, 'days') + 1
+        const fromStartDays = day.diff(startDate, 'days') + 1
+        const fromStartWeeks = day.diff(startDate, 'weeks') + 1
+        const fromWeekStartDays = day.day() + 1
         return(
           <div 
           key={sg._id}
@@ -58,7 +60,7 @@ export const DaySection = ({
               <div 
               style={{color: routineNamesColors[sg.routine].color, fontWeight: 'bold'}}
               className='tool-tip-title'>
-                {routineNamesColors[sg.routine].name} Day: {dayNumber}
+                {routineNamesColors[sg.routine].name} Week: {fromStartWeeks} Day: {fromWeekStartDays}&nbsp; ({fromStartDays})
               </div>{sg.name}
             </ToolTip>}>
               <div
