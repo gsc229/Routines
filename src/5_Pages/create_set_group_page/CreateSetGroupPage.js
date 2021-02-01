@@ -3,17 +3,16 @@ import { connect } from 'react-redux'
 import {fullResetCreateSetGroup, saveSetGroupChanges, createNewSetGroup} from '../../1_Actions/setGroupActions'
 import {useHistory} from 'react-router-dom'
 import {FaRegHandPointLeft, FaRegCalendarAlt} from 'react-icons/fa'
-import {numberToDay} from '../../4_Components/dnd_routine_schedule/schedule_helpers/routineScheduleConstructor'
 import Container from 'react-bootstrap/Container'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import Button from 'react-bootstrap/Button'
 import CreateSetGroupSteps from '../../4_Components/create_set_group/1_create_set_group_steps/CreateSetGroupSteps'
-import FindSavedSetGroup from '../../4_Components/saved_set_groups/FindSavedSetGroup'
 import ModalLayoutOne from '../../4_Components/modals/modal_layout_one/ModalLayoutOne'
 import Link from 'react-bootstrap/NavLink'
 import {FaRegHandPointRight} from 'react-icons/fa'
+import fontSizeClamp from '../../utils/clampBuilder'
 
 export const CreateOrEditExerciseSet = ({
   currentRoutine,
@@ -123,7 +122,12 @@ export const CreateOrEditExerciseSet = ({
         onHide={() => setModalShow(false)}
         show={modalShow}/>
         <div className='create-set-group-page-header'>
-          <h2>Create Set Group for {currentRoutine.name}</h2>
+          <div 
+          style={{fontSize: fontSizeClamp(400, 1000, 1, 1.5)}} 
+          className='title-container'>
+            <h2 style={{fontSize: 'inherit'}}>Create Set Group for:</h2>
+            <h2 style={{fontSize: 'inherit', color: currentRoutine.color || 'var(--routine-red)'}}>{currentRoutine.name}</h2>
+          </div>
           <h6>Week {currentSetGroup.week_number}, Day {currentSetGroup.day_number}</h6>
           <div className='link-container'>
             <Link 
@@ -144,7 +148,6 @@ export const CreateOrEditExerciseSet = ({
             <FindSavedSetGroup />
           </Tab> */}
         </Tabs>
-
       </Container>
     </Layout>
   )

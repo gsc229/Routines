@@ -96,8 +96,8 @@ export const ChosenExercisesBankDND = ({
     onDragEnd={result => onBankCardDragEnd(result, localBulkWriteExerciseSets, currentExerciseSets, createSetGroupData.mode, bulkWriteExerciseSets)}>
       <div className='chosen-exerciese-bank-header'>
         <h4>Chosen Exercises:</h4>
-        {isDev && 
-        <DevComponent maxColumns={maxColumns} dndDimensions={dndDimensions} windowHeight={height} windowWidth={width} dropZoneSets={dropZoneSets} currentExerciseSets={currentExerciseSets} />}
+        {/* {isDev && 
+        <DevComponent maxColumns={maxColumns} dndDimensions={dndDimensions} windowHeight={height} windowWidth={width} dropZoneSets={dropZoneSets} currentExerciseSets={currentExerciseSets} />} */}
       </div>
       <div 
       style={{display: 'flex', flexDirection: 'column'}}
