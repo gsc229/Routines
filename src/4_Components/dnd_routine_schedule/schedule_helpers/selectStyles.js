@@ -1,8 +1,9 @@
-export const customStyles = {
+export const customStyles = (routineColor) => {
+  return {
   option: (provided, { isDisabled, isFocused, isSelected }) => ({
-    backgroundColor: isSelected ? 'var(--routine-red)' : 'white' ,
-    borderBottom: '1px dashed var(--routine-red)',
-    color: isSelected ? 'white' : 'var(--routine-red)',
+    backgroundColor: isSelected ? routineColor || 'var(--routine-red)' : 'white' ,
+    borderBottom: `1px dashed ${routineColor || 'var(--routine-red)'}`,
+    color: isSelected ? 'white' : routineColor || 'var(--routine-red)',
     padding: 10,
     fontWeight: 'bold',
     cursor: 'pointer'
@@ -10,13 +11,13 @@ export const customStyles = {
   control: (provided, isFocused) => ({
     ...provided,
     width: '100%',
-    color: 'var(--routine-red)',
-    border: isFocused ? 'var(--russian-green)' : '2px solid var(--routine-red)'
+    color: routineColor || 'var(--routine-red)',
+    border: isFocused ? 'var(--russian-green)' : `2px solid ${ routineColor || 'var(--routine-red)'}`
   }),
   multiValue: (styles) => {
     return {
       ...styles,
-      backgroundColor: 'var(--routine-red)',
+      backgroundColor: routineColor || 'var(--routine-red)',
       color: 'white'
     }
   },
@@ -29,7 +30,7 @@ export const customStyles = {
   multiValueRemove: (styles) => {
     return{
       ...styles,
-      backgroundColor: 'var(--routine-red)',
+      backgroundColor: routineColor || 'var(--routine-red)',
       color: 'white',
       borderRadius: 0,
       cursor: 'pointer',
@@ -42,6 +43,7 @@ export const customStyles = {
   singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1
     const transition = 'opacity 300ms';
-    return { ...provided, opacity, transition, color: 'var(--routine-red)' }
+    return { ...provided, opacity, transition, color: routineColor || 'var(--routine-red)' }
   }
+}
 }
