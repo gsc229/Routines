@@ -39,7 +39,8 @@ export const ExecuteSet = ({
   }, [])
 
   return (
-    <div className='execute-set'>
+    <div 
+    className='execute-set'>
       <ExecuteSetNavs 
       sessionSaved={sessionSaved}
       setInstructionShow={setInstructionShow}
@@ -110,7 +111,10 @@ export const ExecuteSet = ({
 
       {instructionShow &&
       <div className='instruction-card-container'>
-          <ExerciseCard showEditBtn={false} exercise={currentExerciseSet.exercise} />
+          <ExerciseCard 
+          cardWidth='100%'
+          showEditBtn={false} 
+          exercise={currentExerciseSet.exercise} />
       </div>}
       </div>
     </div>

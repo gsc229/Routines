@@ -42,7 +42,7 @@ export const ExecuteSetsPage = ({
 
   return (
     <LayoutOne showTop={false}>
-      <Container 
+      <Container
       className='page execute-sets-page'>      
       <div 
       style={{color: 'var(--spanish-gray)'}}

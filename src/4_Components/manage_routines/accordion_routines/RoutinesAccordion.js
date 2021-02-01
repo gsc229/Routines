@@ -117,7 +117,6 @@ export const RoutinesAccordion = ({
 
   const showConfirmDeleteRoutineModal = () => {
     return(
-      
       <ConfirmDeleteRoutineModal  
       setModalShow={setModalShow}
       modalShow={modalShow}
@@ -134,13 +133,13 @@ const getToggleStyles = (routineColor) => {
     postion: 'relative',
     backgroundColor: 'var(--bs-dark)', 
     color: routineColor ? routineColor : 'var(--routine-red)',
-    //backgroundColor: routineColor ? routineColor : 'var(--routine-red)',
     borderColor: routineColor ? routineColor : 'var(--routine-red)',
   }
 } 
 
   return (
-    <Accordion /* defaultActiveKey={userRoutines[0]._id} */ className="routines-bank">
+    <Accordion 
+    className="routines-bank">
 
       {modalShow && 
       showConfirmDeleteRoutineModal()}
@@ -163,8 +162,9 @@ const getToggleStyles = (routineColor) => {
             {crudingRoutine ? <DarkSpinner text={spinnerText[crudingRoutine]} /> :
             <Card.Body>
 
-            <div className='details-and-btns-container' style={{flexDirection: `${editingMode ? 'column' : 'row-reverse'}`}} >
-              
+            <div 
+            className='details-and-btns-container'
+            style={{flexDirection: `${editingMode ? 'column' : 'row-reverse'}`}}>
               
               <div className='edit-complete-expand-btns'>
               {!editingMode && !showSpinner && 
@@ -188,8 +188,7 @@ const getToggleStyles = (routineColor) => {
               />}
 
               </div>
-              
-              {/* renders list-group */}
+
               {!editingMode && !showSpinner &&  
               showDetails(routine)}
 

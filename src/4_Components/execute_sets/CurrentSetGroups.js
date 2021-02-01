@@ -24,12 +24,13 @@ export const CurrentSetGroups = ({
   const params = useParams()
 
   const handleCardClick = (setGroup) => {
+    console.log({setGroup})
     const routine = userRoutines.find(routine => routine._id === setGroup.routine)
     const routineName = routine.slug ? routine.slug : routine.name
     const setGroupExSets = routine.exercise_sets.filter(set => set.set_group === setGroup._id)
-    const firstSet = setGroupExSets.find(set => set.order === 0)
+    const firstSet = setGroupExSets.find(set => set.order === 0) || setGroupExSets[0]
+    console.log({firstSet, setGroupExSets})
     const path =  pathConstructor( params.setDate, routineName, setGroup._id, firstSet)
-
     history
     .push(path)
     setCurrentRoutine(routine)
@@ -45,7 +46,7 @@ export const CurrentSetGroups = ({
 
   return (
     <div className='current-sets'>
-      
+
       <div className="sets-bank">
         {currentSetGroups.length > 0 && currentSetGroups.map(setGroup => 
               

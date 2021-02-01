@@ -14,7 +14,6 @@
   }
 }
 
-
 .current-sets{
   //background-color: lightblue;
   max-width: 500px;
@@ -31,9 +30,6 @@
     }
   }
 }
-
-
-
 
 .execute-set{
   max-width: 500px;
@@ -89,8 +85,6 @@
           opacity: 1;
           transition: height .3s linear, opacity .6s ease-in-out;
         }
-
-
       }
     }
 
@@ -105,36 +99,37 @@
         -o-animation: fadeIn ease 2s;
         -ms-animation: fadeIn ease 2s;
       }
-
     }
   }
 
     .inputs-and-targets-saved-container{
       .targets-and-actuals-list{
-     
         li{
-          
           div{
             margin: 5px;
           }
           .revise-btn{
             margin-top: 1rem;
           }
-
         }
       }
     }
 
+    .update-success-container{
+      margin-top: 10px;
+    }
+
     .instruction-card-container{
       display: flex;
-      .card{
+      .exercise-card{
         margin: auto;
+        width: 100%;
       }
     }
+
+
   }
 }
-
-
 .ex-set-navs{
   display: flex;
   justify-content: space-between;
@@ -143,7 +138,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
+    margin-bottom: 10px;
     .btn-text-container{
       display: flex;
       align-items: center;
@@ -166,6 +161,7 @@
   .links-container{
     display: flex;
     justify-content: space-between;
+    margin: 10px 0;
     .link-container{
       .nav-link{
         padding: 0;

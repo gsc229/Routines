@@ -1,21 +1,21 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {saveExerciseSetChanges, setCurrentExerciseSet} from '../../1_Actions/exerciseSetActions'
-import RecordSetInput from './RecordSetInput'
 import Button from 'react-bootstrap/Button'
 import NavLink from 'react-bootstrap/NavLink'
+import RecordSetList from './RecordSetList'
 
 export const RecordInputs = ({
   currentExerciseSet,
   saveExerciseSetChanges,
   setCurrentExerciseSet,
+  userRoutines,
   targets, 
   targetsToActuals,
   routineColor,
   setSessionSaved,
   setUpdateSuccess
 }) => {
-
 
   const [editingActual, setEditingActual] = useState(null) 
   const [originalActuals, setOriginalActuals] = useState([])
@@ -24,7 +24,6 @@ export const RecordInputs = ({
     const originals = []
     targets.forEach(target => {
       const actualObj = targetsToActuals[target.field_name]
-      console.log({targets, actualObj})
       originals.push(actualObj)
     })
     return originals
@@ -87,7 +86,8 @@ export const RecordInputs = ({
 
   return (
 
-    <div className="revising-or-saved-container inputs-and-targets-revising-container">
+    <div
+    className="revising-or-saved-container inputs-and-targets-revising-container">
         
 
           <div className='submit-and-cancel-btns'>
@@ -110,68 +110,24 @@ export const RecordInputs = ({
 
           </div>
         
-
-        <ul className='list inputs-list'>
-
-          {targets.map(target =>{ 
-
-            const actualName = targetsToActuals[target.field_name].name
-            const actualValue = targetsToActuals[target.field_name].value 
-            const actualField = targetsToActuals[target.field_name].field_name
-
-            return( 
-            <li
-            key={target.field_name}
-            style={{border: `1px dotted ${routineColor ? routineColor : 'var(--routine-red)'}`}} 
-            className='list-item inputs-list-list-item'>
-                <div className='list-item-top'>
-
-                  <div className='target-and-result'>
-                    <div 
-                    className='target-container'>
-                      {target.name}: {target.value}
-                    </div>  
-                    <div 
-                    className='result-container'>
-                      {actualName}: {currentExerciseSet[actualField] !== null ? currentExerciseSet[actualField] : <span className='not-recorded-span'>not recorded</span>}
-                    </div>
-                  </div>
-                  
-                  {editingActual !== actualName && 
-                  <NavLink
-                  to=''
-                  onClick={() => setEditingActual(actualName)}
-                  className='edit-button'>
-                    Edit
-                  </NavLink>}
-
-                  {editingActual === actualName && 
-                  <NavLink
-                  to=''
-                  onClick={() => setEditingActual(false)}
-                  className='edit-button'>
-                    Done
-                  </NavLink>}
-
-                </div>
-
-                <div className={`list-item-bottom  ${editingActual === actualName ? 'show-list-item-bottom' : ''}`}>
-                  <RecordSetInput
-                  field={targetsToActuals[target.field_name].field_name} />
-                </div>
-            </li>
-
-            )
-          })}
-
-        </ul>
+          
+          <RecordSetList
+          userRoutines={userRoutines}
+          targets={targets}
+          targetsToActuals={targetsToActuals}
+          currentExerciseSet={currentExerciseSet}
+          setEditingActual={setEditingActual} 
+          editingActual={editingActual}
+          routineColor={routineColor}/>
+        
         
       </div>
   )
 }
 
 const mapStateToProps = (state) => ({
-  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet
+  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
+  userRoutines: state.routineReducer.userRoutines
 })
 
 const mapDispatchToProps = {

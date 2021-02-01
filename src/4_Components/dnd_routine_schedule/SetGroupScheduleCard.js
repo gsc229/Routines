@@ -23,7 +23,7 @@ export const SetGroup = ({
 
   const [modalShow, setModalShow] = useState(false)
   const [deletaModalShow, setDeleteModalShow] = useState(false)
-  const redirectLink = `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name}/week-${weekNumber}/day-${dayNumber}}`
+  const redirectLink = `/create-set-group/${currentRoutine.slug ? currentRoutine.slug : currentRoutine.name.replace(/[\s]/g, '')}/week-${weekNumber}/day-${dayNumber}}`
 
   const handleViewSetGroup = () => {
     setCurrentSetGroup(set_group)
@@ -41,6 +41,7 @@ export const SetGroup = ({
       redirectLink={redirectLink}
       setModalShow={setModalShow} 
       modalShow={modalShow}/>}
+      
       <ConfirmDeleteModal  
       setGroup={set_group}
       modalShow={deletaModalShow}

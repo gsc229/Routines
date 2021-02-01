@@ -45,7 +45,8 @@ const CalendarHeader = ({
         <Link 
         style={{fontSize: fontSizeClamp(300, 1200, .7, 1)}}
         onClick={handleEditScheduleClick}
-        className='view-routine-link' to={`/view-routine/${routine._id}/${routine.slug || routine.name}`} >
+        className='view-routine-link' 
+        to={`/view-routine/${routine._id}/${routine.slug || routine.name}`} >
           Edit
         </Link>
       </div>}
@@ -57,7 +58,7 @@ const CalendarHeader = ({
           <h6
           onClick={() => setValue(prevMonth)}
           className='prev-month  arrow'>
-              {String.fromCharCode(171)}
+            {String.fromCharCode(171)}
           </h6>
           <div 
           style={{fontSize: fontSizeClamp(300, 1200, .8, 1.5)}}>{currMonthName()} {currYear()}</div>
