@@ -50,7 +50,6 @@ export const SubSetModal = ({
     clearCreateSetGroupData()
     clearCurrentExerciseSet()
     localWritingCreateSetGroupData('currentStep', 'choose-exercise')
-    
   }
 
   const buildSubGroup = async () => {
@@ -83,11 +82,10 @@ export const SubSetModal = ({
               }
             })
           }
-
-        
       })
 
-      const subGroupResonse = await bulkWriteExerciseSets(updatesOrInserts, {set_group: currentSetGroup._id})
+      const subGroupResonse = 
+      await bulkWriteExerciseSets(updatesOrInserts, {set_group: currentSetGroup._id})
 
         if(!subGroupResonse.success){
           // report the error in the alert
@@ -117,7 +115,6 @@ export const SubSetModal = ({
     
     }
     // do this if it's a new setGroup
-
     currentSetsCopy.splice(index, 1, ...newSubGroup)
     localBulkWriteExerciseSets(currentSetsCopy)
     setModalShow(false)

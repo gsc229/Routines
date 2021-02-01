@@ -1,28 +1,26 @@
-import React from 'react'
+import React, {useState} from 'react'
+import { connect } from 'react-redux'
 import RecordSetInput from './RecordSetInput'
 import NavLink from 'react-bootstrap/NavLink'
-import {Link} from 'react-router-dom'
-import {PointRightIcon} from '../icons/Icons'
+import Button from 'react-bootstrap/Button'
+import {TargetIcon} from '../icons/Icons'
+import SetTargetsModal from '../create_set_group/3_targets_and_subgroups/SetTargetsModal'
 
 const RecordSetList = ({
   targets,
   targetsToActuals,
   currentExerciseSet,
-  userRoutines,
   setEditingActual,
   editingActual,
   routineColor
 }) => {
 
-  const routine = userRoutines.find(rt => rt._id === currentExerciseSet.routine)
-  const weekNumber = routine.weeks.find(wk => wk._id === currentExerciseSet.week).week_number
-  const dayNumber = routine.set_groups.find(sg => sg._id === currentExerciseSet.set_group).day_number || 0
+  const [modalShow, setModalShow] = useState(false)
+
   const handleSetTargets = () => {
 
   }
-  const redirectLink = `/create-set-group/`
-  .concat(`${routine.slug ? routine.slug : routine.name.replace(/[\s]/g, '')}`)
-  .concat(`/week-${weekNumber}/day-${dayNumber}}`)
+
 
   const noTargetsMessage = () => {
     return(
@@ -31,11 +29,12 @@ const RecordSetList = ({
         <p className="no-targets-message">
           This set has no targts set.
         </p>
-        <Link 
-        to={redirectLink}>
+        <Button
+        style={{display: 'flex', alignItems: 'center'}}
+        onClick={() => setModalShow(true)}>
           Set Targets &nbsp;
-          <PointRightIcon />
-        </Link>
+          <TargetIcon />
+        </Button>
       </div>
     )
   }
@@ -44,7 +43,9 @@ const RecordSetList = ({
   return (
     <ul 
     className='list inputs-list'>
-
+          <SetTargetsModal 
+          setModalShow={setModalShow}
+          modalShow={modalShow}/>
           {targets.length === 0 &&
           noTargetsMessage()}
 
@@ -103,4 +104,12 @@ const RecordSetList = ({
   )
 }
 
-export default RecordSetList
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecordSetList)

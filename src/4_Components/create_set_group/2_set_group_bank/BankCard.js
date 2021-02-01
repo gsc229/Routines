@@ -1,6 +1,14 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroyExerciseSet, localBulkWriteExerciseSets, setCurrentExerciseSet, createSingleExerciseSet} from '../../../1_Actions/exerciseSetActions'
+import {
+  destroyExerciseSet, 
+  localBulkWriteExerciseSets, 
+  setCurrentExerciseSet, 
+  createSingleExerciseSet, 
+  saveExerciseSetChanges,
+  clearCurrentExerciseSet
+} 
+from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
@@ -9,7 +17,7 @@ import {BsGrid3X3Gap} from 'react-icons/bs'
 import {FiTarget} from 'react-icons/fi'
 import {GrObjectGroup} from 'react-icons/gr'
 import TargetIcons from './TargetIcons'
-import EditSetModal from '../3_targets_and_subgroups/SetTargetsModal'
+import SetTargetsModal from '../3_targets_and_subgroups/SetTargetsModal'
 import SubGroupModal from '../3_targets_and_subgroups/SubGroupModal'
 import ColorPickerModal from '../../modals/color_picker_modal/ColorPickerModal'
 import {BiPalette} from 'react-icons/bi'
@@ -17,14 +25,18 @@ import {BiPalette} from 'react-icons/bi'
 export const BankCard = ({
   exerciseSet,
   index,
-  currentExerciseSets, 
+  currentExerciseSets,
+  currentExerciseSet, 
   localBulkWriteExerciseSets,
   setCurrentExerciseSet,
   destroyExerciseSet,
   snapshot,
   createSetGroupData,
-  createSingleExerciseSet
+  createSingleExerciseSet,
+  saveExerciseSetChanges,
+  clearCurrentExerciseSet
 }) => {
+
   const [modalShow, setModalShow] = useState(false)
   const [showPicker, setShowPicker] = useState(false)
 
@@ -39,6 +51,11 @@ export const BankCard = ({
     })
     localBulkWriteExerciseSets(currentExerciseSetsCopy)
     setShowPicker(false)
+  }
+
+  const handleFinishedSettingTargets = async () => {
+    await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
+    setModalShow(false)
   }
 
   const handleRemoveOne = async (e) => {
@@ -69,8 +86,6 @@ export const BankCard = ({
     } else{
         localBulkWriteExerciseSets(copySets)
     }
-
-
   }
 
   const handleOpenTargetsModal = (e) => {
@@ -101,7 +116,8 @@ export const BankCard = ({
       showPickerModal={showPicker}/>
       
       {modalShow === `set-targets-${exerciseSet._id || index}` &&
-      <EditSetModal
+      <SetTargetsModal
+      handleFinishedSettingTargets={handleFinishedSettingTargets}
       index={index}
       modalShow={modalShow===`set-targets-${exerciseSet._id || index}`} 
       setModalShow={setModalShow} />}
@@ -160,6 +176,7 @@ export const BankCard = ({
 
 const mapStateToProps = (state) => ({
   currentExerciseSets: state.exerciseSetReducer.currentExerciseSets,
+  currentExerciseSet: state.exerciseSetReducer.currentExerciseSet,
   createSetGroupData: state.setGroupReducer.createSetGroupData 
 })
 
@@ -167,8 +184,9 @@ const mapDispatchToProps = {
   localBulkWriteExerciseSets,
   setCurrentExerciseSet,
   destroyExerciseSet,
-  createSingleExerciseSet
-  
+  createSingleExerciseSet,
+  saveExerciseSetChanges,
+  clearCurrentExerciseSet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BankCard)
