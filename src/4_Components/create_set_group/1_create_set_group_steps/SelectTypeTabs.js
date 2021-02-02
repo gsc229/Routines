@@ -8,7 +8,8 @@ export const SetGroupForm = ({
   setGroupTypes,
   localWritingSetGroup,
   saveSetGroupChanges,
-  currentStep
+  currentStep,
+  currentRoutine
 }) => {
 
   const [show, setShow] = useState(true)
@@ -29,8 +30,6 @@ export const SetGroupForm = ({
 
   return (
     <div className='set-group-type-tab-btns-container'>
-
-
      
       {currentStep !== 'choose-type' && 
       <span 
@@ -50,6 +49,7 @@ export const SetGroupForm = ({
           key={type}
           >
             <Nav.Link
+            style={{color: currentRoutine.color || 'var(--routine-red)'}}
             className={set_group_type === type && currentStep !== 'choose-type' && 'selected-disabled'}  
             eventKey={type}
             active={set_group_type === type}
@@ -68,7 +68,8 @@ export const SetGroupForm = ({
 const mapStateToProps = (state) => ({
   currentSetGroup: state.setGroupReducer.currentSetGroup,
   setGroupTypes: state.setGroupReducer.set_group_types,
-  currentStep: state.setGroupReducer.createSetGroupData.currentStep
+  currentStep: state.setGroupReducer.createSetGroupData.currentStep,
+  currentRoutine: state.routineReducer.currentRoutine
 })
 
 const mapDispatchToProps = {

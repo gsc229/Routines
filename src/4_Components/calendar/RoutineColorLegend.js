@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {changeColor} from '../../1_Actions/routineActions'
+import {changeColor, saveRoutineChanges} from '../../1_Actions/routineActions'
 import {updateRoutine} from '../../3_APIs/routinesApi'
-import {SliderPicker} from 'react-color'
+import {SliderPicker, HuePicker} from 'react-color'
 import Link from 'react-bootstrap/NavLink'
 
 
@@ -11,7 +11,8 @@ export const RoutineColorLegend = ({
   isSingleRoutine=false,
   routineNamesColors,
   changeColor,
-  currentRoutine
+  currentRoutine,
+  saveRoutineChanges
 }) => {
 
   const [showPicker, setShowPicker] = useState(false)
@@ -27,9 +28,15 @@ export const RoutineColorLegend = ({
   }, [showPicker])
 
   
-  const persistColorChanges = (routineId) => {
+  const persistColorChanges = async(routineId) => {
     if(initialNamesColors[routineId].color !== routineNamesColors[routineId].color){
-      updateRoutine(routineId, {color: routineNamesColors[routineId].color })
+      const saveColorResponse =  await saveRoutineChanges(routineId, {color: routineNamesColors[routineId].color })
+      if(!saveColorResponse.success){
+        return changeColor({
+          ...initialNamesColors,
+          [routineId]: initialNamesColors[routineId]
+        })
+      }
       setInitialNamesColors(routineNamesColors)
     }
   }
@@ -68,18 +75,12 @@ export const RoutineColorLegend = ({
 
   return (
     <div className="routine-color-legend">
-        {/* <ChromePicker onChangeComplete={(color) => console.log({color})} /> */}
        <div className='legend-wrapper'>
         {Object.keys(initialNamesColors)
         .map(routineId => 
         <div
         key={`legend-${routineId}`}
         className={`name-and-slider-container ${showPicker === routineId && 'showing-picker'}`}>
-          {/* <ChromePickerModal
-          currentColor={initialNamesColors[routineId].color}
-          showPicker={showPicker} 
-          setShowPicker={setShowPicker} 
-          handleColorPick={(color) => handleColorChange(color, routineId)} /> */}
 
           <div className='name-and-day-marker'>
             {routineNamesColors[routineId].name}: 
@@ -97,7 +98,7 @@ export const RoutineColorLegend = ({
             onClick={() => handleDoneClick(routineId)}>
               Done
             </Link>
-            <SliderPicker
+            <HuePicker
             color={routineNamesColors[routineId].color} 
             onChangeComplete={(color) => handleColorChange(color, routineId)} />
           </div>}
@@ -114,7 +115,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  changeColor
+  changeColor,
+  saveRoutineChanges
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineColorLegend)

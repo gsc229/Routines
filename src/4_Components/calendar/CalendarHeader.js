@@ -51,7 +51,7 @@ const CalendarHeader = ({
         onClick={handleEditScheduleClick}
         className='view-routine-link' 
         to={`/view-routine/${routine._id}/${routine.slug || routine.name}`} >
-          Edit
+          Edit Schedule
         </Link>
       </div>}
       <Navbar 
