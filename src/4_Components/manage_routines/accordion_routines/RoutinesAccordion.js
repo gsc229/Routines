@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges, createNewRoutine } from '../../../1_Actions/routineActions'
+import { clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges, createNewRoutine, setFlattenedRoutine } from '../../../1_Actions/routineActions'
 import moment from 'moment'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
@@ -15,12 +15,15 @@ import DarkSpinner from '../../spinners/DarkSpinner'
 import ConfirmDeleteRoutineModal from '../../modals/confirm_delete_modals/ConfirmDeleteRoutineModal'
 import fontsizeClamp from '../../../utils/clampBuilder'
 
+
+
 export const RoutinesAccordion = ({
   userId,
   userRoutines,
   currentRoutine,
   clearCurrentRoutine, 
   setCurrentRoutine,
+  setFlattenedRoutine,
   saveRoutineChanges,
   crudingRoutine,
   routineNamesColorsStartDates,
@@ -76,13 +79,13 @@ export const RoutinesAccordion = ({
   }
 
   const handleSameComponentEdit = (routine) => {
-    setCurrentRoutine(routine)
+    setFlattenedRoutine({routine, weeks: routine.weeks, set_groups: routine.set_groups, exercise_sets: routine.exercise_sets})
     setEditingMode(true)
   }
 
   const handleToggle = (routine) => {
     setEditingMode(false)
-    setCurrentRoutine(routine)
+    setFlattenedRoutine({routine, weeks: routine.weeks, set_groups: routine.set_groups, exercise_sets: routine.exercise_sets})
   }
 
 
@@ -103,7 +106,7 @@ export const RoutinesAccordion = ({
           <ul className='list-group'>
             <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Difficulty: </strong><span>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</span></li>
             <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Body Part: </strong><span>{routine.body_part ? routine.body_part : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Start Date: </strong><span>{routine.start_date ? moment(routine.start_date ).format('MMMM DD, YYYY') : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Start Date: </strong><span>{routine.start_date ? moment(routine.start_date ).format('dddd, MMMM DD, YYYY') : 'none chosen'}</span></li>
           </ul>
         </div>
         <ul className='list-group'>
@@ -248,6 +251,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   clearCurrentRoutine,
   setCurrentRoutine,
+  setFlattenedRoutine,
   saveRoutineChanges,
   createNewRoutine
 }

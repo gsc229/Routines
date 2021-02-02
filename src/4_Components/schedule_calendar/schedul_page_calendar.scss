@@ -122,6 +122,20 @@
         text-align: center;
       }
     }
+    .today{
+      background-color: $spanish-gray;
+      color: white;
+    }
+    
+    .before{
+      color: lightgray;
+      //cursor: not-allowed;
+    }
+    
+    .selected{
+      //background-color: $routine-red;
+      color: white;
+    }
     .day-no-sets{
       cursor: default;
       /* &:hover{
@@ -131,21 +145,6 @@
     }
 
   }
+
   
-  
-  
-  .today{
-    background-color: gray;
-    color: white;
-  }
-  
-  .before{
-    color: lightgray;
-    cursor: not-allowed;
-  }
-  
-  .selected{
-    //background-color: $routine-red;
-    color: white;
-  }
 }

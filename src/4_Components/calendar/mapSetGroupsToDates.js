@@ -23,7 +23,7 @@ const mapSetGroupsToDates = (userRoutines) => {
       .forEach(sg => {
 
         const weekStartCopy = weekStartDate.clone()
-        const sgDate = weekStartCopy.add(sg.day_number, 'day').format(format)
+        const sgDate = weekStartCopy.add(sg.day_number - 1, 'day').format(format)
      
         if(!dateSetGroups[sgDate]){
           dateSetGroups[sgDate] = []
