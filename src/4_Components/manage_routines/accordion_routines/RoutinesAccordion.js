@@ -133,14 +133,22 @@ export const RoutinesAccordion = ({
   }
 
 const getToggleStyles = (routineColor) => {
+  
+  const color = () => {
+    if(editingMode){
+      return 'var(--spanish-gray)'
+    }
+    return routineColor ? routineColor : 'var(routine-red)'
+  }
+
   return{
     width: '100%', 
     display: 'flex', 
     justifyContent: 'center', 
     postion: 'relative',
     backgroundColor: 'var(--bs-dark)', 
-    color: routineColor ? routineColor : 'var(--routine-red)',
-    borderColor: routineColor ? routineColor : 'var(--routine-red)',
+    color: color(),
+    borderColor: color(),
   }
 } 
 
