@@ -11,12 +11,12 @@ import RecordInputs from './RecordInputs'
 
 export const ExecuteSet = ({
   currentExerciseSet,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   saveExerciseSetChanges,
   setCurrentPage
 }) => {
 
-  const routineColor = routineNamesColors[currentExerciseSet.routine].color
+  const routineColor = routineNamesColorsStartDates[currentExerciseSet.routine].color
   const {width} = useWindowSize()
   const [instructionShow, setInstructionShow] = useState(false)
   const [targets, setTargets]  = useState([])
@@ -127,7 +127,7 @@ const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
   userRoutines: state.routineReducer.userRoutines,
-  routineNamesColors: state.routineReducer.routineNamesColors
+  routineNamesColorsStartDates: state.routineReducer.routineNamesColorsStartDates
 })
 
 const mapDispatchToProps = {

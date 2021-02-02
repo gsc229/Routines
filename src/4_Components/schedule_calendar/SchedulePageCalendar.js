@@ -6,7 +6,7 @@ import {setCurrentSetGroups} from '../../1_Actions/setGroupActions'
 import fontClamp from '../../utils/clampBuilder'
 import moment from 'moment'
 import buildCalendar from './build'
-import mapSetGroupsToDates from './mapSetGroupsToDates'
+import mapSetGroupsToDates from '../../4_Components/calendar/mapSetGroupsToDates'
 import {dayStyles, beforeToday, weekStyles} from '../calendar/styles'
 import CalendarHeader from '../calendar/CalendarHeader'
 import RoutineColorLegend from '../calendar/RoutineColorLegend'
@@ -20,7 +20,7 @@ const ScheduleCalendar = ({
   fetchRoutines,
   userId,
   userRoutines,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   crudingRoutine,
   setCurrentSetGroups,
   isSingleRoutine=false
@@ -71,7 +71,7 @@ const ScheduleCalendar = ({
         <RoutineColorLegend 
         isSingleRoutine={isSingleRoutine} />
         <CalendarHeader
-        routineNamesColors={routineNamesColors}
+        routineNamesColorsStartDates={routineNamesColorsStartDates}
         value={value} 
         setValue={setValue}/>      
         {
@@ -84,7 +84,7 @@ const ScheduleCalendar = ({
             value={value}
             height={height}
             width={width}
-            routineNamesColors={routineNamesColors} 
+            routineNamesColorsStartDates={routineNamesColorsStartDates} 
             week={week} 
             datesSetGroups={datesSetGroups}
             handleDayClick={handleDayClick}
@@ -98,7 +98,7 @@ const ScheduleCalendar = ({
 
 const mapStateToProps = (state) => ({
   userRoutines: state.routineReducer.userRoutines,
-  routineNamesColors: state.routineReducer.routineNamesColors,
+  routineNamesColorsStartDates: state.routineReducer.routineNamesColorsStartDates,
   userId: state.userReducer.user._id,
   crudingRoutine: state.routineReducer.crudingRoutine
 })

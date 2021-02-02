@@ -4,7 +4,7 @@ import {setCurrentSetGroups} from '../../1_Actions/setGroupActions'
 import moment from 'moment'
 import buildCalendar from './build'
 import {dayStyles, beforeToday, weekStyles} from './styles'
-import mapSetGroupsToDates from '../schedule_calendar/mapSetGroupsToDates'
+import mapSetGroupsToDates from './mapSetGroupsToDates'
 import CalendarHeader from './CalendarHeader'
 import RoutineColorLegend from './RoutineColorLegend'
 import ScheduleWeek from './ScheduleWeek'
@@ -14,7 +14,7 @@ const SingleRoutineCalendar = ({
   className, 
   routine,
   isSingleRoutine=true,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   userRoutines,
   setCurrentSetGroups
 }) => {
@@ -58,7 +58,7 @@ const SingleRoutineCalendar = ({
       value={value}
       height={height}
       width={width}
-      routineNamesColors={routineNamesColors} 
+      routineNamesColorsStartDates={routineNamesColorsStartDates} 
       week={week} 
       datesSetGroups={datesSetGroups}
       handleDayClick={handleDayClick}
@@ -71,7 +71,7 @@ const SingleRoutineCalendar = ({
   )
 }
 const mapStateToProps = (state) => ({
-  routineNamesColors: state.routineReducer.routineNamesColors,
+  routineNamesColorsStartDates: state.routineReducer.routineNamesColorsStartDates,
   userRoutines: state.routineReducer.userRoutines,
   userId: state.userReducer.user._id
 })

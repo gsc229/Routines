@@ -11,7 +11,7 @@ export const DaySection = ({
   daySetGroups,
   day,
   userRoutines,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   setCurrentSetGroup,
   setFlattenedRoutine,
   showEditLink=false,
@@ -49,24 +49,27 @@ export const DaySection = ({
           <div 
           key={sg._id}
           className='day-section-wrapper'>
+
             <ViewSetGroupModal
             showEditLink={showEditLink}
-            redirectLink={`/create-set-group/${routineNamesColors[sg.routine].name }/${sg.week_number}/day-${sg.day_number}-${sg.day}`}
+            redirectLink={`/create-set-group/${routineNamesColorsStartDates[sg.routine].name }/${sg.week_number}/day-${sg.day_number}-${sg.day}`}
             setModalShow={setModalShow} 
             modalShow={modalShow === sg._id} />
+
             <OverlayTrigger 
             overlay={
             <ToolTip>
               <div 
-              style={{color: routineNamesColors[sg.routine].color, fontWeight: 'bold'}}
+              style={{color: routineNamesColorsStartDates[sg.routine].color, fontWeight: 'bold'}}
               className='tool-tip-title'>
-                {routineNamesColors[sg.routine].name} Week: {fromStartWeeks} <br/> Wk. Day: {fromWeekStartDays}&nbsp; (Rt. Day: {fromStartDays})
-              </div>{sg.name}
+                {routineNamesColorsStartDates[sg.routine].name} Week: {fromStartWeeks} <br/> Wk. Day: {fromWeekStartDays}&nbsp; (Rt. Day: {fromStartDays})
+              </div>
+              <p>{sg.name}</p>
             </ToolTip>}>
               <div
                 onClick={ () => width >= 400 && handleClick(sg) }
                 className='day-marker'
-                style={{backgroundColor: routineNamesColors[sg.routine].color}}>
+                style={{backgroundColor: routineNamesColorsStartDates[sg.routine].color}}>
               </div>
             </OverlayTrigger>
           </div>

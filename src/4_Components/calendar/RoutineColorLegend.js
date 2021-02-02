@@ -9,35 +9,35 @@ import Link from 'react-bootstrap/NavLink'
 
 export const RoutineColorLegend = ({
   isSingleRoutine=false,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   changeColor,
   currentRoutine,
   saveRoutineChanges
 }) => {
 
   const [showPicker, setShowPicker] = useState(false)
-  const [initialNamesColors, setInitialNamesColors] = useState(routineNamesColors)
+  const [initialNamesColors, setInitialNamesColors] = useState(routineNamesColorsStartDates)
 
   useEffect(() => {
     if(isSingleRoutine && currentRoutine && currentRoutine._id){
-      setInitialNamesColors({ [currentRoutine._id]: routineNamesColors[currentRoutine._id] })
+      setInitialNamesColors({ [currentRoutine._id]: routineNamesColorsStartDates[currentRoutine._id] })
     } else{
-      setInitialNamesColors(routineNamesColors)
+      setInitialNamesColors(routineNamesColorsStartDates)
     }
 
   }, [showPicker])
 
   
   const persistColorChanges = async(routineId) => {
-    if(initialNamesColors[routineId].color !== routineNamesColors[routineId].color){
-      const saveColorResponse =  await saveRoutineChanges(routineId, {color: routineNamesColors[routineId].color })
+    if(initialNamesColors[routineId].color !== routineNamesColorsStartDates[routineId].color){
+      const saveColorResponse =  await saveRoutineChanges(routineId, {color: routineNamesColorsStartDates[routineId].color })
       if(!saveColorResponse.success){
         return changeColor({
           ...initialNamesColors,
           [routineId]: initialNamesColors[routineId]
         })
       }
-      setInitialNamesColors(routineNamesColors)
+      setInitialNamesColors(routineNamesColorsStartDates)
     }
   }
 
@@ -65,9 +65,9 @@ export const RoutineColorLegend = ({
 
   const handleColorChange = (color, routineId) => {
     changeColor({
-      ...routineNamesColors,
+      ...routineNamesColorsStartDates,
       [routineId]: {
-        ...routineNamesColors[routineId],
+        ...routineNamesColorsStartDates[routineId],
         color: color.hex
       }
     })
@@ -83,10 +83,10 @@ export const RoutineColorLegend = ({
         className={`name-and-slider-container ${showPicker === routineId && 'showing-picker'}`}>
 
           <div className='name-and-day-marker'>
-            {routineNamesColors[routineId].name}: 
+            {routineNamesColorsStartDates[routineId].name}: 
             <div
             onClick={() => handleShowPicker(routineId)}
-            style={{backgroundColor: routineNamesColors[routineId].color}} 
+            style={{backgroundColor: routineNamesColorsStartDates[routineId].color}} 
             className="day-marker">
             </div>
           </div> 
@@ -99,7 +99,7 @@ export const RoutineColorLegend = ({
               Done
             </Link>
             <HuePicker
-            color={routineNamesColors[routineId].color} 
+            color={routineNamesColorsStartDates[routineId].color} 
             onChangeComplete={(color) => handleColorChange(color, routineId)} />
           </div>}
         </div>)}
@@ -110,7 +110,7 @@ export const RoutineColorLegend = ({
 
 const mapStateToProps = (state) => ({
   userRoutines: state.routineReducer.userRoutines,
-  routineNamesColors: state.routineReducer.routineNamesColors,
+  routineNamesColorsStartDates: state.routineReducer.routineNamesColorsStartDates,
   currentRoutine: state.routineReducer.currentRoutine
 })
 

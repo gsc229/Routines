@@ -7,7 +7,7 @@ import {weekStyles, dayStyles} from '../calendar/styles'
 const ScheduleWeek = ({
   week,
   datesSetGroups,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   isSingleRoutine=false,
   handleDayClick,
   showEditLink=false,
@@ -21,7 +21,7 @@ const ScheduleWeek = ({
     <div 
     className={" week" }>
     {week.map((day, index)=>{
-
+    console.log({routineNamesColorsStartDates})
     const formattedDay = day.format('MM-DD-YYYY')
     const daySetGroups = datesSetGroups[formattedDay] && isSingleRoutine 
     ? datesSetGroups[formattedDay].filter(sg => sg.routine === routine._id)
@@ -38,8 +38,9 @@ const ScheduleWeek = ({
         day={day}
         showEditLink={showEditLink}
         windowSize={{height, width}}
-        routineNamesColors={routineNamesColors}
+        routineNamesColorsStartDates={routineNamesColorsStartDates}
         daySetGroups={daySetGroups} />}
+        {formattedDay}
       </div>
     : // ↑ Day has sets ↑ - ↓ Day has no sets ↓ 
       <div
@@ -53,7 +54,7 @@ const ScheduleWeek = ({
 }
 
 const mapStateToProps = (state) => ({
-  routineNamesColors: state.routineReducer.routineNamesColors,
+  routineNamesColorsStartDates: state.routineReducer.routineNamesColorsStartDates,
   userRoutines: state.routineReducer.userRoutines,
   userId: state.userReducer.user._id
 })

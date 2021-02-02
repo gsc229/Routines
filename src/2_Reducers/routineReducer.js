@@ -7,6 +7,7 @@ const colorize = (routines) => {
     newRoutineNamesColors[routine._id] = {}
     newRoutineNamesColors[routine._id].name = routine.name
     routine.color ? newRoutineNamesColors[routine._id].color = routine.color : newRoutineNamesColors[routine._id].color = randomColor()
+    newRoutineNamesColors[routine.id].start_date = routine.start_date
   })
   return newRoutineNamesColors
 }
@@ -20,7 +21,7 @@ const initialState = {
   routineSearchResults: [],
   userExerciseSets: [],
   userRoutines: [],
-  routineNamesColors: {},
+  routineNamesColorsStartDates: {},
   currentRoutineName: '', 
   currentRoutine: {
     user: null,
@@ -71,7 +72,7 @@ const reducer = (state=initialState, action) => {
     case constants.SET_ROUTINE_NAMES_COLORS:
       return{
         ...state,
-        routineNamesColors: action.payload
+        routineNamesColorsStartDates: action.payload
       }
     case constants.SET_FLATTENED_ROUTINE:
       return{
@@ -95,7 +96,7 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         crudingRoutine: false,
-        routineNamesColors: colorize(action.payload.data),
+        routineNamesColorsStartDates: colorize(action.payload.data),
         userRoutines: action.payload.data,
         routinePagination: action.payload.routinePagination
       }
@@ -185,8 +186,8 @@ const reducer = (state=initialState, action) => {
         crudingRoutine: false,
         unsavedChanges: false,
         currentRoutine: action.payload,
-        routineNamesColors: {
-          ...state.routineNamesColors,
+        routineNamesColorsStartDates: {
+          ...state.routineNamesColorsStartDates,
           [action.payload._id]: {
             name: action.payload.name,
             color: action.payload.color

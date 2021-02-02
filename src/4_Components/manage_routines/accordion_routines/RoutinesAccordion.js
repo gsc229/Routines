@@ -23,7 +23,7 @@ export const RoutinesAccordion = ({
   setCurrentRoutine,
   saveRoutineChanges,
   crudingRoutine,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   createNewRoutine
 }) => {
 
@@ -172,7 +172,7 @@ const getToggleStyles = (routineColor) => {
             disabled={editingMode}
             as={Button} 
             onClick={() => handleToggle(routine)}
-            style={getToggleStyles(routineNamesColors[routine._id].color)} 
+            style={getToggleStyles(routineNamesColorsStartDates[routine._id].color)} 
             eventKey={routine._id} >
               {routine.name}
             </Accordion.Toggle>
@@ -242,7 +242,7 @@ const mapStateToProps = (state) => ({
   userRoutines: state.routineReducer.userRoutines,
   currentRoutine: state.routineReducer.currentRoutine,
   crudingRoutine: state.routineReducer.crudingRoutine,
-  routineNamesColors: state.routineReducer.routineNamesColors
+  routineNamesColorsStartDates: state.routineReducer.routineNamesColorsStartDates
 })
 
 const mapDispatchToProps = {
