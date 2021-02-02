@@ -149,11 +149,15 @@ const getToggleStyles = (routineColor) => {
     backgroundColor: 'var(--bs-dark)', 
     color: color(),
     borderColor: color(),
+    '&:focus':{
+      boxShadow: `0 0 0 0.2rem ${color()}`
+    }
   }
 } 
 
   return (
-    <Accordion 
+    <Accordion
+    defaultActiveKey={currentRoutine._id}
     className="routines-bank">
 
       {modalShow && 
@@ -164,6 +168,7 @@ const getToggleStyles = (routineColor) => {
         <Card bg="dark" key={routine._id}>
           <Card.Header>
             <Accordion.Toggle
+            className='toggle-btn'
             disabled={editingMode}
             as={Button} 
             onClick={() => handleToggle(routine)}
