@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {changeColor, saveRoutineChanges} from '../../1_Actions/routineActions'
-import {updateRoutine} from '../../3_APIs/routinesApi'
 import {SliderPicker, HuePicker} from 'react-color'
 import Link from 'react-bootstrap/NavLink'
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import {majorMuscleGroups, categories} from './routineFormData'
 import {localWritingRoutine, createNewRoutine, saveRoutineChanges, clearCurrentRoutine, fetchFlattenedRoutine} from '../../../1_Actions/routineActions'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
@@ -13,6 +14,7 @@ import DiscardBtn from '../../buttons/DiscardBtn'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
+import {HuePicker} from 'react-color'
 
 export const RoutineInfoForm = ({ 
   currentRoutine,
@@ -37,6 +39,10 @@ export const RoutineInfoForm = ({
   const history = useHistory()
   const handleChange = e => {
     localWritingRoutine(e.target.name, e.target.value)
+  }
+
+  const handleColorChange = (colorObj) => {
+    localWritingRoutine('color', colorObj.hex)
   }
 
   
@@ -75,7 +81,7 @@ export const RoutineInfoForm = ({
 
   const getHeader = () => {
   if(currentRoutine._id ) return <h3 style={{backgroundColor: currentRoutine.color || 'var(--routine-red)'}}>Currently Editing: {currentRoutineName}</h3> 
-  if(!currentRoutine._id) return <h3>Basic Routine Info:</h3>
+  if(!currentRoutine._id) return <h3 style={{backgroundColor: currentRoutine.color || 'var(--routine-red)'}}>Basic Routine Info:</h3>
   }
 
   return (
@@ -141,7 +147,18 @@ export const RoutineInfoForm = ({
             custom
             min={0} 
             max={10} />
-              
+          </Form.Group>
+          <Form.Group>
+            <Form.Label style={{color: currentRoutine.color}}>
+              Routine Color
+            </Form.Label>
+            <div 
+            
+            className='color-picker-container'>
+              <HuePicker
+              color={currentRoutine.color} 
+              onChangeComplete={(color) => handleColorChange(color)} />
+            </div>
           </Form.Group>
         </Col>
         
@@ -182,6 +199,9 @@ export const RoutineInfoForm = ({
             name="start_date" 
             value={start_date} 
             type="date"/>
+            <Form.Text className='text-muted'>
+              Tip: Choosing a Sunday start date will align week days and routine days.
+            </Form.Text>
           </Form.Group>
         </Col>
       </Row>
