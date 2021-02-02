@@ -79,7 +79,7 @@ export const fetchSetGroupById = ( setGroupId, query) => dispatch => {
   })
 }
 
-export const saveSetGroupChanges = (setGroupId, updates) => dispatch => {
+export const saveSetGroupChanges = (setGroupId, updates={}) => dispatch => {
   dispatch({type: constants.UPDATING_SET_GROUP})
   return updateSetGroup(setGroupId, updates)
   .then(response => {
@@ -118,7 +118,7 @@ export const saveManySetGroupChanges = (queryAndChanges) => dispatch => {
   })
 }
 
-export const createNewSetGroup = (newSetGroup) => dispatch => {
+export const createNewSetGroup = (newSetGroup={}) => dispatch => {
   dispatch({type: constants.CREATING_SET_GROUP})
   return createSetGroup(newSetGroup)
   .then(response=>{
@@ -136,7 +136,7 @@ export const createNewSetGroup = (newSetGroup) => dispatch => {
   })
 }
 
-export const bulkWriteSetGroups = (updatesArray, findByObj) => dispatch => {
+export const bulkWriteSetGroups = (updatesArray=[{}], findByObj={}) => dispatch => {
 
   dispatch({type: constants.BULK_WRITING_SET_GROUPS})
   

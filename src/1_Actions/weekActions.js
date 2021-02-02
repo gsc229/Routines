@@ -56,7 +56,7 @@ export const createNewWeek = (newWeek) => dispatch => {
   })
 }
 
-export const saveWeekChanges = (weekId, updates) => dispatch => {
+export const saveWeekChanges = (weekId, updates={}) => dispatch => {
   dispatch({type: constants.UPDATING_WEEK})
   return updateWeek(weekId, updates)
   .then(response => {
@@ -74,7 +74,7 @@ export const saveWeekChanges = (weekId, updates) => dispatch => {
 
 }
 
-export const bulkWriteWeeks = (updatesArray, routineId) => dispatch => {
+export const bulkWriteWeeks = (updatesArray=[{}], routineId) => dispatch => {
 
   dispatch({type: constants.BULK_WRITING_WEEKS})
   

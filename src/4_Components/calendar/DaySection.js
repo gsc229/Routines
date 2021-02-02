@@ -60,7 +60,7 @@ export const DaySection = ({
               <div 
               style={{color: routineNamesColors[sg.routine].color, fontWeight: 'bold'}}
               className='tool-tip-title'>
-                {routineNamesColors[sg.routine].name} Week: {fromStartWeeks} Day: {fromWeekStartDays}&nbsp; ({fromStartDays})
+                {routineNamesColors[sg.routine].name} Week: {fromStartWeeks} <br/> Wk. Day: {fromWeekStartDays}&nbsp; (Rt. Day: {fromStartDays})
               </div>{sg.name}
             </ToolTip>}>
               <div

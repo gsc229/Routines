@@ -10,6 +10,33 @@
     width: 90%;
     color:gray;
   }
+  .edit-complete-expand-btns{
+    display: flex;
+    justify-content: flex-end;
+      
+      .discard-symbol{
+        color: $gold-crayola;
+      }
+      .cmd-btn{
+        margin: 10px;
+        font-size:  25px;
+        cursor: pointer;
+      }
+      .click-edit-btn{
+        font-size: 30px;
+        color: $routine-red;
+      }
+      .expand-symbol{
+        font-size: 25px;
+        color: $field-drab !important;
+        
+      }
+      .check-symbol{
+        font-size: 25px;
+        color: $russian-green;
+      }
+    }
+    
   h3{
     background-color: $routine-red;
     color: white;
