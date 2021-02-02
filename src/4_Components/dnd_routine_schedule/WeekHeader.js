@@ -141,6 +141,7 @@ export const WeekHeader = ({
   }
 
   const handleMoveTo = async (e) => {
+    
     const destinationWeekNumber = JSON.parse(e.target.value)
     const sourceWeekNumber = JSON.parse(currentWeek.week_number)
     const sourceId = currentWeek._id
@@ -246,8 +247,9 @@ export const WeekHeader = ({
                 onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
                 onChange={handleMoveTo}
                 className='select-input header-select-input'
-                as="select">
-                <option value='choose' disabled={true}>Move to...</option>
+                as="select"
+                defaultValue=''>
+                <option value='' disabled={true}>Move to...</option>
                 {currentWeeks.filter(wk => {
                  return wk._id !== currentWeek._id
                 }).map(week => {
@@ -269,8 +271,9 @@ export const WeekHeader = ({
               onClick={()=> setCurrentWeek(currentWeeks.find(week => week._id === routineSchedule[weekNumber]._id))}
               onChange={handleCopyAndInsertWeek}
               className='select-input header-select-input'
-              as="select">
-                <option value='choose' disabled={true}>Insert at...</option>
+              as="select"
+              defaultValue=''>
+                <option value='' disabled={true}>Insert at...</option>
                 {currentWeeks.map(week => {
                 return week.week_number !== currentWeek.week_number &&
                 <option
@@ -289,8 +292,9 @@ export const WeekHeader = ({
               onClick={clearCurrentWeek}
               onChange={handleCreateBlankAndInsert}
               className='select-input header-select-input'
-              as="select">
-                <option value='choose' disabled={true}>Choose...</option>
+              as="select"
+              defaultValue=''>
+                <option value='' disabled={true}>Choose...</option>
                 <option 
                 value={weekNumber}>
                   Here

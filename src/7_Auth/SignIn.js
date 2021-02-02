@@ -27,10 +27,12 @@ export const SignIn = ({
   const disabled = credentials.email.length < 1 || credentials.password.length < 1
 
   useEffect(()=> {
-    console.log(user._id)
     if(loggedIn){
       history.push('/')
-      
+      const fetchUserRoutines = async () => {
+        await fetchRoutines(`?user=${user._id}&populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`)
+      }
+      fetchUserRoutines()
     }
   })
 

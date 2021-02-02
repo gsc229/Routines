@@ -50,6 +50,7 @@ export const DroppableDay = ({
     localWritingSetGroup('day', name.day_name)
   }
 
+  const fromStartDays = JSON.parse(dayNumber) + ((JSON.parse(weekNumber) - 1) * 7)
 
   return (
     <Droppable 
@@ -64,7 +65,7 @@ export const DroppableDay = ({
             className='day-header'>
               <h6 
               style={{color: snapshot.isDraggingOver ? 'white' : currentRoutine.color || 'white'}} >
-                W: {weekNumber} &nbsp;&nbsp; Day: {dayNumber}
+                W: {weekNumber} &nbsp;&nbsp; Day: {dayNumber} &nbsp;–&nbsp; {fromStartDays} 
               </h6>
               <Link
               style={{backgroundColor: currentRoutine.color || ''}} 

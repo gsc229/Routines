@@ -27,7 +27,7 @@ const ScheduleCalendar = ({
 }) => {
 
   const history = useHistory()
-  const [dateSetGroups, setDateSetGroups] = useState({})
+  const [datesSetGroups, setDatesSetGroups] = useState({})
   const [calendar, setCalendar] = useState([])
   const [value, setValue] = useState(moment())
   const {width, height} = useWindowSize()
@@ -47,7 +47,7 @@ const ScheduleCalendar = ({
   }, [])
 
   useEffect(() => {  
-    userRoutines && setDateSetGroups(mapSetGroupsToDates(userRoutines))
+    userRoutines && setDatesSetGroups(mapSetGroupsToDates(userRoutines))
   }, [userRoutines])
 
   useEffect(()=>{
@@ -86,7 +86,7 @@ const ScheduleCalendar = ({
             width={width}
             routineNamesColors={routineNamesColors} 
             week={week} 
-            dateSetGroups={dateSetGroups}
+            datesSetGroups={datesSetGroups}
             handleDayClick={handleDayClick}
             />
           </div>)

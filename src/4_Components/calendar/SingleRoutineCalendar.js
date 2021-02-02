@@ -21,11 +21,11 @@ const SingleRoutineCalendar = ({
 
   const [calendar, setCalendar] = useState([])
   const [value, setValue] = useState(moment())
-  const [dateSetGroups, setDateSetGroups] = useState({})
+  const [datesSetGroups, setDatesSetGroups] = useState({})
   const {height, width} = useWindowSize()
 
   useEffect(() => {  
-    userRoutines && setDateSetGroups(mapSetGroupsToDates(userRoutines))
+    userRoutines && setDatesSetGroups(mapSetGroupsToDates(userRoutines))
   }, [userRoutines])
 
   useEffect(()=>{
@@ -60,7 +60,7 @@ const SingleRoutineCalendar = ({
       width={width}
       routineNamesColors={routineNamesColors} 
       week={week} 
-      dateSetGroups={dateSetGroups}
+      datesSetGroups={datesSetGroups}
       handleDayClick={handleDayClick}
       routine={routine}
       isSingleRoutine={true}

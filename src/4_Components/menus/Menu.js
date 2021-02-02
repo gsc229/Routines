@@ -1,11 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import { clearCurrentRoutine } from '../../1_Actions/routineActions'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import {logout} from '../../1_Actions/userActions'
 import {Link, useLocation} from 'react-router-dom'
-const Menu = ({logout}) => {
+
+const Menu = ({logout, clearCurrentRoutine}) => {
   
   const pathname = useLocation().pathname
   
@@ -27,7 +29,7 @@ const Menu = ({logout}) => {
           {/* <Nav.Link active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">Manage Routines</Nav.Link> */}
           <NavDropdown active={isActivePath('dropdown')} title='Manage' aria-labelledby="navbarDropdown">
             <NavDropdown.Item active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">Saved Routines</NavDropdown.Item>
-            <NavDropdown.Item active={isActivePath('/create-routine')} as={Link} to="/create-routine">New Routine</NavDropdown.Item>
+            <NavDropdown.Item onClick={clearCurrentRoutine} active={isActivePath('/create-routine')} as={Link} to="/create-routine">New Routine</NavDropdown.Item>
             {/* <NavDropdown.Item active={isActivePath('/find-routine')} as={Link} to="/find-routine">Find Routines</NavDropdown.Item> */}
             <NavDropdown.Item><hr className="dropdown-divider" /></NavDropdown.Item>
             <NavDropdown.Item active={isActivePath('/manage-exercises')} as={Link} to="/manage-exercises">My Exercises</NavDropdown.Item>
@@ -41,4 +43,13 @@ const Menu = ({logout}) => {
   )
 }
 
-export default connect( null, {logout})(Menu)
+const mapStateToProps = state => ({
+
+})
+
+const mapDispatchToProps = {
+  logout,
+  clearCurrentRoutine
+}
+
+export default connect( mapStateToProps, mapDispatchToProps)(Menu)

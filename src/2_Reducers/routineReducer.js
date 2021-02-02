@@ -37,6 +37,9 @@ const initialState = {
 }
 
 const reducer = (state=initialState, action) => {
+
+  let foundRoutine
+
   switch(action.type){
     case constants.SET_CURRENT_ROUTINE:
       return{
@@ -102,10 +105,30 @@ const reducer = (state=initialState, action) => {
         crudingRoutine: 'fetching-routine'
       }
     case constants.FETCH_FLATTENED_ROUTINE_SUCCESS:
+      
+      foundRoutine = state.userRoutines.find(routine => routine._id === action.payload.routine._id)
+
+      const flattendRoutine = {
+        ...action.payload.routine,
+        weeks: action.payload.weeks,
+        set_groups: action.payload.set_groups,
+        exercise_sets: action.payload.exercise_sets
+      }
+
       return{
         ...state,
         crudingRoutine: false,
-        currentRoutine: action.payload.routine
+        currentRoutine: action.payload.routine,
+        userRoutines: foundRoutine 
+        ? state.userRoutines
+        .map(routine => {
+          if(routine._id === flattendRoutine._id){
+            return flattendRoutine
+          } else{
+            return routine
+          }
+        })
+        : [...state.userRoutines, flattendRoutine]
       }
     case constants.FETCH_FLATTENED_ROUTINE_FAIL:
       return{
@@ -170,7 +193,14 @@ const reducer = (state=initialState, action) => {
           }
         },
         currentRoutineName: action.payload.name,
-        userRoutines: [...state.userRoutines.map(routine => routine._id === action.payload._id ? action.payload : routine)]
+        userRoutines: [...state.userRoutines.map(routine => {
+          if( routine._id === action.payload._id){
+            console.log('routineReducer: ', {...routine, ...action.payload})
+            return {...routine, ...action.payload}
+          } else{
+            return routine
+          }
+        })]
       }
     case constants.UPDATE_ROUTINE_FAIL:
       return{
@@ -202,6 +232,230 @@ const reducer = (state=initialState, action) => {
       ...state,
       error_message: ''
     }
+
+    /* ASCYN Interdependent */
+    case constants.CREATE_WEEK_SUCCESS:
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.routine){
+            return{
+              ...routine,
+              weeks: [...routine.weeks, action.payload]
+              .sort((a, b) => a.week_number - b.week_number)
+            }
+          } else{
+            return routine
+          }
+        })
+      }
+    case constants.UPDATE_WEEK_SUCCESS:
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.routine){
+            return{
+              ...routine,
+              weeks: routine.weeks
+              .map(week => week._id === action.payload._id ? action.payload : week)
+              .sort((a, b) => a.week_number - b.week_number)
+            }
+          } else{
+            return routine
+          }
+        })
+      }
+    case constants.BULK_WRITE_WEEKS_SUCCESS:
+      return{
+        ...state,
+        userRoutines: state.userRoutines 
+        .map(routine => {
+          if(routine._id === action.payload.routineId){
+            return{
+              ...routine,
+              weeks: action.payload.data
+            }
+          } else{
+            return routine
+          }
+        })
+      }
+    case constants.DELETE_WEEK_SUCCESS:      
+      const deleteSuccessWeekId = action.payload._id ? action.payload._id : action.payload
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.routine){
+            return{
+              ...routine,
+              weeks: routine.weeks
+              .filter(week => week._id !== deleteSuccessWeekId)
+              .sort((a, b) => a.week_number - b.week_number),
+              set_groups: routine.set_groups
+              .filter(sg => sg.week !== deleteSuccessWeekId),
+              exercise_sets: routine.exercise_sets
+              .filter(set => set.week !== deleteSuccessWeekId)
+            }
+          } else{
+            return routine
+          }
+        })
+      }
+    case constants.CREATE_SET_GROUP_SUCCESS:
+      
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.routine){
+            return{
+              ...routine,
+              set_groups: [...routine.set_groups, action.payload]
+              .sort((a, b) => a.week_number - b.week_number)
+            }
+          } else{
+            return routine
+          }
+        })
+        
+      }
+    case constants.UPDATE_SET_GROUP_SUCCESS:
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.routine){
+            return{
+              ...routine,
+              set_groups: routine.set_groups 
+              .map(setGroup => setGroup._id === action.payload._id ? action.payload : setGroup)
+            }
+          } else{
+            return routine
+          }
+        })
+        
+      }
+    case constants.BULK_WRITE_SET_GROUPS_SUCCESS:
+      const bulkWriteSgsRoutineId = action.payload.data[0].routine
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === bulkWriteSgsRoutineId){
+            return{
+              ...routine,
+              set_groups: action.payload.data
+            }
+          } else{
+            return routine
+          }
+        })
+      }
+    case constants.DELETE_SET_GROUP_SUCCESS:
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.routine){
+            return{
+              ...routine,
+              set_groups: routine.set_groups
+              .filter(sg => sg._id !== action.payload._id),
+              exercise_sets: routine.exercise_sets
+              .filter(set => set.set_group !== action.payload._id)
+            }
+          } else{
+            return routine
+          }
+        })
+      }
+    case constants.CREATE_EXERCISE_SET_SUCCESS:
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.routine){
+            return{
+              ...routine,
+              exercise_sets: [...routine.exercise_sets, action.payload]
+            }
+          } else{
+            return routine
+          }
+        })
+      }
+    case constants.CREATE_EXERCISE_SETS_SUCCESS:
+      const createExSetsSuccssRoutineId = action.payload[0] ? action.payload[0].routine : ''
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === createExSetsSuccssRoutineId){
+            return{
+              ...routine,
+              exercise_sets: [...routine.exercise_sets, ...action.payload]
+            }
+          } else{
+            return routine
+          }
+        })
+        
+      }
+    case constants.UPDATE_EXERCISE_SET_SUCCESS:
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.routine){
+            return{
+              ...routine,
+              exercise_sets: routine.exercise_sets 
+              .map(setGroup => setGroup._id === action.payload._id ? action.payload : setGroup)
+            }
+          } else{
+            return routine
+          }
+        })
+        
+      }
+    case constants.BULK_WRITE_EXERCISE_SETS_SUCCESS:
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.findByObj.routine){
+            return{
+              ...routine,
+              exercise_sets: action.payload.data
+            }
+          } else{
+            return routine
+          }
+        })
+
+      }
+    case constants.DELETE_EXERCISE_SET_SUCCESS:
+      return{
+        ...state,
+        userRoutines: state.userRoutines
+        .map(routine => {
+          if(routine._id === action.payload.routine){
+            return{
+              ...routine,
+              exercise_sets: routine.exercise_sets
+              .filter(set => set._id !== action.payload._id)
+            }
+          } else{
+            return routine
+          }
+        })
+      }
+
+
     case constants.LOG_OUT:
       return {...initialState}
 

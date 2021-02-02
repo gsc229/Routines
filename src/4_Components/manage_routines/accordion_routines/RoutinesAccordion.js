@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges } from '../../../1_Actions/routineActions'
+import { clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges, createNewRoutine } from '../../../1_Actions/routineActions'
 import moment from 'moment'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
@@ -17,13 +16,15 @@ import ConfirmDeleteRoutineModal from '../../modals/confirm_delete_modals/Confir
 import fontsizeClamp from '../../../utils/clampBuilder'
 
 export const RoutinesAccordion = ({
+  userId,
   userRoutines,
   currentRoutine,
   clearCurrentRoutine, 
   setCurrentRoutine,
   saveRoutineChanges,
   crudingRoutine,
-  routineNamesColors
+  routineNamesColors,
+  createNewRoutine
 }) => {
 
   const [editingMode, setEditingMode] = useState(false)
@@ -50,27 +51,33 @@ export const RoutinesAccordion = ({
     }, 800)
   }
   
-  const history = useHistory()
 
-  const handleSaveClick = () => {
-    saveRoutineChanges(currentRoutine._id, currentRoutine)
-    setEditingMode(false)
-    clearCurrentRoutine()
+  const handleSaveClick = async() => {
+    // after the update or save, redirect will depend on whether eiditing old or createing new routine and user input. 
+    let response
+
+    if(!currentRoutine.original_creator){
+      response = await createNewRoutine({...currentRoutine, original_creator: userId, user: userId})
+    }else if(!currentRoutine.user){
+      response = await createNewRoutine({...currentRoutine, user: userId})
+    } else{
+      response = await saveRoutineChanges(currentRoutine._id, currentRoutine)
+    }
+
+    if(response && response.success){
+      setEditingMode(false)
+    }
   }
 
   const handleDiscardClick = () => {
     setEditingMode(false)
+    
     clearCurrentRoutine()
   }
 
   const handleSameComponentEdit = (routine) => {
     setCurrentRoutine(routine)
     setEditingMode(true)
-  }
-
-  const editInCreatePage = (routine) => {
-    if(currentRoutine._id !== routine._id) setCurrentRoutine(routine)
-    history.push('/create-routine')
   }
 
   const handleToggle = (routine) => {
@@ -126,19 +133,31 @@ export const RoutinesAccordion = ({
   }
 
 const getToggleStyles = (routineColor) => {
+  
+  const color = () => {
+    if(editingMode){
+      return 'var(--spanish-gray)'
+    }
+    return routineColor ? routineColor : 'var(routine-red)'
+  }
+
   return{
     width: '100%', 
     display: 'flex', 
     justifyContent: 'center', 
     postion: 'relative',
     backgroundColor: 'var(--bs-dark)', 
-    color: routineColor ? routineColor : 'var(--routine-red)',
-    borderColor: routineColor ? routineColor : 'var(--routine-red)',
+    color: color(),
+    borderColor: color(),
+    '&:focus':{
+      boxShadow: `0 0 0 0.2rem ${color()}`
+    }
   }
 } 
 
   return (
-    <Accordion 
+    <Accordion
+    defaultActiveKey={currentRoutine._id}
     className="routines-bank">
 
       {modalShow && 
@@ -149,6 +168,7 @@ const getToggleStyles = (routineColor) => {
         <Card bg="dark" key={routine._id}>
           <Card.Header>
             <Accordion.Toggle
+            className='toggle-btn'
             disabled={editingMode}
             as={Button} 
             onClick={() => handleToggle(routine)}
@@ -167,25 +187,25 @@ const getToggleStyles = (routineColor) => {
             style={{flexDirection: `${editingMode ? 'column' : 'row-reverse'}`}}>
               
               <div className='edit-complete-expand-btns'>
-              {!editingMode && !showSpinner && 
-              <OverlayTrigger
-                key="left"
-                placement="left"
-                overlay={
-                  <ToolTip>
-                    Edit these details
-                  </ToolTip>
-                }
-              > 
-                <TiEdit className='click-edit-btn cmd-btn' onClick={() => handleSameComponentEdit(routine)} /> 
-              </OverlayTrigger>}
+                {!editingMode && !showSpinner && 
+                <OverlayTrigger
+                  key="left"
+                  placement="left"
+                  overlay={
+                    <ToolTip>
+                      Edit these details
+                    </ToolTip>
+                  }
+                > 
+                  <TiEdit className='click-edit-btn cmd-btn' onClick={() => handleSameComponentEdit(routine)} /> 
+                </OverlayTrigger>}
 
-              {editingMode && !showSpinner &&
-              <SaveDiscardExpandBtnGroup
-              saveOnClick={handleSaveClick}
-              discardOnClick={handleDiscardClick}
-              expandOnclick={() => editInCreatePage(routine)}
-              />}
+                {editingMode && !showSpinner &&
+                <SaveDiscardExpandBtnGroup
+                showExpandBtn={false}
+                saveOnClick={handleSaveClick}
+                discardOnClick={handleDiscardClick}
+                />}
 
               </div>
 
@@ -195,9 +215,11 @@ const getToggleStyles = (routineColor) => {
               {showSpinner && <DarkSpinner  style={{marginBottom: '50px', height: '300px'}} />}
 
               {editingMode && currentRoutine._id === routine._id && !crudingRoutine &&
-              <CreateRoutineForm 
+              <CreateRoutineForm
+              routine={routine} 
               discardBtn={true}
-              discardCallback={() => setEditingMode(false)}
+              handleSave={handleSaveClick}
+              handleClose={() => setEditingMode(false)}
               showFinishLaterBtn={false}
               showHeader={false} />}
             </div>
@@ -216,6 +238,7 @@ const getToggleStyles = (routineColor) => {
 }
 
 const mapStateToProps = (state) => ({
+  userId: state.userReducer.user._id,
   userRoutines: state.routineReducer.userRoutines,
   currentRoutine: state.routineReducer.currentRoutine,
   crudingRoutine: state.routineReducer.crudingRoutine,
@@ -226,6 +249,7 @@ const mapDispatchToProps = {
   clearCurrentRoutine,
   setCurrentRoutine,
   saveRoutineChanges,
+  createNewRoutine
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutinesAccordion)

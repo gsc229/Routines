@@ -5,9 +5,11 @@ import {setFlattenedRoutine} from '../../1_Actions/routineActions'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
 import ViewSetGroupModal from '../modals/view_modals/ViewSetGroupModal'
+import moment from 'moment'
 
 export const DaySection = ({
-  dateSetGroups,
+  daySetGroups,
+  day,
   userRoutines,
   routineNamesColors,
   setCurrentSetGroup,
@@ -18,6 +20,7 @@ export const DaySection = ({
 
   const [modalShow, setModalShow] = useState(false)
   const {width} = windowSize
+
   const handleClick = (sg) => { 
 
     const selectedRoutine = {...userRoutines.find(routine => routine._id === sg.routine)}
@@ -37,7 +40,11 @@ export const DaySection = ({
     onClick={e => width >= 400 && e.stopPropagation()}
     className='day-sections'>
       
-      {dateSetGroups && dateSetGroups.sort((a, b) => a.routine - b.routine).map(sg => {
+      {daySetGroups && daySetGroups.sort((a, b) => a.routine - b.routine).map(sg => {
+        const startDate = moment(userRoutines.find(rt => rt._id === sg.routine).start_date)
+        const fromStartDays = day.diff(startDate, 'days') + 1
+        const fromStartWeeks = day.diff(startDate, 'weeks') + 1
+        const fromWeekStartDays = day.day() + 1
         return(
           <div 
           key={sg._id}
@@ -53,7 +60,7 @@ export const DaySection = ({
               <div 
               style={{color: routineNamesColors[sg.routine].color, fontWeight: 'bold'}}
               className='tool-tip-title'>
-                {routineNamesColors[sg.routine].name + ':'}
+                {routineNamesColors[sg.routine].name} Week: {fromStartWeeks} <br/> Wk. Day: {fromWeekStartDays}&nbsp; (Rt. Day: {fromStartDays})
               </div>{sg.name}
             </ToolTip>}>
               <div

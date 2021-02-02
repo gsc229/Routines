@@ -110,6 +110,9 @@ export const CreateOrEditExerciseSet = ({
       </div>
     )
   }
+  const weekNumber = JSON.parse(currentSetGroup.week_number) + 1
+  const dayNumber = JSON.parse(currentSetGroup.day_number)
+  const startFromDays = ((weekNumber - 1) * 7) +  dayNumber
 
   return (
     <Layout>
@@ -128,11 +131,11 @@ export const CreateOrEditExerciseSet = ({
             <h2 style={{fontSize: 'inherit'}}>Create Set Group for:</h2>
             <h2 style={{fontSize: 'inherit', color: currentRoutine.color || 'var(--routine-red)'}}>{currentRoutine.name}</h2>
           </div>
-          <h6>Week {currentSetGroup.week_number}, Day {currentSetGroup.day_number}</h6>
+          <h6>Week {weekNumber}, Day {dayNumber} &nbsp;&nbsp;({startFromDays})</h6>
           <div className='link-container'>
             <Link 
             onClick={modalShowLogic}>
-              <FaRegCalendarAlt />&nbsp;<FaRegHandPointLeft />&nbsp;<span>Back to Schedule</span>
+              <FaRegCalendarAlt />&nbsp;<FaRegHandPointLeft />&nbsp;<span>Schedule Planner</span>
             </Link>
           </div>
         </div>

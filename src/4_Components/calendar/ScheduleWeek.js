@@ -6,7 +6,7 @@ import {weekStyles, dayStyles} from '../calendar/styles'
 
 const ScheduleWeek = ({
   week,
-  dateSetGroups,
+  datesSetGroups,
   routineNamesColors,
   isSingleRoutine=false,
   handleDayClick,
@@ -19,12 +19,13 @@ const ScheduleWeek = ({
   
   return (
     <div 
-    className={weekStyles(week) + " week" }>
-    {week.map(day=>{
+    className={" week" }>
+    {week.map((day, index)=>{
+
     const formattedDay = day.format('MM-DD-YYYY')
-    const daySetGroups = dateSetGroups[formattedDay] && isSingleRoutine 
-    ? dateSetGroups[formattedDay].filter(sg => sg.routine === routine._id)
-    : dateSetGroups[formattedDay]
+    const daySetGroups = datesSetGroups[formattedDay] && isSingleRoutine 
+    ? datesSetGroups[formattedDay].filter(sg => sg.routine === routine._id)
+    : datesSetGroups[formattedDay]
 
     return daySetGroups ?
       <div
@@ -34,10 +35,11 @@ const ScheduleWeek = ({
         <p>{day.format("D")}</p>
         {daySetGroups &&
         <DaySection
+        day={day}
         showEditLink={showEditLink}
         windowSize={{height, width}}
         routineNamesColors={routineNamesColors}
-        dateSetGroups={daySetGroups} />}
+        daySetGroups={daySetGroups} />}
       </div>
     : // ↑ Day has sets ↑ - ↓ Day has no sets ↓ 
       <div

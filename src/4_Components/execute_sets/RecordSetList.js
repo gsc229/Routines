@@ -78,7 +78,7 @@ const RecordSetList = ({
                   to=''
                   onClick={() => setEditingActual(actualName)}
                   className='edit-button'>
-                    Edit
+                    Record Result
                   </NavLink>}
 
                   {editingActual === actualName && 
