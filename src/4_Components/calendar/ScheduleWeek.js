@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import DaySection from './DaySection'
 import {weekStyles, dayStyles} from '../calendar/styles'
-
+import moment from 'moment'
+import fontSizeClamp from '../../utils/clampBuilder'
 
 const ScheduleWeek = ({
   week,
@@ -16,13 +17,43 @@ const ScheduleWeek = ({
   height,
   width
 }) => {
+
+  const getStartMarkers = (formattedDay) => {
+
+    const startIcons = []
+
+    Object.keys(routineNamesColorsStartDates)
+    .map(idKey => {
+      const formattedStart = moment(routineNamesColorsStartDates[idKey].start_date).format('MM-DD-YYYY')
+      if(formattedStart === formattedDay){
+        startIcons.push(
+        <div 
+        style={{
+        width: 'fit-content',
+        color: routineNamesColorsStartDates[idKey].color, 
+        overflow: 'hidden', 
+        fontSize: fontSizeClamp(400, 1000, .6, 1)}}
+        className="start-date">
+          <p>S</p>
+        </div>
+        )
+      }
+    })
+
+    return(
+      <div 
+      style={{display: 'flex', flexWrap: 'wrap'}}
+      className='starts-container'>
+        {startIcons.map(div => div)}
+      </div>
+    )
+  }
   
   return (
     <div 
     className={" week" }>
     {week.map((day, index)=>{
-    console.log({routineNamesColorsStartDates})
-    const formattedDay = day.format('MM-DD-YYYY')
+    const formattedDay = day.format('MM-DD-YYYY')    
     const daySetGroups = datesSetGroups[formattedDay] && isSingleRoutine 
     ? datesSetGroups[formattedDay].filter(sg => sg.routine === routine._id)
     : datesSetGroups[formattedDay]
@@ -40,13 +71,14 @@ const ScheduleWeek = ({
         windowSize={{height, width}}
         routineNamesColorsStartDates={routineNamesColorsStartDates}
         daySetGroups={daySetGroups} />}
-        {formattedDay}
+        {getStartMarkers(formattedDay)}
       </div>
     : // ↑ Day has sets ↑ - ↓ Day has no sets ↓ 
       <div
         key={day._d}
         className={dayStyles(day, value) + " day day-no-sets"}>
           <p>{day.format("D")}</p>
+          {getStartMarkers(formattedDay)}
       </div>
     })}
     </div>

@@ -7,8 +7,9 @@ const colorize = (routines) => {
     newRoutineNamesColors[routine._id] = {}
     newRoutineNamesColors[routine._id].name = routine.name
     routine.color ? newRoutineNamesColors[routine._id].color = routine.color : newRoutineNamesColors[routine._id].color = randomColor()
-    newRoutineNamesColors[routine.id].start_date = routine.start_date
+    newRoutineNamesColors[routine._id].start_date = routine.start_date
   })
+  
   return newRoutineNamesColors
 }
 
@@ -196,7 +197,6 @@ const reducer = (state=initialState, action) => {
         currentRoutineName: action.payload.name,
         userRoutines: [...state.userRoutines.map(routine => {
           if( routine._id === action.payload._id){
-            console.log('routineReducer: ', {...routine, ...action.payload})
             return {...routine, ...action.payload}
           } else{
             return routine

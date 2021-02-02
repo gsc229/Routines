@@ -41,8 +41,8 @@ export const DaySection = ({
     className='day-sections'>
       
       {daySetGroups && daySetGroups.sort((a, b) => a.routine - b.routine).map(sg => {
-        const startDate = moment(userRoutines.find(rt => rt._id === sg.routine).start_date)
-        const fromStartDays = day.diff(startDate, 'days') + 1
+        const startDate = moment(routineNamesColorsStartDates[sg.routine].start_date)
+        const fromStartDays = day.diff(startDate, 'days') + 2
         const fromStartWeeks = day.diff(startDate, 'weeks') + 1
         const fromWeekStartDays = day.day() + 1
         return(
@@ -66,10 +66,12 @@ export const DaySection = ({
               </div>
               <p>{sg.name}</p>
             </ToolTip>}>
-              <div
-                onClick={ () => width >= 400 && handleClick(sg) }
-                className='day-marker'
-                style={{backgroundColor: routineNamesColorsStartDates[sg.routine].color}}>
+              <div className='day-marker-wrapper'>
+                <div
+                  onClick={ () => width >= 400 && handleClick(sg) }
+                  className='day-marker'
+                  style={{backgroundColor: routineNamesColorsStartDates[sg.routine].color}}>
+                </div>
               </div>
             </OverlayTrigger>
           </div>

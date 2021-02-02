@@ -20,7 +20,7 @@ const SingleRoutineCalendar = ({
 }) => {
 
   const [calendar, setCalendar] = useState([])
-  const [value, setValue] = useState(moment())
+  const [value, setValue] = useState(moment(routine.start_date))
   const [datesSetGroups, setDatesSetGroups] = useState({})
   const {height, width} = useWindowSize()
 
