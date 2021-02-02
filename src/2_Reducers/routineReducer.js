@@ -105,7 +105,7 @@ const reducer = (state=initialState, action) => {
         crudingRoutine: 'fetching-routine'
       }
     case constants.FETCH_FLATTENED_ROUTINE_SUCCESS:
-
+      
       foundRoutine = state.userRoutines.find(routine => routine._id === action.payload.routine._id)
 
       const flattendRoutine = {
@@ -122,7 +122,7 @@ const reducer = (state=initialState, action) => {
         userRoutines: foundRoutine 
         ? state.userRoutines
         .map(routine => {
-          if(routine._id === action.payload){
+          if(routine._id === flattendRoutine._id){
             return flattendRoutine
           } else{
             return routine
@@ -193,7 +193,14 @@ const reducer = (state=initialState, action) => {
           }
         },
         currentRoutineName: action.payload.name,
-        userRoutines: [...state.userRoutines.map(routine => routine._id === action.payload._id ? action.payload : routine)]
+        userRoutines: [...state.userRoutines.map(routine => {
+          if( routine._id === action.payload._id){
+            console.log('routineReducer: ', {...routine, ...action.payload})
+            return {...routine, ...action.payload}
+          } else{
+            return routine
+          }
+        })]
       }
     case constants.UPDATE_ROUTINE_FAIL:
       return{
@@ -242,7 +249,6 @@ const reducer = (state=initialState, action) => {
             return routine
           }
         })
-        
       }
     case constants.UPDATE_WEEK_SUCCESS:
       return{
@@ -276,7 +282,8 @@ const reducer = (state=initialState, action) => {
           }
         })
       }
-    case constants.DELETE_WEEK_SUCCESS:
+    case constants.DELETE_WEEK_SUCCESS:      
+      const deleteSuccessWeekId = action.payload._id ? action.payload._id : action.payload
       return{
         ...state,
         userRoutines: state.userRoutines
@@ -285,12 +292,12 @@ const reducer = (state=initialState, action) => {
             return{
               ...routine,
               weeks: routine.weeks
-              .filter(week => week._id !== action.payload._id)
+              .filter(week => week._id !== deleteSuccessWeekId)
               .sort((a, b) => a.week_number - b.week_number),
               set_groups: routine.set_groups
-              .filter(sg => sg.week !== action.payload._id),
+              .filter(sg => sg.week !== deleteSuccessWeekId),
               exercise_sets: routine.exercise_sets
-              .filter(set => set.week !== action.payload._id)
+              .filter(set => set.week !== deleteSuccessWeekId)
             }
           } else{
             return routine
@@ -298,6 +305,7 @@ const reducer = (state=initialState, action) => {
         })
       }
     case constants.CREATE_SET_GROUP_SUCCESS:
+      
       return{
         ...state,
         userRoutines: state.userRoutines
@@ -332,11 +340,12 @@ const reducer = (state=initialState, action) => {
         
       }
     case constants.BULK_WRITE_SET_GROUPS_SUCCESS:
+      const bulkWriteSgsRoutineId = action.payload.data[0].routine
       return{
         ...state,
         userRoutines: state.userRoutines
         .map(routine => {
-          if(routine._id === action.payload.routineId){
+          if(routine._id === bulkWriteSgsRoutineId){
             return{
               ...routine,
               set_groups: action.payload.data
@@ -357,7 +366,7 @@ const reducer = (state=initialState, action) => {
               set_groups: routine.set_groups
               .filter(sg => sg._id !== action.payload._id),
               exercise_sets: routine.exercise_sets
-              .filter(set => set.set_groups !== action.payload._id)
+              .filter(set => set.set_group !== action.payload._id)
             }
           } else{
             return routine
@@ -380,11 +389,12 @@ const reducer = (state=initialState, action) => {
         })
       }
     case constants.CREATE_EXERCISE_SETS_SUCCESS:
+      const createExSetsSuccssRoutineId = action.payload[0] ? action.payload[0].routine : ''
       return{
         ...state,
         userRoutines: state.userRoutines
         .map(routine => {
-          if(routine._id === action.payload.routine){
+          if(routine._id === createExSetsSuccssRoutineId){
             return{
               ...routine,
               exercise_sets: [...routine.exercise_sets, ...action.payload]
@@ -417,7 +427,7 @@ const reducer = (state=initialState, action) => {
         ...state,
         userRoutines: state.userRoutines
         .map(routine => {
-          if(routine._id === action.payload.routineId){
+          if(routine._id === action.payload.findByObj.routine){
             return{
               ...routine,
               exercise_sets: action.payload.data
@@ -428,7 +438,7 @@ const reducer = (state=initialState, action) => {
         })
 
       }
-    case constants.DELETE_EXERCISE_SUCCESS:
+    case constants.DELETE_EXERCISE_SET_SUCCESS:
       return{
         ...state,
         userRoutines: state.userRoutines

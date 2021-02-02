@@ -5,32 +5,20 @@ import Container from 'react-bootstrap/Container'
 import RoutineInfoForm from '../../4_Components/manage_routines/form_routine/RoutineInfoForm'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 
-const CreateRoutine = ({currentIsSaved, crudingRoutine}) => {
+const CreateRoutine = ({crudingRoutine}) => {
 
-  // TO DO: if current is saved redirect to editing url
-  const [showSpinner, setshowSpinner] = useState(false)
-
-
-  useEffect(() => {
-    if(crudingRoutine === 'updating'){
-      setshowSpinner(true)
-    }
-  }, [crudingRoutine])
-
- 
-  if(showSpinner){
-    setTimeout(() => {
-      setshowSpinner(false)
-    }, 800)
-  }
+  
 
   return (
     <Layout>
       <Container className='page create-routine-page' >
-        {!showSpinner && !crudingRoutine && 
+
+        {!crudingRoutine && 
         <RoutineInfoForm />}
-        {(showSpinner || crudingRoutine )&& 
-        <DarkSpinner />}
+
+        {crudingRoutine === 'updating-routine' && 
+        <DarkSpinner text='Saving...' />}
+
       </Container>
     </Layout>
   )
@@ -41,6 +29,8 @@ const mapStateToProps = (state) => ({
   crudingRoutine: state.routineReducer.crudingRoutine 
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateRoutine)

@@ -214,8 +214,8 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingExerciseSet: false,
-        currentRoutineSets: [...state.currentRoutineSets.filter(set => set._id !== action.payload)],
-        currentExerciseSets: [...state.currentExerciseSets.filter(set => set._id !== action.payload)]
+        currentRoutineSets: [...state.currentRoutineSets.filter(set => set._id !== action.payload._id)],
+        currentExerciseSets: [...state.currentExerciseSets.filter(set => set._id !== action.payload._id)]
       }
     case constants.DELETE_EXERCISE_SET_FAIL:
       return{

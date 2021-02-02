@@ -70,9 +70,9 @@ export const saveExerciseSetChanges = (exerciseSetId, updates) => dispatch => {
       return false
   })
 }
-
+// bulkwrite will return the 
 export const bulkWriteExerciseSets = (updatesArray, findByObj) => dispatch => {
-
+  
   dispatch({type: constants.BULK_WRITING_EXERCISE_SETS})
   
   return bulkUpdateExerciseSets(updatesArray, findByObj)
@@ -138,7 +138,7 @@ export const destroyExerciseSet = (setId) => dispatch => {
   return deleteExerciseSet(setId)
   .then(deleteExSetResponse => {
     if(deleteExSetResponse.success){
-      dispatch({type: constants.DELETE_EXERCISE_SET_SUCCESS, payload: setId})
+      dispatch({type: constants.DELETE_EXERCISE_SET_SUCCESS, payload: deleteExSetResponse.data})
       return deleteExSetResponse
     }
     if(deleteExSetResponse.error_message){

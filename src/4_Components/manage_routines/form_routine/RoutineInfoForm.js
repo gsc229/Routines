@@ -19,18 +19,15 @@ export const RoutineInfoForm = ({
   currentRoutineName, 
   localWritingRoutine, 
   error_message, 
-  unsavedChanges,
-  clearErrorMessage, 
   createNewRoutine, 
   saveRoutineChanges,
   userId,
   showHeader=true,
   showDiscardBtn=true,
-  discardCallback,
+  handleSave,
+  handleClose,
   showSaveBtn=true,
   showGoToWeekBtn=true,
-  showGoToRoutinesBtn=true,
-  showGoToExerciseBank=true,
   fetchFlattenedRoutine
 }) => {
 
@@ -59,7 +56,7 @@ export const RoutineInfoForm = ({
     }
 
     if(response && response.success){
-      fetchFlattenedRoutine(response.data._id)
+      handleClose()
     }
     
   }
@@ -77,13 +74,15 @@ export const RoutineInfoForm = ({
   }
 
   const getHeader = () => {
-  if(currentRoutine._id ) return <h3>Currently Editing: {currentRoutineName}</h3> 
+  if(currentRoutine._id ) return <h3 style={{backgroundColor: currentRoutine.color || 'var(--routine-red)'}}>Currently Editing: {currentRoutineName}</h3> 
   if(!currentRoutine._id) return <h3>Basic Routine Info:</h3>
   }
 
   return (
-    <Form className='info-form routine-form'>      
+    <Form className='info-form routine-form'>  
+
       {showHeader && getHeader()}
+
       {error_message && 
       <Alert
       className='name-alert' 
@@ -205,14 +204,14 @@ export const RoutineInfoForm = ({
           {showDiscardBtn && 
           <DiscardBtn 
           className='routine-form-btn discard-routine-btn' 
-          onClick={discardCallback ? discardCallback : handleDiscard} />}
+          onClick={handleClose ? handleClose : handleDiscard} />}
           {showSaveBtn && 
           <SaveBtn 
           className=' routine-form-btn save-routine-btn'  
-          onClick={() => handleCreateOrEdit()} 
+          onClick={handleSave || handleCreateOrEdit} 
           text=" Save"/>}
         </ButtonGroup>
-        {currentRoutine._id &&
+        {currentRoutine._id && showGoToWeekBtn &&
         <ButtonGroup className="mr-2 mt-2">
           <Button onClick={handleMangeScheduleClick}>Manage Weeks</Button>
         </ButtonGroup>}
