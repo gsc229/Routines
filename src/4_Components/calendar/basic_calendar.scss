@@ -99,7 +99,7 @@
     width: 17%;
     border-right: 2px solid $jet;
     min-height: 40px;
-    cursor: pointer;
+    //cursor: pointer;
     p{
       margin: 0;
     }
@@ -116,7 +116,7 @@
   }
   
   .selected{
-    background-color: $routine-red;
+    //background-color: $routine-red;
     color: white;
   }
 

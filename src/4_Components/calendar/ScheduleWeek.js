@@ -19,7 +19,7 @@ const ScheduleWeek = ({
   
   return (
     <div 
-    className={weekStyles(week) + " week" }>
+    className={" week" }>
     {week.map((day, index)=>{
 
     const formattedDay = day.format('MM-DD-YYYY')
