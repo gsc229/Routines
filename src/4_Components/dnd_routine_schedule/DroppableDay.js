@@ -68,6 +68,7 @@ export const DroppableDay = ({
                 W: {weekNumber} &nbsp;&nbsp; Day: {dayNumber} &nbsp;–&nbsp; {fromStartDays} 
               </h6>
               <Link
+              className='add-sets-link'
               style={{backgroundColor: currentRoutine.color || ''}} 
               onClick={handleAddSetsClick}
               to={

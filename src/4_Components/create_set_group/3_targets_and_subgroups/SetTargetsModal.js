@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
+import {saveExerciseSetChanges} from '../../../1_Actions/exerciseSetActions'
 import Modal from 'react-bootstrap/Modal'
 import CloseAlert from './CloseAlert'
 import Button from 'react-bootstrap/Button'
@@ -9,14 +10,17 @@ export const SetTargetsModal = ({
   modalShow,
   setModalShow,
   currentExerciseSet,
-  handleFinishedSettingTargets
+  customSaveCallback,
+  saveExerciseSetChanges
 }) => {
 
-  const [alertConfig, setAlertConfig] = useState({
+  const initialAlertConfig = {
     show: false,
     text: 'Are you sure you want to close?',
     coninute_btn: false
-  })
+  }
+
+  const [alertConfig, setAlertConfig] = useState(initialAlertConfig)
 
   const {exercise} = currentExerciseSet
 
@@ -29,14 +33,14 @@ export const SetTargetsModal = ({
 
   const colseConfirmed = () => {
     setModalShow(false)
-    setAlertConfig({
-      ...alertConfig,
-      show: false
-    })
+    setAlertConfig(initialAlertConfig)
   }
 
-
-  
+  const defaultSaveMethod = async () => {
+    await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
+    setModalShow(false)
+    setAlertConfig(initialAlertConfig)
+  }
 
   return (
     <Modal
@@ -59,7 +63,7 @@ export const SetTargetsModal = ({
         <CloseAlert alertConfig={alertConfig} />
 
         <div className='continue-close-btns'>
-          <Button className='continue-btn' variant='success' onClick={() => setAlertConfig(false)}>Continue Working</Button> 
+          <Button className='continue-btn' variant='success' onClick={() => setAlertConfig(initialAlertConfig)}>Continue Working</Button> 
           <Button className='close-btn' onClick={colseConfirmed}>Close</Button>
         </div>
       </Modal.Body>}
@@ -73,7 +77,7 @@ export const SetTargetsModal = ({
         {!alertConfig.show && 
         <Button
           className='done-setting-targets-btn'
-          onClick={handleFinishedSettingTargets}>
+          onClick={customSaveCallback || defaultSaveMethod}>
           Done
         </Button>}
       </Modal.Footer>
@@ -89,7 +93,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-
+  saveExerciseSetChanges
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetTargetsModal)

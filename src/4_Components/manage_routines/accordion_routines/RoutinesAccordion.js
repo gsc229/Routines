@@ -95,19 +95,19 @@ export const RoutinesAccordion = ({
       <div className='list-group-container'>
         <div className='first-two-lists'>
           <ul className='list-group'>
-            <li style={routineDescStyles}><strong>Category:</strong><span> {routine.category ? routine.category : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong>Muscle Group: </strong><span>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong>Target Muscle: </strong><span>{routine.target_muscle ? routine.target_muscle : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong>End Date: </strong><span>{routine.end_date ? routine.end_date : 'n/a'}</span></li>
+            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Category:</strong><span> {routine.category ? routine.category : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Muscle Group: </strong><span>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Target Muscle: </strong><span>{routine.target_muscle ? routine.target_muscle : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>End Date: </strong><span>{routine.end_date ? routine.end_date : 'n/a'}</span></li>
           </ul> 
           <ul className='list-group'>
-            <li style={routineDescStyles}><strong>Difficulty: </strong><span>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong>Body Part: </strong><span>{routine.body_part ? routine.body_part : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong>Start Date: </strong><span>{routine.start_date ? moment(routine.start_date ).format('MMMM DD, YYYY') : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Difficulty: </strong><span>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Body Part: </strong><span>{routine.body_part ? routine.body_part : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Start Date: </strong><span>{routine.start_date ? moment(routine.start_date ).format('MMMM DD, YYYY') : 'none chosen'}</span></li>
           </ul>
         </div>
         <ul className='list-group'>
-          <li style={routineDescStyles}><strong>Description:</strong><span>
+          <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Description:</strong><span>
             {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
           </span></li>
         </ul> 

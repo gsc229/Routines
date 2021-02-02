@@ -117,7 +117,7 @@ export const BankCard = ({
       
       {modalShow === `set-targets-${exerciseSet._id || index}` &&
       <SetTargetsModal
-      handleFinishedSettingTargets={handleFinishedSettingTargets}
+      customSaveCallback={handleFinishedSettingTargets}
       index={index}
       modalShow={modalShow===`set-targets-${exerciseSet._id || index}`} 
       setModalShow={setModalShow} />}
