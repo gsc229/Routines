@@ -42,7 +42,7 @@ export const DaySection = ({
       
       {daySetGroups && daySetGroups.sort((a, b) => a.routine - b.routine).map(sg => {
 
-        const startDate = moment(routineNamesColorsStartDates[sg.routine].start_date).startOf('day')
+        const startDate = moment.utc(routineNamesColorsStartDates[sg.routine].start_date)
         const diff = day.diff(startDate, 'days') 
         const fromStartDays = diff + 1
         const fromStartWeeks = day.diff(startDate, 'weeks') + 1

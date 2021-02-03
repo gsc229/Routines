@@ -29,7 +29,7 @@ const ScheduleCalendar = ({
   const history = useHistory()
   const [datesSetGroups, setDatesSetGroups] = useState({})
   const [calendar, setCalendar] = useState([])
-  const [value, setValue] = useState(moment())
+  const [value, setValue] = useState(moment.utc())
   const {width, height} = useWindowSize()
 
   useEffect(() => {

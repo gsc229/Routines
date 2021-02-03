@@ -38,6 +38,7 @@ export const RoutineInfoForm = ({
   
   const history = useHistory()
   const handleChange = e => {
+    alert(e.target.value)
     localWritingRoutine(e.target.name, e.target.value)
   }
 

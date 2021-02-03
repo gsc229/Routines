@@ -7,7 +7,7 @@ const mapSetGroupsToDates = (userRoutines) => {
   userRoutines && 
   userRoutines.forEach(routine => {
 
-    const routineStartDate = moment(routine.start_date)
+    const routineStartDate = moment.utc(routine.start_date)
     
     routine.weeks && 
     routine.weeks

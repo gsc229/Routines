@@ -106,7 +106,7 @@ export const RoutinesAccordion = ({
           <ul className='list-group'>
             <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Difficulty: </strong><span>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</span></li>
             <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Body Part: </strong><span>{routine.body_part ? routine.body_part : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Start Date: </strong><span>{routine.start_date ? moment(routine.start_date ).format('dddd, MMMM DD, YYYY') : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Start Date: </strong><span>{routine.start_date ? moment.utc(routine.start_date ).format('dddd, MMM DD, YYYY') : 'none chosen'}</span></li>
           </ul>
         </div>
         <ul className='list-group'>

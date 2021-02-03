@@ -24,7 +24,8 @@ const ScheduleWeek = ({
 
     Object.keys(routineNamesColorsStartDates)
     .map(idKey => {
-      const formattedStart = moment(routineNamesColorsStartDates[idKey].start_date).format('MM-DD-YYYY')
+      const formattedStart = moment.utc(routineNamesColorsStartDates[idKey].start_date).format('MM-DD-YYYY')
+      console.log({formattedStart})
       if(formattedStart === formattedDay){
         startIcons.push(
         <div 

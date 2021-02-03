@@ -6,12 +6,12 @@ import {setCurrentRoutine, fetchFlattenedRoutine, setFlattenedRoutine} from '../
 import fontSizeClamp from '../../utils/clampBuilder'
 
 const CalendarHeader = ({
-  singleRoutine=false,
   value, 
   setValue, 
   routine,
   setFlattenedRoutine,
-  fetchFlattenedRoutine}) => {
+  isSingleRoutine
+}) => {
 
   function currMonthName(){
     return value.format("MMMM")
@@ -41,7 +41,10 @@ const CalendarHeader = ({
   
   return (
     <div 
-    style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} 
+    style={{
+    borderTopLeftRadius: '4px', 
+    borderTopRightRadius: '4px',
+    }} 
     className='calendar-header'>
       {routine && 
       <div 
@@ -55,9 +58,12 @@ const CalendarHeader = ({
         </Link>
       </div>}
       <Navbar 
-      style={{borderTopLeftRadius: '4px', borderTopRightRadius: '4px'}} 
+      style={{
+      borderTopLeftRadius: '4px', 
+      borderTopRightRadius: '4px'}} 
       bg='dark'>
         <div 
+        style={{border: `1px dashed ${isSingleRoutine ? routine.color : 'var(--routine-red)'}`}}
         className="calendar-header-top">
           <h6
           onClick={() => setValue(prevMonth)}

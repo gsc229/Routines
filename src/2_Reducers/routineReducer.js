@@ -191,7 +191,8 @@ const reducer = (state=initialState, action) => {
           ...state.routineNamesColorsStartDates,
           [action.payload._id]: {
             name: action.payload.name,
-            color: action.payload.color
+            color: action.payload.color,
+            start_date: action.payload.start_date
           }
         },
         currentRoutineName: action.payload.name,
