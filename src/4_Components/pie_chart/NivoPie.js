@@ -43,7 +43,7 @@ const NivoPie = ({exSetStratumData={}}) => {
 
   return (
     <div 
-    style={{height: clampBuilder(400, 1000, 15, 20), minWidth: '300px', margin: '0 auto', border: '1px solid green'}}
+    style={{height: clampBuilder(400, 1000, 15, 20)}}
     className="novi-pie-chart-container">
       <ResponsivePie
         data={exerciseData}
@@ -51,7 +51,7 @@ const NivoPie = ({exSetStratumData={}}) => {
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
-        //colors={{ scheme: 'nivo' }}
+        colors={{ scheme: 'nivo' }}
         borderWidth={1}
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
         radialLabel={'label'}

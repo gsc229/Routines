@@ -1,0 +1,18 @@
+.dashboard{
+  .exercise-pies-container{
+    .pie-column{
+      position: relative;
+      h5{
+        text-align: center;
+        position: relative;
+        top: 30px;
+      }
+    }
+    .novi-pie-chart-container{
+      min-width: 250px;
+      margin: 0 auto;
+      color: black;
+      font-weight: bold;
+    }
+  }
+}

@@ -10,7 +10,7 @@ export const UserDashBoard = ({user,userRoutines}) => {
     <LayoutOne showTop={false}>
       <Container 
       className='page dashboard-page'>
-        <h1>User Dashboard</h1>
+        <h3>Your Activity:</h3>
         <Dashboard />
         {/* <div className='raw-data' >
           <pre style={{color: 'white'}}>{JSON.stringify(user, null, 2)}</pre>
