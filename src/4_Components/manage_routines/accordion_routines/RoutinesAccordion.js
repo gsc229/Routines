@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges, createNewRoutine, setFlattenedRoutine } from '../../../1_Actions/routineActions'
+import mapSetGroupsToDates from '../../calendar/mapSetGroupsToDates'
 import moment from 'moment'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
@@ -93,24 +94,45 @@ export const RoutinesAccordion = ({
     fontSize: fontsizeClamp(450, 800, .8, 1)
   }
 
+  const categoryStyle = {
+    color: currentRoutine.color || 'var(--spanish-gray)'
+  }
+
+
+  const getStartDate = () => {
+    if(currentRoutine.start_date){
+      return moment.utc(currentRoutine.start_date ).format('dddd, MMM DD, YYYY') 
+    } else return 'none chosen'
+  }
+
+  const getEndDate = () => {
+    if(currentRoutine.set_groups){
+      const dates =  Object.keys(mapSetGroupsToDates([currentRoutine]).datesSetGroups)
+      const endDate = moment(dates[dates.length - 1]).format('dddd, MMM DD, YYYY')
+    
+      return endDate
+
+    } else return 'n/a'
+  }
+
   const showDetails = (routine) => {
     return (
       <div className='list-group-container'>
         <div className='first-two-lists'>
           <ul className='list-group'>
-            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Category:</strong><span> {routine.category ? routine.category : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Muscle Group: </strong><span>{routine.muscle_group ? routine.muscle_group : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Target Muscle: </strong><span>{routine.target_muscle ? routine.target_muscle : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>End Date: </strong><span>{routine.end_date ? routine.end_date : 'n/a'}</span></li>
+            <li style={routineDescStyles}><strong style={categoryStyle}>Category:</strong><span> {routine.category || 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={categoryStyle}>Muscle Group: </strong><span>{routine.muscle_group  || 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={categoryStyle}>Target Muscle: </strong><span>{routine.target_muscle || 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={categoryStyle}>End Date: </strong><span>{getEndDate() || 'n/a'}</span></li>
           </ul> 
           <ul className='list-group'>
-            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Difficulty: </strong><span>{routine.difficulty_scale ? routine.difficulty_scale : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Body Part: </strong><span>{routine.body_part ? routine.body_part : 'none chosen'}</span></li>
-            <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Start Date: </strong><span>{routine.start_date ? moment.utc(routine.start_date ).format('dddd, MMM DD, YYYY') : 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={categoryStyle}>Difficulty: </strong><span>{routine.difficulty_scale || 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={categoryStyle}>Body Part: </strong><span>{routine.body_part || 'none chosen'}</span></li>
+            <li style={routineDescStyles}><strong style={categoryStyle}>Start Date: </strong><span>{getStartDate()}</span></li>
           </ul>
         </div>
         <ul className='list-group'>
-          <li style={routineDescStyles}><strong style={{color: currentRoutine.color || 'var(--spanish-gray)'}}>Description:</strong><span>
+          <li style={routineDescStyles}><strong style={categoryStyle}>Description:</strong><span>
             {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
           </span></li>
         </ul> 

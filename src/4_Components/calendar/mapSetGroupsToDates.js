@@ -1,14 +1,26 @@
 import moment from 'moment'
 
-const mapSetGroupsToDates = (userRoutines) => {
+const mapSetGroupsToDates = (userRoutines=[]) => {
   const format = 'MM-DD-YYYY'
-  const dateSetGroups = {}
+  const datesSetGroups = {}
+  const routinesEndDates = {}
+  const endDatesRtouines = {}
 
   userRoutines && 
   userRoutines.forEach(routine => {
-
     const routineStartDate = moment.utc(routine.start_date)
+
+    const currentDatesSetGroups = {}
     
+    const getEndDate = (routine) => {
+      if(routine.set_groups){
+        const dates =  Object.keys(currentDatesSetGroups).sort((a, b) => moment(a) - moment(b))
+        const endDate = moment(dates[dates.length - 1]).format('MM-DD-YYYY')
+        return endDate
+  
+      } else return 'n/a'
+    }
+
     routine.weeks && 
     routine.weeks
     .sort((a, b) => a.week_number - b.week_number)
@@ -25,15 +37,22 @@ const mapSetGroupsToDates = (userRoutines) => {
         const weekStartCopy = weekStartDate.clone()
         const sgDate = weekStartCopy.add(sg.day_number - 1, 'day').format(format)
      
-        if(!dateSetGroups[sgDate]){
-          dateSetGroups[sgDate] = []
+        if(!datesSetGroups[sgDate]){
+          datesSetGroups[sgDate] = []
         }
-        dateSetGroups[sgDate] = [...dateSetGroups[sgDate], sg]
+        if(!currentDatesSetGroups[sgDate]){
+          currentDatesSetGroups[sgDate] = []
+        }
+        datesSetGroups[sgDate] = [...datesSetGroups[sgDate], sg]
+        currentDatesSetGroups[sgDate] = [...currentDatesSetGroups[sgDate], sg]
       })
     })
+    
+    routinesEndDates[routine._id] = getEndDate(routine)
+    endDatesRtouines[getEndDate(routine)] = routine._id
   })
   
-  return dateSetGroups
+  return {datesSetGroups, routinesEndDates, endDatesRtouines}
 }
 
 export default mapSetGroupsToDates

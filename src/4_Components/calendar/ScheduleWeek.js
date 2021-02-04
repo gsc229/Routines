@@ -8,6 +8,8 @@ import fontSizeClamp from '../../utils/clampBuilder'
 const ScheduleWeek = ({
   week,
   datesSetGroups,
+  routinesEndDates,
+  userRoutines,
   routineNamesColorsStartDates,
   isSingleRoutine=false,
   handleDayClick,
@@ -18,27 +20,46 @@ const ScheduleWeek = ({
   width
 }) => {
 
-  const getStartMarkers = (formattedDay) => {
+
+
+  const routineIdKeys = Object.keys(routineNamesColorsStartDates)
+
+  const getStartEndMarkers = (formattedDay) => {
 
     const startIcons = []
 
-    Object.keys(routineNamesColorsStartDates)
+    const getDivStyles = (idKey) => ({
+      width: 'fit-content',
+      marginLeft: '2px',
+      color: routineNamesColorsStartDates[idKey].color, 
+      overflow: 'hidden', 
+      fontSize: fontSizeClamp(400, 1000, .6, 1)
+    })
+
+    routineIdKeys
     .map(idKey => {
       const formattedStart = moment.utc(routineNamesColorsStartDates[idKey].start_date).format('MM-DD-YYYY')
-      console.log({formattedStart})
-      if(formattedStart === formattedDay){
+
+      if(formattedDay === formattedStart){
         startIcons.push(
         <div 
-        style={{
-        width: 'fit-content',
-        color: routineNamesColorsStartDates[idKey].color, 
-        overflow: 'hidden', 
-        fontSize: fontSizeClamp(400, 1000, .6, 1)}}
+        style={getDivStyles(idKey)}
         className="start-date">
           <p>S</p>
         </div>
         )
       }
+
+      if(formattedDay === routinesEndDates[idKey]){
+        startIcons.push(
+        <div 
+        style={getDivStyles(idKey)}
+        className="start-date">
+          <p>E</p>
+        </div>
+        )
+      }
+
     })
 
     return(
@@ -54,8 +75,10 @@ const ScheduleWeek = ({
     <div 
     className={" week" }>
     {week.map((day, index)=>{
+
     const formattedDay = day.format('MM-DD-YYYY')    
-    const daySetGroups = datesSetGroups[formattedDay] && isSingleRoutine 
+    const daySetGroups = datesSetGroups[formattedDay] 
+    && isSingleRoutine 
     ? datesSetGroups[formattedDay].filter(sg => sg.routine === routine._id)
     : datesSetGroups[formattedDay]
 
@@ -72,14 +95,14 @@ const ScheduleWeek = ({
         windowSize={{height, width}}
         routineNamesColorsStartDates={routineNamesColorsStartDates}
         daySetGroups={daySetGroups} />}
-        {getStartMarkers(formattedDay)}
+        {getStartEndMarkers(formattedDay)}
       </div>
     : // ↑ Day has sets ↑ - ↓ Day has no sets ↓ 
       <div
         key={day._d}
         className={dayStyles(day, value) + " day day-no-sets"}>
           <p>{day.format("D")}</p>
-          {getStartMarkers(formattedDay)}
+          {getStartEndMarkers(formattedDay)}
       </div>
     })}
     </div>

@@ -63,7 +63,7 @@ export const ExecuteSetsPage = ({
         onClick={() => history.push(`/execute-sets/${setDate}`)}  
         className="back-to-container back-to-set-groups-container">
           <PointLeftIcon />
-          &nbsp; All Set Groups
+          &nbsp;All Set Groups for this Day
         </div>}
       </div>
 

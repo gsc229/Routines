@@ -66,7 +66,7 @@ export const DroppableDay = ({
             className='day-header'>
               <h6 
               style={{color: snapshot.isDraggingOver ? 'white' : currentRoutine.color || 'white'}} >
-                W: {weekNumber} &nbsp;&nbsp; Day: {dayNumber} &nbsp;–&nbsp; {fromStartDays} 
+                Week: {weekNumber} &nbsp;&nbsp; Day: {dayNumber} &nbsp;&nbsp; Routine Day: {fromStartDays} 
               </h6>
               <Link
               className='add-sets-link'

@@ -21,6 +21,8 @@ export const DaySection = ({
   const [modalShow, setModalShow] = useState(false)
   const {width} = windowSize
 
+  
+
   const handleClick = (sg) => { 
 
     const selectedRoutine = {...userRoutines.find(routine => routine._id === sg.routine)}

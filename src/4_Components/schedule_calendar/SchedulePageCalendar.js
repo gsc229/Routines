@@ -28,10 +28,11 @@ const ScheduleCalendar = ({
 
   const history = useHistory()
   const [datesSetGroups, setDatesSetGroups] = useState({})
+  const [routinesEndDates, setRoutinesEndDates] = useState({})
   const [calendar, setCalendar] = useState([])
   const [value, setValue] = useState(moment.utc())
   const {width, height} = useWindowSize()
-
+  
   useEffect(() => {
 
     const fetchUserRoutines = async () => {
@@ -47,7 +48,11 @@ const ScheduleCalendar = ({
   }, [])
 
   useEffect(() => {  
-    userRoutines && setDatesSetGroups(mapSetGroupsToDates(userRoutines))
+    if(userRoutines){
+      const dateData = mapSetGroupsToDates(userRoutines)
+      setDatesSetGroups(dateData.datesSetGroups)
+      setRoutinesEndDates(dateData.routinesEndDates)
+    } 
   }, [userRoutines])
 
   useEffect(()=>{
@@ -60,7 +65,7 @@ const ScheduleCalendar = ({
     //return <Redirect to={`/execute-sets/${date}`} />
   }
 
-
+  console.log({calendar, datesSetGroups})
   return (
     <div className='schedule-wrapper'>
       {crudingRoutine === 'fetching-routines' && <DarkSpinner text='Loading Schedule...' />}
@@ -87,6 +92,7 @@ const ScheduleCalendar = ({
             routineNamesColorsStartDates={routineNamesColorsStartDates} 
             week={week} 
             datesSetGroups={datesSetGroups}
+            routinesEndDates={routinesEndDates}
             handleDayClick={handleDayClick}
             />
           </div>)
