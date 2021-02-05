@@ -10,11 +10,11 @@ const ExercisePies = ({
   return (
     <div className='exercise-pies-container'>
       <Row>
-        <Col className='pie-column' sm='12' md='6'>
+        <Col className='pie-column muscle-group-column' sm='12' md='6'>
           <h5>Muscle Group:</h5>
           <NivoPie exSetStratumData={muscleGroupCount}  />
         </Col>
-        <Col className='pie-column' sm='12' md='6'>
+        <Col className='pie-column exercises-column' sm='12' md='6'>
           <h5>Exercises: </h5>
           <NivoPie exSetStratumData={exerciseNameExSetCount} />
         </Col>

@@ -1,11 +1,19 @@
 .dashboard{
   .exercise-pies-container{
+    .row{
+      position: relative;
+    }
     .pie-column{
       position: relative;
       h5{
         text-align: center;
         position: relative;
         top: 30px;
+      }
+    }
+    @media screen and (max-width: 767px){
+      .pie-column:nth-child(2){
+        bottom: 80px;
       }
     }
     .novi-pie-chart-container{

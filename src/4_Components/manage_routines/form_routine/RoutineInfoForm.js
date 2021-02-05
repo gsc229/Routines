@@ -1,7 +1,6 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import {majorMuscleGroups, categories} from './routineFormData'
 import {localWritingRoutine, createNewRoutine, saveRoutineChanges, clearCurrentRoutine, fetchFlattenedRoutine} from '../../../1_Actions/routineActions'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
@@ -38,7 +37,6 @@ export const RoutineInfoForm = ({
   
   const history = useHistory()
   const handleChange = e => {
-    alert(e.target.value)
     localWritingRoutine(e.target.name, e.target.value)
   }
 

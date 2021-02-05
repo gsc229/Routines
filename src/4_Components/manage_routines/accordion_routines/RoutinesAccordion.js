@@ -23,7 +23,6 @@ export const RoutinesAccordion = ({
   userRoutines,
   currentRoutine,
   clearCurrentRoutine, 
-  setCurrentRoutine,
   setFlattenedRoutine,
   saveRoutineChanges,
   crudingRoutine,
