@@ -29,10 +29,10 @@ export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[
   let muscleGroupSets = {}
   let weekMuscleGroupSets = {}
 
-  muscleGroups && muscleGroups.forEach(group=> {
+  muscleGroups && muscleGroups.forEach(groupObj => {
     const data = {}
     Object.keys(weekRanges).forEach(weekName => data[weekName] = {x: weekName, y: 0})
-    muscleGroupSets[group] = {id: group, data}
+    muscleGroupSets[groupObj.name] = {id: groupObj.name, color: groupObj.color, data}
   })
 
   muscleGroups && exSets.forEach(set => {

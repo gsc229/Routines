@@ -1,22 +1,24 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import { getNonOrdinalExSetDataFromFlattendRotuines } from './helpers/exerciseStratification'
 import mapSgsToDates from '../calendar/mapRoutinesToDates'
 import { combineExSets } from './helpers/combineExSets'
 import { getMonthCalendarWeeksMuscleGroupData } from './helpers/getMonthCalendarWeeksMuscleGroupData'
-import moment from 'moment'
 import ExercisePies from './ExercisePies'
 import LineChart from '../line_chart/LineChart'
+import MucleGroupSelector from './MuscleGroupSelector'
 import { testData2 } from '../line_chart/testData2'
+
 
 export const Dashboard = ({
   userRoutines  
 }) => {
 
-  const muscleGroupList = ["Chest", "Back", "Arms", "Shoulders", "Legs", "Calves", "Full Body"]
+  const muscleGroupList = [{name: "Chest", color: ''}, {name: "Back", color: ''}, {name: "Arms", color: ''}, {name: "Shoulders", color: ''}, {name: "Legs", color: ''}, {name: "Calves", color: ''}, {name: "Full Body", color: ''}]
   
   const [combinedExSets, setCombinedExSets] = useState([])
-  const [muscleGroups, setMuscleGroups] = useState(muscleGroupList)
+  const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)
   const [weekIdDate, setWeekIdDate] = useState({})
   const [startDate, setStartDate] = useState(moment())
   const [field, setField] = useState('target_weight')
@@ -28,8 +30,7 @@ export const Dashboard = ({
 
   useEffect(() => {
     const {datesSetGroups, setGroupIdDate, weekIdDate, endDatesRtouines} = mapSgsToDates(userRoutines)
-    
-    console.log({weekIdDate})
+   
     setWeekIdDate(weekIdDate)
     setSetGroupIdDate(setGroupIdDate)
     setEndDatesRoutines(endDatesRtouines)
@@ -38,9 +39,9 @@ export const Dashboard = ({
 
   
   useEffect(() => {
-    const newLineChartData = getMonthCalendarWeeksMuscleGroupData(combinedExSets, muscleGroups, weekIdDate, startDate, field).muscleGroupSets
+    const newLineChartData = getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field).muscleGroupSets
     setLineChartMuscleGroupData(newLineChartData)
-  }, [combinedExSets, muscleGroups, weekIdDate, startDate, field])
+  }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field])
 
   const {
     exerciseNameExSetCount,
@@ -55,21 +56,21 @@ export const Dashboard = ({
 
   return (
     <div className='dashboard'>
-      <ExercisePies exerciseNameExSetCount={exerciseNameExSetCount} muscleGroupCount={muscleGroupCount} />
-      <div className="line-chart-header">
-      <label htmlFor="month">Pick Month:</label>
+      <div className="month-picker-container">
+        <label htmlFor="month">Your Activity:</label>
         <input 
         onChange={selectDate}
+        placeholder='Choose Month'
+        value={startDate.clone().format('YYYY-MM')}
         type="month" id="month" name="month" />
       </div>
-      <LineChart data={lineChartMuscleGroupData} />
-      <div style={{display: 'flex'}}>
-        <pre style={{color: 'white'}}>{JSON.stringify(weekIdDate, null, 2)}</pre>
-        <pre style={{color: 'white'}}>{JSON.stringify(testData2, null, 2)}</pre>
-        <pre 
-        style={{color: 'white'}}>
-          {JSON.stringify(getMonthCalendarWeeksMuscleGroupData(combinedExSets, muscleGroups, weekIdDate, startDate, field), null, 2)}
-        </pre>
+      <div className='visualizations-container'>
+        <ExercisePies exerciseNameExSetCount={exerciseNameExSetCount} muscleGroupCount={muscleGroupCount} />
+        <MucleGroupSelector 
+        muscleGroupList={muscleGroupList}
+        selectedMuscleGroups={selectedMuscleGroups} 
+        setSelectedMuscleGroups={setSelectedMuscleGroups} />
+        <LineChart data={lineChartMuscleGroupData} />
       </div>
     </div>
   )

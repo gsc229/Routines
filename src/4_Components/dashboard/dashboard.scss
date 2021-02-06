@@ -1,4 +1,21 @@
 .dashboard{
+  .month-picker-container{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    background-color: $bs-dark;
+    top: 50px;
+    padding-top: 20px;
+  }
+
+  .visualizations-container{
+    position: relative;
+    top: 70px;
+  }
+
   .exercise-pies-container{
     .row{
       position: relative;

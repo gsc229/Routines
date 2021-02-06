@@ -19,11 +19,12 @@ const LineChart = ({data}) => {
 
   return (
     <div 
-      style={{height: '400px', width: '100%', color: 'black', border: '1px solid red'}}
+      style={{height: '400px', width: '100%', color: 'black'}}
       className="line-chart-target-weight">
         <ResponsiveLine
         data={data}
         theme={theme}
+        colors={{ scheme: 'paired' }}
         margin={{ top: 50, right: 0, bottom: 50, left: 50 }}
         xScale={{ type: 'point' }}
         yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
