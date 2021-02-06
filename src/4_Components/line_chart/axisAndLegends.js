@@ -1,16 +1,16 @@
 export const legends = [
   {
-      anchor: 'bottom-right',
-      direction: 'column',
+      anchor: 'top',
+      direction: 'row',
       justify: false,
-      translateX: 100,
-      translateY: 0,
+      translateX: 0,
+      translateY: -30,
       itemsSpacing: 0,
-      itemDirection: 'left-to-right',
+      itemDirection: 'bottom-to-top',
       itemWidth: 80,
       itemHeight: 20,
       itemOpacity: 0.75,
-      symbolSize: 12,
+      symbolSize: 10,
       symbolShape: 'circle',
       symbolBorderColor: 'rgba(0, 0, 0, .5)',
       effects: [
@@ -31,7 +31,7 @@ export const axisLeft = {
   tickSize: 5,
   tickPadding: 5,
   tickRotation: 0,
-  legend: 'count',
+  legend: 'Total Target Weight',
   legendOffset: -40,
   legendPosition: 'middle'
 }
@@ -40,8 +40,8 @@ export const axisBottom = {
   orient: 'bottom',
   tickSize: 5,
   tickPadding: 5,
-  tickRotation: 0,
-  legend: 'transportation',
+  tickRotation: -90,
+  legend: 'Date',
   legendOffset: 36,
   legendPosition: 'middle'
 }
