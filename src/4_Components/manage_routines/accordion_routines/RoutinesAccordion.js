@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { clearCurrentRoutine, setCurrentRoutine, saveRoutineChanges, createNewRoutine, setFlattenedRoutine } from '../../../1_Actions/routineActions'
-import mapSetGroupsToDates from '../../calendar/mapSetGroupsToDates'
+import mapSetGroupsToDates from '../../calendar/mapRoutinesToDates'
 import moment from 'moment'
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'

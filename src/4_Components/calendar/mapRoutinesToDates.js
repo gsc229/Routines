@@ -1,11 +1,12 @@
 import moment from 'moment'
 
-const mapSetGroupsToDates = (userRoutines=[]) => {
-  const format = 'MM-DD-YYYY'
+const mapSetGroupsToDates = (userRoutines=[], format="MM-DD-YYYY") => {
+  
   const datesSetGroups = {}
   const setGroupIdDate = {}
   const routinesEndDates = {}
   const endDatesRtouines = {}
+  const weekIdDate = {}
 
   userRoutines && 
   userRoutines.forEach(routine => {
@@ -13,15 +14,7 @@ const mapSetGroupsToDates = (userRoutines=[]) => {
 
     const currentDatesSetGroups = {}
     
-    const getEndDate = (routine) => {
-      if(routine.set_groups){
-        const dates =  Object.keys(currentDatesSetGroups).sort((a, b) => moment(a, 'MM-DD-YYYY') - moment(b, 'MM-DD-YYYY'))
-        const endDate = moment.utc(dates[dates.length - 1]).format('MM-DD-YYYY')
-        
-        return endDate
-  
-      } else return 'n/a'
-    }
+    
 
     routine.weeks && 
     routine.weeks
@@ -29,6 +22,7 @@ const mapSetGroupsToDates = (userRoutines=[]) => {
     .forEach((week, idx) => {
 
       const weekStartDate = week.week_number > 1 ? routineStartDate.add(1,'week') : routineStartDate
+      weekIdDate[week._id] = weekStartDate.format(format)
 
       routine.set_groups && 
       routine.set_groups
@@ -51,12 +45,22 @@ const mapSetGroupsToDates = (userRoutines=[]) => {
         currentDatesSetGroups[sgDate] = [...currentDatesSetGroups[sgDate], sg]
       })
     })
+
+    const getEndDate = () => {
+      if(routine.set_groups){
+        const dates =  Object.keys(currentDatesSetGroups).sort((a, b) => moment(a, format) - moment(b, format))
+        const endDate = moment.utc(dates[dates.length - 1]).format(format)
+        
+        return endDate
+  
+      } else return 'n/a'
+    }
     
-    routinesEndDates[routine._id] = getEndDate(routine)
-    endDatesRtouines[getEndDate(routine)] = routine._id
+    routinesEndDates[routine._id] = getEndDate()
+    endDatesRtouines[getEndDate()] = routine._id
   })
   
-  return {datesSetGroups, routinesEndDates, endDatesRtouines, setGroupIdDate}
+  return {datesSetGroups, routinesEndDates, endDatesRtouines, setGroupIdDate, weekIdDate}
 }
 
 export default mapSetGroupsToDates
