@@ -1,9 +1,9 @@
 export const customStyles = (routineColor) => {
   return {
-  option: (provided, { isDisabled, isFocused, isSelected }) => ({
+  option: (provided, { isDisabled, isFocused, isSelected, data }) => ({
     backgroundColor: isSelected ? routineColor || 'var(--routine-red)' : 'white' ,
     borderBottom: `1px dashed ${routineColor || 'var(--routine-red)'}`,
-    color: isSelected ? 'white' : routineColor || 'var(--routine-red)',
+    color: isSelected ? 'white' : data.selectedColor || 'var(--routine-red)',
     padding: 10,
     fontWeight: 'bold',
     cursor: 'pointer'
@@ -14,10 +14,11 @@ export const customStyles = (routineColor) => {
     color: routineColor || 'var(--routine-red)',
     border: isFocused ? 'var(--russian-green)' : `2px solid ${ routineColor || 'var(--routine-red)'}`
   }),
-  multiValue: (styles) => {
+  multiValue: (styles, {data}) => {
+    console.log(JSON.stringify(data))
     return {
       ...styles,
-      backgroundColor: routineColor || 'var(--routine-red)',
+      backgroundColor: data.selectedColor || 'var(--routine-red)',
       color: 'white'
     }
   },
@@ -27,10 +28,10 @@ export const customStyles = (routineColor) => {
       color: 'white'
     }
   },
-  multiValueRemove: (styles) => {
+  multiValueRemove: (styles, {data}) => {
     return{
       ...styles,
-      backgroundColor: routineColor || 'var(--routine-red)',
+      backgroundColor: data.selectedColor || 'var(--routine-red)',
       color: 'white',
       borderRadius: 0,
       cursor: 'pointer',
