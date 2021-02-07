@@ -72,11 +72,11 @@ export const getAxisLeft = ({
 export const getAxisBottom = ({
 
   orient='bottom',
-  tickSize=5,
+  tickSize=10,
   tickPadding=5,
-  tickRotation=-90,
-  legend='Date',
-  legendOffset=36,
+  tickRotation=30,
+  legend,
+  legendOffset=50,
   legendPosition='middle'
 
 }) => {

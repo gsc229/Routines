@@ -9,10 +9,10 @@ const MuscleGroupSelector = ({
   selectedMuscleGroups
 }) => {
 
-  const selectOptions = muscleGroupList.map(groupObj => ({ label: groupObj.name, value: groupObj.name }))
+  const selectOptions = muscleGroupList.map(groupObj => ({ label: groupObj.name, value: groupObj.name, selectedColor: groupObj.color }))
   selectOptions.unshift({label: 'All', value: 'All'})
   
-  const selectedValues = selectedMuscleGroups.map(groupObj => ({label: groupObj.name, value: groupObj.name}))
+  const selectedValues = selectedMuscleGroups.map(groupObj => ({label: groupObj.name, value: groupObj.name, selectedColor: groupObj.color }))
   const animatedComponents = makeAnimated()
 
   const handleGroupSelect = (newSelections) => {
@@ -41,6 +41,7 @@ const MuscleGroupSelector = ({
       onChange={handleGroupSelect}
       options={selectOptions}
       isMulti
+      closeMenuOnSelect={false}
       autoFocus
       isSearchable/>
     </div>

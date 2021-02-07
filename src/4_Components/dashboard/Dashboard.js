@@ -15,7 +15,7 @@ export const Dashboard = ({
   userRoutines  
 }) => {
 
-  const muscleGroupList = [{name: "Chest"}, {name: "Back"} , {name: "Abs"}, {name: "Arms"}, {name: "Shoulders"}, {name: "Legs"}, {name: "Calves"}, {name: "Full Body"}]
+  const muscleGroupList = [{name: "Chest", color: '#80599c'}, {name: "Back", color: '#42b0f5'} , {name: "Abs", color: '#f542d7'}, {name: "Arms", color: '#ffa808'}, {name: "Shoulders", color: '#409928'}, {name: "Legs", color: '#3dd9bf'}, {name: "Calves", color: '#3040f0'}, {name: "Full Body", color: '#d1d93d'}]
   const capitalizeField = (field) => {
     return field.split('_').map(word => word[0].toUpperCase() + word.slice(1, word.length)).join(" ")
   }
@@ -23,7 +23,7 @@ export const Dashboard = ({
   const [pieData, setPieData] = useState({
     exerciseNameExSetCount: {},
     muscleGroupCount: {},
-    duration: 'month'
+    duration: 'year'
   })
   const [combinedExSets, setCombinedExSets] = useState([])
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)

@@ -11,8 +11,9 @@ export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[
   const weekIdWeekName = {}
   let currentRangeStart = FirstDayOfMonth.clone()
   let currentRangeEnd = currentRangeStart.clone().add(6, 'days')
+
   for(let i = 1; i <= numWeeks; i++){
-    weekRanges[`Week ${i}`] = {start: currentRangeStart.format(format), end: currentRangeEnd.format(format)}
+    weekRanges[`Wk.${i} - ${currentRangeStart.clone().format('DD')}-${currentRangeEnd.clone().format('DD')}`] = {start: currentRangeStart.format(format), end: currentRangeEnd.format(format)}
     currentRangeStart = currentRangeEnd.clone().add(1, 'day')
     currentRangeEnd = currentRangeStart.clone().add(6, 'days')
   }
@@ -22,7 +23,6 @@ export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[
       if(moment(weekIdDate[wkId]).isBetween(moment(weekRanges[weekName].start), moment(weekRanges[weekName].end), null, '[]')){
         weekIdWeekName[wkId] = weekName
       }
-      
     })
   })
   
