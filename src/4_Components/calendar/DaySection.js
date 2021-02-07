@@ -11,7 +11,7 @@ export const DaySection = ({
   daySetGroups,
   day,
   userRoutines,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   setCurrentSetGroup,
   setFlattenedRoutine,
   showEditLink=false,
@@ -20,6 +20,8 @@ export const DaySection = ({
 
   const [modalShow, setModalShow] = useState(false)
   const {width} = windowSize
+
+  
 
   const handleClick = (sg) => { 
 
@@ -41,32 +43,40 @@ export const DaySection = ({
     className='day-sections'>
       
       {daySetGroups && daySetGroups.sort((a, b) => a.routine - b.routine).map(sg => {
-        const startDate = moment(userRoutines.find(rt => rt._id === sg.routine).start_date)
-        const fromStartDays = day.diff(startDate, 'days') + 1
+
+        const startDate = moment.utc(routineNamesColorsStartDates[sg.routine].start_date)
+        const diff = day.diff(startDate, 'days') 
+        const fromStartDays = diff + 1
         const fromStartWeeks = day.diff(startDate, 'weeks') + 1
-        const fromWeekStartDays = day.day() + 1
+        const weekDayNum = day.day() + 1
+
         return(
           <div 
           key={sg._id}
           className='day-section-wrapper'>
+
             <ViewSetGroupModal
             showEditLink={showEditLink}
-            redirectLink={`/create-set-group/${routineNamesColors[sg.routine].name }/${sg.week_number}/day-${sg.day_number}-${sg.day}`}
+            redirectLink={`/create-set-group/${routineNamesColorsStartDates[sg.routine].name }/${sg.week_number}/day-${sg.day_number}-${sg.day}`}
             setModalShow={setModalShow} 
             modalShow={modalShow === sg._id} />
+
             <OverlayTrigger 
             overlay={
             <ToolTip>
               <div 
-              style={{color: routineNamesColors[sg.routine].color, fontWeight: 'bold'}}
+              style={{color: routineNamesColorsStartDates[sg.routine].color, fontWeight: 'bold'}}
               className='tool-tip-title'>
-                {routineNamesColors[sg.routine].name} Week: {fromStartWeeks} <br/> Wk. Day: {fromWeekStartDays}&nbsp; (Rt. Day: {fromStartDays})
-              </div>{sg.name}
+                {routineNamesColorsStartDates[sg.routine].name} Week: {fromStartWeeks} <br/> Wk. Day: {weekDayNum}&nbsp; (Rt. Day: {fromStartDays})
+              </div>
+              <p>{sg.name}</p>
             </ToolTip>}>
-              <div
-                onClick={ () => width >= 400 && handleClick(sg) }
-                className='day-marker'
-                style={{backgroundColor: routineNamesColors[sg.routine].color}}>
+              <div className='day-marker-wrapper'>
+                <div
+                  onClick={ () => width >= 400 && handleClick(sg) }
+                  className='day-marker'
+                  style={{backgroundColor: routineNamesColorsStartDates[sg.routine].color}}>
+                </div>
               </div>
             </OverlayTrigger>
           </div>

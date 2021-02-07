@@ -13,13 +13,13 @@ export const ExecuteSetNavs = ({
   currentExerciseSets,
   currentExerciseSet,
   setCurrentExerciseSet,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   setInstructionShow,
   instructionShow,
   sessionSaved
 }) => {
   
-  const routineColor = routineNamesColors[currentExerciseSet.routine].color ? routineNamesColors[currentExerciseSet.routine].color : 'var(--routine-red)'
+  const routineColor = routineNamesColorsStartDates[currentExerciseSet.routine].color ? routineNamesColorsStartDates[currentExerciseSet.routine].color : 'var(--routine-red)'
 
 
   const params = useParams()
@@ -80,7 +80,7 @@ export const ExecuteSetNavs = ({
 
   const ControlComponent = props => (
     <div style={controlStyles}>
-      {<p>{routineNamesColors[currentExerciseSet.routine].name}</p>}
+      {<p>{routineNamesColorsStartDates[currentExerciseSet.routine].name}</p>}
       <components.Control {...props} />
     </div>
   );
@@ -156,7 +156,7 @@ const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentSetGroup: state.setGroupReducer.currentSetGroup,
   userRoutines: state.routineReducer.userRoutines,
-  routineNamesColors: state.routineReducer.routineNamesColors
+  routineNamesColorsStartDates: state.routineReducer.routineNamesColorsStartDates
 })
 
 const mapDispatchToProps = {

@@ -7,7 +7,9 @@ const colorize = (routines) => {
     newRoutineNamesColors[routine._id] = {}
     newRoutineNamesColors[routine._id].name = routine.name
     routine.color ? newRoutineNamesColors[routine._id].color = routine.color : newRoutineNamesColors[routine._id].color = randomColor()
+    newRoutineNamesColors[routine._id].start_date = routine.start_date
   })
+  
   return newRoutineNamesColors
 }
 
@@ -20,7 +22,7 @@ const initialState = {
   routineSearchResults: [],
   userExerciseSets: [],
   userRoutines: [],
-  routineNamesColors: {},
+  routineNamesColorsStartDates: {},
   currentRoutineName: '', 
   currentRoutine: {
     user: null,
@@ -32,6 +34,7 @@ const initialState = {
     difficulty_scale: null,
     start_date: null,
     end_date: null,
+    color: '#A00E0E',
     weeks: []
   }
 }
@@ -71,7 +74,7 @@ const reducer = (state=initialState, action) => {
     case constants.SET_ROUTINE_NAMES_COLORS:
       return{
         ...state,
-        routineNamesColors: action.payload
+        routineNamesColorsStartDates: action.payload
       }
     case constants.SET_FLATTENED_ROUTINE:
       return{
@@ -95,7 +98,7 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         crudingRoutine: false,
-        routineNamesColors: colorize(action.payload.data),
+        routineNamesColorsStartDates: colorize(action.payload.data),
         userRoutines: action.payload.data,
         routinePagination: action.payload.routinePagination
       }
@@ -185,17 +188,17 @@ const reducer = (state=initialState, action) => {
         crudingRoutine: false,
         unsavedChanges: false,
         currentRoutine: action.payload,
-        routineNamesColors: {
-          ...state.routineNamesColors,
+        routineNamesColorsStartDates: {
+          ...state.routineNamesColorsStartDates,
           [action.payload._id]: {
             name: action.payload.name,
-            color: action.payload.color
+            color: action.payload.color,
+            start_date: action.payload.start_date
           }
         },
         currentRoutineName: action.payload.name,
         userRoutines: [...state.userRoutines.map(routine => {
           if( routine._id === action.payload._id){
-            console.log('routineReducer: ', {...routine, ...action.payload})
             return {...routine, ...action.payload}
           } else{
             return routine

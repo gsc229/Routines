@@ -23,7 +23,10 @@
         cursor: pointer;
       }
     }
-
+    .hue-picker{
+      max-width: 100%;
+      width: 100%;
+    }
     .slider-container{
       max-width: 300px;
       min-width: 220px;

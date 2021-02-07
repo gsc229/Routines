@@ -11,7 +11,7 @@ export const clearCurrentWeek = () => dispatch => {
   dispatch({type: constants.CLEAR_CURRENT_WEEK})
 }
 
-export const setScheduleDnDSelectedWeekNumber = (number) => dispatch => {
+export const setSelectedWeekNumbers = (number) => dispatch => {
   dispatch({type: constants.SET_SELECTED_WEEK_NUMBER, payload: number})
 }
 

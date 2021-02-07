@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {saveWeekChanges, setCurrentWeek, setScheduleDnDSelectedWeekNumber} from '../../1_Actions/weekActions'
+import {saveWeekChanges, setCurrentWeek, setSelectedWeekNumbers} from '../../1_Actions/weekActions'
 import {saveManySetGroupChanges, saveSetGroupChanges} from '../../1_Actions/setGroupActions'
 import {bulkWriteExerciseSets} from '../../1_Actions/exerciseSetActions'
 import {clearErrorMessage} from '../../1_Actions/userActions'
@@ -22,7 +22,7 @@ export const RoutineScheduleDnd = ({
   crudingWeek,
   crudingSetGroup,
   crudingExerciseSet,
-  scheduleDnDSelectedWeekNumbers,
+  selectedWeekNumbers,
   bulkWriteExerciseSets
 }) => {
 
@@ -44,23 +44,23 @@ export const RoutineScheduleDnd = ({
   } 
 
   useEffect(() => {
-    if(scheduleDnDSelectedWeekNumbers.includes('all')){
+    if(selectedWeekNumbers.includes('all')){
       setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, currentWeeks, currentRoutineSets))
     } else{
-      const targetWeeks = currentWeeks.filter(week=> scheduleDnDSelectedWeekNumbers.find( num => num === week.week_number))
+      const targetWeeks = currentWeeks.filter(week=> selectedWeekNumbers.find( num => num === week.week_number))
       setRoutineSchedule(routineScheduleConstructor(currentRoutineSetGroups, targetWeeks, currentRoutineSets))
     }
 
-  }, [currentWeeks, currentRoutineSets, scheduleDnDSelectedWeekNumbers, currentRoutineSetGroups])
+  }, [currentWeeks, currentRoutineSets, selectedWeekNumbers, currentRoutineSetGroups])
 
   return (
   <div 
     className='routine-schedule-dnd'>
       {modalShow && <ConfirmDeleteWeekModal setModalShow={setModalShow} modalShow={modalShow} />}
-      {!currentRoutineSetGroups && <DarkSpinner />}
+      {/* {!currentRoutineSetGroups && <DarkSpinner />} */}
       {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
 
-      {currentRoutineSetGroups  && crudingSetGroup !== 'updating-many-set-groups' &&
+      {/* currentRoutineSetGroups  &&  */crudingSetGroup !== 'updating-many-set-groups' &&
       <DragDropContext 
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule, currentRoutineSets, bulkWriteExerciseSets)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {
@@ -107,7 +107,7 @@ const mapStateToProps = (state) => ({
   userId: state.userReducer.user._id,
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
-  scheduleDnDSelectedWeekNumbers: state.weekReducer.scheduleDnDSelectedWeekNumbers,
+  selectedWeekNumbers: state.weekReducer.selectedWeekNumbers,
   currentRoutineSetGroups: state.setGroupReducer.currentRoutineSetGroups,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
@@ -123,7 +123,7 @@ const mapDispatchToProps = {
   saveManySetGroupChanges,
   bulkWriteExerciseSets,
   clearErrorMessage,
-  setScheduleDnDSelectedWeekNumber
+  setSelectedWeekNumbers
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineScheduleDnd)

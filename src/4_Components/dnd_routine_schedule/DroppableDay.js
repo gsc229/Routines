@@ -60,12 +60,13 @@ export const DroppableDay = ({
       return(
         <Card              
         className={`day-container-card ${snapshot.isDraggingOver && 'day-container-card-hovering'}`}>
-          <Card.Header style={{backgroundColor: snapshot.isDraggingOver ? currentRoutine.color || 'white' : 'var(--jet)'}}>
+          <Card.Header 
+          style={{backgroundColor: snapshot.isDraggingOver ? currentRoutine.color || 'white' : 'var(--jet)'}}>
             <div
             className='day-header'>
               <h6 
               style={{color: snapshot.isDraggingOver ? 'white' : currentRoutine.color || 'white'}} >
-                W: {weekNumber} &nbsp;&nbsp; Day: {dayNumber} &nbsp;–&nbsp; {fromStartDays} 
+                Week: {weekNumber} &nbsp;&nbsp; Day: {dayNumber} &nbsp;&nbsp; Routine Day: {fromStartDays} 
               </h6>
               <Link
               className='add-sets-link'

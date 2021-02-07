@@ -102,7 +102,8 @@ export const CreateOrEditExerciseSet = ({
     }
 
     return(
-      <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+      <div
+      className='btn-container'>
         <Button onClick={returnToSchedule}>Continue Without Save</Button>
         <Button 
         onClick={saveAndContinue}
@@ -118,7 +119,7 @@ export const CreateOrEditExerciseSet = ({
     <Layout>
       <Container className='page create-setgroup-page-container'>
         <ModalLayoutOne
-        className='create-set-group-navigate-modal'
+        className='confirm-navigate-modal'
         header={modalHeader()} 
         body={modalBody()}
         footer={modalFooter()}
@@ -144,7 +145,7 @@ export const CreateOrEditExerciseSet = ({
           id="create-set-group-tabs"
           activeKey={searchMode}
           onSelect={(mode) => setSearchMode(mode)}>
-          <Tab eventKey="exercise" title="Create A New Set Group">
+          <Tab eventKey="exercise" title={currentSetGroup._id ? "Edit Set Group" : "Create A New Set Group"}>
             <CreateSetGroupSteps />
           </Tab>
           {/* <Tab eventKey="set" title="Use A Saved Set Group">

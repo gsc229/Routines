@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import { connect } from 'react-redux'
 import {windowScrollTop} from '../../utils/windowScroll'
 import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
-import {createNewWeek, setScheduleDnDSelectedWeekNumber} from '../../1_Actions/weekActions'
+import {createNewWeek, setSelectedWeekNumbers} from '../../1_Actions/weekActions'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
@@ -20,7 +20,7 @@ export const ViewRoutinePage = ({
   fetchFlattenedRoutine, 
   createNewWeek,
   userId,
-  setScheduleDnDSelectedWeekNumber
+  setSelectedWeekNumbers
 }) => {
   
   const handleRefresh = () => {
@@ -57,7 +57,6 @@ export const ViewRoutinePage = ({
   const showWeeks = () => {
     return currentWeeks && currentWeeks.length > 0 && !crudingRoutine &&
       <div>
-        
         <RoutineScheduleDnd />
       </div>
   }
@@ -66,9 +65,10 @@ export const ViewRoutinePage = ({
   return (
     <Layout>
       <Container className='page manage-current-routine-page-container'>
+      {currentWeeks.length > 0 &&
       <div 
-        fixed='top'
-        className='manage-current-routine-page-header'>
+      fixed='top'
+      className='manage-current-routine-page-header'>
         <div className='header-inner'>
             <div 
             style={{fontSize: fontSizeClamp(400, 1000, 1.2, 1.5)}}
@@ -83,12 +83,12 @@ export const ViewRoutinePage = ({
             className='search-nav'>
               <Nav.Item>
               <WeekSelector 
-              setScheduleDnDSelectedWeekNumber={setScheduleDnDSelectedWeekNumber}
+              setSelectedWeekNumbers={setSelectedWeekNumbers}
               currentWeeks={currentWeeks}/>
               </Nav.Item>
             </Nav>
           </div>
-        </div>
+      </div>}
         
 
         {showWeeks()}
@@ -110,7 +110,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   fetchFlattenedRoutine,
   createNewWeek,
-  setScheduleDnDSelectedWeekNumber
+  setSelectedWeekNumbers
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewRoutinePage)

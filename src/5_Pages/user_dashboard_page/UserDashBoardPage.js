@@ -1,18 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
+import Container from 'react-bootstrap/Container'
+import Dashboard from '../../4_Components/dashboard/Dashboard'
 
 export const UserDashBoard = ({user,userRoutines}) => {
   
   return (
     <LayoutOne showTop={false}>
-      <div className="page user-dashboard">
-        <h1>User Dashboard</h1>
-        <div className='raw-data' >
-          <pre style={{color: 'white'}}>{JSON.stringify(user, null, 2)}</pre>
-          <pre style={{color: 'white'}}>{JSON.stringify(userRoutines, null, 2)}</pre>
-        </div>
-      </div>
+      <Container 
+      className='page dashboard-page'>
+        <Dashboard />
+      </Container>
     </LayoutOne>
   )
 }

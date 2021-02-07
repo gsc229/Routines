@@ -41,3 +41,18 @@
     border-bottom-left-radius: 4px;
   }
 }
+
+.modal-content{
+  .modal-footer{
+    .btn-container{
+      display: flex; 
+      justify-content: space-between; 
+      width: 100%; 
+      align-items: center; 
+      flex-wrap: wrap;
+      button{
+        margin: 10px auto;
+      }
+    }
+  }
+}

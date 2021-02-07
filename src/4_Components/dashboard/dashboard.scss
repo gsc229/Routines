@@ -1,0 +1,58 @@
+.dashboard{
+
+  .ex-pies-and-checkbox{
+    .all-time-checkbox-form{
+      display: flex;
+      justify-content: center;
+      .form-group-container{
+        text-align: center;
+      }
+      .form-group{
+        width: 250px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+  .month-picker-container{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    background-color: $bs-dark;
+    top: 50px;
+    padding-top: 20px;
+  }
+
+  .visualizations-container{
+    position: relative;
+    top: 70px;
+  }
+
+  .exercise-pies-container{
+    .row{
+      position: relative;
+    }
+    .pie-column{
+      position: relative;
+      h5{
+        text-align: center;
+        position: relative;
+        top: 30px;
+      }
+    }
+    @media screen and (max-width: 767px){
+      .pie-column:nth-child(2){
+        bottom: 80px;
+      }
+    }
+    .novi-pie-chart-container{
+      min-width: 250px;
+      margin: 0 auto;
+      color: black;
+      font-weight: bold;
+    }
+  }
+}

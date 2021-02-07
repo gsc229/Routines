@@ -28,6 +28,16 @@ export const SetGroupForm = ({
     
   }
 
+  const normalStyles = {
+    color: currentRoutine.color || 'var(--routine-red)', 
+    backgroundColor: 'transparent'
+  }
+
+  const activeStyls = {
+    backgroundColor: currentRoutine.color || 'transparent',
+    border: `1px solid ${currentRoutine.color || 'var(--routine-red)'}`
+  }
+
   return (
     <div className='set-group-type-tab-btns-container'>
      
@@ -49,8 +59,8 @@ export const SetGroupForm = ({
           key={type}
           >
             <Nav.Link
-            style={{color: currentRoutine.color || 'var(--routine-red)'}}
-            className={set_group_type === type && currentStep !== 'choose-type' && 'selected-disabled'}  
+            style={set_group_type === type ? activeStyls : normalStyles}
+            //className={set_group_type === type && currentStep !== 'choose-type' && 'selected-disabled'}  
             eventKey={type}
             active={set_group_type === type}
             onClick={() => handleTypeChoice(type)}

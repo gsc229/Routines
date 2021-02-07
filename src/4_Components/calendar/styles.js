@@ -20,7 +20,6 @@ export function isToday(day){
 export function dayStyles(day, value){
   //if(isNextMonth(day)) return "next-month"
   if(beforeToday(day)) return "before"
-  if(isSelected(day, value)) return "selected"
   if(isToday(day)) return "today"
 }
 

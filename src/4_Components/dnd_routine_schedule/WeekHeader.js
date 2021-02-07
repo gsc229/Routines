@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setCurrentWeek, setScheduleDnDSelectedWeekNumber,  bulkWriteWeeks, clearCurrentWeek} from '../../1_Actions/weekActions'
+import { setCurrentWeek, setSelectedWeekNumbers,  bulkWriteWeeks, clearCurrentWeek} from '../../1_Actions/weekActions'
 import { bulkWriteSetGroups } from '../../1_Actions/setGroupActions'
 import {bulkWriteExerciseSets} from '../../1_Actions/exerciseSetActions'
 import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
@@ -26,8 +26,8 @@ export const WeekHeader = ({
   setCurrentWeek,
   crudingWeek,
   crudingSetGroup,
-  setScheduleDnDSelectedWeekNumber,
-  scheduleDnDSelectedWeekNumbers,
+  setSelectedWeekNumbers,
+  selectedWeekNumbers,
   fetchFlattenedRoutine,
   clearCurrentWeek
 }) => {
@@ -176,7 +176,7 @@ export const WeekHeader = ({
       }
     })
     await bulkWriteWeeks(updates,  currentRoutine._id)
-    //setScheduleDnDSelectedWeekNumber([destinationWeekNumber])
+    //setSelectedWeekNumbers([destinationWeekNumber])
   }
 
 
@@ -320,7 +320,7 @@ const mapStateToProps = (state) => ({
   currentRoutine: state.routineReducer.currentRoutine,
   currentWeeks: state.weekReducer.currentWeeks,
   currentWeek: state.weekReducer.currentWeek,
-  scheduleDnDSelectedWeekNumbers: state.weekReducer.scheduleDnDSelectedWeekNumbers,
+  selectedWeekNumbers: state.weekReducer.selectedWeekNumbers,
   currentRoutineSetGroups: state.setGroupReducer.currentRoutineSetGroups,
   currentRoutineSets: state.exerciseSetReducer.currentRoutineSets,
   error_message: state.weekReducer.error_message,
@@ -333,7 +333,7 @@ const mapDispatchToProps = {
   bulkWriteSetGroups,
   bulkWriteExerciseSets,
   setCurrentWeek,
-  setScheduleDnDSelectedWeekNumber,
+  setSelectedWeekNumbers,
   fetchFlattenedRoutine,
   clearCurrentWeek
 }

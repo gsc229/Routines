@@ -25,8 +25,8 @@ export const ManageRoutinesPage = ({
   }
 
   return (
-    <LayoutOne showTop={false}>
-      <Container className='page manage-routines container'>
+    <LayoutOne>
+      <Container className='page manage-routines'>
         <Row>
           <Col lg='8' md='12' className="routines-column">
             <h2>Your Routines:</h2>

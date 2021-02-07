@@ -7,7 +7,7 @@ import makeAnimated from 'react-select/animated'
 
 
 export const WeekSelector = ({
-  setScheduleDnDSelectedWeekNumber,
+  setSelectedWeekNumbers,
   currentRoutine,
   currentWeeks
 }) => {
@@ -29,7 +29,7 @@ export const WeekSelector = ({
 
     if(newSelections === null){
       setSelectedValues('')
-      return setScheduleDnDSelectedWeekNumber(['all'])
+      return setSelectedWeekNumbers(['all'])
     }
 
     if(newSelections.includes('all')){
@@ -41,7 +41,7 @@ export const WeekSelector = ({
     newSelections = Array.isArray(newSelections) ? newSelections : [newSelections]
 
     const updatedWeekNums = newSelections.map( selection => selection.value)
-    setScheduleDnDSelectedWeekNumber(updatedWeekNums)
+    setSelectedWeekNumbers(updatedWeekNums)
 
 
   }

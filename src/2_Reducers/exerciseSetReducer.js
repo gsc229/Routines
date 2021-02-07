@@ -117,7 +117,7 @@ const reducer = (state=initialState, action) => {
       return{
         ...state,
         crudingExerciseSet: false,
-        currentRoutineSets: action.payload.exercise_sets.sort((a, b) => a.order - b.order)
+        currentRoutineSets: action.payload.exercise_sets ? action.payload.exercise_sets.sort((a, b) => a.order - b.order) : []
       }
     /* ASYNC   */
     // single set

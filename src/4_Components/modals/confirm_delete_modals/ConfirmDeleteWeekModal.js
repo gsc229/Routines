@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
-import {destroyWeek, setScheduleDnDSelectedWeekNumber, bulkWriteWeeks} from '../../../1_Actions/weekActions'
+import {destroyWeek, setSelectedWeekNumbers, bulkWriteWeeks} from '../../../1_Actions/weekActions'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import DarkSpinner from '../../spinners/DarkSpinner'
@@ -16,7 +16,7 @@ export const ConfirmDeleteWeekModal = ({
   confirmingTextObject,
   failingTextObject,
   error_message,
-  setScheduleDnDSelectedWeekNumber
+  setSelectedWeekNumbers
 }) => {
 
   failingTextObject ? failingTextObject = failingTextObject : failingTextObject = 
@@ -57,13 +57,13 @@ export const ConfirmDeleteWeekModal = ({
       const writeResponse = await bulkWriteWeeks(weekUpdates, routineId)
       
       if(writeResponse.success){
-        setScheduleDnDSelectedWeekNumber(['all'])
+        setSelectedWeekNumbers(['all'])
         return 
       } 
     }
 
     if(deleteResponse.success){
-      setScheduleDnDSelectedWeekNumber(['all'])
+      setSelectedWeekNumbers(['all'])
       setModalShow(false)
       setDeleteFailed({
         ...deleteFailed,
@@ -173,7 +173,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   destroyWeek,
   bulkWriteWeeks,
-  setScheduleDnDSelectedWeekNumber
+  setSelectedWeekNumbers
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmDeleteWeekModal)

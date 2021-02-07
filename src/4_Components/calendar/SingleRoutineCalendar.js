@@ -4,7 +4,7 @@ import {setCurrentSetGroups} from '../../1_Actions/setGroupActions'
 import moment from 'moment'
 import buildCalendar from './build'
 import {dayStyles, beforeToday, weekStyles} from './styles'
-import mapSetGroupsToDates from '../schedule_calendar/mapSetGroupsToDates'
+import mapSetGroupsToDates from './mapRoutinesToDates'
 import CalendarHeader from './CalendarHeader'
 import RoutineColorLegend from './RoutineColorLegend'
 import ScheduleWeek from './ScheduleWeek'
@@ -14,18 +14,25 @@ const SingleRoutineCalendar = ({
   className, 
   routine,
   isSingleRoutine=true,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   userRoutines,
   setCurrentSetGroups
 }) => {
 
   const [calendar, setCalendar] = useState([])
-  const [value, setValue] = useState(moment())
+  const [value, setValue] = useState(moment.utc(routine.start_date))
   const [datesSetGroups, setDatesSetGroups] = useState({})
+  const [routinesEndDates, setRoutinesEndDates] = useState({})
+  const [endDatesRoutines, setEndDatesRoutines] = useState({})
   const {height, width} = useWindowSize()
 
   useEffect(() => {  
-    userRoutines && setDatesSetGroups(mapSetGroupsToDates(userRoutines))
+    if(userRoutines){
+      const dateData = mapSetGroupsToDates(userRoutines)
+      setDatesSetGroups(dateData.datesSetGroups)
+      setRoutinesEndDates(dateData.routinesEndDates)
+      setEndDatesRoutines(dateData.endDatesRtouines)
+    } 
   }, [userRoutines])
 
   useEffect(()=>{
@@ -44,7 +51,7 @@ const SingleRoutineCalendar = ({
       isSingleRoutine={false} />
 
       <CalendarHeader 
-      singleRoutine={isSingleRoutine}
+      isSingleRoutine={true}
       value={value} 
       setValue={setValue} 
       routine={routine} />
@@ -58,9 +65,11 @@ const SingleRoutineCalendar = ({
       value={value}
       height={height}
       width={width}
-      routineNamesColors={routineNamesColors} 
+      routineNamesColorsStartDates={routineNamesColorsStartDates} 
       week={week} 
       datesSetGroups={datesSetGroups}
+      routinesEndDates={routinesEndDates}
+      endDatesRoutines={endDatesRoutines}
       handleDayClick={handleDayClick}
       routine={routine}
       isSingleRoutine={true}
@@ -71,7 +80,7 @@ const SingleRoutineCalendar = ({
   )
 }
 const mapStateToProps = (state) => ({
-  routineNamesColors: state.routineReducer.routineNamesColors,
+  routineNamesColorsStartDates: state.routineReducer.routineNamesColorsStartDates,
   userRoutines: state.routineReducer.userRoutines,
   userId: state.userReducer.user._id
 })

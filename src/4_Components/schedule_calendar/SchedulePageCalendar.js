@@ -6,7 +6,7 @@ import {setCurrentSetGroups} from '../../1_Actions/setGroupActions'
 import fontClamp from '../../utils/clampBuilder'
 import moment from 'moment'
 import buildCalendar from './build'
-import mapSetGroupsToDates from './mapSetGroupsToDates'
+import mapSetGroupsToDates from '../../4_Components/calendar/mapRoutinesToDates'
 import {dayStyles, beforeToday, weekStyles} from '../calendar/styles'
 import CalendarHeader from '../calendar/CalendarHeader'
 import RoutineColorLegend from '../calendar/RoutineColorLegend'
@@ -20,7 +20,7 @@ const ScheduleCalendar = ({
   fetchRoutines,
   userId,
   userRoutines,
-  routineNamesColors,
+  routineNamesColorsStartDates,
   crudingRoutine,
   setCurrentSetGroups,
   isSingleRoutine=false
@@ -28,10 +28,11 @@ const ScheduleCalendar = ({
 
   const history = useHistory()
   const [datesSetGroups, setDatesSetGroups] = useState({})
+  const [routinesEndDates, setRoutinesEndDates] = useState({})
   const [calendar, setCalendar] = useState([])
-  const [value, setValue] = useState(moment())
+  const [value, setValue] = useState(moment.utc())
   const {width, height} = useWindowSize()
-
+  
   useEffect(() => {
 
     const fetchUserRoutines = async () => {
@@ -47,7 +48,11 @@ const ScheduleCalendar = ({
   }, [])
 
   useEffect(() => {  
-    userRoutines && setDatesSetGroups(mapSetGroupsToDates(userRoutines))
+    if(userRoutines){
+      const dateData = mapSetGroupsToDates(userRoutines)
+      setDatesSetGroups(dateData.datesSetGroups)
+      setRoutinesEndDates(dateData.routinesEndDates)
+    } 
   }, [userRoutines])
 
   useEffect(()=>{
@@ -60,7 +65,7 @@ const ScheduleCalendar = ({
     //return <Redirect to={`/execute-sets/${date}`} />
   }
 
-
+  console.log({calendar, datesSetGroups})
   return (
     <div className='schedule-wrapper'>
       {crudingRoutine === 'fetching-routines' && <DarkSpinner text='Loading Schedule...' />}
@@ -71,7 +76,7 @@ const ScheduleCalendar = ({
         <RoutineColorLegend 
         isSingleRoutine={isSingleRoutine} />
         <CalendarHeader
-        routineNamesColors={routineNamesColors}
+        routineNamesColorsStartDates={routineNamesColorsStartDates}
         value={value} 
         setValue={setValue}/>      
         {
@@ -84,9 +89,10 @@ const ScheduleCalendar = ({
             value={value}
             height={height}
             width={width}
-            routineNamesColors={routineNamesColors} 
+            routineNamesColorsStartDates={routineNamesColorsStartDates} 
             week={week} 
             datesSetGroups={datesSetGroups}
+            routinesEndDates={routinesEndDates}
             handleDayClick={handleDayClick}
             />
           </div>)
@@ -98,7 +104,7 @@ const ScheduleCalendar = ({
 
 const mapStateToProps = (state) => ({
   userRoutines: state.routineReducer.userRoutines,
-  routineNamesColors: state.routineReducer.routineNamesColors,
+  routineNamesColorsStartDates: state.routineReducer.routineNamesColorsStartDates,
   userId: state.userReducer.user._id,
   crudingRoutine: state.routineReducer.crudingRoutine
 })
