@@ -85,7 +85,7 @@ const ScheduleWeek = ({
     return daySetGroups ?
       <div
       onClick={() => handleDayClick(daySetGroups, formattedDay)}
-      key={day._d}
+      key={day._id}
       className={dayStyles(day, value) + " day"}>
         <p>{day.format("D")}</p>
         {daySetGroups &&

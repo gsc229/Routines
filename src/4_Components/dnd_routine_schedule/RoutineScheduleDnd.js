@@ -57,10 +57,10 @@ export const RoutineScheduleDnd = ({
   <div 
     className='routine-schedule-dnd'>
       {modalShow && <ConfirmDeleteWeekModal setModalShow={setModalShow} modalShow={modalShow} />}
-      {!currentRoutineSetGroups && <DarkSpinner />}
+      {/* {!currentRoutineSetGroups && <DarkSpinner />} */}
       {crudingSetGroup === 'updating-many-set-groups' && <DarkSpinner text='Syncing Schedule...' />}
 
-      {currentRoutineSetGroups  && crudingSetGroup !== 'updating-many-set-groups' &&
+      {/* currentRoutineSetGroups  &&  */crudingSetGroup !== 'updating-many-set-groups' &&
       <DragDropContext 
        onDragEnd={ result => onSetGroupDragEnd(result, routineSchedule, saveSetGroupChanges, setRoutineSchedule, currentRoutineSets, bulkWriteExerciseSets)}>
       {Object.entries(routineSchedule).map(([weekNumber, days]) => {

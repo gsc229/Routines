@@ -1,56 +1,62 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { getNonOrdinalExSetDataFromFlattendRotuines } from './helpers/exerciseStratification'
 import mapSgsToDates from '../calendar/mapRoutinesToDates'
 import { combineExSets } from './helpers/combineExSets'
 import { getMonthCalendarWeeksMuscleGroupData } from './helpers/getMonthCalendarWeeksMuscleGroupData'
 import ExercisePies from './ExercisePies'
 import LineChart from '../line_chart/LineChart'
 import MucleGroupSelector from './MuscleGroupSelector'
-import { testData2 } from '../line_chart/testData2'
+import {exercisePieDataFromSetGroups} from './helpers/exercisePieDataFromSetGroups'
+import Form from 'react-bootstrap/Form'
 
 
 export const Dashboard = ({
   userRoutines  
 }) => {
 
-  const muscleGroupList = [{name: "Chest", color: ''}, {name: "Back", color: ''}, {name: "Arms", color: ''}, {name: "Shoulders", color: ''}, {name: "Legs", color: ''}, {name: "Calves", color: ''}, {name: "Full Body", color: ''}]
+  const muscleGroupList = [{name: "Chest"}, {name: "Back"}, {name: "Arms"}, {name: "Shoulders"}, {name: "Legs"}, {name: "Calves"}, {name: "Full Body"}]
+  const capitalizeField = (field) => {
+    return field.split('_').map(word => word[0].toUpperCase() + word.slice(1, word.length)).join(" ")
+  }
   
+  const [pieData, setPieData] = useState({
+    exerciseNameExSetCount: {},
+    muscleGroupCount: {},
+    duration: 'month'
+  })
   const [combinedExSets, setCombinedExSets] = useState([])
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)
   const [weekIdDate, setWeekIdDate] = useState({})
   const [startDate, setStartDate] = useState(moment())
   const [field, setField] = useState('target_weight')
-  const [lineChartMuscleGroupData, setLineChartMuscleGroupData] = useState([])
-
-
-  const [setGroupIdDate, setSetGroupIdDate] = useState({})
-  const [endDatesRtouines, setEndDatesRoutines] = useState({})
+  const [lineCharData, setLineCharData] = useState([])
 
   useEffect(() => {
-    const {datesSetGroups, setGroupIdDate, weekIdDate, endDatesRtouines} = mapSgsToDates(userRoutines)
+    const {weekIdDate} = mapSgsToDates(userRoutines)
    
     setWeekIdDate(weekIdDate)
-    setSetGroupIdDate(setGroupIdDate)
-    setEndDatesRoutines(endDatesRtouines)
     setCombinedExSets(combineExSets(userRoutines))
   },[userRoutines])
 
   
   useEffect(() => {
     const newLineChartData = getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field).muscleGroupSets
-    setLineChartMuscleGroupData(newLineChartData)
+    setLineCharData(newLineChartData)
   }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field])
 
-  const {
-    exerciseNameExSetCount,
-    muscleGroupCount
-  } = getNonOrdinalExSetDataFromFlattendRotuines(userRoutines)
+  useEffect(() => {
+    const {exerciseNameExSetCount, muscleGroupCount} = exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration)
+    setPieData({...pieData, exerciseNameExSetCount, muscleGroupCount})
+  }, [pieData.duration, startDate, combinedExSets])
 
   const selectDate = (e) => {
     const newMomenet = moment.utc(e.target.value)
     setStartDate(newMomenet)
+  }
+
+  const handleAllTimePieClick = (e) => {
+    setPieData({...pieData, duration: e.target.name})
   }
 
 
@@ -60,17 +66,50 @@ export const Dashboard = ({
         <label htmlFor="month">Your Activity:</label>
         <input 
         onChange={selectDate}
+        checked={pieData.duration==='year'}
         placeholder='Choose Month'
         value={startDate.clone().format('YYYY-MM')}
         type="month" id="month" name="month" />
       </div>
       <div className='visualizations-container'>
-        <ExercisePies exerciseNameExSetCount={exerciseNameExSetCount} muscleGroupCount={muscleGroupCount} />
-        <MucleGroupSelector 
-        muscleGroupList={muscleGroupList}
-        selectedMuscleGroups={selectedMuscleGroups} 
-        setSelectedMuscleGroups={setSelectedMuscleGroups} />
-        <LineChart data={lineChartMuscleGroupData} />
+
+        <div className="ex-pies-and-checkbox">
+          <Form className='all-time-checkbox-form'>
+            <div className='form-group-container'>
+              <h6>Pie Chat Data For:</h6>
+              <Form.Group>
+                <Form.Check
+                label='Year'
+                onClick={handleAllTimePieClick}
+                checked={pieData.duration==='year'}
+                name='year'
+                value='year'
+                type='radio' 
+                />
+                <Form.Check
+                label='Month'
+                onClick={handleAllTimePieClick}
+                checked={pieData.duration==='month'}
+                name='month'
+                value='month'
+                type="radio"
+                />
+            </Form.Group>
+            </div>
+          </Form>
+          <ExercisePies exerciseNameExSetCount={pieData.exerciseNameExSetCount} muscleGroupCount={pieData.muscleGroupCount} />
+        </div>
+
+        <div className='line-chart-and-selector'>
+          <MucleGroupSelector 
+          muscleGroupList={muscleGroupList}
+          selectedMuscleGroups={selectedMuscleGroups} 
+          setSelectedMuscleGroups={setSelectedMuscleGroups} />
+          <LineChart 
+          axisTitle={`Total ${capitalizeField(field)}`}
+          data={lineCharData} />
+        </div>
+
       </div>
     </div>
   )

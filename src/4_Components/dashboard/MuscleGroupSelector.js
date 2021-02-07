@@ -16,8 +16,6 @@ const MuscleGroupSelector = ({
   const animatedComponents = makeAnimated()
 
   const handleGroupSelect = (newSelections) => {
-
-    console.log({newSelections})
     if(!newSelections){
       return setSelectedMuscleGroups([])
     }

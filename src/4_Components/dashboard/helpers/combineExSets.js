@@ -1,7 +1,7 @@
 export const combineExSets = (userRoutines) => {
 
   const combinedExSets = []
-  userRoutines.forEach(routine => combinedExSets.push(...routine.exercise_sets))
+  userRoutines.forEach(routine => routine.exercise_sets && combinedExSets.push(...routine.exercise_sets))
   return combinedExSets
 
 }

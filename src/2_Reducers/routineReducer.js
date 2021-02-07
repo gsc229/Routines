@@ -34,6 +34,7 @@ const initialState = {
     difficulty_scale: null,
     start_date: null,
     end_date: null,
+    color: '#A00E0E',
     weeks: []
   }
 }

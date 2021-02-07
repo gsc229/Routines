@@ -69,7 +69,7 @@ export const ViewSetGroupModal = ({
        <div className='set-group-modal-sets-container'>
           {currentExerciseSets.map((set, index) => 
             <div key={`${set._id}${index}`} className='set-container'>
-              <p>Exercise {index + 1}: <i>{set.exercise.name}</i></p>
+              <p>{index + 1}. <i>{set.exercise.name}</i></p>
               <ul className='targets-and-actual-list'>
                 {getTargetsAndActual(set).map((kVs, index2 )=> {
                   return(

@@ -57,7 +57,6 @@ export const ViewRoutinePage = ({
   const showWeeks = () => {
     return currentWeeks && currentWeeks.length > 0 && !crudingRoutine &&
       <div>
-        
         <RoutineScheduleDnd />
       </div>
   }
@@ -66,9 +65,10 @@ export const ViewRoutinePage = ({
   return (
     <Layout>
       <Container className='page manage-current-routine-page-container'>
+      {currentWeeks.length > 0 &&
       <div 
-        fixed='top'
-        className='manage-current-routine-page-header'>
+      fixed='top'
+      className='manage-current-routine-page-header'>
         <div className='header-inner'>
             <div 
             style={{fontSize: fontSizeClamp(400, 1000, 1.2, 1.5)}}
@@ -88,7 +88,7 @@ export const ViewRoutinePage = ({
               </Nav.Item>
             </Nav>
           </div>
-        </div>
+      </div>}
         
 
         {showWeeks()}

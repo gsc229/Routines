@@ -50,6 +50,7 @@ export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[
     muscleGroupSets[muscleGroup].data = Object.keys(dataObject).map(datum => dataObject[datum])
   })
 
+  
   muscleGroupSets = Object.keys(muscleGroupSets).map(muscleName => muscleGroupSets[muscleName] )
 
   return{FirstDayOfMonth, LastDayOfMonth, weekIdDate, weekRanges, weekIdWeekName, weekMuscleGroupSets, muscleGroupSets}

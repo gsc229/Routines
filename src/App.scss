@@ -102,10 +102,11 @@ h1{
 
 // Routine Form 
 @import './4_Components/manage_routines/form_routine/form_routine.scss';
-
+// Pages 
+@import './5_Pages/schedule_page/schedule_pages.scss';
+@import './5_Pages/create_set_group_page/create_or_edit_set_group_page.scss';
 
 // Create Set Group
-@import './5_Pages/create_set_group_page/create_or_edit_set_group_page.scss';
 @import './4_Components/create_set_group/1_create_set_group_steps/create_set_group_steps.scss';
 @import './4_Components/create_set_group/2_set_group_bank/set_group_bank.scss';
 @import './4_Components/create_set_group/2_preview_set_group/preview_set_group.scss';

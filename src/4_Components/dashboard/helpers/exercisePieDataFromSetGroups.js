@@ -1,18 +1,12 @@
-export const combineSetsGroupsFromFlattendRoutines = (userRoutines) => {
-  const userSetGroups = []
-  userRoutines.forEach(rt => userSetGroups.push(...rt.set_groups))
-  return userSetGroups
-}
+import moment from 'moment'
 
-export const combineExSetsFromFlattendRoutines = (userRoutines) => {
-  const userExSets = []
-  userRoutines.forEach(rt => rt.exercise_sets && userExSets.push(...rt.exercise_sets))
-  return userExSets
-}
-
-// for pie charts
-export const getNonOrdinalExSetDataFromFlattendRotuines = (userRoutines=[{}]) => {
-  const userExSets = combineExSetsFromFlattendRoutines(userRoutines)
+export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDateMoment, duration='month') => {
+ 
+  const startDate = startDateMoment.clone().startOf(duration)
+  const endDate = startDateMoment.clone().endOf(duration)
+  const currentExSets = exSets.filter(set => {
+    return moment(weekIdDate[set.week], 'MM-DD-YYYY').isBetween(startDate, endDate, null, '[]')
+  })
 
   // use the exercise _id not the set group _id
   const exerciseIdExSets = {}
@@ -24,7 +18,7 @@ export const getNonOrdinalExSetDataFromFlattendRotuines = (userRoutines=[{}]) =>
   const exerciseMuscleGroupId = {}
   const muscleGroupCount = {}
 
-  userExSets.forEach(set => {
+  currentExSets.forEach(set => {
     // register the exercise
     if(!exerciseIdExSets[set.exercise._id]){
       exerciseIdExSets[set.exercise._id] = []
