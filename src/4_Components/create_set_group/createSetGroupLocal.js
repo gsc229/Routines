@@ -95,7 +95,8 @@ export const createSetGroupLocal = (
       newSet.target_distance = previousDistance
       newSet.target_time = previousTime
       newSet.target_laps = previousLaps
-
+      // order
+      newSet.order = i
 
       // increment or decrement for each iteration
       previousWeight = Math.round(previousWeight - (previousWeight * percentWeightDecrease))
