@@ -15,7 +15,7 @@ export const Dashboard = ({
   userRoutines  
 }) => {
 
-  const muscleGroupList = [{name: "Chest"}, {name: "Back"}, {name: "Arms"}, {name: "Shoulders"}, {name: "Legs"}, {name: "Calves"}, {name: "Full Body"}]
+  const muscleGroupList = [{name: "Chest"}, {name: "Back"} , {name: "Abs"}, {name: "Arms"}, {name: "Shoulders"}, {name: "Legs"}, {name: "Calves"}, {name: "Full Body"}]
   const capitalizeField = (field) => {
     return field.split('_').map(word => word[0].toUpperCase() + word.slice(1, word.length)).join(" ")
   }
