@@ -70,7 +70,7 @@ export const RecordInputs = ({
     return true
   }
 
-  const acutalsHaveChanged = () => {
+  const showActualsHaveChanged = () => {
 
     for(const actual of originalActuals){
       
@@ -93,17 +93,17 @@ export const RecordInputs = ({
           <div className='submit-and-cancel-btns'>
             <Button
             size='sm'
-            disabled={!acutalsHaveChanged()}
+            disabled={!showActualsHaveChanged()}
             onClick={handleSubmit}
-            variant={acutalsHaveChanged() ? 'outline-success' : 'outline-secondary' }
+            variant={showActualsHaveChanged() ? 'outline-success' : 'outline-secondary' }
             className='submit-all-btn'>
               Submit
             </Button>
             <Button
             size='sm'
-            disabled={!acutalsHaveChanged()}
+            disabled={!showActualsHaveChanged()}
             onClick={handleCancel}
-            variant={acutalsHaveChanged() ? 'outline-primary' : 'outline-secondary' }
+            variant={showActualsHaveChanged() ? 'outline-primary' : 'outline-secondary' }
             className='submit-all-btn'>
               Cancel
             </Button>

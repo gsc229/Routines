@@ -29,7 +29,7 @@ export const Dashboard = ({
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)
   const [weekIdDate, setWeekIdDate] = useState({})
   const [startDate, setStartDate] = useState(moment())
-  const [acutals, setActuals] = useState(false)
+  const [showActuals, setShowActuals] = useState(false)
   const [ duration, setDuration ] = useState('month')
   const [field, setField] = useState('target_weight')
   const [lineCharData, setLineCharData] = useState([])
@@ -40,25 +40,30 @@ export const Dashboard = ({
     setCombinedExSets(combineExSets(userRoutines))
   },[userRoutines])
 
-  
-  useEffect(() => {
-    const newLineChartData = getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , duration).muscleGroupSets
-    setLineCharData(newLineChartData)
-  }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, duration])
-
+  // Pie
   useEffect(() => {
     const {exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor} = 
     exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration, muscleGroupColorObj)
     setPieData({...pieData, exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor})
   }, [pieData.duration, startDate, combinedExSets])
 
+  // Line
+  useEffect(() => {
+    const targetOrActualField = showActuals ? field.replace('target', 'actual') : field
+    const newLineChartData = 
+    getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, targetOrActualField, null , duration).muscleGroupSets
+    setLineCharData(newLineChartData)
+  }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, duration, showActuals])
+
   const selectDate = (e) => {
     const newMomenet = moment.utc(e.target.value)
     setStartDate(newMomenet)
+    setDuration('month')
   }
 
   const handleAllTimePieClick = (e) => {
     setPieData({...pieData, duration: e.target.name})
+    
   }
 
 
@@ -77,7 +82,6 @@ export const Dashboard = ({
         <div className="ex-pies-and-checkbox">
           <Form className='all-time-checkbox-form'>
             <div className='form-group-container'>
-              <h6>Pie Chat Data For:</h6>
               <Form.Group>
                 <Form.Check
                 label='Year'
@@ -106,35 +110,25 @@ export const Dashboard = ({
 
         <div 
         className='line-chart-and-controls'>
-          <Form className='all-time-checkbox-form'>
-            <div className='form-group-container'>
-              <Form.Group>
-                <Form.Check
-                label='Year'
-                onClick={() => setDuration('year')}
-                checked={duration==='year'}
-                name='year'
-                value='year'
-                type='radio' 
-                />
-                <Form.Check
-                label='Month'
-                onClick={() => setDuration('month')}
-                checked={duration==='month'}
-                name='month'
-                value='month'
-                type="radio"
-                />
-            </Form.Group>
-            </div>
-          </Form>
+          <h3 className='weekly-totals-header'>Weekly Totals: </h3>
           <LineChartControls 
+          showActuals={showActuals}
+          setShowActuals={setShowActuals}
+          duration={duration}
+          setDuration={setDuration}
           setField={setField}
+          field={field}
           muscleGroupList={muscleGroupList}
           setSelectedMuscleGroups={setSelectedMuscleGroups}
           selectedMuscleGroups={selectedMuscleGroups} />
+          <h6 className='line-chart-heading'>
+            Weekly&nbsp;
+            {`Totals - ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)} - `}
+            &nbsp;
+            {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
+          </h6>
           <LineChart 
-          axisTitle={`Total ${capitalizeField(field)}`}
+          axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
           data={lineCharData} />
         </div>
       </div>
