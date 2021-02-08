@@ -3,41 +3,26 @@ import {ResponsivePie} from '@nivo/pie'
 import randomColor from 'randomcolor'
 import {defs} from './defs'
 import {fill} from './fill'
-import {legends} from './legends'
-import {data} from './data'
+import { muscleGroupList } from '../dashboard/helpers/muscleGroupNameAndColorList'
 import clampBuilder from '../../utils/clampBuilder' 
-/* 
-// data
-[
-  {
-    "id": "lisp",
-    "label": "lisp",
-    "value": 173,
-    "color": "hsl(70, 70%, 50%)"
-  }
-]
-*/
 
-/* 
-fill
-[
-  {
-      match: {
-          id: 'ruby'
-      },
-      id: 'dots'
-  },
-]
-*/
-
-const NivoPie = ({exSetStratumData={}}) => {
+const NivoPie = ({exSetStratumData={}, useColor}) => {
 
   const exerciseData = Object.keys(exSetStratumData).map(name => (
+    useColor
+    ?
     {
       id: name,
       label: name, 
       value: exSetStratumData[name], 
-      color: randomColor({luminosity: 'dark', format: 'rgba', alpha: 0.5})
+      color: muscleGroupList.find(nameColor => nameColor.name === name).color
+    }
+    :
+    {
+      id: name,
+      label: name, 
+      value: exSetStratumData[name], 
+      color: randomColor({luminosity: 'light', format: 'rgba', alpha: 1})
     }
   ))
 
@@ -51,7 +36,7 @@ const NivoPie = ({exSetStratumData={}}) => {
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
-        colors={{ scheme: 'nivo' }}
+        colors={useColor ? d => d.data.color : d => d.data.color}
         borderWidth={1}
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
         radialLabel={'label'}

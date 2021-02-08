@@ -74,7 +74,7 @@ export const getAxisBottom = ({
   orient='bottom',
   tickSize=10,
   tickPadding=5,
-  tickRotation=30,
+  tickRotation,
   legend,
   legendOffset=50,
   legendPosition='middle'

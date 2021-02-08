@@ -8,14 +8,15 @@ import ExercisePies from './ExercisePies'
 import LineChart from '../line_chart/LineChart'
 import MucleGroupSelector from './MuscleGroupSelector'
 import {exercisePieDataFromSetGroups} from './helpers/exercisePieDataFromSetGroups'
+import {muscleGroupList} from './helpers/muscleGroupNameAndColorList'
 import Form from 'react-bootstrap/Form'
+import TargetSelector from '../create_set_group/3_targets_and_subgroups/TargetsSetter'
 
 
 export const Dashboard = ({
   userRoutines  
 }) => {
 
-  const muscleGroupList = [{name: "Chest", color: '#80599c'}, {name: "Back", color: '#42b0f5'} , {name: "Abs", color: '#f542d7'}, {name: "Arms", color: '#ffa808'}, {name: "Shoulders", color: '#409928'}, {name: "Legs", color: '#3dd9bf'}, {name: "Calves", color: '#3040f0'}, {name: "Full Body", color: '#d1d93d'}]
   const capitalizeField = (field) => {
     return field.split('_').map(word => word[0].toUpperCase() + word.slice(1, word.length)).join(" ")
   }
@@ -34,7 +35,6 @@ export const Dashboard = ({
 
   useEffect(() => {
     const {weekIdDate} = mapSgsToDates(userRoutines)
-   
     setWeekIdDate(weekIdDate)
     setCombinedExSets(combineExSets(userRoutines))
   },[userRoutines])
@@ -59,6 +59,7 @@ export const Dashboard = ({
     setPieData({...pieData, duration: e.target.name})
   }
 
+  const {exerciseIdExSetCount, exerciseIdColor} = exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration)
 
   return (
     <div className='dashboard'>
@@ -72,7 +73,6 @@ export const Dashboard = ({
         type="month" id="month" name="month" />
       </div>
       <div className='visualizations-container'>
-
         <div className="ex-pies-and-checkbox">
           <Form className='all-time-checkbox-form'>
             <div className='form-group-container'>
@@ -101,6 +101,7 @@ export const Dashboard = ({
         </div>
 
         <div className='line-chart-and-selector'>
+          <TargetSelector onSelect={e => setField(e)} showInput={false} />
           <MucleGroupSelector 
           muscleGroupList={muscleGroupList}
           selectedMuscleGroups={selectedMuscleGroups} 
@@ -109,7 +110,6 @@ export const Dashboard = ({
           axisTitle={`Total ${capitalizeField(field)}`}
           data={lineCharData} />
         </div>
-
       </div>
     </div>
   )
