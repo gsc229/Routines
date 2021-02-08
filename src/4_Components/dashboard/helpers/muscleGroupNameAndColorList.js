@@ -8,3 +8,12 @@ export const muscleGroupList = [
   {name: "Calves", color: '#3040f0'}, 
   {name: "Full Body", color: '#d1d93d'}
 ]
+
+
+const converArrayToObj = () => {
+  const obj = {} 
+  muscleGroupList.forEach(nameColor => obj[nameColor.name] = nameColor)
+  return obj
+}
+
+export const muscleGroupColorObj = converArrayToObj()

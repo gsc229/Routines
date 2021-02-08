@@ -2,14 +2,14 @@ import moment from 'moment'
 
 
 
-export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[], weekIdDate={}, monthMoment, field, format='YYYY-MM-DD') => {
+export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[], weekIdDate={}, monthMoment, field, format='YYYY-MM-DD', duration='month') => {
   
-  const FirstDayOfMonth = monthMoment.clone().startOf('month').startOf('week').startOf('day')
-  const LastDayOfMonth = monthMoment.clone().endOf('month').endOf('week').endOf('day').add(1, 'second')
-  const numWeeks = LastDayOfMonth.diff(FirstDayOfMonth, 'weeks')
+  const startMoment = monthMoment.clone().startOf(duration).startOf('week').startOf('day')
+  const endMoment = monthMoment.clone().endOf(duration).endOf('week').endOf('day').add(1, 'day')
+  const numWeeks = endMoment.diff(startMoment, 'weeks')
   const weekRanges = {}
   const weekIdWeekName = {}
-  let currentRangeStart = FirstDayOfMonth.clone()
+  let currentRangeStart = startMoment.clone()
   let currentRangeEnd = currentRangeStart.clone().add(6, 'days')
 
   for(let i = 1; i <= numWeeks; i++){
@@ -53,6 +53,6 @@ export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[
   
   muscleGroupSets = Object.keys(muscleGroupSets).map(muscleName => muscleGroupSets[muscleName] )
 
-  return{FirstDayOfMonth, LastDayOfMonth, weekIdDate, weekRanges, weekIdWeekName, weekMuscleGroupSets, muscleGroupSets}
+  return{startMoment, endMoment, weekIdDate, weekRanges, weekIdWeekName, weekMuscleGroupSets, muscleGroupSets}
 
 }

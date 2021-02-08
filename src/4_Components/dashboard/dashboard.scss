@@ -1,17 +1,16 @@
 .dashboard{
 
-  .ex-pies-and-checkbox{
-    .all-time-checkbox-form{
+  
+  .all-time-checkbox-form{
+    display: flex;
+    justify-content: center;
+    .form-group-container{
+      text-align: center;
+    }
+    .form-group{
+      width: 250px;
       display: flex;
-      justify-content: center;
-      .form-group-container{
-        text-align: center;
-      }
-      .form-group{
-        width: 250px;
-        display: flex;
-        justify-content: space-between;
-      }
+      justify-content: space-between;
     }
   }
   .month-picker-container{

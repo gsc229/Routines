@@ -6,12 +6,10 @@ import { combineExSets } from './helpers/combineExSets'
 import { getMonthCalendarWeeksMuscleGroupData } from './helpers/getMonthCalendarWeeksMuscleGroupData'
 import ExercisePies from './ExercisePies'
 import LineChart from '../line_chart/LineChart'
-import MucleGroupSelector from './MuscleGroupSelector'
 import {exercisePieDataFromSetGroups} from './helpers/exercisePieDataFromSetGroups'
-import {muscleGroupList} from './helpers/muscleGroupNameAndColorList'
+import {muscleGroupList, muscleGroupColorObj} from './helpers/muscleGroupNameAndColorList'
 import Form from 'react-bootstrap/Form'
-import TargetSelector from '../create_set_group/3_targets_and_subgroups/TargetsSetter'
-
+import LineChartControls from './LineChartControls'
 
 export const Dashboard = ({
   userRoutines  
@@ -22,6 +20,7 @@ export const Dashboard = ({
   }
   
   const [pieData, setPieData] = useState({
+    exerciseNameMuscleGroupColor: {},
     exerciseNameExSetCount: {},
     muscleGroupCount: {},
     duration: 'year'
@@ -30,6 +29,8 @@ export const Dashboard = ({
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)
   const [weekIdDate, setWeekIdDate] = useState({})
   const [startDate, setStartDate] = useState(moment())
+  const [acutals, setActuals] = useState(false)
+  const [ duration, setDuration ] = useState('month')
   const [field, setField] = useState('target_weight')
   const [lineCharData, setLineCharData] = useState([])
 
@@ -41,13 +42,14 @@ export const Dashboard = ({
 
   
   useEffect(() => {
-    const newLineChartData = getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field).muscleGroupSets
+    const newLineChartData = getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , duration).muscleGroupSets
     setLineCharData(newLineChartData)
-  }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field])
+  }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, duration])
 
   useEffect(() => {
-    const {exerciseNameExSetCount, muscleGroupCount} = exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration)
-    setPieData({...pieData, exerciseNameExSetCount, muscleGroupCount})
+    const {exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor} = 
+    exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration, muscleGroupColorObj)
+    setPieData({...pieData, exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor})
   }, [pieData.duration, startDate, combinedExSets])
 
   const selectDate = (e) => {
@@ -59,7 +61,6 @@ export const Dashboard = ({
     setPieData({...pieData, duration: e.target.name})
   }
 
-  const {exerciseIdExSetCount, exerciseIdColor} = exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration)
 
   return (
     <div className='dashboard'>
@@ -97,15 +98,41 @@ export const Dashboard = ({
             </Form.Group>
             </div>
           </Form>
-          <ExercisePies exerciseNameExSetCount={pieData.exerciseNameExSetCount} muscleGroupCount={pieData.muscleGroupCount} />
+          <ExercisePies
+          exerciseNameMuscleGroupColor={pieData.exerciseNameMuscleGroupColor}
+          exerciseNameExSetCount={pieData.exerciseNameExSetCount} 
+          muscleGroupCount={pieData.muscleGroupCount} />
         </div>
 
-        <div className='line-chart-and-selector'>
-          <TargetSelector onSelect={e => setField(e)} showInput={false} />
-          <MucleGroupSelector 
+        <div 
+        className='line-chart-and-controls'>
+          <Form className='all-time-checkbox-form'>
+            <div className='form-group-container'>
+              <Form.Group>
+                <Form.Check
+                label='Year'
+                onClick={() => setDuration('year')}
+                checked={duration==='year'}
+                name='year'
+                value='year'
+                type='radio' 
+                />
+                <Form.Check
+                label='Month'
+                onClick={() => setDuration('month')}
+                checked={duration==='month'}
+                name='month'
+                value='month'
+                type="radio"
+                />
+            </Form.Group>
+            </div>
+          </Form>
+          <LineChartControls 
+          setField={setField}
           muscleGroupList={muscleGroupList}
-          selectedMuscleGroups={selectedMuscleGroups} 
-          setSelectedMuscleGroups={setSelectedMuscleGroups} />
+          setSelectedMuscleGroups={setSelectedMuscleGroups}
+          selectedMuscleGroups={selectedMuscleGroups} />
           <LineChart 
           axisTitle={`Total ${capitalizeField(field)}`}
           data={lineCharData} />

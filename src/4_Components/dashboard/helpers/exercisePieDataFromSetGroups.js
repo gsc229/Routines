@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDateMoment, duration='month') => {
+export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDateMoment, duration='month', muscleGroupNameAndColorList) => {
  
   const startDate = startDateMoment.clone().startOf(duration)
   const endDate = startDateMoment.clone().endOf(duration)
@@ -14,6 +14,7 @@ export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDate
   const exerciseIdName = {}
   const exerciseIdColor = {}
   const exerciseNameId = {}
+  const exerciseNameMuscleGroupColor = {}
   const exerciseIdExSetCount = {}
   const exerciseNameExSetCount = {}
   const exerciseIdMuscleGroup = {}
@@ -27,6 +28,7 @@ export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDate
       exerciseIdName[set.exercise._id] = set.exercise.name
       exerciseNameId[set.exercise.name] = set.exercise._id
       exerciseIdColor[set.exercise._id] = set.exercise.color || null
+      exerciseNameMuscleGroupColor[set.exercise.name] = muscleGroupNameAndColorList[set.exercise.muscle_group].color || null
     }
 
     if(set.exercise.muscle_group && !muscleGroupCount[set.exercise.muscle_group]){
@@ -55,6 +57,7 @@ export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDate
     exerciseNameId,
     exerciseIdExSetCount,
     exerciseNameExSetCount,
+    exerciseNameMuscleGroupColor,
     muscleGroupCount,
     exerciseMuscleGroupId,
     exerciseIdMuscleGroup

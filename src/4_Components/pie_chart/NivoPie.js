@@ -6,24 +6,25 @@ import {fill} from './fill'
 import { muscleGroupList } from '../dashboard/helpers/muscleGroupNameAndColorList'
 import clampBuilder from '../../utils/clampBuilder' 
 
-const NivoPie = ({exSetStratumData={}, useColor}) => {
+const NivoPie = ({exSetStratumData={}, exerciseNameMuscleGroupColor}) => {
 
   const exerciseData = Object.keys(exSetStratumData).map(name => (
-    useColor
+    exerciseNameMuscleGroupColor
     ?
     {
       id: name,
       label: name, 
       value: exSetStratumData[name], 
-      color: muscleGroupList.find(nameColor => nameColor.name === name).color
+      color: exerciseNameMuscleGroupColor[name] || randomColor({luminosity: 'light', format: 'rgba', alpha: 1})
     }
     :
     {
       id: name,
       label: name, 
       value: exSetStratumData[name], 
-      color: randomColor({luminosity: 'light', format: 'rgba', alpha: 1})
+      color: muscleGroupList.find(nameColor => nameColor.name === name).color
     }
+    
   ))
 
   return (
@@ -36,7 +37,7 @@ const NivoPie = ({exSetStratumData={}, useColor}) => {
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
-        colors={useColor ? d => d.data.color : d => d.data.color}
+        colors={d => d.data.color}
         borderWidth={1}
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
         radialLabel={'label'}
