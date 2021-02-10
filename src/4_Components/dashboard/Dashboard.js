@@ -123,7 +123,9 @@ export const Dashboard = ({
           selectedMuscleGroups={selectedMuscleGroups} />
           <h6 className='line-chart-heading'>
             Weekly&nbsp;
-            {`Totals - ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)} - `}
+            Totals - &nbsp;
+            <span style={{color: showActuals ? 'lightgreen' : 'red', fontWeight: 'bold'}}>{capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)} </span>
+            - 
             &nbsp;
             {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
           </h6>
