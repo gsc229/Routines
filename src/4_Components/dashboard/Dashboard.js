@@ -32,7 +32,13 @@ export const Dashboard = ({
   const [showActuals, setShowActuals] = useState(false)
   const [ duration, setDuration ] = useState('month')
   const [field, setField] = useState('target_weight')
-  const [lineCharData, setLineCharData] = useState([])
+  const [lineCharData, setLineCharData] = useState({
+    monthTarget: [],
+    yearTarget: [],
+    monthActual: [],
+    yearActual: []
+
+  })
 
   useEffect(() => {
     const {weekIdDate} = mapSgsToDates(userRoutines)
@@ -49,11 +55,25 @@ export const Dashboard = ({
 
   // Line
   useEffect(() => {
-    const targetOrActualField = showActuals ? field.replace('target', 'actual') : field
-    const newLineChartData = 
-    getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, targetOrActualField, null , duration).muscleGroupSets
+    const newLineChartData = {
+      monthTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , 'month').muscleGroupSets,
+      yearTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , 'year').muscleGroupSets,
+      monthActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'month').muscleGroupSets,
+      yearActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'year').muscleGroupSets,
+    }
     setLineCharData(newLineChartData)
-  }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, duration, showActuals])
+  }, [combinedExSets])
+
+  // Line
+  useEffect(() => {
+    const newLineChartData = {
+      monthTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , 'month').muscleGroupSets,
+      yearTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , 'year').muscleGroupSets,
+      monthActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'month').muscleGroupSets,
+      yearActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'year').muscleGroupSets,
+    }
+    setLineCharData(newLineChartData)
+  }, [combinedExSets, startDate, selectedMuscleGroups])
 
   const selectDate = (e) => {
     const newMomenet = moment.utc(e.target.value)
@@ -71,20 +91,42 @@ export const Dashboard = ({
       month: 'every week',
       year: 'every 4 weeks'
     }
-    return (
-      duration === 'week'
-      ?
-      <LineChart
-      bottomTickValueFreq={bottomTickValueFreq[duration]}
-      axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
-      data={lineCharData} />
-      :
-      <LineChart
-      bottomTickValueFreq={bottomTickValueFreq[duration]}
-      axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
-      data={lineCharData} />
 
-    )
+    if(showActuals && duration === 'month'){
+      return (
+        <LineChart
+        bottomTickValueFreq={bottomTickValueFreq[duration]}
+        axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
+        data={lineCharData.monthActual} />
+      )
+    }
+
+    if(showActuals && duration === 'year'){
+      return (
+        <LineChart
+        bottomTickValueFreq={bottomTickValueFreq[duration]}
+        axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
+        data={lineCharData.yearActual} />
+      )
+    }
+
+    if(!showActuals && duration === 'month'){
+      return (
+        <LineChart
+        bottomTickValueFreq={bottomTickValueFreq[duration]}
+        axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
+        data={lineCharData.monthTarget} />
+      )
+    }
+
+    if(!showActuals && duration === 'year'){
+      return (
+        <LineChart
+        bottomTickValueFreq={bottomTickValueFreq[duration]}
+        axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
+        data={lineCharData.yearTarget} />
+      )
+    }
   }
 
 
@@ -151,6 +193,7 @@ export const Dashboard = ({
             {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
           </h6>
           {getLineChart()}
+          <pre style={{color: 'white'}}>{JSON.stringify(lineCharData.month, null, 2)}</pre>
         </div>
       </div>
     </div>
