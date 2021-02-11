@@ -26,7 +26,7 @@ const LineChart = ({data, axisTitle, bottomTickValueFreq="every week"}) => {
     <div 
       style={{height: '400px', width: '100%', color: 'black'}}
       className="line-chart-target-weight">
-        <ResponsiveLineCanvas
+        <ResponsiveLine
         data={data}
         theme={theme}       
         colors={d => d.color}
