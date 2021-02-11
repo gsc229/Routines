@@ -2,7 +2,7 @@ import React from 'react'
 import {ResponsiveLine} from '@nivo/line'
 import { getAxisBottom, getAxisLeft, getLegends } from './axisAndLegends'
 
-const LineChart = ({data, axisTitle}) => {
+const LineChart = ({data, axisTitle, bottomTickValueFreq="every week"}) => {
   const theme = {
     textColor: '#ffffff',
     backgroundColor: '#000000',
@@ -31,14 +31,27 @@ const LineChart = ({data, axisTitle}) => {
         theme={theme}       
         colors={d => d.color}
         margin={{ top: 50, right: 0, bottom: 50, left: 50 }}
-        xScale={{ type: 'point' }}
-        yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: false, reverse: false }}
+        xScale={{
+            type: 'time',
+            format: '%Y-%m-%d',
+            useUTC: false,
+            precision: 'day',
+        }}
+        xFormat="time:%Y-%m-%d"
         yFormat=" >-.2f"
+        yScale={{
+          type: 'linear',
+          stacked: false,
+        }}
         axisTop={null}
         textColor={'#ffffff'}
         axisRight={null}
-        axisBottom={getAxisBottom({})}
-        axisLeft={getAxisLeft({legend: axisTitle})}
+        axisBottom={{
+          format: '%b %d',
+          tickValues: bottomTickValueFreq,
+          legendOffset: -12,
+          tickRotation: -90
+        }}
         pointSize={10}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={2}

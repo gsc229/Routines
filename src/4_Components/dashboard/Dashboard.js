@@ -67,8 +67,13 @@ export const Dashboard = ({
   }
 
   const getLineChart = () => {
+    const bottomTickValueFreq = {
+      month: 'every week',
+      year: 'every 4 weeks'
+    }
     return (
-      <LineChart 
+      <LineChart
+      bottomTickValueFreq={bottomTickValueFreq[duration]}
       axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
       data={lineCharData} />
     )
@@ -137,9 +142,7 @@ export const Dashboard = ({
             &nbsp;
             {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
           </h6>
-
           {getLineChart()}
-          
         </div>
       </div>
     </div>
