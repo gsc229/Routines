@@ -1,5 +1,5 @@
 import React from 'react'
-import {ResponsiveLine} from '@nivo/line'
+import {ResponsiveLine, ResponsiveLineCanvas} from '@nivo/line'
 import { getAxisBottom, getAxisLeft, getLegends } from './axisAndLegends'
 
 const LineChart = ({data, axisTitle, bottomTickValueFreq="every week"}) => {
@@ -26,7 +26,7 @@ const LineChart = ({data, axisTitle, bottomTickValueFreq="every week"}) => {
     <div 
       style={{height: '400px', width: '100%', color: 'black'}}
       className="line-chart-target-weight">
-        <ResponsiveLine
+        <ResponsiveLineCanvas
         data={data}
         theme={theme}       
         colors={d => d.color}

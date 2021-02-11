@@ -62,17 +62,6 @@ export const Dashboard = ({
       yearActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'year').muscleGroupSets,
     }
     setLineCharData(newLineChartData)
-  }, [combinedExSets])
-
-  // Line
-  useEffect(() => {
-    const newLineChartData = {
-      monthTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , 'month').muscleGroupSets,
-      yearTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , 'year').muscleGroupSets,
-      monthActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'month').muscleGroupSets,
-      yearActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'year').muscleGroupSets,
-    }
-    setLineCharData(newLineChartData)
   }, [combinedExSets, startDate, selectedMuscleGroups])
 
   const selectDate = (e) => {
