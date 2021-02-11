@@ -154,6 +154,7 @@ export const Dashboard = ({
               </Form.Group>
             </div>
           </Form>
+          <pre style={{color: 'white'}}>{JSON.stringify(pieData, null, 2)}</pre>
           <ExercisePies
           exerciseNameMuscleGroupColor={pieData.exerciseNameMuscleGroupColor}
           exerciseNameExSetCount={pieData.exerciseNameExSetCount} 
