@@ -92,7 +92,7 @@ export const Dashboard = ({
                 type='radio' 
                 />
                 <Form.Check
-                label='Month'
+                label={startDate.clone().format('MMMM')}
                 onClick={handleAllTimePieClick}
                 checked={pieData.duration==='month'}
                 name='month'
