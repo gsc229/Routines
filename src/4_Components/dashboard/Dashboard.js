@@ -154,7 +154,7 @@ export const Dashboard = ({
               </Form.Group>
             </div>
           </Form>
-          <pre style={{color: 'white'}}>{JSON.stringify(pieData, null, 2)}</pre>
+          
           <ExercisePies
           exerciseNameMuscleGroupColor={pieData.exerciseNameMuscleGroupColor}
           exerciseNameExSetCount={pieData.exerciseNameExSetCount} 
@@ -183,7 +183,6 @@ export const Dashboard = ({
             {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
           </h6>
           {getLineChart()}
-          <pre style={{color: 'white'}}>{JSON.stringify(lineCharData, null, 2)}</pre>
         </div>
       </div>
     </div>
