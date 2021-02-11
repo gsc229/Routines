@@ -48,9 +48,9 @@ export const Dashboard = ({
   }, [pieData.duration, startDate, combinedExSets])
 
   // Line
-  useEffect(() => {
+  useEffect( async() => {
     const targetOrActualField = showActuals ? field.replace('target', 'actual') : field
-    const newLineChartData = 
+    const newLineChartData = await
     getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, targetOrActualField, null , duration).muscleGroupSets
     setLineCharData(newLineChartData)
   }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, duration, showActuals])
@@ -99,7 +99,7 @@ export const Dashboard = ({
                 value='month'
                 type="radio"
                 />
-            </Form.Group>
+              </Form.Group>
             </div>
           </Form>
           <ExercisePies
