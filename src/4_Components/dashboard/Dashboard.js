@@ -137,7 +137,9 @@ export const Dashboard = ({
             &nbsp;
             {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
           </h6>
+
           {getLineChart()}
+          
         </div>
       </div>
     </div>
