@@ -182,7 +182,7 @@ export const Dashboard = ({
             {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
           </h6>
           {getLineChart()}
-          <pre style={{color: 'white'}}>{JSON.stringify(lineCharData.month, null, 2)}</pre>
+          <pre style={{color: 'white'}}>{JSON.stringify(lineCharData, null, 2)}</pre>
         </div>
       </div>
     </div>
