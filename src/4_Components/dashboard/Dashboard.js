@@ -48,9 +48,9 @@ export const Dashboard = ({
   }, [pieData.duration, startDate, combinedExSets])
 
   // Line
-  useEffect( async() => {
+  useEffect(() => {
     const targetOrActualField = showActuals ? field.replace('target', 'actual') : field
-    const newLineChartData = await
+    const newLineChartData = 
     getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, targetOrActualField, null , duration).muscleGroupSets
     setLineCharData(newLineChartData)
   }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, duration, showActuals])
@@ -64,6 +64,14 @@ export const Dashboard = ({
   const handleAllTimePieClick = (e) => {
     setPieData({...pieData, duration: e.target.name})
     
+  }
+
+  const getLineChart = () => {
+    return (
+      <LineChart 
+      axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
+      data={lineCharData} />
+    )
   }
 
 
@@ -129,9 +137,7 @@ export const Dashboard = ({
             &nbsp;
             {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
           </h6>
-          <LineChart 
-          axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
-          data={lineCharData} />
+          {getLineChart()}
         </div>
       </div>
     </div>
