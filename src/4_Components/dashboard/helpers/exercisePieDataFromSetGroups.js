@@ -1,9 +1,10 @@
 import moment from 'moment'
 
-export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDateMoment, duration='month') => {
+export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDateMoment, duration='month', muscleGroupNameAndColorList) => {
  
   const startDate = startDateMoment.clone().startOf(duration)
   const endDate = startDateMoment.clone().endOf(duration)
+
   const currentExSets = exSets.filter(set => {
     return moment(weekIdDate[set.week], 'MM-DD-YYYY').isBetween(startDate, endDate, null, '[]')
   })
@@ -11,7 +12,9 @@ export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDate
   // use the exercise _id not the set group _id
   const exerciseIdExSets = {}
   const exerciseIdName = {}
+  const exerciseIdColor = {}
   const exerciseNameId = {}
+  const exerciseNameMuscleGroupColor = {}
   const exerciseIdExSetCount = {}
   const exerciseNameExSetCount = {}
   const exerciseIdMuscleGroup = {}
@@ -24,6 +27,8 @@ export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDate
       exerciseIdExSets[set.exercise._id] = []
       exerciseIdName[set.exercise._id] = set.exercise.name
       exerciseNameId[set.exercise.name] = set.exercise._id
+      exerciseIdColor[set.exercise._id] = set.exercise.color || null
+      exerciseNameMuscleGroupColor[set.exercise.name] = muscleGroupNameAndColorList[set.exercise.muscle_group].color || null
     }
 
     if(set.exercise.muscle_group && !muscleGroupCount[set.exercise.muscle_group]){
@@ -48,9 +53,11 @@ export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDate
   return{
     exerciseIdExSets,
     exerciseIdName,
+    exerciseIdColor,
     exerciseNameId,
     exerciseIdExSetCount,
     exerciseNameExSetCount,
+    exerciseNameMuscleGroupColor,
     muscleGroupCount,
     exerciseMuscleGroupId,
     exerciseIdMuscleGroup

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
+import { isDemo } from '../config/config'
 import LandingPageLayout from '../6_Layouts/layout_two/LandingPageLayout.js'
 import {logInUser, clearErrorMessage} from '../1_Actions/userActions'
 import {fetchRoutines} from '../1_Actions/routineActions'
@@ -48,7 +49,10 @@ export const SignIn = ({
     logInUser(credentials)
   }
 
-  
+  if(isDemo){
+    logInUser({email: 'user1@mail.com', password: 'user123'})
+  }
+
 
   return (
     <LandingPageLayout >
@@ -74,7 +78,6 @@ export const SignIn = ({
             <button
             disabled={disabled}
             className="btn">Sign In</button>
-            
           </form>
           
         </div>

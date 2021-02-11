@@ -1,19 +1,4 @@
 .dashboard{
-
-  .ex-pies-and-checkbox{
-    .all-time-checkbox-form{
-      display: flex;
-      justify-content: center;
-      .form-group-container{
-        text-align: center;
-      }
-      .form-group{
-        width: 250px;
-        display: flex;
-        justify-content: space-between;
-      }
-    }
-  }
   .month-picker-container{
     display: flex;
     align-items: flex-start;
@@ -26,10 +11,27 @@
     padding-top: 20px;
   }
 
+  .form-group-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .form-group{
+      display: flex;
+      justify-content: space-between;
+      width: 250px;
+      flex-wrap: wrap;
+      input{
+        cursor: pointer;
+      }
+    }
+  }
+
   .visualizations-container{
     position: relative;
     top: 70px;
   }
+
+  
 
   .exercise-pies-container{
     .row{
@@ -53,6 +55,23 @@
       margin: 0 auto;
       color: black;
       font-weight: bold;
+    }
+  }
+
+  .line-chart-and-controls{
+    .weekly-totals-header{
+      text-align: center;
+    }
+    .line-chart-heading{
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .checkboxes-container{
+      margin: 10px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
   }
 }

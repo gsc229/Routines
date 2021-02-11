@@ -37,12 +37,13 @@ const ScheduleWeek = ({
     })
 
     routineIdKeys
-    .map(idKey => {
+    .map((idKey, idx) => {
       const formattedStart = moment.utc(routineNamesColorsStartDates[idKey].start_date).format('MM-DD-YYYY')
 
       if(formattedDay === formattedStart){
         startIcons.push(
-        <div 
+        <div
+        key={`${idKey}-${idx}`} 
         style={getDivStyles(idKey)}
         className="start-date">
           <p>S</p>
@@ -52,7 +53,8 @@ const ScheduleWeek = ({
 
       if(formattedDay === routinesEndDates[idKey]){
         startIcons.push(
-        <div 
+        <div
+        key={`${idKey}-${idx}`} 
         style={getDivStyles(idKey)}
         className="start-date">
           <p>E</p>
@@ -63,7 +65,8 @@ const ScheduleWeek = ({
     })
 
     return(
-      <div 
+      <div
+      key={formattedDay}
       style={{display: 'flex', flexWrap: 'wrap'}}
       className='starts-container'>
         {startIcons.map(div => div)}

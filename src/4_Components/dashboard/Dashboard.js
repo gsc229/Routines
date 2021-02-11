@@ -6,21 +6,21 @@ import { combineExSets } from './helpers/combineExSets'
 import { getMonthCalendarWeeksMuscleGroupData } from './helpers/getMonthCalendarWeeksMuscleGroupData'
 import ExercisePies from './ExercisePies'
 import LineChart from '../line_chart/LineChart'
-import MucleGroupSelector from './MuscleGroupSelector'
 import {exercisePieDataFromSetGroups} from './helpers/exercisePieDataFromSetGroups'
+import {muscleGroupList, muscleGroupColorObj} from './helpers/muscleGroupNameAndColorList'
 import Form from 'react-bootstrap/Form'
-
+import LineChartControls from './LineChartControls'
 
 export const Dashboard = ({
   userRoutines  
 }) => {
 
-  const muscleGroupList = [{name: "Chest", color: '#80599c'}, {name: "Back", color: '#42b0f5'} , {name: "Abs", color: '#f542d7'}, {name: "Arms", color: '#ffa808'}, {name: "Shoulders", color: '#409928'}, {name: "Legs", color: '#3dd9bf'}, {name: "Calves", color: '#3040f0'}, {name: "Full Body", color: '#d1d93d'}]
   const capitalizeField = (field) => {
     return field.split('_').map(word => word[0].toUpperCase() + word.slice(1, word.length)).join(" ")
   }
   
   const [pieData, setPieData] = useState({
+    exerciseNameMuscleGroupColor: {},
     exerciseNameExSetCount: {},
     muscleGroupCount: {},
     duration: 'year'
@@ -29,34 +29,41 @@ export const Dashboard = ({
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)
   const [weekIdDate, setWeekIdDate] = useState({})
   const [startDate, setStartDate] = useState(moment())
+  const [showActuals, setShowActuals] = useState(false)
+  const [ duration, setDuration ] = useState('month')
   const [field, setField] = useState('target_weight')
   const [lineCharData, setLineCharData] = useState([])
 
   useEffect(() => {
     const {weekIdDate} = mapSgsToDates(userRoutines)
-   
     setWeekIdDate(weekIdDate)
     setCombinedExSets(combineExSets(userRoutines))
   },[userRoutines])
 
-  
+  // Pie
   useEffect(() => {
-    const newLineChartData = getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field).muscleGroupSets
-    setLineCharData(newLineChartData)
-  }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field])
-
-  useEffect(() => {
-    const {exerciseNameExSetCount, muscleGroupCount} = exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration)
-    setPieData({...pieData, exerciseNameExSetCount, muscleGroupCount})
+    const {exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor} = 
+    exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration, muscleGroupColorObj)
+    setPieData({...pieData, exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor})
   }, [pieData.duration, startDate, combinedExSets])
+
+  // Line
+  useEffect(() => {
+    const targetOrActualField = showActuals ? field.replace('target', 'actual') : field
+    const newLineChartData = 
+    getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, targetOrActualField, null , duration).muscleGroupSets
+    setLineCharData(newLineChartData)
+  }, [combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, duration, showActuals])
 
   const selectDate = (e) => {
     const newMomenet = moment.utc(e.target.value)
     setStartDate(newMomenet)
+    setDuration('month')
   }
 
   const handleAllTimePieClick = (e) => {
     setPieData({...pieData, duration: e.target.name})
+    
   }
 
 
@@ -72,11 +79,9 @@ export const Dashboard = ({
         type="month" id="month" name="month" />
       </div>
       <div className='visualizations-container'>
-
         <div className="ex-pies-and-checkbox">
           <Form className='all-time-checkbox-form'>
             <div className='form-group-container'>
-              <h6>Pie Chat Data For:</h6>
               <Form.Group>
                 <Form.Check
                 label='Year'
@@ -87,7 +92,7 @@ export const Dashboard = ({
                 type='radio' 
                 />
                 <Form.Check
-                label='Month'
+                label={startDate.clone().format('MMMM')}
                 onClick={handleAllTimePieClick}
                 checked={pieData.duration==='month'}
                 name='month'
@@ -97,19 +102,37 @@ export const Dashboard = ({
             </Form.Group>
             </div>
           </Form>
-          <ExercisePies exerciseNameExSetCount={pieData.exerciseNameExSetCount} muscleGroupCount={pieData.muscleGroupCount} />
+          <ExercisePies
+          exerciseNameMuscleGroupColor={pieData.exerciseNameMuscleGroupColor}
+          exerciseNameExSetCount={pieData.exerciseNameExSetCount} 
+          muscleGroupCount={pieData.muscleGroupCount} />
         </div>
 
-        <div className='line-chart-and-selector'>
-          <MucleGroupSelector 
+        <div 
+        className='line-chart-and-controls'>
+          <h3 className='weekly-totals-header'>Weekly Totals: </h3>
+          <LineChartControls 
+          showActuals={showActuals}
+          setShowActuals={setShowActuals}
+          duration={duration}
+          setDuration={setDuration}
+          setField={setField}
+          field={field}
           muscleGroupList={muscleGroupList}
-          selectedMuscleGroups={selectedMuscleGroups} 
-          setSelectedMuscleGroups={setSelectedMuscleGroups} />
+          setSelectedMuscleGroups={setSelectedMuscleGroups}
+          selectedMuscleGroups={selectedMuscleGroups} />
+          <h6 className='line-chart-heading'>
+            Weekly&nbsp;
+            Totals - &nbsp;
+            <span style={{color: showActuals ? 'lightgreen' : 'red', fontWeight: 'bold'}}>{capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)} </span>
+            - 
+            &nbsp;
+            {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
+          </h6>
           <LineChart 
-          axisTitle={`Total ${capitalizeField(field)}`}
+          axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
           data={lineCharData} />
         </div>
-
       </div>
     </div>
   )

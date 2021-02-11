@@ -9,11 +9,18 @@ import {WeightIcon, TimeIcon, DistanceIcon, SwimLapsIcon, RepsIcon} from '../../
 import Container from 'react-bootstrap/Container'
 
 
-export const TargetsBuilder = (props) => {
+export const TargetsBuilder = ({
+  showInput=true,
+  onSelect
+}) => {
 
   return (
     <Container className='targets-setter-container'>
-      <Tab.Container id="targets-setter" defaultActiveKey="target_weight">
+      <Tab.Container
+      disabled={true}
+      onSelect={onSelect} 
+      id="targets-setter" 
+      defaultActiveKey="target_weight">
         <Row className='tabs-row'>
           <Col className='tabs-column' xs={12}>
             <Nav variant="pills" className="flex-row">
@@ -59,6 +66,7 @@ export const TargetsBuilder = (props) => {
               </Nav.Item>
             </Nav>
           </Col>
+          {showInput &&
           <Col sm={9}>
             <Tab.Content>
               <Tab.Pane 
@@ -102,7 +110,7 @@ export const TargetsBuilder = (props) => {
                 />              
               </Tab.Pane>
             </Tab.Content>
-          </Col>
+          </Col>}
         </Row>
       </Tab.Container>
     </Container>

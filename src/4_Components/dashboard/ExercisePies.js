@@ -5,18 +5,22 @@ import Col from 'react-bootstrap/Col'
 
 const ExercisePies = ({
   muscleGroupCount, 
-  exerciseNameExSetCount
+  exerciseNameExSetCount,
+  exerciseNameMuscleGroupColor
 }) => {
   return (
     <div className='exercise-pies-container'>
       <Row>
         <Col className='pie-column muscle-group-column' sm='12' md='6'>
           <h5>Sets by Muscle Group:</h5>
-          <NivoPie exSetStratumData={muscleGroupCount}  />
+          <NivoPie 
+          exSetStratumData={muscleGroupCount}  />
         </Col>
         <Col className='pie-column exercises-column' sm='12' md='6'>
           <h5>Sets by Exercise: </h5>
-          <NivoPie exSetStratumData={exerciseNameExSetCount} />
+          <NivoPie 
+          exerciseNameMuscleGroupColor={exerciseNameMuscleGroupColor}
+          exSetStratumData={exerciseNameExSetCount} />
         </Col>
       </Row>
     </div>
