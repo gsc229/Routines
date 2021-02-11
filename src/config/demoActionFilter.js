@@ -1,8 +1,6 @@
 import { isDemo } from './config'
 import moment from 'moment'
 
-const forBiddenActions = []
-
 let errorMessage = "Sorry! That's not allowed in demo mode."
 
 const actionIsForbidden = (action) => {
@@ -18,6 +16,11 @@ const actionIsForbidden = (action) => {
             errorMessage = "Sorry, you can't delete objects in demo mode."
             return true
         }
+      }
+
+      if( action.type === 'LOG_OUT' ){
+        errorMessage = "Sorry! You can't log out in demo mode."
+        return true
       }
 
       if(action.payload){
