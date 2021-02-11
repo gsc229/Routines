@@ -72,10 +72,18 @@ export const Dashboard = ({
       year: 'every 4 weeks'
     }
     return (
+      duration === 'week'
+      ?
       <LineChart
       bottomTickValueFreq={bottomTickValueFreq[duration]}
       axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
       data={lineCharData} />
+      :
+      <LineChart
+      bottomTickValueFreq={bottomTickValueFreq[duration]}
+      axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
+      data={lineCharData} />
+
     )
   }
 
