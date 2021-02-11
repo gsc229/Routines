@@ -62,7 +62,7 @@ export const Dashboard = ({
       yearActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'year').muscleGroupSets,
     }
     setLineCharData(newLineChartData)
-  }, [combinedExSets, startDate, selectedMuscleGroups])
+  }, [combinedExSets, startDate, selectedMuscleGroups, field])
 
   const selectDate = (e) => {
     const newMomenet = moment.utc(e.target.value)
