@@ -4,11 +4,7 @@ import moment from 'moment'
 import mapSgsToDates from '../calendar/mapRoutinesToDates'
 import { combineExSets } from './helpers/combineExSets'
 import { getMonthCalendarWeeksMuscleGroupData } from './helpers/getMonthCalendarWeeksMuscleGroupData'
-import ExercisePies from './ExercisePies'
-import LineChart from '../line_chart/LineChart'
 import {muscleGroupList, muscleGroupColorObj} from './helpers/muscleGroupNameAndColorList'
-import Form from 'react-bootstrap/Form'
-import LineChartControls from './LineChartControls'
 import MuscleGroupTotalsTab from './MuscleGroupTotalsTab'
 import SetBreakDownTab from './SetBreakDownTab'
 
@@ -23,7 +19,10 @@ export const Dashboard = ({
   
   const [combinedExSets, setCombinedExSets] = useState([])
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)
-  const [weekIdDate, setWeekIdDate] = useState({})
+  const [dateMaps, setDateMaps] = useState({
+    weekIdDate: {},
+    setGroupIdDate: {}
+  })
   const [startDate, setStartDate] = useState(moment())
   const [showActuals, setShowActuals] = useState(false)
   const [duration, setDuration] = useState('month')
@@ -36,8 +35,12 @@ export const Dashboard = ({
   })
 
   useEffect(() => {
-    const {weekIdDate} = mapSgsToDates(userRoutines)
-    setWeekIdDate(weekIdDate)
+    const {weekIdDate, setGroupIdDate} = mapSgsToDates(userRoutines)
+    setDateMaps({
+      ...dateMaps,
+      weekIdDate,
+      setGroupIdDate
+    })
     setCombinedExSets(combineExSets(userRoutines))
   },[userRoutines])
 
@@ -46,10 +49,10 @@ export const Dashboard = ({
   // Line
   useEffect(() => {
     const newLineChartData = {
-      monthTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , 'month').muscleGroupSets,
-      yearTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field, null , 'year').muscleGroupSets,
-      monthActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'month').muscleGroupSets,
-      yearActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'year').muscleGroupSets,
+      monthTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, dateMaps.weekIdDate, startDate, field, null , 'month').muscleGroupSets,
+      yearTarget: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, dateMaps.weekIdDate, startDate, field, null , 'year').muscleGroupSets,
+      monthActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, dateMaps.weekIdDate, startDate, field.replace('target', 'actual') , null , 'month').muscleGroupSets,
+      yearActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, dateMaps.weekIdDate, startDate, field.replace('target', 'actual') , null , 'year').muscleGroupSets,
     }
     setLineChartData(newLineChartData)
   }, [combinedExSets, startDate, selectedMuscleGroups, field])
@@ -59,8 +62,6 @@ export const Dashboard = ({
     setStartDate(newMomenet)
     setDuration('month')
   }
-
-  
 
 
   return (
@@ -81,7 +82,8 @@ export const Dashboard = ({
 
         <SetBreakDownTab
         combinedExSets={combinedExSets}
-        weekIdDate={weekIdDate}
+        weekIdDate={dateMaps.weekIdDate}
+        setGroupIdDate={dateMaps.setGroupIdDate}
         startDate={startDate}
         />
 

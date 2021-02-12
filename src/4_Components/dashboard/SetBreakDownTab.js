@@ -9,6 +9,7 @@ import { duration } from 'moment'
 const SetBreakDownTab = ({
   combinedExSets,
   weekIdDate,
+  setGroupIdDate,
   startDate
 }) => {
 
@@ -22,7 +23,7 @@ const SetBreakDownTab = ({
   // Pie
   useEffect(() => {
     const {exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor} = 
-    exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration, muscleGroupColorObj)
+    exercisePieDataFromSetGroups(combinedExSets, setGroupIdDate, startDate, pieData.duration, muscleGroupColorObj)
     setPieData({...pieData, exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor})
   }, [pieData.duration, startDate, combinedExSets])
 
@@ -36,35 +37,38 @@ const SetBreakDownTab = ({
 
   return (
     <div className="ex-pies-and-checkbox">
-          <pre style={{color: 'white'}}>{JSON.stringify({weekIdDate}, null, 2)}</pre>
-          <Form className='all-time-checkbox-form'>
-            <div className='form-group-container'>
-              <Form.Group>
-                <Form.Check
-                label='Year'
-                onClick={handleAllTimePieClick}
-                checked={pieData.duration==='year'}
-                name='year'
-                value='year'
-                type='radio' 
-                />
-                <Form.Check
-                label={startDate.clone().format('MMMM')}
-                onClick={handleAllTimePieClick}
-                checked={pieData.duration==='month'}
-                name='month'
-                value='month'
-                type="radio"
-                />
-              </Form.Group>
-            </div>
-          </Form>
-          
-          <ExercisePies
-          exerciseNameMuscleGroupColor={pieData.exerciseNameMuscleGroupColor}
-          exerciseNameExSetCount={pieData.exerciseNameExSetCount} 
-          muscleGroupCount={pieData.muscleGroupCount} />
+      <Form className='all-time-checkbox-form'>
+        <div className='form-group-container'>
+          <Form.Group>
+            <Form.Check
+            label='Year'
+            onClick={handleAllTimePieClick}
+            checked={pieData.duration==='year'}
+            name='year'
+            value='year'
+            type='radio' 
+            />
+            <Form.Check
+            label={startDate.clone().format('MMMM')}
+            onClick={handleAllTimePieClick}
+            checked={pieData.duration==='month'}
+            name='month'
+            value='month'
+            type="radio"
+            />
+          </Form.Group>
         </div>
+      </Form>
+      {Object.keys(pieData.muscleGroupCount).length > 0 &&
+      <ExercisePies
+      exerciseNameMuscleGroupColor={pieData.exerciseNameMuscleGroupColor}
+      exerciseNameExSetCount={pieData.exerciseNameExSetCount} 
+      muscleGroupCount={pieData.muscleGroupCount} />}
+      {Object.keys(pieData.muscleGroupCount).length === 0 && 
+      <div style={{height: '300px', textAlign: 'center'}}>
+        <p>No data for the seleced time period</p>  
+      </div>}
+    </div>
   )
 }
 
