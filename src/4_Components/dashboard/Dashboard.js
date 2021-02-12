@@ -6,10 +6,11 @@ import { combineExSets } from './helpers/combineExSets'
 import { getMonthCalendarWeeksMuscleGroupData } from './helpers/getMonthCalendarWeeksMuscleGroupData'
 import ExercisePies from './ExercisePies'
 import LineChart from '../line_chart/LineChart'
-import {exercisePieDataFromSetGroups} from './helpers/exercisePieDataFromSetGroups'
 import {muscleGroupList, muscleGroupColorObj} from './helpers/muscleGroupNameAndColorList'
 import Form from 'react-bootstrap/Form'
 import LineChartControls from './LineChartControls'
+import MuscleGroupTotalsTab from './MuscleGroupTotalsTab'
+import SetBreakDownTab from './SetBreakDownTab'
 
 export const Dashboard = ({
   userRoutines  
@@ -19,25 +20,19 @@ export const Dashboard = ({
     return field.split('_').map(word => word[0].toUpperCase() + word.slice(1, word.length)).join(" ")
   }
   
-  const [pieData, setPieData] = useState({
-    exerciseNameMuscleGroupColor: {},
-    exerciseNameExSetCount: {},
-    muscleGroupCount: {},
-    duration: 'year'
-  })
+  
   const [combinedExSets, setCombinedExSets] = useState([])
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)
   const [weekIdDate, setWeekIdDate] = useState({})
   const [startDate, setStartDate] = useState(moment())
   const [showActuals, setShowActuals] = useState(false)
-  const [ duration, setDuration ] = useState('month')
+  const [duration, setDuration] = useState('month')
   const [field, setField] = useState('target_weight')
-  const [lineCharData, setLineCharData] = useState({
+  const [lineChartData, setLineChartData] = useState({
     monthTarget: [],
     yearTarget: [],
     monthActual: [],
     yearActual: []
-
   })
 
   useEffect(() => {
@@ -46,12 +41,7 @@ export const Dashboard = ({
     setCombinedExSets(combineExSets(userRoutines))
   },[userRoutines])
 
-  // Pie
-  useEffect(() => {
-    const {exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor} = 
-    exercisePieDataFromSetGroups(combinedExSets, weekIdDate, startDate, pieData.duration, muscleGroupColorObj)
-    setPieData({...pieData, exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor})
-  }, [pieData.duration, startDate, combinedExSets])
+  
 
   // Line
   useEffect(() => {
@@ -61,7 +51,7 @@ export const Dashboard = ({
       monthActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'month').muscleGroupSets,
       yearActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, weekIdDate, startDate, field.replace('target', 'actual') , null , 'year').muscleGroupSets,
     }
-    setLineCharData(newLineChartData)
+    setLineChartData(newLineChartData)
   }, [combinedExSets, startDate, selectedMuscleGroups, field])
 
   const selectDate = (e) => {
@@ -70,53 +60,7 @@ export const Dashboard = ({
     setDuration('month')
   }
 
-  const handleAllTimePieClick = (e) => {
-    setPieData({...pieData, duration: e.target.name})
-    
-  }
-
-  const getLineChart = () => {
-    const bottomTickValueFreq = {
-      month: 'every week',
-      year: 'every 4 weeks'
-    }
-
-    if(showActuals && duration === 'month'){
-      return (
-        <LineChart
-        bottomTickValueFreq={bottomTickValueFreq[duration]}
-        axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
-        data={lineCharData.monthActual} />
-      )
-    }
-
-    if(showActuals && duration === 'year'){
-      return (
-        <LineChart
-        bottomTickValueFreq={bottomTickValueFreq[duration]}
-        axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
-        data={lineCharData.yearActual} />
-      )
-    }
-
-    if(!showActuals && duration === 'month'){
-      return (
-        <LineChart
-        bottomTickValueFreq={bottomTickValueFreq[duration]}
-        axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
-        data={lineCharData.monthTarget} />
-      )
-    }
-
-    if(!showActuals && duration === 'year'){
-      return (
-        <LineChart
-        bottomTickValueFreq={bottomTickValueFreq[duration]}
-        axisTitle={`Total ${capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)}`}
-        data={lineCharData.yearTarget} />
-      )
-    }
-  }
+  
 
 
   return (
@@ -126,66 +70,35 @@ export const Dashboard = ({
           <label htmlFor="month">Your Activity:</label>
           <input 
           onChange={selectDate}
-          checked={pieData.duration==='year'}
           placeholder='Choose Month'
           value={startDate.clone().format('YYYY-MM')}
-          type="month" id="month" name="month" />
+          type="month" 
+          id="month" 
+          name="month" />
         </div>
       </div>
       <div className='visualizations-container'>
-        <div className="ex-pies-and-checkbox">
-          <Form className='all-time-checkbox-form'>
-            <div className='form-group-container'>
-              <Form.Group>
-                <Form.Check
-                label='Year'
-                onClick={handleAllTimePieClick}
-                checked={pieData.duration==='year'}
-                name='year'
-                value='year'
-                type='radio' 
-                />
-                <Form.Check
-                label={startDate.clone().format('MMMM')}
-                onClick={handleAllTimePieClick}
-                checked={pieData.duration==='month'}
-                name='month'
-                value='month'
-                type="radio"
-                />
-              </Form.Group>
-            </div>
-          </Form>
-          
-          <ExercisePies
-          exerciseNameMuscleGroupColor={pieData.exerciseNameMuscleGroupColor}
-          exerciseNameExSetCount={pieData.exerciseNameExSetCount} 
-          muscleGroupCount={pieData.muscleGroupCount} />
-        </div>
 
-        <div 
-        className='line-chart-and-controls'>
-          <h3 className='weekly-totals-header'>Weekly Totals: </h3>
-          <LineChartControls 
-          showActuals={showActuals}
-          setShowActuals={setShowActuals}
-          duration={duration}
-          setDuration={setDuration}
-          setField={setField}
-          field={field}
-          muscleGroupList={muscleGroupList}
-          setSelectedMuscleGroups={setSelectedMuscleGroups}
-          selectedMuscleGroups={selectedMuscleGroups} />
-          <h6 className='line-chart-heading'>
-            Weekly&nbsp;
-            Totals - &nbsp;
-            <span style={{color: showActuals ? 'lightgreen' : 'red', fontWeight: 'bold'}}>{capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)} </span>
-            - 
-            &nbsp;
-            {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
-          </h6>
-          {getLineChart()}
-        </div>
+        <SetBreakDownTab
+        combinedExSets={combinedExSets}
+        weekIdDate={weekIdDate}
+        startDate={startDate}
+        />
+
+        <MuscleGroupTotalsTab
+        showActuals={showActuals}
+        setShowActuals={setShowActuals}
+        duration={duration}
+        setDuration={setDuration}
+        setField={setField}
+        field={field}
+        muscleGroupList={muscleGroupList}
+        selectedMuscleGroups={selectedMuscleGroups}
+        setSelectedMuscleGroups={setSelectedMuscleGroups}
+        startDate={startDate}
+        capitalizeField={capitalizeField}
+        lineChartData={lineChartData}
+        />
       </div>
     </div>
   )

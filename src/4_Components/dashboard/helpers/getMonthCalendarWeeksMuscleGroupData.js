@@ -3,7 +3,7 @@ import moment from 'moment'
 
 
 export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[], weekIdDate={}, monthMoment, field, format='YYYY-MM-DD', duration='month') => {
-  console.log({field})
+  
   const startMoment = monthMoment.clone().startOf(duration).startOf('month').startOf('week').startOf('day')
   const endMoment = monthMoment.clone().endOf(duration).endOf('week').endOf('day').add(1, 'day')
   const numWeeks = endMoment.diff(startMoment, 'weeks')

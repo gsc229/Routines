@@ -8,6 +8,7 @@ export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDate
   const currentExSets = exSets.filter(set => {
     return moment(weekIdDate[set.week], 'MM-DD-YYYY').isBetween(startDate, endDate, null, '[]')
   })
+  console.log({startDate: startDate.clone().format('MM-DD-YYYY'), endDate: endDate.clone().format('MM-DD-YYYY')})
 
   // use the exercise _id not the set group _id
   const exerciseIdExSets = {}
