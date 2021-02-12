@@ -1,14 +1,28 @@
 .dashboard{
   .month-picker-container{
+    //background-color: lightblue;
+    background-color: $bs-dark;
     display: flex;
-    align-items: flex-start;
-    flex-direction: column;
     position: fixed;
     z-index: 10;
     width: 100%;
-    background-color: $bs-dark;
     top: 50px;
-    padding-top: 20px;
+    left: 0;
+    padding: 15px 10px 5px 5px;
+    .month-picker-inner{
+      //background-color: lightcoral;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      align-content: center;
+      width: 300px;
+      position: relative;
+      label{
+        position: relative;
+        top: 5px;
+      }
+    }
   }
 
   .form-group-container{

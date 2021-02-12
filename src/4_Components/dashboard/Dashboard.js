@@ -122,13 +122,15 @@ export const Dashboard = ({
   return (
     <div className='dashboard'>
       <div className="month-picker-container">
-        <label htmlFor="month">Your Activity:</label>
-        <input 
-        onChange={selectDate}
-        checked={pieData.duration==='year'}
-        placeholder='Choose Month'
-        value={startDate.clone().format('YYYY-MM')}
-        type="month" id="month" name="month" />
+        <div className='month-picker-inner'>
+          <label htmlFor="month">Your Activity:</label>
+          <input 
+          onChange={selectDate}
+          checked={pieData.duration==='year'}
+          placeholder='Choose Month'
+          value={startDate.clone().format('YYYY-MM')}
+          type="month" id="month" name="month" />
+        </div>
       </div>
       <div className='visualizations-container'>
         <div className="ex-pies-and-checkbox">
