@@ -29,7 +29,6 @@ const NivoPie = ({exSetStratumData={}, exerciseNameMuscleGroupColor}) => {
 
   return (
     <div 
-    style={{height: clampBuilder(400, 1000, 15, 20)}}
     className="novi-pie-chart-container">
       <ResponsivePieCanvas
         data={exerciseData}
