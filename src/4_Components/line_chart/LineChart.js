@@ -45,7 +45,14 @@ const LineChart = ({data, bottomTickValueFreq="every week"}) => {
         }}
         axisTop={null}
         textColor={'#ffffff'}
-        axisRight={null}
+        axisRight={{
+          orient: 'right',
+          tickSize: 20,
+          tickPadding: 20,
+          tickRotation: 0,
+          legend: '',
+          legendOffset: -60
+        }}
         axisBottom={{
           format: '%b %d',
           tickValues: bottomTickValueFreq,

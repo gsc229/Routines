@@ -8,7 +8,6 @@ import { duration } from 'moment'
 
 const SetBreakDownTab = ({
   combinedExSets,
-  weekIdDate,
   setGroupIdDate,
   startDate
 }) => {

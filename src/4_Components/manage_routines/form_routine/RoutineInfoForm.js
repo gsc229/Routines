@@ -50,13 +50,18 @@ export const RoutineInfoForm = ({
   const handleCreateOrEdit = async (path) => {
     // after the update or save, redirect will depend on whether eiditing old or createing new routine and user input. 
     let response
+    
+    const routineTopInfo = {...currentRoutine}
+    delete routineTopInfo.weeks
+    delete routineTopInfo.set_groups
+    delete routineTopInfo.exercise_sets
 
-    if(!currentRoutine.original_creator){
-      response = await createNewRoutine({...currentRoutine, original_creator: userId, user: userId})
-    }else if(!currentRoutine.user){
-      response = await createNewRoutine({...currentRoutine, user: userId})
+    if(!routineTopInfo.original_creator){
+      response = await createNewRoutine({...routineTopInfo, original_creator: userId, user: userId})
+    }else if(!routineTopInfo.user){
+      response = await createNewRoutine({...routineTopInfo, user: userId})
     } else{
-      response = await saveRoutineChanges(currentRoutine._id, currentRoutine)
+      response = await saveRoutineChanges(routineTopInfo._id, routineTopInfo)
     }
 
     if(response && response.success){
@@ -84,7 +89,6 @@ export const RoutineInfoForm = ({
 
   return (
     <Form className='info-form routine-form'>  
-
       {showHeader && getHeader()}
 
       {error_message && 

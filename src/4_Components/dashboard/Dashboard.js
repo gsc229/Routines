@@ -7,6 +7,8 @@ import { getMonthCalendarWeeksMuscleGroupData } from './helpers/getMonthCalendar
 import {muscleGroupList, muscleGroupColorObj} from './helpers/muscleGroupNameAndColorList'
 import MuscleGroupTotalsTab from './MuscleGroupTotalsTab'
 import SetBreakDownTab from './SetBreakDownTab'
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 
 export const Dashboard = ({
   userRoutines  
@@ -16,7 +18,7 @@ export const Dashboard = ({
     return field.split('_').map(word => word[0].toUpperCase() + word.slice(1, word.length)).join(" ")
   }
   
-  
+  const [tabKey, setTabKey] = useState('set-breakdown')
   const [combinedExSets, setCombinedExSets] = useState([])
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)
   const [dateMaps, setDateMaps] = useState({
@@ -79,13 +81,22 @@ export const Dashboard = ({
         </div>
       </div>
       <div className='visualizations-container'>
+      <Tabs
+      variant='pills'
+      id='data-tabs'
+      activeKey={tabKey}
+      onSelect={k => setTabKey(k)}>
+        <Tab eventKey='set-breakdown' title='Set Break Down'>
+          
+          <SetBreakDownTab
+          combinedExSets={combinedExSets}
+          weekIdDate={dateMaps.weekIdDate}
+          setGroupIdDate={dateMaps.setGroupIdDate}
+          startDate={startDate}
+          />
 
-        <SetBreakDownTab
-        combinedExSets={combinedExSets}
-        weekIdDate={dateMaps.weekIdDate}
-        setGroupIdDate={dateMaps.setGroupIdDate}
-        startDate={startDate}
-        />
+        </Tab>
+        <Tab eventKey='muscle-group-totals' title='Muscle Group Totals'>
 
         <MuscleGroupTotalsTab
         showActuals={showActuals}
@@ -101,6 +112,9 @@ export const Dashboard = ({
         capitalizeField={capitalizeField}
         lineChartData={lineChartData}
         />
+        
+        </Tab>
+      </Tabs>
       </div>
     </div>
   )

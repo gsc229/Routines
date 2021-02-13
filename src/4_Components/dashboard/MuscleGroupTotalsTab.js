@@ -64,28 +64,28 @@ const MuscleGroupTotalsTab = ({
 
   return (
     <div 
-        className='line-chart-and-controls'>
-          <h3 className='weekly-totals-header'>Weekly Totals: </h3>
-          <LineChartControls 
-          showActuals={showActuals}
-          setShowActuals={setShowActuals}
-          duration={duration}
-          setDuration={setDuration}
-          setField={setField}
-          field={field}
-          muscleGroupList={muscleGroupList}
-          setSelectedMuscleGroups={setSelectedMuscleGroups}
-          selectedMuscleGroups={selectedMuscleGroups} />
-          <h6 className='line-chart-heading'>
-            Weekly&nbsp;
-            Totals - &nbsp;
-            <span style={{color: showActuals ? 'lightgreen' : 'red', fontWeight: 'bold'}}>{capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)} </span>
-            - 
-            &nbsp;
-            {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
-          </h6>
-          {getLineChart()}
-        </div>
+    className='line-chart-and-controls'>
+      <h3 className='weekly-totals-header'>Weekly Totals: </h3>
+      <LineChartControls 
+      showActuals={showActuals}
+      setShowActuals={setShowActuals}
+      duration={duration}
+      setDuration={setDuration}
+      setField={setField}
+      field={field}
+      muscleGroupList={muscleGroupList}
+      setSelectedMuscleGroups={setSelectedMuscleGroups}
+      selectedMuscleGroups={selectedMuscleGroups} />
+      <h6 className='line-chart-heading'>
+        Weekly&nbsp;
+        Totals - &nbsp;
+        <span style={{color: showActuals ? 'lightgreen' : 'red', fontWeight: 'bold'}}>{capitalizeField(field).replace('Target', `${showActuals ? 'Actual' : 'Target'}`)} </span>
+        - 
+        &nbsp;
+        {duration === 'month' ? startDate.clone().format('MMMM YYYY') : startDate.clone().format('YYYY')}
+      </h6>
+      {getLineChart()}
+    </div>
   )
 }
 

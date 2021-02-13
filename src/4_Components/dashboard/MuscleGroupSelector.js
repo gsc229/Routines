@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { customStyles } from './helpers/selectStyles'
@@ -8,12 +8,15 @@ const MuscleGroupSelector = ({
   setSelectedMuscleGroups,
   selectedMuscleGroups
 }) => {
-
+  const animatedComponents = makeAnimated()
   const selectOptions = muscleGroupList.map(groupObj => ({ label: groupObj.name, value: groupObj.name, selectedColor: groupObj.color }))
   selectOptions.unshift({label: 'All', value: 'All'})
+
   
-  const selectedValues = selectedMuscleGroups.map(groupObj => ({label: groupObj.name, value: groupObj.name, selectedColor: groupObj.color }))
-  const animatedComponents = makeAnimated()
+  
+  const selectedValues =  selectedMuscleGroups && selectedMuscleGroups.map(groupObj => ({label: groupObj.name, value: groupObj.name, selectedColor: groupObj.color }))
+
+  
 
   const handleGroupSelect = (newSelections) => {
     if(!newSelections){
@@ -33,16 +36,17 @@ const MuscleGroupSelector = ({
 
   return (
     <div className='select-container'>
+
       <Select
-      value={selectedValues}
+      value={[...selectedValues]}
       components={animatedComponents}
       styles={customStyles()}
       placeholder='Select Muscle Groups...'
       onChange={handleGroupSelect}
       options={selectOptions}
       isMulti
-      closeMenuOnSelect={false}
       isSearchable={false}
+      closeMenuOnSelect={true}
       autoFocus/>
     </div>
   )

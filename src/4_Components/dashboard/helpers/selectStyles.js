@@ -15,6 +15,7 @@ export const customStyles = (routineColor) => {
     border: isFocused ? 'var(--russian-green)' : `2px solid ${ routineColor || 'var(--routine-red)'}`
   }),
   multiValue: (styles, {data}) => {
+    console.log({styles, data})
     return {
       ...styles,
       backgroundColor: data.selectedColor || 'var(--routine-red)',
