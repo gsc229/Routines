@@ -3,7 +3,7 @@ import moment from 'moment'
 
 
 export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[], weekIdDate={}, monthMoment, field, format='YYYY-MM-DD', duration='month') => {
-  console.log({field})
+  
   const startMoment = monthMoment.clone().startOf(duration).startOf('month').startOf('week').startOf('day')
   const endMoment = monthMoment.clone().endOf(duration).endOf('week').endOf('day').add(1, 'day')
   const numWeeks = endMoment.diff(startMoment, 'weeks')
@@ -12,8 +12,13 @@ export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[
   let currentRangeStart = startMoment.clone()
   let currentRangeEnd = currentRangeStart.clone().add(6, 'days')
 
+  /* 
+  old label
+  `W:${i} : ${currentRangeStart.clone().format('DD-MMM')}-${currentRangeEnd.clone().format('DD-MMM')}`
+  */
+
   for(let i = 1; i <= numWeeks; i++){
-    weekRanges[`W:${i} : ${currentRangeStart.clone().format('DD-MMM')}-${currentRangeEnd.clone().format('DD-MMM')}`] = {start: currentRangeStart.format(format), end: currentRangeEnd.format(format)}
+    weekRanges[`${currentRangeStart.clone().format('YYYY-MM-DD')}`] = {start: currentRangeStart.format(format), end: currentRangeEnd.format(format)}
     currentRangeStart = currentRangeEnd.clone().add(1, 'day')
     currentRangeEnd = currentRangeStart.clone().add(6, 'days')
   }

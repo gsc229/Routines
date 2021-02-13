@@ -31,11 +31,11 @@ export const getLegends = ({
         symbolBorderColor,
         effects: [
             {
-                on: 'hover',
-                style: {
-                    itemBackground: 'rgba(0, 0, 0, .03)',
-                    itemOpacity: 1
-                }
+            on: 'hover',
+            style: {
+                itemBackground: 'rgba(0, 0, 0, .03)',
+                itemOpacity: 1
+            }
             }
         ]
     }
@@ -91,4 +91,5 @@ export const getAxisBottom = ({
     legendPosition
   }
   return axisBottom
+
 }

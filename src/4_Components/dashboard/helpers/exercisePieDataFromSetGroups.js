@@ -1,12 +1,12 @@
 import moment from 'moment'
 
-export const exercisePieDataFromSetGroups = (exSets=[], weekIdDate={}, startDateMoment, duration='month', muscleGroupNameAndColorList) => {
+export const exercisePieDataFromSetGroups = (exSets=[], setGroupIdDate={}, startDateMoment, duration='month', muscleGroupNameAndColorList) => {
  
   const startDate = startDateMoment.clone().startOf(duration)
   const endDate = startDateMoment.clone().endOf(duration)
 
   const currentExSets = exSets.filter(set => {
-    return moment(weekIdDate[set.week], 'MM-DD-YYYY').isBetween(startDate, endDate, null, '[]')
+    return moment(setGroupIdDate[set.set_group], 'MM-DD-YYYY').isBetween(startDate, endDate, null, '[]')
   })
 
   // use the exercise _id not the set group _id
