@@ -4,7 +4,6 @@ import moment from 'moment'
 let errorMessage = "Sorry! That's not allowed in demo mode."
 
 const actionIsForbidden = (action) => {
-
     if(isDemo){
       if((action.type.includes('CREATING') || action.type.includes('DELETING') )){
         const actionType = action.type.includes('CREATING') ? 'CREATING' : 'DELETING'
@@ -51,7 +50,7 @@ const actionIsForbidden = (action) => {
 }
 
 export const demoFilter = store => next => action => {
-  if(actionIsForbidden(action)){
+  if(isDemo && actionIsForbidden(action)){
     alert(errorMessage)
     throw new Error(errorMessage)
   } else{
