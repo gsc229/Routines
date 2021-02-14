@@ -1,0 +1,132 @@
+.create-set-group-steps{
+  width: 95%;
+  margin: auto;
+  background-color: $bs-dark;
+  border-radius: 8px;
+  border-top-left-radius: 0;
+  color: white;
+  padding-top: 10px;
+  .quick-build-heading{
+    width: fit-content;
+    margin-left: 15px;
+    margin-bottom: 0;
+  }
+
+  .set-group-type-tab-btns-container{
+    position: relative;
+    min-height: 20px;
+    .show-types-span{
+      z-index: 10;
+      position: absolute;
+      left: 90px;
+      top: 3px;
+      font-size: 12px;
+      text-decoration: underline;
+      font-style: italic;
+      color: $routine-red;
+      cursor: pointer;
+    }
+    .show-types-span-hide{
+      z-index: 10;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 12px;
+      text-decoration: underline;
+      font-style: italic;
+    }
+  }
+
+  .set-group-type-tab-btns{
+    border: 1px solid $spanish-gray;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 4px;
+    //width: 95%;
+    margin: auto;
+    a:hover{
+      color: white;
+    }
+    .selected-disabled{
+      background-color: $spanish-gray;
+    }
+  }
+
+  .type-explanation-and-use-btn{
+    display: flex;
+    width: 100%;
+    min-height: 20px;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 10px;
+    position: relative;
+    .type-title{
+      //margin-bottom: 15px;
+    }
+    span{
+      z-index: 10;
+      font-size: 12px;
+      text-decoration: underline;
+      font-style: italic;
+      color: $routine-red;
+      cursor: pointer;
+    }
+    .span-on-hide{
+      top: 0;
+      left: 0;
+    }
+
+    .hide{
+      display: none
+
+    }
+
+    .use-set-type-btn{
+      width: fit-content;
+      margin-top: 20px;
+    }
+    }
+
+
+  .create-set-group-navs-container{
+    //width: 95%;
+    margin: auto;
+    margin-top: 10px;
+    padding: 0;
+    .create-set-group-navs-row{
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+    }
+    .create-set-group-btn-column{
+    padding: 0;
+      button{
+        display: flex;
+        width: 100%;
+        margin-bottom: 10px;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+
+
+
+
+
+}
+
+
+
+  /* .disabled-step-btn{
+    background-color: whitesmoke;
+    border: whitesmoke;
+    color: rgba(155,157,160, .4);
+  }
+
+  .disabled-previous-step-btn{
+    background-color: whitesmoke;
+    border: whitesmoke;
+    color: rgba(155,157,160, .4);
+  } */
+}

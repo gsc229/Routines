@@ -1,0 +1,50 @@
+.container-fluid{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.manage-current-routine-page-container{
+  position: relative;
+  padding: 0;
+  .manage-current-routine-page-header{
+    background-color: $bs-dark;
+    height: fit-content;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    .title-container{
+      margin-bottom: 20px;
+    }
+  }
+
+  .no-weeks-message{
+    width: 80%;
+    margin: auto;
+  }
+}
+
+.header-inner{
+  width: 58%;
+  margin: auto;
+  margin-top: 65px;
+  @media screen and (max-width: 992px){
+    width: 90%;
+  }
+  @media screen and (max-width: 1199px){
+    width: 80%;
+  }
+  @media screen and (max-width: 780px){
+    width: 90%;
+  }
+  .search-nav{
+    .nav-item{
+      width: 100%;
+    }
+    .select-container{
+      width: 100%;
+      padding-bottom: 10px;
+    }
+  }
+}

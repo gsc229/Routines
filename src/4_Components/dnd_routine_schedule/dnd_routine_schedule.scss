@@ -1,0 +1,249 @@
+.add-week-btn{
+  margin: 10px 0 50px 0;
+  width: 100%;
+}
+
+.routine-schedule-dnd{
+  background-color: $bs-dark;
+  border-radius: 4px;
+  padding-top: 120px;
+  @media screen and (max-width: 780px){
+    padding-top: 110px;
+  }
+}
+
+
+
+.week-container{
+  padding: 30px;
+  padding-top: 0;
+  border-radius: 4px;
+  border: 1px dashed $persian-plum;
+  margin: 10px auto;
+  margin-bottom: 20px;
+  .week-container-header{
+    color: white;
+    .header-top{
+      margin: 20px 0;
+    }
+    .week-header-form{
+      width: 100%;
+      border-top: 1px solid lightslategrey;
+      border-bottom: 1px solid lightslategray;
+      .form-row{
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .delete-week-btn{
+          margin-bottom: 10px;
+        }
+      }
+      
+    }
+  }
+  .week-container-row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 100px;
+    margin-bottom: 20px;
+    
+  }
+}
+/* ========== DAY ========= */
+.day-container-card{
+  border: 2px solid $jet;
+  background-color: $spanish-gray;
+  margin: 10px 0;
+  width: 30%;
+  min-height: 200px;
+  min-width: 300px;
+  padding: 5px;
+  @media only screen and (max-width: 770px) {
+    width: 100%;
+    min-width: 0;
+  }
+  .day-header{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    h6{
+      margin-bottom: 0;
+    }
+    .add-sets-link{
+      margin: 10px 0;
+      margin-left: 5px;
+    }
+  }
+
+  .card-header{
+    background-color: $jet;
+    color: whitesmoke;
+    a{
+      color: whitesmoke;
+      border-radius: 50px;
+      padding: 0px 10px 0px 10px;
+    }
+  }  
+}
+.day-container-card-hovering{
+  .card-header{
+    background-color: $routine-red;
+    color: white;
+    font-weight: bolder;
+    
+  }
+}
+
+
+/* ========= SET GROUP =========== */
+.set-group-schedule-card{
+  margin: 5px auto;
+  cursor: grab;
+  background-color: $bs-dark;
+  .set-group-schedule-card-header{
+    padding-left: 4px;
+    padding-right: 0;
+    display: flex;
+    justify-content: space-between;
+    .view-copy-move-btns-conainer{
+      //background-color: orange;
+      display: flex;
+      cursor: auto;
+      width: 100%;
+      position: relative;
+      margin-left: 5px;
+      .view-duplicate-here-to{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 20px;
+        flex-wrap: wrap;
+        width: 80%;
+        .view-here-container{
+          //background-color: hotpink;
+          width: 30%;
+          display: flex;
+          justify-content: space-between;
+          margin-left: 5px;
+          .schedule-card-control-btn{
+            cursor: pointer;
+          }
+        }
+        .duplicate-to-container{
+          //background-color: lightblue;
+          .duplicate-to{
+            margin: auto;
+          }
+        }
+
+        @media screen and (max-width: 420px){
+          .duplicate-to-container{
+            margin-top: 10px;
+          }
+          .view-here-container{
+            //background-color: hotpink;
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+          }
+        }
+      }
+
+      .grabber-container{
+        //background-color:  lime;
+        width: fit-content;
+        height: fit-content;
+        position: absolute;
+        top: -10px;
+        right: 10px;
+        .schedule-card-grabber{
+          cursor: grab;
+        } 
+      }
+      /* @media screen and (max-width: 390px){
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        .schedule-card-grabber{
+          position: absolute;
+          right: 0;
+          margin-right: 5px;
+        }
+      } */
+      
+      
+    
+    }
+    /* #duplicate-to-week-dropdown{
+      color: white;
+      .nav-item{
+        background-color: white;
+      } 
+    } */
+    
+    .duplicate-to-day-dropdown{
+      background-color: white;
+      color: black;
+      margin: 15px auto;
+      a{
+        background-color: white;
+        color: black;
+      }
+      div{
+        
+        a{
+          background-color: white;
+        }
+      }
+      
+    }
+
+    .duplicate-to-day-dropdown.show{
+      background-color: $routine-red;
+      color: black;
+      margin: 15px auto;
+      padding: 4px;
+      a{
+        background-color: $routine-red;
+        color: white;
+      }
+      div{
+        a{
+          background-color: white;
+          color: black;
+          &:hover{
+            background-color: lightblue;
+          }
+        }
+      }
+      
+    }
+
+    
+    
+  }
+
+  .set-group-schedule-card-body{
+    position: relative;
+    .set-group-card-delete-icon{
+      position: absolute;
+      right: 2px;
+      bottom: 2px;
+      color: $routine-red;
+      cursor: pointer;
+    }
+    .card-subtitle{
+      color: whitesmoke;
+      font-size: 13px;
+      font-weight: bold;
+    }
+  }
+}
+
+

@@ -1,3 +1,22 @@
+.confirm-delete-modal{
+  background-color: rgba($color: #000000, $alpha: .8);
+  color: white;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  .confirm-delete-inner{
+    background-color: red;
+    margin: auto;
+    position: relative;
+    top: 200px;
+    height: 50%;
+    width: 50%;
+  }
+}
+
 .manage-routines{
   //border: 1px solid yellow;
   height: 100%;
@@ -20,24 +39,4 @@
     color: $routine-red;
     font-weight: 600;
   }
-}
-
-#manage-routines-calendar{
-  //background-color: green;
-  font-size: 15px;
-  //border-bottom: 1px solid black;
-
-  .live-week:hover{
-    border: 1px solid red;
-  }
-
-  .day{
-    font-size: 10px;
-    min-height: 100px;
-  }
-
-
-
-
-
 }

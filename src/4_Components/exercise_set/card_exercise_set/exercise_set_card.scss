@@ -1,0 +1,18 @@
+.exercise-set-card{
+  width: fit-content;
+  //margin: auto;
+  .card-title-container{
+    display: flex;
+    justify-content: space-between;
+  }
+  .target-and-actual-container{
+    display: flex;
+    ul{
+      margin-right: 20px;
+      li{
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+}

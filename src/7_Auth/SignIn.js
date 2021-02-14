@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
+import { isDemo } from '../config/config'
 import LandingPageLayout from '../6_Layouts/layout_two/LandingPageLayout.js'
 import {logInUser, clearErrorMessage} from '../1_Actions/userActions'
-import {userRoutinesQuery} from '../1_Actions/routineActions'
+import {fetchRoutines} from '../1_Actions/routineActions'
 
 export const SignIn = ({
   logInUser, 
   clearErrorMessage,
-  userRoutinesQuery,
+  fetchRoutines,
   user,  
   loggedIn, 
   error_message, 
@@ -27,23 +28,16 @@ export const SignIn = ({
   const disabled = credentials.email.length < 1 || credentials.password.length < 1
 
   useEffect(()=> {
-    console.log(user._id)
     if(loggedIn){
       history.push('/')
-      userRoutinesQuery(`user=${user._id}&populate_one=weeks&populate_two=exercises&populate_three=excercise`)
-    }
-
-    if(error_message){
-      setTimeout(() => {
-        clearErrorMessage()
-      }, 4000)
+      const fetchUserRoutines = async () => {
+        await fetchRoutines(`?user=${user._id}&populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`)
+      }
+      fetchUserRoutines()
     }
   })
 
   const handleChange = (e) => {
-    if(error_message){
-      clearErrorMessage()
-    }
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value
@@ -55,7 +49,10 @@ export const SignIn = ({
     logInUser(credentials)
   }
 
-  
+  if(isDemo){
+    logInUser({email: 'user1@mail.com', password: 'user123'})
+  }
+
 
   return (
     <LandingPageLayout >
@@ -81,7 +78,6 @@ export const SignIn = ({
             <button
             disabled={disabled}
             className="btn">Sign In</button>
-            
           </form>
           
         </div>
@@ -100,7 +96,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   logInUser,
   clearErrorMessage,
-  userRoutinesQuery
+  fetchRoutines
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn)

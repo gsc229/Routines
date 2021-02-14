@@ -1,0 +1,58 @@
+.create-setgroup-page-container{
+  padding: 10px;
+  .create-set-group-page-header{
+    margin-bottom: 20px;
+    .link-container{
+      position: relative;
+      a{
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        color: white;
+        position: relative;
+        span{
+          position: relative;
+          margin-left: 5px;
+          top: 2px;
+        }
+        svg{
+          color: $russian-green;
+          font-size: 20px;
+        }
+        padding: 0;
+        min-height: 30px;
+        //border: 1px solid $routine-red;
+        border-radius: 4px;
+      }
+    }
+  }
+  .create-set-group-tabs{
+    border-bottom: none;
+    .active{
+      background-color: whitesmoke;
+
+    }
+  }
+  .tab-content{
+    border: 1px solid whitesmoke;
+    background-color: $bs-dark;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+}
+
+.modal-content{
+  .modal-footer{
+    .btn-container{
+      display: flex; 
+      justify-content: space-between; 
+      width: 100%; 
+      align-items: center; 
+      flex-wrap: wrap;
+      button{
+        margin: 10px auto;
+      }
+    }
+  }
+}

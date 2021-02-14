@@ -1,0 +1,15 @@
+.set-targets-modal, .sub-group-modal{
+  .modal-body-alert{
+    .close-alert{
+      color: $routine-red;
+    }
+    .continue-close-btns{
+      display: flex;
+      justify-content: flex-end;
+      .close-btn{
+        margin-left: 20px;
+      }
+    }
+  }
+
+}

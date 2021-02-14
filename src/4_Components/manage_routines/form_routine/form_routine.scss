@@ -1,0 +1,89 @@
+.info-form{
+  background-color: $bs-dark;
+  color: white;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  position: relative;
+  .name-alert{
+    margin: 10px auto;
+    width: 90%;
+    color:gray;
+  }
+  .edit-complete-expand-btns{
+    display: flex;
+    justify-content: flex-end;
+      
+      .discard-symbol{
+        color: $gold-crayola;
+      }
+      .cmd-btn{
+        margin: 10px;
+        font-size:  25px;
+        cursor: pointer;
+      }
+      .click-edit-btn{
+        font-size: 30px;
+        color: $routine-red;
+      }
+      .expand-symbol{
+        font-size: 25px;
+        color: $field-drab !important;
+        
+      }
+      .check-symbol{
+        font-size: 25px;
+        color: $russian-green;
+      }
+    }
+    
+  h3{
+    background-color: $routine-red;
+    color: white;
+    font-weight: bolder;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  span{
+    padding-right: 20px;
+  }
+
+  .difficulty-slider-label-form-group{
+    .difficulty-range-label{
+      width: 100%;
+      .row{
+        div{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-left: 0;
+          span{
+            text-align: right;
+            font-size: 18px;
+          }
+        }
+      }
+      
+    }
+
+  }
+
+  .color-picker-container{
+    .hue-picker{
+      max-width: 100%;
+    }  
+  }
+  
+  .difficulty-slider-row{
+    div{
+      padding-left: 0;
+    }
+    .difficulty-slider{
+      border-radius: 4px;
+      padding-left: 0;
+    }
+  }
+  .discard-routine-btn{
+    color: white;
+  }
+}

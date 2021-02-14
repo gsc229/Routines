@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
-import {userExercisesQuery, createNewExercise, clearCurrentExercise} from '../../1_Actions/exerciseActions'
+import {userExercisesQuery, clearCurrentExercise} from '../../1_Actions/exerciseActions'
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-import ExerciseAccordion from '../../4_Components/accordion_exercise/ExerciseAccordion'
-import ExerciseCard from '../../4_Components/card_exercise/ExerciseCard'
+import ExerciseAccordion from '../../4_Components/exercise/accordion_exercise/ExerciseAccordion'
+import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard'
 import {FaRegHandPointLeft} from 'react-icons/fa'
 
 export const ManageExercisesPage = ({
@@ -30,7 +30,7 @@ export const ManageExercisesPage = ({
 
   return (
     <LayoutOne>
-      <Container className="container manage-exercises">
+      <Container className="page container manage-exercises">
         <div className='manage-exercises-top'>
           <h2>Your Exercises: </h2>
           <Link to='/create-exercise'>

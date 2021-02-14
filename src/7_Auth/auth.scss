@@ -8,14 +8,19 @@
   }
 }
 
-.signin-form{
+.sign-in-form-container{
+  margin-top: 100px;
+  .signin-form{
   
-  button{
-    background-color: $routine-red;
-    margin-top: 10px;
-    color: white;
+    button{
+      background-color: $routine-red;
+      margin-top: 10px;
+      color: white;
+    }
   }
 }
+
+
 
 .error-message-container{
   height: 0px;

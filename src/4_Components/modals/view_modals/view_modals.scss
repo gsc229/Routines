@@ -1,0 +1,47 @@
+.view-set-group-modal{
+  .view-set-group-modal-header{
+    .heading-and-edit-link{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      position: relative;
+    h5{
+      position: relative;
+      top: 5px;
+      }
+      .edit-link{
+        margin-left: 50px;
+      }
+    }
+    
+  }
+
+  .view-set-group-modal-body{
+    padding: 20px;
+  }
+  
+  .set-group-modal-sets-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    p{
+      font-weight: bold;
+      padding: 0;
+      margin: 0;
+      i{
+        color: $routine-red;
+      }
+    }
+    .targets-and-actual-list{
+      list-style: none;
+      font-size: 14px;
+      margin: 0 auto;
+      li{
+        margin-left: 20px;
+        text-transform: capitalize;
+        i{
+          text-transform: none;
+        }
+      }
+    }
+  }
+}

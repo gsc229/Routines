@@ -1,0 +1,111 @@
+.routines-bank{
+  margin: 20px 0;
+  ul{
+    //list-style-type: disc;
+    button{
+      margin: 10px 0;
+    }
+    li{
+      margin: 5px 0;
+    }
+  }
+  .card{
+    border: none;
+    margin-bottom: 10px;
+    .card-header{
+      background-color: $jet;
+      padding: 0.45rem;
+      .toggle-btn{
+        &:focus{
+          box-shadow: 0 0 0 0.2rem;
+          font-weight: bold;
+        }
+      }
+    }
+    .card-body{
+      padding: 8px;
+    }
+  }
+
+  .details-and-btns-container{
+    display: flex;
+    justify-content: space-between;
+    .list-group-container{
+      width: 100%;
+    }
+    .first-two-lists{
+      width: 60%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .list-group{
+      //background-color: lightcoral;
+      li{
+        //background-color: lightblue;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        margin-right: 10px;
+        min-width: 100px;
+        strong{
+          color:$routine-red;
+        }
+        span{
+          margin-left: 2px;
+          color: whitesmoke;
+        }
+      }
+      a{
+        width: 100%;
+      }
+    }
+    .spinner{
+      margin: auto;
+    }
+    .edit-complete-expand-btns{
+    display: flex;
+    justify-content: flex-end;
+      
+      .discard-symbol{
+        color: $gold-crayola;
+      }
+      .cmd-btn{
+        margin: 10px;
+        font-size:  25px;
+        cursor: pointer;
+      }
+      .click-edit-btn{
+        font-size: 30px;
+        color: $routine-red;
+      }
+      .expand-symbol{
+        font-size: 25px;
+        color: $field-drab !important;
+        
+      }
+      .check-symbol{
+        font-size: 25px;
+        color: $russian-green;
+      }
+    }
+  }
+
+  
+  // CALENDAR
+  .manage-routines-calendar{
+    //background-color: green;
+    font-size: 15px;
+    //border-bottom: 1px solid black;
+
+    .live-week:hover{
+      border: 1px solid red;
+    }
+
+    .day{
+      font-size: 10px;
+      height: 8vmin;
+    }
+
+  }
+}

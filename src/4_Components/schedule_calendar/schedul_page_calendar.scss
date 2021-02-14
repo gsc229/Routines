@@ -1,0 +1,150 @@
+.schedule-page-calendar{
+  border-bottom: 1px solid $bs-dark;
+  background-color: $jet;
+  padding: 10px;
+  border-radius: 4px;
+  .calendar-header{
+    color: white;
+    margin-top: 15px;
+    .navbar{
+      border-bottom: none;
+      padding: 0;
+      margin-bottom: 5px;
+    }
+    .view-routine-link-container{
+      display: flex;
+      justify-content: center;
+      .view-routine-link{
+        margin-right: 20px;
+        padding: 5px;
+        background-color: $routine-red;
+        color: whitesmoke;
+        border-radius: 50px;
+        padding: 3px 10px 3px 10px;
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .calendar-header-top{
+    border: 1px dashed $routine-red;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+
+  .calendar-header-bottom{
+    display: flex;
+    color: darkgray;
+    justify-content: space-between;
+    background-color:  $routine-red;
+    h6{
+      margin: auto;
+    }
+  }
+  
+  .arrow{
+    cursor: pointer;
+    position: relative;
+    font-size: 25px;
+    margin-left: 20px;
+    margin-right: 20px;
+    
+  }
+
+  .schedule-week-container{
+    position: relative;
+    .view-week-btn{
+      width: fit-content;
+      margin-bottom: 0;
+      padding-top: 5px;
+      cursor: pointer;
+    }
+
+    
+  }
+
+  .schedule-week-container{
+    .week{
+      display: flex;
+      justify-content: space-evenly;
+      height: 15vmin;
+      border-top: 2px solid $jet;
+      border-left: 2px solid $jet;
+      position: relative;
+    }
+    
+    .day{
+      border-right: 2px solid $jet;
+      background-color: $bs-dark;
+      width: 100%;
+      color: $spanish-gray;
+      font-weight: bold;
+      z-index: 1;
+      cursor: pointer;
+      position: relative;
+      /* &:hover{
+        background-color: white;
+      } */
+      p{
+        margin: 0;
+        margin-bottom: 5px;
+        padding-left: 2px;
+        //padding-top: 2px;
+      }
+      .day-sections{
+        display: flex;
+        flex-wrap: wrap;
+        z-index: 99;
+        .tool-tip-title{
+          color: $routine-red;
+        }
+        .day-marker{
+          height: 1vw;
+          width: 1vw;
+          min-height: 2px;
+          min-width: 2px;
+          border-radius: 50%;
+          margin: 2px;
+          position: relative;
+          cursor: pointer;
+          z-index: 100;
+        }
+      }
+      .execute-sets{
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        color: $routine-red;
+        text-align: center;
+      }
+    }
+    .today{
+      background-color: $spanish-gray;
+      color: white;
+    }
+    
+    .before{
+      color: lightgray;
+      //cursor: not-allowed;
+    }
+    
+    .selected{
+      //background-color: $routine-red;
+      color: white;
+    }
+    .day-no-sets{
+      cursor: default;
+      /* &:hover{
+      background-color: whitesmoke;
+      border-right: 1px solid black;
+      } */
+    }
+
+  }
+
+  
+}

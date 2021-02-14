@@ -1,5 +1,7 @@
 import React from 'react'
 import {Link, useLocation} from 'react-router-dom'
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
 
 const activeStyle = {
   color: 'rgb(160, 14, 14)'
@@ -13,25 +15,18 @@ const LandingMenu = () => {
     return location.pathname === pathname ? { active: true, style: activeStyle} : {active: false, style: {}}
   }
   return (
-    <div className="menu">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container-fluid">
-          <Link style={{...isActiveTab('/').style, fontWeight: 'bold'}} className="navbar-brand" to="/">Routines</Link>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">              
-              <li className="nav-item">
-                <Link style={isActiveTab('/signin').style} className="nav-link" to="/signin">Sign In</Link>
-              </li>
-              <li className="nav-item">
-                <Link style={isActiveTab('/signup').style} className="nav-link" to="/signup">Create Account</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <div className="menu" style={{marginBottom: '56px'}}>
+      <Navbar fixed='top' expand="lg" bg="dark" variant="dark">
+        <Navbar.Brand style={isActiveTab('/').style} as={Link} to="/">Routines</Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarNav" />
+        <Navbar.Collapse id="navbarNav">
+        <Nav>
+          <Nav.Link style={isActiveTab('/signin').style} active={isActiveTab('/signin').active} as={Link} to='/signin'>Sign In</Nav.Link>
+          <Nav.Link style={isActiveTab('/signup').style} active={isActiveTab('/signup').active} as={Link} to="/signup">Create Account</Nav.Link>
+          
+        </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </div>
   )
 }

@@ -1,46 +1,52 @@
-import {useState, useEffect} from 'react'
+import {useEffect} from 'react'
 import { connect } from 'react-redux'
+import {clearErrorMessage} from './1_Actions/userActions'
 import {Switch, Route} from 'react-router-dom'
-import {getWeek} from './3_APIs/routineWeekHelpers'
-import {getQuery} from './3_APIs/queryApi'
+import {environment} from './config/config'
 import './App.scss'
 import PrivateRoute from './7_Auth/PrivateRoute'
 import PublicLandingPage from './5_Pages/landing_page/LandingPage'
 import SignIn from './7_Auth/SignIn'
 import SignUp from './7_Auth/SignUp'
 import UserDashBoard from './5_Pages/user_dashboard_page/UserDashBoardPage'
-import Schedule from './4_Components/calendar/Calendar'
 import ManageRoutinesPage from './5_Pages/manage_routines_page/ManageRoutinesPage'
 import CreateOrEditRoutinePage from './5_Pages/create_routine_page/CreateOrEditRoutinePage'
-import CreateOrEditWeekPage from './5_Pages/create_week_page/CreateOrEditWeekPage'
+import ManageCurrentRoutinePage from './5_Pages/manage_routine_page/ManageCurrentRoutinePage'
 import CreateOrEditExercisePage from './5_Pages/create_exercise_page/CreateOrEditExercisePage'
+import CreateSetGroupPage from './5_Pages/create_set_group_page/CreateSetGroupPage'
 import ManageExercisesPage from './5_Pages/manage_exercises_page/ManageExercisesPage'
 import BrowseExercisesPage from './5_Pages/browse_exercises_page/BrowseExercisesPage'
-// experimental
-import RoutineWeekDnD from './4_Components/routines_dnd/RoutineWeekDnD'
+import SchedulePage from './5_Pages/schedule_page/SchedulePage'
+import ExecuteSetsPage from './5_Pages/execute_sets_page/ExecuteSetsPage'
 
-function App({loggedIn}) {
 
-  const testWeekId = '5fd6eb71b0321644dc6bf08a'
-  const testWeekQueryStr = 'populate_one=exercise_sets&populate_two=exercise'
-  const query = `/routines/weeks/${testWeekId}?populate_one=exercise_sets&populate_two=exercise`
-  // /routines/weeks/5fd6eb71b0321644dc6bf08a?populate_one=exercises
-  const [weekData, setWeekData] = useState()
+function App({
+  loggedIn,
+  user_ERROR,
+  routine_ERROR,
+  week_ERROR,
+  set_group_ERROR,
+  exercise_set_ERROR,
+  exercise_ERROR,
+  clearErrorMessage
+}) {
+
   
-  useEffect(()=>{
-    /* getWeek(testWeekId, testWeekQueryStr) */
-    getQuery(query)
-    .then(AppJsQueryResponse => {
-      console.log({AppJsQueryResponse})
-      if(AppJsQueryResponse.success){
-        setWeekData(AppJsQueryResponse.data)
-      } else{
-        console.log({AppJsQueryResponse})
-      }
-    })
-  }, [])
+useEffect(() => {
+  const error_message = `${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}` 
+  if(error_message && environment ==='development'){
+    alert(`${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}`)
+  }
 
-  console.log({loggedIn})
+  if(error_message){
+    setTimeout(() => clearErrorMessage(), 4000)
+  }
+  
+}, 
+[user_ERROR,routine_ERROR,week_ERROR,set_group_ERROR,exercise_set_ERROR,exercise_ERROR])
+
+
+
 
   return (
     <div className="App">
@@ -60,32 +66,36 @@ function App({loggedIn}) {
           <PublicLandingPage />
         </Route>  
       }
-      <Route exact path="/schedule">
-        <Schedule />
-      </Route>
-      <Route exact path="/manage-routines" component={ManageRoutinesPage} />
-      <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
-      <Route exact path="/create-exercise" component={CreateOrEditExercisePage} />
-      <Route exact path="/editing-routine/:routineId/create-week" component={CreateOrEditWeekPage} />
-      <Route exact path="/manage-exercises" component={ManageExercisesPage} />
-      <Route exact path="/browse-exercises" component={BrowseExercisesPage} />
 
-
-        {/* Experimental */}
-        <Route exact path="/routines-dnd">
-          <RoutineWeekDnD weekData={weekData} setWeekData={setWeekData}/>
+        <Route exact path="/schedule">
+          <SchedulePage />
         </Route>
+        <Route exact path="/manage-routines" component={ManageRoutinesPage} />
+        <Route exact path="/create-routine" component={CreateOrEditRoutinePage} />
+        <Route exact path="/view-routine/:routineId/:routineName" component={ManageCurrentRoutinePage} />
+        <Route  path='/execute-sets/:setDate' component={ExecuteSetsPage} />
+        <Route exact path="/create-exercise" component={CreateOrEditExercisePage} />
+        <Route exact path="/manage-exercises" component={ManageExercisesPage} />
+        <Route exact path="/browse-exercises" component={BrowseExercisesPage} />
+        <Route exact path="/create-set-group/:routineName/:weekNumber/:dayNumber" component={CreateSetGroupPage} />
+        
       </Switch>
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  loggedIn: state.userReducer.loggedIn
+  loggedIn: state.userReducer.loggedIn,
+  user_ERROR: state.userReducer.error_message,
+  routine_ERROR: state.routineReducer.error_message,
+  week_ERROR: state.weekReducer.error_message,
+  set_group_ERROR: state.setGroupReducer.error_message,
+  exercise_set_ERROR: state.exerciseSetReducer.error_message,
+  exercise_ERROR: state.exerciseReducer.error_message
 })
 
 const mapDispatchToProps = {
-  
+  clearErrorMessage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -1,0 +1,74 @@
+import React from 'react'
+import {ResponsiveLineCanvas} from '@nivo/line'
+import {getLegends } from './axisAndLegends'
+
+const LineChart = ({data, bottomTickValueFreq="every week"}) => {
+  const theme = {
+    textColor: '#ffffff',
+    backgroundColor: '#000000',
+    axis: {
+      textColor: '#ffffff',
+      fontSize: '14px',
+      tickColor: '#eee',
+    },
+    grid: {
+      stroke: '#888',
+      strokeWidth: 1
+    },
+    crosshair: {
+      line: {
+        stroke: "#888"
+      }
+    }
+  };
+
+  return (
+    <div 
+      style={{height: '400px', width: '100%', color: 'black'}}
+      className="line-chart-target-weight">
+        <ResponsiveLineCanvas
+        data={data}
+        theme={theme}       
+        colors={d => d.color}
+        margin={{ top: 50, right: 0, bottom: 50, left: 50 }}
+        xScale={{
+            type: 'time',
+            format: '%Y-%m-%d',
+            useUTC: false,
+            precision: 'day',
+        }}
+        xFormat="time:%Y-%m-%d"
+        yFormat=" >-.2f"
+        yScale={{
+          type: 'linear',
+          stacked: false,
+        }}
+        axisTop={null}
+        textColor={'#ffffff'}
+        axisRight={{
+          orient: 'right',
+          tickSize: 20,
+          tickPadding: 20,
+          tickRotation: 0,
+          legend: '',
+          legendOffset: -60
+        }}
+        axisBottom={{
+          format: '%b %d',
+          tickValues: bottomTickValueFreq,
+          legendOffset: -12,
+          tickRotation: -90
+        }}
+        pointSize={10}
+        pointColor={{ theme: 'background' }}
+        pointBorderWidth={2}
+        pointBorderColor={{ from: 'serieColor' }}
+        pointLabelYOffset={-12}
+        useMesh={true}
+        legends={getLegends({})}
+    />
+  </div>
+  )
+}
+
+export default LineChart

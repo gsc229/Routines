@@ -1,34 +1,25 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import Layout from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
-import RoutineInfoForm from '../../4_Components/form_routine/RoutineInfoForm'
+import RoutineInfoForm from '../../4_Components/manage_routines/form_routine/RoutineInfoForm'
 import DarkSpinner from '../../4_Components/spinners/DarkSpinner'
 
-const CreateRoutine = ({currentIsSaved, crudingRoutine}) => {
+const CreateRoutine = ({crudingRoutine}) => {
 
-  // TO DO: if current is saved redirect to editing url
-  const [showSpinner, setshowSpinner] = useState(false)
-
-
-  useEffect(() => {
-    if(crudingRoutine === 'updating'){
-      setshowSpinner(true)
-    }
-  }, [crudingRoutine])
-
- 
-  if(showSpinner){
-    setTimeout(() => {
-      setshowSpinner(false)
-    }, 800)
-  }
+  const history = useHistory()
 
   return (
     <Layout>
-      <Container>
-        {!showSpinner && !crudingRoutine && <RoutineInfoForm />}
-        {(showSpinner || crudingRoutine )&& <DarkSpinner />}
+      <Container className='page create-routine-page' >
+
+        {!crudingRoutine && 
+        <RoutineInfoForm handleClose={() => history.push('/manage-routines')}/>}
+
+        {crudingRoutine === 'updating-routine' && 
+        <DarkSpinner text='Saving...' />}
+
       </Container>
     </Layout>
   )
@@ -39,6 +30,8 @@ const mapStateToProps = (state) => ({
   crudingRoutine: state.routineReducer.crudingRoutine 
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateRoutine)

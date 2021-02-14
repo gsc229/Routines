@@ -1,0 +1,30 @@
+.info-form{
+  .row{
+    .input-column{
+      .requirement-not-met{
+        font-weight: bolder;
+      }
+      .requirement-not-met::placeholder{
+        color: $routine-red;
+      }
+
+      .requirment-met{
+        font-weight: bolder;
+        color: $russian-green;
+        
+      }
+    }
+
+    .disabled-next-step-btn{
+      background-color: whitesmoke;
+      border: whitesmoke;
+      color: rgba(155,157,160, .4);
+    }
+
+    .disabled-previous-step-btn{
+      background-color: whitesmoke;
+      border: whitesmoke;
+      color: rgba(155,157,160, .4);
+    }
+  }
+}

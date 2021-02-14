@@ -4,6 +4,11 @@ $wine: #602e2eff;
 $rufous: #a00e0eff;
 $deep-taupe: #7f5959ff;
 $spanish-gray: #8d8d8dff;
+$bs-dark: #343A40;
+
+$dead-red: #a00e0ec4;
+$alive-red: #e42828;
+
 
 // browns
 $persian-plum: #6f1d1bff;
@@ -11,13 +16,37 @@ $camel: #bb9457ff;
 $bistre: #432818ff;
 $windsor-tan: #99582aff;
 $banana-mania: #ffe6a7ff;
-$bistre: #352208ff;
+$bistre-dark: #352208ff;
 $gold-crayola: #e1bb80ff;
 $gold-fusion: #7b6b43ff;
 $field-drab: #685634ff;
 $raw-umber: #806443ff;
 // greens
-$kelly-green: #3ec300;
+$kelly-green: #8bd668ea;
+
+$live-green: #5ec02dcb;
+
 $russian-green: #6B9166;
 
-$bs-dark: #343A40;
+// yellows
+$dead-yellow: #aca858;
+$icterine: #fff75eff;
+$lemon-yellow: #fff056ff;
+$corn: #ffe94eff;
+$minion-yellow: #ffe246ff;
+$mustard: #ffda3dff;
+$mustard-2: #ffd53eff;
+$sunglow: #fecf3eff;
+$orange-yellow: #fdc43fff;
+$maximum-yellow-red: #fdbe39ff;
+$honey-yellow: #fdb833ff;
+
+// when needed in inline styling
+:root{
+  --gold-fusion: #{$gold-fusion};
+  --routine-red: #{$routine-red};
+  --bs-dark: #{$bs-dark};
+  --jet: #{$jet};
+  --spanish-gray: #{$spanish-gray};
+  --russian-green: #{$russian-green};
+}

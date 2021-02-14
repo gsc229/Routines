@@ -1,0 +1,290 @@
+.set-group-exercise-search{
+  background-color: $bs-dark;
+  //padding: 10px;
+  .set-group-exercise-search-btns-container{
+    //border: 1px solid red;
+    //width: 95%;
+    margin: auto;
+    .btn-row{
+      display: flex;
+    }
+    .btn-column{
+    margin: 5px auto;
+      button{
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .search-exercises-form{
+    margin: auto;
+    margin-top: 10px;
+    padding: 0;
+    .row-muscle-group-and-category{
+      margin: auto;
+      .col-muscle-group-and-category{
+        //border: 1px solid blue;
+        padding: 0;
+        .form-checkbox-container{
+          width: fit-content;
+          display: grid;
+          grid-template-columns: auto auto;
+          @media only screen and (max-width: 1000px) {
+            grid-template-columns: auto auto;
+          }
+          .form-check{
+            margin-right: 15px;
+          }
+        }
+
+
+      }
+    }
+  }
+  
+  .drop-zones-container{
+    display: flex;
+    
+  }
+  .chosen-exercises-bank{
+    width: 100%;
+    //border: 1px solid yellow;
+    color: white;
+    margin-bottom: 20px;
+    padding: 0;
+  }
+
+  .drop-zone-row{
+    //border: 2px solid $routine-red;
+    background-color: $bs-dark;
+    width: fit-content;
+    width: 100%;
+    margin: auto;
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    min-height: 100px;
+    border-radius: 4px;
+    position: relative;
+    padding: 10px;
+   
+    .no-exercises-message{
+      padding: 10px;
+      width: fit-content;
+      margin: auto;
+    }
+  }
+
+  .bank-card-draggable{
+    //border: 1px solid $honey-yellow;
+    border-radius: 4px;
+    padding: 2px;
+    margin:  5px;
+    //width: fit-content;
+    flex: 0 0 auto;
+  }
+
+
+  .bank-card{
+    background-color: $bs-dark;
+    border: 2px solid $gold-fusion;
+    padding: 2px;
+    width: 175px;
+    min-height: 85px;
+    position: relative;
+    cursor: grab;
+    .color-picker-icon{
+      cursor: pointer;
+      position: absolute;
+      z-index: 10;
+      top: 30px;
+      left: 0;
+      color: $spanish-gray;
+      :nth-child(2){
+        color: red;
+      }
+      :nth-child(3){
+        color: rgb(0, 255, 0);
+      }
+      :nth-child(4){
+        color: rgb(255, 247, 0);
+      }
+      :nth-child(5){
+        color: rgb(0, 238, 255);
+      }
+    }
+    .github-picker{
+      position: absolute;
+      z-index: 12;
+      top: 20px;
+      cursor: pointer;
+    }
+    .name-and-index{
+      //border: 1px solid red;
+      font-size: 12px;
+      width: 100%;
+      text-align: center;
+    }
+    .card-body{
+      background-color: $bs-dark;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      .target-icons-container{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        .no-targets-span{
+          font-size: 10px;
+          font-style: italic;
+        }
+        .icon-and-number{
+          cursor: default;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          span{
+          font-size: 9px;
+          font-style: italic;
+          }
+          .icon{
+            margin: 0 2px;
+          }
+
+        }
+        
+      }
+
+      .grabber-icon,.copy-icon,.target-icon, .create-subset-icon{
+        color: $spanish-gray
+
+      }
+      .remove-icon, .copy-icon, .target-icon, .create-subset-icon{
+        cursor: pointer;
+      }
+      .grabber-icon{
+        cursor: grab;;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .create-subset-icon{
+        position: absolute;
+        bottom: 0;
+        background-color: $spanish-gray;
+      }
+      .copy-icon{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+      .target-icon{
+        position: absolute;
+        top: 0;
+        right: 0;
+        circle{
+          color: $persian-plum;
+          
+        }
+        :nth-child(2){
+          color: $spanish-gray;
+        }
+        /* circle{
+          color: red;
+        } */
+        path{
+          color: $persian-plum;
+        }
+        
+        &:hover{
+          circle{
+            color: $alive-red;
+            
+          }
+          :nth-child(2){
+            color: white;
+          }
+          /* circle{
+            color: red;
+          } */
+          path{
+            color: $alive-red;
+          }
+         
+        }
+      }
+      .remove-icon{
+        color: $dead-red;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        &:hover{
+          color: $alive-red;
+        }
+      }
+
+
+    .card-subtitle{
+      color: $honey-yellow;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-left: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    }
+    
+  }
+
+  .bank-card-dragging{
+    border: 1px solid $banana-mania;
+    .card-body{
+      .icon{
+        color: white;
+      }
+    }
+    #target-icon{
+      circle{
+        color: $alive-red;
+        
+      }
+      :nth-child(2){
+        color: white;
+      }
+      /* circle{
+        color: red;
+      } */
+      path{
+        color: $alive-red;
+      }
+    }
+  }
+
+  .set-group-exercise-search-results{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: auto;
+    background-color: $spanish-gray;
+    padding: 20px 0;
+    border-radius: 4px;
+    h5{
+      margin-bottom: 20px;
+    }
+    .attach-exercise-to-set-card{
+      margin: 5px;
+    }
+
+  }
+
+}
+

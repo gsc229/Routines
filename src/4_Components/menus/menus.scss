@@ -1,0 +1,30 @@
+.navbar{
+  border-bottom: 1px solid $spanish-gray;
+  .navbar-brand{
+    color: $routine-red;
+    position: relative;
+    .weight-lift-up-icon{
+      position: relative;
+      bottom: 4px;
+    }
+  }
+  .dropdown{
+    background-color: $bs-dark;
+    .dropdown-menu{
+      background-color: $bs-dark;
+      .dropdown-item{
+        color: white;
+        &:hover{
+          color: $routine-red;
+          font-weight: bold;
+        }
+        &:active{
+          color: white;
+        }
+      }
+      .active:hover{
+        color: white;
+      }
+    }
+  }
+}

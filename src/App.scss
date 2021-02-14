@@ -3,36 +3,131 @@
 // bootstrap
 @import "./custom_bs.scss";
 
+// reset
+.App{
+  position: relative;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.4;
+  //background-color: $persian-plum;
+  background-color: $bs-dark;
+  color: whitesmoke;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  cursor: grab;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: $routine-red; 
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+background: rgba(255,0,0,0.4); 
+}
+
+h1{
+  font-size: 3rem;
+}
+
+.page{
+  margin-bottom: 300px;
+}
+
+
+// charts 
+@import './4_Components/pie_chart/pie_chart_one.scss';
+@import './4_Components/line_chart/line_chart.scss';
+
 // Auth
 @import './7_Auth/auth.scss';
+// Dashboard
 @import './5_Pages/user_dashboard_page/user_dashboard_page.scss';
+@import './4_Components/dashboard/dashboard.scss';
+
+@import './4_Components/menus/menus.scss';
 
 // Exercises
 @import './5_Pages/manage_exercises_page/manage_exercises_page.scss';
+
+// Exercise Form 
+@import './4_Components/iframe/iframe.scss';
+@import './4_Components/exercise/form_exercise/exercise_form.scss';
 
 // Browse Exercises
 @import './5_Pages/browse_exercises_page/browse_exercises_page.scss';
 
 // Routines 
 @import './5_Pages/manage_routines_page/manage_routines_page.scss';
+@import './5_Pages/manage_routine_page/manage_current_routine_page.scss';
 
 // Layouts 
 @import './6_Layouts/layout_one/layout_one.scss';
 
+// Modals
+@import './4_Components/modals/global_modal_styles.scss';
+@import './4_Components/modals/view_modals/view_modals.scss';
+@import './4_Components/modals/confirm_delete_modals/confirm_delete_modals.scss';
+@import './4_Components/modals/remove_modals/remove_all_modals.scss';
+@import './4_Components/modals/color_picker_modal/color_picker_modal.scss';
 
 // Calendar
 @import './4_Components/calendar/basic_calendar.scss';
+@import './4_Components/schedule_calendar/schedul_page_calendar.scss';
+@import './4_Components/calendar/routine_color_legend.scss';
 
 
 // Routine Form 
-@import './4_Components/form_routine/form_routine.scss';
+@import './4_Components/manage_routines/form_routine/form_routine.scss';
+// Pages 
+@import './5_Pages/schedule_page/schedule_pages.scss';
+@import './5_Pages/create_set_group_page/create_or_edit_set_group_page.scss';
 
-// Exercise Form 
-@import './4_Components/iframe/iframe.scss';
+// Create Set Group
+@import './4_Components/create_set_group/1_create_set_group_steps/create_set_group_steps.scss';
+@import './4_Components/create_set_group/2_set_group_bank/set_group_bank.scss';
+@import './4_Components/create_set_group/2_preview_set_group/preview_set_group.scss';
+@import './4_Components/create_set_group/3_create_set_group_search_ex_card/attach_exercise_to_sg_card.scss';
+@import './4_Components/create_set_group/3_form_create_set_group/set_group_forms.scss';
+@import './4_Components/create_set_group/3_set_card_with_input_details/set_card_detail_inputs.scss';
+@import './4_Components/create_set_group/3_targets_and_subgroups/target_setter_and_subgroups.scss';
+@import './4_Components/create_set_group/3_targets_and_subgroups/edit_set_modal.scss';
+@import './4_Components/saved_set_groups/find_saved_set_group.scss';
 
+// Eexecute Set Group
+@import './4_Components/execute_sets/execute_sets.scss';
+
+// Week 
+@import './4_Components/week/week_template.scss';
 
 // Accordion
-@import './4_Components/accordion_routines/routines_accordion.scss';
-@import './4_Components/accordion_embed_instruction//embed_accordion.scss';
+@import './4_Components/manage_routines/accordion_routines/routines_accordion.scss';
+@import './4_Components/exercise/accordion_embed_instruction/embed_accordion.scss';
 // Cards
-@import './4_Components/card_exercise/exercise_card.scss';
+@import './4_Components/exercise/card_exercise/exercise_card.scss';
+@import './4_Components/exercise_set/card_exercise_set/exercise_set_card.scss';
+//DND
+@import './4_Components/dnd_routine_schedule/dnd_routine_schedule.scss';

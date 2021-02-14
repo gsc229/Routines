@@ -92,6 +92,11 @@ const reducer = (state=initialState, action) => {
         exerciseSearchResults: action.payload.data,
         searchResultsPaginaion: action.payload.exercisePagination
       }
+    case constants.CLEAR_EXERCISE_SEARCH_RESULTS: 
+      return{
+        ...state,
+        exerciseSearchResults: initialState.exerciseSearchResults
+      }
     case constants.CREATING_EXERCISE:
       return{
         ...state,
@@ -156,7 +161,9 @@ const reducer = (state=initialState, action) => {
         error_message: ''
       }
 
-
+      case constants.LOG_OUT:
+        return initialState
+      
 
     default: 
       return state

@@ -1,0 +1,1 @@
+export const currentRoutineRefreshWkSgEsEx = `?populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`
