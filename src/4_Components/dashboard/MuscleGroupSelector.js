@@ -54,6 +54,7 @@ const MuscleGroupSelector = ({
       onChange={handleGroupSelect}
       options={selectOptions}
       isMulti
+      isSearchable={false}
       closeMenuOnSelect={true}
       autoFocus={false}/>
     </div>
