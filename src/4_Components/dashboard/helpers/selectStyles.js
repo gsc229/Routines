@@ -15,7 +15,6 @@ export const customStyles = (routineColor) => {
     border: isFocused ? 'var(--russian-green)' : `2px solid ${ routineColor || 'var(--routine-red)'}`
   }),
   multiValue: (styles, {data}) => {
-    console.log({styles, data})
     return {
       ...styles,
       backgroundColor: data.selectedColor || 'var(--routine-red)',
@@ -25,7 +24,8 @@ export const customStyles = (routineColor) => {
   multiValueLabel: (styles) => {
     return{
       ...styles,
-      color: 'white'
+      color: 'white',
+      width: 'fit-content'
     }
   },
   multiValueRemove: (styles, {data}) => {
@@ -41,10 +41,10 @@ export const customStyles = (routineColor) => {
       }
     }
   },
-  singleValue: (provided, state) => {
+  /* singleValue: (provided, state) => {
     const opacity = state.isDisabled ? 0.5 : 1
     const transition = 'opacity 300ms';
     return { ...provided, opacity, transition, color: routineColor || 'var(--routine-red)' }
-  }
+  } */
 }
 }
