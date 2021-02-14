@@ -55,7 +55,7 @@ const MuscleGroupSelector = ({
       options={selectOptions}
       isMulti
       closeMenuOnSelect={true}
-      autoFocus/>
+      autoFocus={false}/>
     </div>
   )
 }
