@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {publicExercisesQuery} from '../../../1_Actions/exerciseActions'
+import { muscleGroupList } from '../../dashboard/helpers/muscleGroupNameAndColorList'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
@@ -108,61 +109,14 @@ export const SearchExercisesForm = ({
           </Form.Label>
         </div>
           <div className='form-checkbox-container'>
-            <Form.Check
+            {muscleGroupList.sort((a, b) => (a.name > b.name) ? 1 : -1).map((mg, idx) => (
+              <Form.Check 
               onClick={handleCheckValue}
-              label="Chest"
+              label={mg.name}
               name="muscle_group"
-              value="muscle_group[in]=Chest"
-              id="muscle_group1"
-            />
-            <Form.Check
-              onClick={handleCheckValue}
-              label="Arms"
-              name="muscle_group"
-              value="muscle_group[in]=Arms"
-              id="muscle_group2"
-            />
-            <Form.Check
-              onClick={handleCheckValue}
-              label="Back"
-              name="muscle_group"
-              value="muscle_group[in]=Back"
-              id="muscle_group3"
-            />
-            <Form.Check
-              onClick={handleCheckValue}
-              label="Shoulders"
-              name="muscle_group"
-              value="muscle_group[in]=Shoulders"
-              id="muscle_group4"
-            />
-              <Form.Check
-              onClick={handleCheckValue}
-              label="Legs"
-              name="muscle_group"
-              value="muscle_group[in]=Legs"
-              id="muscle_group5"
-            />
-            <Form.Check
-              onClick={handleCheckValue}
-              label="Calves"
-              name="muscle_group"
-              value="muscle_group[in]=Calves"
-              id="muscle_group6"
-            />
-            <Form.Check
-              onClick={handleCheckValue}
-              label="Full Body"
-              name="muscle_group"
-              value="muscle_group[in]=Full Body"
-              id="muscle_group7"
-            />
-            <Form.Check
-              label="Multiple Major Muscle Groups"
-              name="muscle_group"
-              value="muscle_group[in]=Multiple Major Muscle Groups"
-              id="muscle_group8"
-            />
+              value={`muscle_group[in]=${mg.name}`} 
+              id={`muscle_group${idx}`}/>
+            ))}
           </div>
         </Col>
         </Row>
