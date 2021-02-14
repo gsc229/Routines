@@ -5,7 +5,8 @@ const LineChartChecboxes = ({
   setDuration,
   setShowActuals,
   duration,
-  showActuals
+  showActuals,
+  startDate
 }) => {
   return (
   <div className='checkboxes-container'>
@@ -21,7 +22,7 @@ const LineChartChecboxes = ({
           type='radio' 
           />
           <Form.Check
-          label='Month'
+          label={startDate.clone().format("MMMM")}
           onClick={() => setDuration('month')}
           checked={duration==='month'}
           name='month'

@@ -66,7 +66,8 @@ const MuscleGroupTotalsTab = ({
     <div 
     className='line-chart-and-controls'>
       <h3 className='weekly-totals-header'>Weekly Totals: </h3>
-      <LineChartControls 
+      <LineChartControls
+      startDate={startDate}
       showActuals={showActuals}
       setShowActuals={setShowActuals}
       duration={duration}

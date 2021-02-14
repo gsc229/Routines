@@ -12,7 +12,8 @@ const LineChartControls = ({
   selectedMuscleGroups,
   setSelectedMuscleGroups,
   duration, 
-  setDuration
+  setDuration,
+  startDate
 }) => {
   return (
     <div className='line-chart-controls'>
@@ -21,11 +22,12 @@ const LineChartControls = ({
         onSelect={e => setField(e)} 
         showInput={false} />
       </div>
-      <MuscleGroupSelector 
+      <MuscleGroupSelector
       muscleGroupList={muscleGroupList}
       selectedMuscleGroups={selectedMuscleGroups} 
       setSelectedMuscleGroups={setSelectedMuscleGroups} />
-      <LineChartChecboxes 
+      <LineChartChecboxes
+      startDate={startDate}
       showActuals={showActuals} 
       setShowActuals={setShowActuals} 
       duration={duration} 

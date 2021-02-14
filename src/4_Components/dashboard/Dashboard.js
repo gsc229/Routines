@@ -98,6 +98,7 @@ export const Dashboard = ({
         </Tab>
         <Tab eventKey='muscle-group-totals' title='Muscle Group Totals'>
 
+        {tabKey==='muscle-group-totals' && 
         <MuscleGroupTotalsTab
         showActuals={showActuals}
         setShowActuals={setShowActuals}
@@ -111,7 +112,7 @@ export const Dashboard = ({
         startDate={startDate}
         capitalizeField={capitalizeField}
         lineChartData={lineChartData}
-        />
+        />}
         
         </Tab>
       </Tabs>
