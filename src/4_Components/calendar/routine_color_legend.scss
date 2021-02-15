@@ -5,18 +5,17 @@
     flex-wrap: wrap;
   }
   .name-and-slider-container{
-    //background-color: lightblue;
     display: flex;
     flex-direction: column;
     margin-right: 20px;
-    font-size: 12px;
-    height: 15px;
+    font-size: 15px;
     transition: height .04s linear;
     .name-and-day-marker{
       display: flex;
+      align-items: center;
       .day-marker{
-        height: .8em;
-        width: .8em;
+        height: 1em;
+        width: 1em;
         border-radius: 50%;
         margin: 2px;
         margin-left: 5px;
