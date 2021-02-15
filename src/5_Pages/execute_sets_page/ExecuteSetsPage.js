@@ -20,7 +20,7 @@ export const ExecuteSetsPage = ({
   const history = useHistory()
   const {setDate} = useParams()
   const match = useRouteMatch()
-  const daysDate = moment(setDate).format('LL')
+  const daysDate = moment(setDate, 'MM-DD-YYYY').format('MMMM DD, YYYY')
   const [currentPage, setCurrentPage] = useState('all-set-groups')
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export const ExecuteSetsPage = ({
     }
 
   }, [])
-
+  
   return (
     <LayoutOne showTop={false}>
       <Container

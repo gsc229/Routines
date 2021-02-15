@@ -11,31 +11,35 @@ const DynamicFieldInput = ({
   placeholder='optional',
   required=true,
   label,
-  inputPirmitiveType="number",
+  inputType="number",
   min=0,
-  max=null,
+  max=2000,
   currentExerciseSet,
   localWritingExerciseSet,
   appendText,
   field // rep_max reps_per_set target_weight target_time target_distance total_sets
 }) => {
 
-  /* onChange={(e) => localWritingExerciseSet(e.target.name, inputPirmitiveType === 'number' ? JSON.parse(e.target.value) : e.target.value)}  */
+  /* onChange={(e) => localWritingExerciseSet(e.target.name, inputType === 'number' ? JSON.parse(e.target.value) : e.target.value)}  */
+  const handleChange = (e) => {
+    const number = e.target.value <= max ? JSON.parse(e.target.value) : 2000
+    localWritingExerciseSet(e.target.name, number)
+  }
   
   return(
     <Form>
       <Form.Group>
         <Form.Label>
            {label}
-          </Form.Label>
+        </Form.Label>
         <InputGroup>
           <FormControl
           placeholder={placeholder}
           className={`${required ? !currentExerciseSet[field] ? 'requirement-not-met' : 'requirment-met' : ""}`} 
-          onChange={(e) => localWritingExerciseSet(e.target.name, e.target.value)} 
+          onChange={handleChange} 
           value={currentExerciseSet[field] || 0 } 
           name={field} 
-          type={inputPirmitiveType}
+          type={inputType}
           max={max}
           min={min}
           />

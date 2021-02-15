@@ -85,13 +85,36 @@ export const TargetsBuilder = ({
                   field='target_reps'
                 />
               </Tab.Pane>
-              <Tab.Pane 
+              <Tab.Pane
               className='target-setter-tab-pande'
               eventKey="target_time">
-                <ConnecedDynamicInput
-                  field='target_time'
-                  label='Time'  
-                />              
+                <div 
+                className='time-inputs'>
+                  <div className='time-input-container'>
+                    <ConnecedDynamicInput
+                      field='target_hours'
+                      label='Hours' 
+                      inputType='number' 
+                      max={1000}
+                    />
+                  </div>
+                  <div className='time-input-container'>
+                    <ConnecedDynamicInput
+                      field='target_minutes'
+                      label='Minutes' 
+                      inputType='number'
+                      max={59}
+                    />
+                  </div>
+                  <div className='time-input-container'>
+                    <ConnecedDynamicInput
+                      field='target_seconds'
+                      label='Seconds' 
+                      inputType='number'
+                      max={59}
+                    />
+                  </div>
+                </div>             
               </Tab.Pane>
               <Tab.Pane 
               className='target-setter-tab-pande'

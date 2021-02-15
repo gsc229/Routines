@@ -17,10 +17,6 @@ const RecordSetList = ({
 
   const [modalShow, setModalShow] = useState(false)
 
-  const handleSetTargets = () => {
-
-  }
-
 
   const noTargetsMessage = () => {
     return(
@@ -78,7 +74,7 @@ const RecordSetList = ({
                   to=''
                   onClick={() => setEditingActual(actualName)}
                   className='edit-button'>
-                    Record Result
+                    Edit
                   </NavLink>}
 
                   {editingActual === actualName && 
@@ -96,7 +92,6 @@ const RecordSetList = ({
                   field={targetsToActuals[target.field_name].field_name} />
                 </div>
             </li>
-
             )
           })}
 

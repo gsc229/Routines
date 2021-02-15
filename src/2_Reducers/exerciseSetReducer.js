@@ -23,11 +23,17 @@ const initialState = {
     target_weight: null,
     rest_time: null,
     target_time: null,
+    target_hours: null,
+    target_minutes: null,
+    target_seconds: null, 
     target_distance: null,
     target_laps: null,
     actual_reps: null,
     actual_weight: null,
     actual_time: null,
+    actual_hours: null,
+    actual_minutes: null,
+    actual_seconds: null, 
     actual_distance: null,
     actual_laps: null
   }

@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
-import {saveExerciseSetChanges, setCurrentExerciseSet} from '../../1_Actions/exerciseSetActions'
+import {saveExerciseSetChanges, setCurrentExerciseSet, localWritingExerciseSet} from '../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
 import NavLink from 'react-bootstrap/NavLink'
 import RecordSetList from './RecordSetList'
 
 export const RecordInputs = ({
   currentExerciseSet,
+  localWritingExerciseSet,
   saveExerciseSetChanges,
   setCurrentExerciseSet,
   userRoutines,
@@ -84,13 +85,29 @@ export const RecordInputs = ({
     return false
   }
 
+ const handleAutoFill = () => {
+   targets.forEach(target => {
+     localWritingExerciseSet(target.field_name.replace('target', 'actual'), target.value)
+   })
+ }
+
   return (
 
     <div
     className="revising-or-saved-container inputs-and-targets-revising-container">
-        
+          
 
           <div className='submit-and-cancel-btns'>
+          <Button
+            size='sm'
+            disabled={targets.length < 1}
+            onClick={handleAutoFill}
+            variant='danger'
+            className='submit-all-btn'>
+              Auto Fill
+            </Button>
+
+
             <Button
             size='sm'
             disabled={!showActualsHaveChanged()}
@@ -132,7 +149,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   saveExerciseSetChanges,
-  setCurrentExerciseSet
+  setCurrentExerciseSet,
+  localWritingExerciseSet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecordInputs)

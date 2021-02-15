@@ -124,6 +124,7 @@ export const ExecuteSetNavs = ({
               placeholder='Select set...'
               onChange={handleSetSelect}
               options={selectOptions}
+              isSearchable={false}
               autoFocus/>
           </div>
           <div className='links-container'>
