@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import {
   destroyExerciseSet, 
   localBulkWriteExerciseSets, 
-  setCurrentExerciseSet, 
+  setCurrentExerciseSet,
+  setCurrentExerciseSets,
   createSingleExerciseSet, 
   saveExerciseSetChanges,
   clearCurrentExerciseSet
@@ -29,6 +30,7 @@ export const BankCard = ({
   currentExerciseSet, 
   localBulkWriteExerciseSets,
   setCurrentExerciseSet,
+  setCurrentExerciseSets,
   destroyExerciseSet,
   snapshot,
   createSetGroupData,
@@ -54,7 +56,12 @@ export const BankCard = ({
   }
 
   const handleFinishedSettingTargets = async () => {
-    await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
+    if(currentExerciseSet._id){
+      await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
+    }
+    if(!currentExerciseSet._id){
+      setCurrentExerciseSets(currentExerciseSets.map(exSet => exSet.order === currentExerciseSet.order ? currentExerciseSet : exSet))
+    }
     setModalShow(false)
   }
 
@@ -84,7 +91,7 @@ export const BankCard = ({
     if(createSetGroupData.mode === 'editing'){
       const createResponse = await createSingleExerciseSet(copySet)
     } else{
-        localBulkWriteExerciseSets(copySets)
+      localBulkWriteExerciseSets(copySets)
     }
   }
 
@@ -93,7 +100,7 @@ export const BankCard = ({
     setCurrentExerciseSet(exerciseSet)
     // slow down for touch screen to prevent outside modal close click
     
-      setModalShow(`set-targets-${exerciseSet._id || index}`)
+    setModalShow(`set-targets-${exerciseSet._id || index}`)
  
   }
 
@@ -186,7 +193,8 @@ const mapDispatchToProps = {
   destroyExerciseSet,
   createSingleExerciseSet,
   saveExerciseSetChanges,
-  clearCurrentExerciseSet
+  clearCurrentExerciseSet,
+  setCurrentExerciseSets
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BankCard)

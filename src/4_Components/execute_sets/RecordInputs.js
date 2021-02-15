@@ -95,11 +95,12 @@ export const RecordInputs = ({
 
     <div
     className="revising-or-saved-container inputs-and-targets-revising-container">
-        
+          
 
           <div className='submit-and-cancel-btns'>
           <Button
             size='sm'
+            disabled={targets.length < 1}
             onClick={handleAutoFill}
             variant='danger'
             className='submit-all-btn'>

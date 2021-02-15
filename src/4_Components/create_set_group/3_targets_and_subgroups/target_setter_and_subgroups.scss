@@ -36,3 +36,10 @@
       text-align: center;
     }
 }
+
+.time-inputs{
+  display: flex;
+  .time-input-container{
+    margin-right: 10px;
+  }
+}
