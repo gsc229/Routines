@@ -3,6 +3,56 @@
   background-color: $jet;
   padding: 10px;
   border-radius: 4px;
+  .routine-color-legend{
+    position: relative;
+    margin-bottom: 30px;
+    .legend-wrapper{
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      background-color: $jet;
+      height: 25px;
+      width: 100%;
+      z-index: 10;
+      transition: height .1s linear;
+    }
+    .wrapper-showing-picker{
+      height: 100px;
+      transition: height .1s linear;
+    }
+    .name-and-slider-container{
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+      font-size: 15px;
+      transition: height .04s linear;
+      .name-and-day-marker{
+        display: flex;
+        align-items: center;
+        .day-marker{
+          height: 1em;
+          width: 1em;
+          border-radius: 50%;
+          margin: 2px;
+          margin-left: 5px;
+          cursor: pointer;
+        }
+      }
+      .slider-container{
+        max-width: 300px;
+        min-width: 220px;
+        z-index: 10;
+        .hue-picker{
+          max-width: 100%;
+          width: 100%;
+        }
+        a{
+          padding: 0;
+          margin: 5px 0;
+        }
+      }
+    }
+  }
   .calendar-header{
     color: white;
     margin-top: 15px;

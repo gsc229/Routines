@@ -56,8 +56,7 @@ export const RoutineColorLegend = ({
     // change out routine click 
     } else{
       persistColorChanges(routineId)
-      setShowPicker(false)
-      setTimeout(() => { setShowPicker(routineId)}, 40)
+      setShowPicker(routineId)
     }
   }
 
@@ -74,12 +73,12 @@ export const RoutineColorLegend = ({
 
   return (
     <div className="routine-color-legend">
-       <div className='legend-wrapper'>
+       <div className={`legend-wrapper ${showPicker  && 'wrapper-showing-picker'}`}>
         {Object.keys(initialNamesColors)
         .map(routineId => 
         <div
         key={`legend-${routineId}`}
-        className={`name-and-slider-container ${showPicker === routineId && 'showing-picker'}`}>
+        className={`name-and-slider-container ${showPicker  && 'name-and-slider-container-showing-picker'}`}>
 
           <div className='name-and-day-marker'>
             {routineNamesColorsStartDates[routineId].name}: 
@@ -92,7 +91,7 @@ export const RoutineColorLegend = ({
           
           {showPicker === routineId && 
           <div
-          className={`slider-container ${showPicker === routineId && 'showing-picker-slider'}`}>
+          className={`slider-container ${showPicker === routineId && 'slider-container-showing-picker'}`}>
             <Link  
             onClick={() => handleDoneClick(routineId)}>
               Done
