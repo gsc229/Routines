@@ -59,7 +59,7 @@ export const ViewSetGroupModal = ({
           onClick={handleEditClick}
           className='edit-link' 
           to={redirectLink}>
-            Edit Set
+            Edit Set Group
           </Link>}
         </div>
       </Modal.Header>

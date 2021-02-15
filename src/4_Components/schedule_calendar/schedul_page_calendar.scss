@@ -98,6 +98,8 @@
       .day-sections{
         display: flex;
         flex-wrap: wrap;
+        width: fit-content;
+        max-width: 100%;
         z-index: 99;
         .tool-tip-title{
           color: $routine-red;

@@ -78,8 +78,6 @@ export const RoutinesAccordion = ({
 
   const handleDiscardClick = () => {
     setEditingMode(false)
-    
-    clearCurrentRoutine()
   }
 
   const handleSameComponentEdit = (routine) => {

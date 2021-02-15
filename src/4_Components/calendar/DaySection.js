@@ -23,7 +23,7 @@ export const DaySection = ({
 
   
 
-  const handleClick = (sg) => { 
+  const handleSetGroupClick = (sg) => { 
 
     const selectedRoutine = {...userRoutines.find(routine => routine._id === sg.routine)}
     const flattenedRoutine = {
@@ -73,7 +73,7 @@ export const DaySection = ({
             </ToolTip>}>
               <div className='day-marker-wrapper'>
                 <div
-                  onClick={ () => width >= 400 && handleClick(sg) }
+                  onClick={ () => width >= 400 && handleSetGroupClick(sg) }
                   className='day-marker'
                   style={{backgroundColor: routineNamesColorsStartDates[sg.routine].color}}>
                 </div>

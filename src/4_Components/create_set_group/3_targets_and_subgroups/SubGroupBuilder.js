@@ -16,7 +16,7 @@ export const SetGroupBuilder = ({
   const {total_sets} = createSetGroupData
 
   const handleTotalSets = (e) => {
-    const number = e.target.value <= 100 ? JSON.parse(e.target.value) : 100
+    const number = e.target.value <= 20 ? JSON.parse(e.target.value) : 20
     localWritingCreateSetGroupData('total_sets', number)
   }
 
@@ -33,7 +33,7 @@ export const SetGroupBuilder = ({
                 type='number'
                 value={total_sets} 
                 min={1} 
-                max={100} />
+                max={20} />
               </Form.Group>
             </Form>
           </Col>
