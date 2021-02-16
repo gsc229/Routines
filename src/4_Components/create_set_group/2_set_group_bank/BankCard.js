@@ -98,7 +98,6 @@ export const BankCard = ({
   const handleOpenTargetsModal = (e) => {
     e.preventDefault()
     setCurrentExerciseSet(exerciseSet)
-    // slow down for touch screen to prevent outside modal close click
     
     setModalShow(`set-targets-${exerciseSet._id || index}`)
  
@@ -107,7 +106,6 @@ export const BankCard = ({
   const handleOpenSubGroupModal = (e) => {
     e.preventDefault()
     setCurrentExerciseSet(exerciseSet)
-    // slow down for touch screen to prevent outside modal close click
     setModalShow(`sub-group-${exerciseSet._id || index}`)
   }
 
