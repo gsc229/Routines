@@ -20,6 +20,14 @@ export const RecordInputs = ({
 
   const [editingActual, setEditingActual] = useState(null) 
   const [originalActuals, setOriginalActuals] = useState([])
+  const targetsEqualActuals = () => {
+    for(let i = 0; i < targets.length; i++){
+      if(targets[i].value !== currentExerciseSet[targets[i].field_name.replace('target', 'actual')]){
+        return false
+      }
+    }
+    return true
+  }
 
   const getOriginalActuals = () => {
     const originals = []
@@ -31,10 +39,11 @@ export const RecordInputs = ({
   }
 
   useEffect(() => {
-     
     setOriginalActuals(getOriginalActuals())
 
   }, [targets])
+
+  
 
   const handleSubmit = async() => {
     const updateResult = await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
@@ -96,15 +105,15 @@ export const RecordInputs = ({
     <div
     className="revising-or-saved-container inputs-and-targets-revising-container">
           
-
           <div className='submit-and-cancel-btns'>
-          <Button
+            
+            <Button
             size='sm'
-            disabled={targets.length < 1}
+            disabled={targets.length < 1 || targetsEqualActuals()}
             onClick={handleAutoFill}
             variant='danger'
             className='submit-all-btn'>
-              Auto Fill
+              {`Match Target${targets.length > 1 ? 's' : ''}`}
             </Button>
 
 
