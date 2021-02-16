@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import {logout} from '../../1_Actions/userActions'
 import {Link, useLocation} from 'react-router-dom'
-import { CalendarIcon } from '../icons/Icons'
+import { CalendarIcon, LogOutIcon } from '../icons/Icons'
 
 const Menu = ({logout, clearCurrentRoutine}) => {
   
@@ -24,7 +24,7 @@ const Menu = ({logout, clearCurrentRoutine}) => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
-        <Nav>
+        <Nav className='mr-auto'>
           <Nav.Link active={isActivePath('/schedule')} as={Link} to='/schedule'>
             <CalendarIcon styles={{fontSize: '20px', color: 'white'}} />
           </Nav.Link>
@@ -38,7 +38,15 @@ const Menu = ({logout, clearCurrentRoutine}) => {
             <NavDropdown.Item active={isActivePath('/manage-exercises')} as={Link} to="/manage-exercises">My Exercises</NavDropdown.Item>
             <NavDropdown.Item active={isActivePath('/browse-exercises')} as={Link} to="/browse-exercises">Browse Exercises</NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link as={Link} onClick={logout} className="nav-Nav.link" to="/">Log Out</Nav.Link>
+        </Nav>
+        <Nav>
+          <Nav.Link as={Link} onClick={logout} className="nav-Nav.link" to="/">
+            <div
+            className='logout-container'>
+              Log Out&nbsp;
+              <LogOutIcon />
+            </div>
+          </Nav.Link>
         </Nav>
         </Navbar.Collapse>
       </Navbar>
