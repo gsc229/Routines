@@ -15,15 +15,7 @@ export const LandingPage = ({
 
   
 
-  const demoLogin = async() => {
-    const data = await logInUser({email: 'user1@mail.com', password: 'user123'})
-    const user = data.data
-    await fetchRoutines(`?user=${user._id}&populate_weeks=true&populate_set_groups=true&populate_exercise_sets_exercise=true`)
-  }
-
-  if(isDemo && !loggedIn){
-    demoLogin()
-  }
+ 
 
   return (
     <LandingPageLayout>
