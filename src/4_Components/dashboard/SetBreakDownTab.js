@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {exercisePieDataFromSetGroups} from './helpers/exercisePieDataFromSetGroups'
 import ExercisePies from './ExercisePies'
 import Form from 'react-bootstrap/Form'
-import {muscleGroupList, muscleGroupColorObj} from './helpers/muscleGroupNameAndColorList'
+import {muscleGroupList, muscleGroupColorObj} from '../shared_helpers_and_variables/muscleGroupNameAndColorList'
 import { duration } from 'moment'
 
 
