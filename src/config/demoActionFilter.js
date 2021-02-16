@@ -17,10 +17,10 @@ const actionIsForbidden = (action) => {
         }
       }
 
-      if( action.type === 'LOG_OUT' ){
+      /* if( action.type === 'LOG_OUT' ){
         errorMessage = "Sorry! You can't log out in demo mode."
         return true
-      }
+      } */
 
       if(action.payload){
         if(action.payload.field || action.payload.key){
