@@ -7,7 +7,6 @@ import {fetchRoutines} from '../1_Actions/routineActions'
 
 export const SignIn = ({
   logInUser, 
-  clearErrorMessage,
   fetchRoutines,
   user,  
   loggedIn, 
@@ -49,6 +48,7 @@ export const SignIn = ({
       [e.target.name]: e.target.value
     })
   }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if(isDemo){
@@ -56,8 +56,6 @@ export const SignIn = ({
     }
     logInUser(credentials)
   }
-
-  
 
 
   return (
