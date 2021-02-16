@@ -25,7 +25,7 @@ export const SignIn = ({
     password: ''
   })
 
-  const disabled = credentials.email.length < 1 || credentials.password.length < 1
+  const disabled = !isDemo && (credentials.email.length < 1 || credentials.password.length < 1)
 
   const demoCredentials = {
     email: 'user1@mail.com',
