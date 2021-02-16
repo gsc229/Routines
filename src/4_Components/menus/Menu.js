@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import {logout} from '../../1_Actions/userActions'
 import {Link, useLocation} from 'react-router-dom'
+import { CalendarIcon } from '../icons/Icons'
 
 const Menu = ({logout, clearCurrentRoutine}) => {
   
@@ -24,7 +25,9 @@ const Menu = ({logout, clearCurrentRoutine}) => {
         <Navbar.Toggle aria-controls="navbarNav" />
         <Navbar.Collapse id="navbarNav">
         <Nav>
-          <Nav.Link active={isActivePath('/schedule')} as={Link} to='/schedule'>Workout Schedule</Nav.Link>
+          <Nav.Link active={isActivePath('/schedule')} as={Link} to='/schedule'>
+            <CalendarIcon styles={{fontSize: '20px', color: 'white'}} />
+          </Nav.Link>
           {/* <Nav.Link active={isActivePath('/goals')} as={Link} to="/goals">Goals</Nav.Link> */}
           {/* <Nav.Link active={isActivePath('/manage-routines')} as={Link} to="/manage-routines">Manage Routines</Nav.Link> */}
           <NavDropdown active={isActivePath('dropdown')} title='Manage' aria-labelledby="navbarDropdown">

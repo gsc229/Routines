@@ -92,3 +92,21 @@ export const saveExerciseChanges = (exerciseId, updates) => dispatch => {
   })
 
 }
+
+export const destroyExercise = (exerciseId) => dispatch => {
+  dispatch({type: constants.DELETING_EXERCISE})
+  return updateExercise(exerciseId)
+  .then(response => {
+    if(response && response.success){
+     dispatch({type: constants.DELETE_EXERCISE_SUCCESS, payload: response.data})
+     return response  
+    } 
+    if(response && response.error_message){
+      dispatch({type: constants.DELETE_EXERCISE_FAIL, payload: response.error_message})
+      return response
+    } 
+    
+    dispatch({type: constants.DELETE_EXERCISE_FAIL, payload: generalErrorMessage})
+    return response
+  })
+}

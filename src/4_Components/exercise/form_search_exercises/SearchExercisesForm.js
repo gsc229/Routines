@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {publicExercisesQuery} from '../../../1_Actions/exerciseActions'
-import { muscleGroupList } from '../../dashboard/helpers/muscleGroupNameAndColorList'
+import { muscleGroupList } from '../../shared_helpers_and_variables/muscleGroupNameAndColorList'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'

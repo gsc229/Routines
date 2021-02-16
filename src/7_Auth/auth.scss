@@ -11,7 +11,9 @@
 .sign-in-form-container{
   margin-top: 100px;
   .signin-form{
-  
+    input{
+      padding: 3px;
+    }
     button{
       background-color: $routine-red;
       margin-top: 10px;

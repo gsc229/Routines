@@ -22,7 +22,7 @@ const LandingMenu = () => {
         <Navbar.Collapse id="navbarNav">
         <Nav>
           <Nav.Link style={isActiveTab('/signin').style} active={isActiveTab('/signin').active} as={Link} to='/signin'>Sign In</Nav.Link>
-          <Nav.Link style={isActiveTab('/signup').style} active={isActiveTab('/signup').active} as={Link} to="/signup">Create Account</Nav.Link>
+          {/* <Nav.Link style={isActiveTab('/signup').style} active={isActiveTab('/signup').active} as={Link} to="/signup">Create Account</Nav.Link> */}
           
         </Nav>
         </Navbar.Collapse>

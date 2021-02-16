@@ -1,0 +1,14 @@
+.carousel{
+  max-width: 900px;
+  margin: auto;
+  margin-top: 100px;
+  .carousel-inner{
+    .carousel-item{
+      .carousel-caption{
+        position: relative;
+        left: auto;
+        right: auto;
+      }
+    }
+  }
+}
