@@ -10,6 +10,8 @@
   }
   .dropdown{
     background-color: $bs-dark;
+    position: relative;
+    top: 2px;
     .dropdown-menu{
       background-color: $bs-dark;
       .dropdown-item{
@@ -25,6 +27,16 @@
       .active:hover{
         color: white;
       }
+    }
+  }
+
+  .logout-container{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    .icon{
+      font-size: 20px;
+      color: white;
     }
   }
 }

@@ -8,6 +8,7 @@ import {BiStopwatch} from 'react-icons/bi'
 import {AiOutlineNumber} from 'react-icons/ai'
 import {MdPool} from 'react-icons/md'
 import {FaRegHandPointLeft, FaRegHandPointRight, FaRegCalendarAlt} from 'react-icons/fa'
+import { IoLogOutOutline } from 'react-icons/io5'
 
 export const GrabberIcon = ({onClick, styles={}}) => <BsGrid3X3Gap style={styles} onClick={onClick} className='icon grabber-icon' />
 export const EyeIcon = ({onClick, styles={}}) => <BsEye style={styles} onClick={onClick} className='icon eye-icon' />
@@ -25,3 +26,4 @@ export const WeightLiftUpIcon = ({onClick, styles={}}) => <GiWeightLiftingUp  st
 export const PointLeftIcon = ({onClick, styles={}}) => <FaRegHandPointLeft  style={styles} onClick={onClick} className='icon point-left-icon'/>
 export const PointRightIcon= ({onClick, styles={}}) => <FaRegHandPointRight style={styles} onClick={onClick} className='icon point-right-icon'/>
 export const CalendarIcon = ({onClick, styles={}}) => <FaRegCalendarAlt  style={styles} onClick={onClick} className='icon calendar-icon'/>
+export const LogOutIcon = ({onClick, styles={}}) => <IoLogOutOutline  style={styles} onClick={onClick} className='icon log-out-icon'/>
