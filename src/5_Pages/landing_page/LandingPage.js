@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import {logInUser, clearErrorMessage} from '../../1_Actions/userActions'
 import {fetchRoutines} from '../../1_Actions/routineActions'
-import { useHistory } from 'react-router-dom'
 import { isDemo } from '../../config/config'
-import {useLocation} from 'react-router-dom'
-import LandingPageLayout from '../../6_Layouts/layout_two/LandingPageLayout.js'
+import LandingPageLayout from '../../6_Layouts/layout_two/LandingPageLayout'
+import LandingPageCarousel from './carousel/LandingPageCarousel'
 
 
 export const LandingPage = ({
@@ -28,7 +27,7 @@ export const LandingPage = ({
 
   return (
     <LandingPageLayout>
-      <h1>Landing Page</h1>
+      <LandingPageCarousel />
     </LandingPageLayout>
   )
 

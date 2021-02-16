@@ -49,3 +49,20 @@ export const updateExercise = (exerciseId, updates) => {
     return {succes: false, error_message: "Somthing went wrong. Try again lager"}
   })
 }
+
+export const deleteExercise = (exerciseId) => {
+  
+  return axiosWihAuth()
+  .delete(`/exercises/${exerciseId}`)
+  .then(deleteExerciseResponse=>{
+    console.log({deleteExerciseResponse})
+    return deleteExerciseResponse.data
+  })
+  .catch(deleteExerciseError => {
+    console.log({deleteExerciseError})
+    if(deleteExerciseError.response){
+      return deleteExerciseError.response.data
+    }
+    return {succes: false, error_message: "Somthing went wrong. Try again lager"}
+  })
+}

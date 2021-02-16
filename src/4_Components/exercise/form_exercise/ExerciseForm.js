@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import {useHistory} from 'react-router-dom'
 import { connect } from 'react-redux'
-import {createNewExercise, clearCurrentExercise, saveExerciseChanges, localWritingExercise} from '../../../1_Actions/exerciseActions'
+import {createNewExercise, clearCurrentExercise, saveExerciseChanges, localWritingExercise, destroyExercise} from '../../../1_Actions/exerciseActions'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
 import {majorMuscleGroups, categories} from '../../manage_routines/form_routine/routineFormData'
 import Form from 'react-bootstrap/Form'
@@ -14,24 +14,19 @@ import DiscardBtn from '../../buttons/DiscardBtn'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import EmbedAccordion from '../accordion_embed_instruction/EmbedAccordion'
 import IFramePreview from './IFramePreview'
+import Button from 'react-bootstrap/Button'
 
 export const ExerciseForm = ({ 
   currentExercise,
   currentExerciseName, 
   localWritingExercise, 
-  error_message, 
-  unsavedChanges,
-  clearErrorMessage, 
-  createNewExercise, 
+  createNewExercise,
+  destroyExercise,
   saveExerciseChanges,
   userId,
   showHeader=true,
   discardBtn=true,
   saveBtn=true,
-  goToWeekBtn=true,
-  finishLaterBtn=true,
-  continueEditingBtn=true,
-  goToExerciseBank=true
 }) => {
 
    /* 
@@ -92,6 +87,11 @@ export const ExerciseForm = ({
   const getHeader = () => {
     if(currentExercise._id ) return <h2>Currently Editing: {currentExerciseName}</h2> 
     if(!currentExercise._id) return <h2>Basic Exercise Info:</h2>
+  }
+
+  const handleDeleteExercise = async() => {
+    await destroyExercise(currentExercise._id)
+    history.push('/manage-exercises')
   }
 
 
@@ -178,11 +178,15 @@ export const ExerciseForm = ({
         <ButtonGroup className="mt-2">
           {saveBtn && 
           <SaveBtn style={{textAlign: 'center'}} className='mr-1'  onClick={() => handleCreateOrEdit('manageExercises')} text=" Save"/>}
+          {currentExercise._id && 
+          <Button onClick={handleDeleteExercise}>DELETE EXERCISE</Button>}
         </ButtonGroup>
+
+
         
-        <p>TODO: Turn these into a modal that pops up after save</p>
         
-        <ButtonGroup className="mt-2">
+        
+        {/* <ButtonGroup className="mt-2">
           {finishLaterBtn && 
           <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('manageExercises')} text=" Save and Finish Later" Icon="" />}
           {!unsavedChanges && goToWeekBtn && 
@@ -191,7 +195,7 @@ export const ExerciseForm = ({
           <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Exercise Bank" Icon="" />}
           {!unsavedChanges && continueEditingBtn && 
           <SaveBtn className='mr-1' onClick={() => handleCreateOrEdit('')} text=" Continue Editing" Icon="" />}
-        </ButtonGroup>
+        </ButtonGroup> */}
       </ButtonToolbar>
       <br></br>
       <br/>
@@ -213,7 +217,8 @@ const mapDispatchToProps = {
   clearErrorMessage,
   createNewExercise,
   saveExerciseChanges,
-  clearCurrentExercise
+  clearCurrentExercise,
+  destroyExercise
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExerciseForm)

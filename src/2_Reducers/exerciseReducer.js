@@ -10,7 +10,7 @@ const initialState = {
   error_message: '',
   exercisePagination: null,
   exerciseSearchResults: [],
-  userExercises: '', // [{}]
+  userExercises: [], // [{}]
   currentExercise: {
     name: null,
     category: null,
@@ -147,7 +147,9 @@ const reducer = (state=initialState, action) => {
         return{
           ...state,
           crudingExercise: false,
-          currentExercise: initialState.currentExercise
+          currentExercise: initialState.currentExercise,
+          userExercises: state.userExercises.filter(exercise => exercise._id !== action.payload._id),
+          exerciseSearchResults: state.exerciseSearchResults.filter(exercise => exercise._id !== action.payload._id)
         }
       case constants.DELETE_EXERCISE_FAIL:
         return{
