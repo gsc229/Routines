@@ -91,9 +91,7 @@ const reducer = (state=initialState, action) => {
       // but for some reason was not removed from the cRss
       return{
         ...state,
-        currentExerciseSets: action.payload.data,
-        currentRoutineSets: [...state.currentRoutineSets.filter(set => set.set_group === action.payload.setGroupId)]
-        
+        currentExerciseSets: action.payload.data
       }
     case constants.SET_CURRENT_EXERCISE_SETS:
       return{

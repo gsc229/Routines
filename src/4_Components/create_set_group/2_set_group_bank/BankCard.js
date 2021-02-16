@@ -7,7 +7,7 @@ import {
   setCurrentExerciseSets,
   createSingleExerciseSet, 
   saveExerciseSetChanges,
-  clearCurrentExerciseSet
+  
 } 
 from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
@@ -35,8 +35,7 @@ export const BankCard = ({
   snapshot,
   createSetGroupData,
   createSingleExerciseSet,
-  saveExerciseSetChanges,
-  clearCurrentExerciseSet
+  saveExerciseSetChanges
 }) => {
 
   const [modalShow, setModalShow] = useState(false)
@@ -98,7 +97,6 @@ export const BankCard = ({
   const handleOpenTargetsModal = (e) => {
     e.preventDefault()
     setCurrentExerciseSet(exerciseSet)
-    // slow down for touch screen to prevent outside modal close click
     
     setModalShow(`set-targets-${exerciseSet._id || index}`)
  
@@ -107,7 +105,6 @@ export const BankCard = ({
   const handleOpenSubGroupModal = (e) => {
     e.preventDefault()
     setCurrentExerciseSet(exerciseSet)
-    // slow down for touch screen to prevent outside modal close click
     setModalShow(`sub-group-${exerciseSet._id || index}`)
   }
 
@@ -193,7 +190,6 @@ const mapDispatchToProps = {
   destroyExerciseSet,
   createSingleExerciseSet,
   saveExerciseSetChanges,
-  clearCurrentExerciseSet,
   setCurrentExerciseSets
 }
 
