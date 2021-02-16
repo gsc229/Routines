@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import { isDemo } from '../config/config'
 import LandingPageLayout from '../6_Layouts/layout_two/LandingPageLayout.js'
-import {logInUser, clearErrorMessage} from '../1_Actions/userActions'
+import {logInUser, } from '../1_Actions/userActions'
 import {fetchRoutines} from '../1_Actions/routineActions'
+import DarkSpinner from '../4_Components/spinners/DarkSpinner'
 
 export const SignIn = ({
   logInUser, 
-  clearErrorMessage,
+  loggingIn,
   fetchRoutines,
   user,  
   loggedIn, 
@@ -32,6 +33,7 @@ export const SignIn = ({
     password: 'user123'
   }
 
+  const signInMessage = isDemo ? 'Please wait. Demo may take a few seconds...' : 'Signing in...'
 
   useEffect(()=> {
     if(loggedIn){
@@ -56,10 +58,7 @@ export const SignIn = ({
     }
     logInUser(credentials)
   }
-
   
-
-
   return (
     <LandingPageLayout >
       <div className ='container sign-in-container'>
@@ -67,13 +66,15 @@ export const SignIn = ({
           <form action="" onSubmit={handleSubmit} className="auth-form signin-form">
             <h1>{isDemo && 'Demo '}Sign In</h1>
             <input
+            disabled={loggingIn}
             onChange={handleChange} 
             name='email'
             type="email" 
             value={isDemo ? demoCredentials.email : credentials.email}
             placeholder='email'
             className="email"/>
-            <input 
+            <input
+            disabled={loggingIn} 
             onChange={handleChange}
             value={isDemo ? demoCredentials.password : credentials.password}
             name='password'
@@ -84,9 +85,12 @@ export const SignIn = ({
               <p className={`error-message ${error_message && ' hide-message'}`}>{error_message}</p>
             </div>
             <button
-            disabled={disabled}
-            className="btn">Sign In</button>
+            disabled={disabled || loggingIn}
+            className="btn">
+              Sign In
+            </button>
           </form>
+          {loggingIn && <DarkSpinner style={{height: '100px'}} text={signInMessage} />}
         </div>
       </div>
     </LandingPageLayout>
@@ -102,7 +106,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   logInUser,
-  clearErrorMessage,
   fetchRoutines
 }
 

@@ -7,7 +7,7 @@ import {
   setCurrentExerciseSets,
   createSingleExerciseSet, 
   saveExerciseSetChanges,
-  clearCurrentExerciseSet
+  
 } 
 from '../../../1_Actions/exerciseSetActions'
 import Card from 'react-bootstrap/Card'
@@ -35,8 +35,7 @@ export const BankCard = ({
   snapshot,
   createSetGroupData,
   createSingleExerciseSet,
-  saveExerciseSetChanges,
-  clearCurrentExerciseSet
+  saveExerciseSetChanges
 }) => {
 
   const [modalShow, setModalShow] = useState(false)
@@ -191,7 +190,6 @@ const mapDispatchToProps = {
   destroyExerciseSet,
   createSingleExerciseSet,
   saveExerciseSetChanges,
-  clearCurrentExerciseSet,
   setCurrentExerciseSets
 }
 
