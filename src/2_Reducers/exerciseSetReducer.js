@@ -194,16 +194,15 @@ const reducer = (state=initialState, action) => {
       }
     case constants.BULK_WRITE_EXERCISE_SETS_SUCCESS:
       // success will always return all the remaining/modified/created sets of a single set group (populated with exercise)
-      const {routine} = action.payload.findByObj
-
-      const targetSetGroupId = action.payload.data[0].set_group
-      console.log({targetSetGroupId})
+      // when sets are deleted look for set_group in findByObj. Need to do it this way for cases where there are no remaining sets 
+      // from which to determine the set_group 
+      const {routine, set_group} = action.payload.findByObj
       
       return{
         ...state,
         crudingExerciseSet: false,
         currentExerciseSets: action.payload.data.sort((a, b) => a.order - b.order),
-        currentRoutineSets: routine ? action.payload.data : [...state.currentRoutineSets.filter(set => set.set_group !== targetSetGroupId), ...action.payload.data].sort((a, b) => a.order - b.order)
+        currentRoutineSets: routine ? action.payload.data : [...state.currentRoutineSets.filter(set => set.set_group !== set_group), ...action.payload.data].sort((a, b) => a.order - b.order)
          
       }
     case constants.BULK_WRITE_EXERCISE_SETS_FAIL:
