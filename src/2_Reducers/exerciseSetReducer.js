@@ -198,7 +198,7 @@ const reducer = (state=initialState, action) => {
 
       const targetSetGroupId = action.payload.data[0].set_group
       console.log({targetSetGroupId})
-
+      
       return{
         ...state,
         crudingExerciseSet: false,
