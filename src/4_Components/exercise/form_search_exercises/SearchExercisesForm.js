@@ -110,7 +110,8 @@ export const SearchExercisesForm = ({
         </div>
           <div className='form-checkbox-container'>
             {muscleGroupList.sort((a, b) => (a.name > b.name) ? 1 : -1).map((mg, idx) => (
-              <Form.Check 
+              <Form.Check
+              key={mg.name} 
               onClick={handleCheckValue}
               label={mg.name}
               name="muscle_group"
