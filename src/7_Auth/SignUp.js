@@ -55,9 +55,9 @@ export const SignUp = ({
   
   return (
     <LandingPageLayout >
-      <div className ='container sign-in-container'>
-        <div className="sign-in-form-container">
-          <form action="" onSubmit={handleSubmit} className="auth-form signin-form">
+      <div className ='container sign-up-container'>
+        <div className="sign-up-form-container">
+          <form action="" onSubmit={handleSubmit} className="auth-form signup-form">
             <h1>{isDemo && 'Demo '}Sign Up</h1>
             <label htmlFor='email'>Email:</label>
             <input
