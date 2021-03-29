@@ -51,6 +51,11 @@ const reducer = (state=initialState, action) => {
         currentRoutineName: action.payload.name,
         unsavedChanges: false
       }
+    case  constants.REPLACE_ROUTINE:
+      return{
+        ...state,
+        userRoutines: [...state.userRoutines.map(routine => routine._id === action.payload._id ? action.payload : routine)]
+      }
     case constants.CLEAR_ROUTINE_SEARCH_RESULTS:
       return{
         ...state,

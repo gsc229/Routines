@@ -8,6 +8,10 @@ export const setCurrentRoutine = (routine) => dispatch => {
   dispatch({type: constants.SET_CURRENT_ROUTINE, payload: routine})
 }
 
+export const replaceRoutine = (updatedRoutine) => dispatch => {
+  dispatch({type: constants.REPLACE_ROUTINE, payload: updatedRoutine})
+}
+
 export const localWritingRoutine = (field, data) => dispatch => {
   dispatch({type: constants.WRITING_ROUTINE, payload: {field, data}})
 }

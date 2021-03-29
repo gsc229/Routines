@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import { isDemo } from '../config/config'
 import LandingPageLayout from '../6_Layouts/layout_two/LandingPageLayout.js'
-import {logInUser, } from '../1_Actions/userActions'
+import { logInUser } from '../1_Actions/userActions'
 import {fetchRoutines} from '../1_Actions/routineActions'
 import DarkSpinner from '../4_Components/spinners/DarkSpinner'
 
