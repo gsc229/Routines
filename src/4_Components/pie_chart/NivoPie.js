@@ -35,7 +35,8 @@ const NivoPie = ({exSetStratumData={}, exerciseNameMuscleGroupColor}) => {
         innerRadius={.5}
         padAngle={0.7}
         cornerRadius={0}
-        colors={d => d.data.color}
+        //colors={d => d.data.color}
+        colors={{ scheme: 'red_grey' }}
         borderWidth={1}
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
         radialLabel={'label'}
