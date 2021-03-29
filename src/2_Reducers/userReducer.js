@@ -29,7 +29,8 @@ const reducer = (state=initialState, action) => {
       return {
         ...state,
         error_message: action.payload,
-        loggedIn: false
+        loggedIn: false,
+        loggingIn: false
       }
     case constants.LOG_OUT: 
       return {

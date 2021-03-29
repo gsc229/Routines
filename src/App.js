@@ -35,7 +35,7 @@ function App({
 useEffect(() => {
   const error_message = `${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}` 
   if(error_message && environment ==='development'){
-    alert(`${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}`)
+    console.log(`${user_ERROR}${routine_ERROR}${set_group_ERROR}${exercise_set_ERROR}${exercise_ERROR}`)
   }
 
   if(error_message){
