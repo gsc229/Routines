@@ -7,7 +7,7 @@ import {IoSpeedometerOutline} from 'react-icons/io5'
 import {BiStopwatch} from 'react-icons/bi'
 import {AiOutlineNumber} from 'react-icons/ai'
 import {MdPool} from 'react-icons/md'
-import {FaRegHandPointLeft, FaRegHandPointRight, FaRegCalendarAlt} from 'react-icons/fa'
+import {FaRegHandPointLeft, FaRegHandPointRight, FaRegCalendarAlt, FaCheck, FaTimes} from 'react-icons/fa'
 import { IoLogOutOutline } from 'react-icons/io5'
 
 export const GrabberIcon = ({onClick, styles={}}) => <BsGrid3X3Gap style={styles} onClick={onClick} className='icon grabber-icon' />
@@ -27,3 +27,5 @@ export const PointLeftIcon = ({onClick, styles={}}) => <FaRegHandPointLeft  styl
 export const PointRightIcon= ({onClick, styles={}}) => <FaRegHandPointRight style={styles} onClick={onClick} className='icon point-right-icon'/>
 export const CalendarIcon = ({onClick, styles={}}) => <FaRegCalendarAlt  style={styles} onClick={onClick} className='icon calendar-icon'/>
 export const LogOutIcon = ({onClick, styles={}}) => <IoLogOutOutline  style={styles} onClick={onClick} className='icon log-out-icon'/>
+export const Check = ({onClick, styles={}}) => <FaCheck  style={styles} onClick={onClick} className='icon check-icon'/>
+export const CloseX = ({onClick, styles={}}) => <FaTimes  style={styles} onClick={onClick} className='icon close-x-icon'/>
