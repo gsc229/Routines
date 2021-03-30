@@ -97,7 +97,7 @@ export const SignUp = ({
 
   const getErrorMessage = () => {
     if(error_message.includes('duplicate key')) return "An account with that email already exists. Please sign in."
-
+    
     return error_message
   }
   

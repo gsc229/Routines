@@ -5,6 +5,8 @@ import LandingPageLayout from '../6_Layouts/layout_two/LandingPageLayout.js'
 import { logInUser } from '../1_Actions/userActions'
 import {fetchRoutines} from '../1_Actions/routineActions'
 import DarkSpinner from '../4_Components/spinners/DarkSpinner'
+import Alert from 'react-bootstrap/Alert'
+
 
 export const SignIn = ({
   logInUser, 
@@ -59,6 +61,12 @@ export const SignIn = ({
     }
     logInUser(credentials)
   }
+
+  const getErrorMessage = () => {
+    if(error_message.includes('duplicate key')) return "An account with that email already exists. Please sign in."
+    
+    return error_message
+  }
   
   return (
     <LandingPageLayout >
@@ -83,7 +91,11 @@ export const SignIn = ({
             placeholder='password'
             className="password"/>
             <div className={`error-message-container ${error_message && 'open-container'}`}>
-              <p className={`error-message ${error_message && ' hide-message'}`}>{error_message}</p>
+              <Alert 
+              variant='danger'
+              className={`error-message ${error_message && ' show-message'}`}>
+                {getErrorMessage()}
+              </Alert>
             </div>
             <button
             disabled={disabled || loggingIn}
