@@ -61,10 +61,9 @@ const ScheduleCalendar = ({
   const handleDayClick = (setGroups, date) => {
     history.push(`/execute-sets/${date}`)
     setCurrentSetGroups(setGroups)
-    //return <Redirect to={`/execute-sets/${date}`} />
   }
 
-  console.log({calendar, datesSetGroups})
+  
   return (
     <div className='schedule-wrapper'>
       {crudingRoutine === 'fetching-routines' && <DarkSpinner text='Loading Schedule...' />}

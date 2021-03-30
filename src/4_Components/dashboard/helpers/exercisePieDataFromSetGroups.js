@@ -28,7 +28,7 @@ export const exercisePieDataFromSetGroups = (exSets=[], setGroupIdDate={}, start
       exerciseIdName[set.exercise._id] = set.exercise.name
       exerciseNameId[set.exercise.name] = set.exercise._id
       exerciseIdColor[set.exercise._id] = set.exercise.color || null
-      exerciseNameMuscleGroupColor[set.exercise.name] = muscleGroupNameAndColorList[set.exercise.muscle_group].color || null
+      exerciseNameMuscleGroupColor[set.exercise.name] = muscleGroupNameAndColorList[set.exercise.muscle_group] ? muscleGroupNameAndColorList[set.exercise.muscle_group].color : null
     }
 
     if(set.exercise.muscle_group && !muscleGroupCount[set.exercise.muscle_group]){
