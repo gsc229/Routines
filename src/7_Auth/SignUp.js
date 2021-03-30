@@ -2,19 +2,20 @@ import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import { isDemo } from '../config/config'
 import LandingPageLayout from '../6_Layouts/layout_two/LandingPageLayout.js'
-import { logInUser } from '../1_Actions/userActions'
+import { createAccount } from '../1_Actions/userActions'
 import {fetchRoutines} from '../1_Actions/routineActions'
 import DarkSpinner from '../4_Components/spinners/DarkSpinner'
 import { Check, CloseX } from '../4_Components/icons/Icons'
+import Alert from 'react-bootstrap/Alert'
+import {useHistory} from 'react-router-dom'
 
 export const SignUp = ({
-  logInUser, 
+  createAccount, 
   creatingAccount,
   fetchRoutines,
   user,  
   loggedIn, 
-  error_message, 
-  history
+  error_message
 }) => {
   /* 
     test user:
@@ -28,10 +29,10 @@ export const SignUp = ({
     passwordMatch: ''
   })
 
-  const disabled = !isDemo && (credentials.email.length < 1 || credentials.password.length < 1)
+  const history = useHistory()
 
   const signInMessage = "Creating Account.."
-  console.log({credentials})
+  
 
   const isValidEmail = () => {
     const emailPattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
@@ -75,21 +76,29 @@ export const SignUp = ({
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    logInUser(credentials)
+    createAccount(credentials)
   }
 
   const emailValidMessage = () => {
-    if(isValidEmail()) return <p>Valid Email <Check /></p>
-    if(!isValidEmail()) return <p>Email not valid <CloseX /></p>
+    if(isValidEmail()) return <p>Valid email <Check styles={{color: 'lime'}} /></p>
+    if(!isValidEmail()) return <p><CloseX styles={{color: 'red'}} /> Email not valid</p>
   }
 
   const pwStrengthMessage = () => {
-    if(isValidPw()) return <p>Valid Password <Check /></p>
-    if(!isValidPw()) return <p>Password must be at least eight characters long. Must contain at least one number, one lowercase letter, one uppercase letter and one special character !@#$%^&*  <CloseX/></p>
+    if(isValidPw()) return <p>Valid password <Check styles={{color: 'lime'}} /></p>
+    if(!isValidPw()) return <p>{credentials.password.length > 1 && <CloseX styles={{color: 'red'}}/>} Password must be at least eight characters long. Must contain at least one number, one lowercase letter, one uppercase letter and one special character !@#$%^&*</p>
   }
 
   const pwMatchMessage = () => {
+    if(isMatch()) return <p>Passwords match <Check styles={{color: 'lime'}} /></p>
 
+    if(!isMatch()) return <p><CloseX styles={{color: 'red'}}/> Passwords do not match</p>
+  }
+
+  const getErrorMessage = () => {
+    if(error_message.includes('duplicate key')) return "An account with that email already exists. Please sign in."
+
+    return error_message
   }
   
   return (
@@ -107,6 +116,7 @@ export const SignUp = ({
             value={credentials.email}
             placeholder='email'
             className="email"/>
+            {credentials.email.length > 1 && emailValidMessage()}
             <label htmlFor='password'>Password: </label>
             <input
             disabled={creatingAccount} 
@@ -116,6 +126,7 @@ export const SignUp = ({
             type="password"
             placeholder='password'
             className="password"/>
+            {pwStrengthMessage()}
             <input
             disabled={creatingAccount} 
             onChange={handleChange}
@@ -124,13 +135,18 @@ export const SignUp = ({
             type="password"
             placeholder='retype password'
             className="password"/>
+            {credentials.passwordMatch.length > 1 && pwMatchMessage()}
             <div className={`error-message-container ${error_message && 'open-container'}`}>
-              <p className={`error-message ${error_message && ' hide-message'}`}>{error_message}</p>
+              <Alert 
+              variant='danger'
+              className={`error-message ${error_message && ' show-message'}`}>
+                {getErrorMessage()}
+              </Alert>
             </div>
             <button
             disabled={!canSubmit() || creatingAccount}
             className="btn">
-              Sign In
+              Sign Up
             </button>
           </form>
           {creatingAccount && <DarkSpinner style={{height: '100px'}} text={signInMessage} />}
@@ -148,7 +164,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  logInUser,
+  createAccount,
   fetchRoutines
 }
 

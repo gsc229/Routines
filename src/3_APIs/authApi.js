@@ -16,14 +16,14 @@ export const signIn = (userInfo) => {
 
 export const registger = (newUserInfo) => {
   return axiosWithAuth()
-  .post('/auth/new-user')
+  .post('/auth/new-user', newUserInfo)
   .then(response => {
     console.log({response})
     localStorage.setItem('token', JSON.stringify(response.data.token))
     return response.data
   })
-  .catch(registgerError => {
-    console.log({registgerError})
-    return registgerError.response.data
+  .catch(registrationError => {
+    console.log({registrationError})
+    return registrationError.response.data
   })
 }
