@@ -8,7 +8,6 @@ import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Calendar from '../../4_Components/schedule_calendar/SchedulePageCalendar'
 import {FiRefreshCcw} from 'react-icons/fi'
 import Button from 'react-bootstrap/Button'
-import { PointRightIcon } from '../../4_Components/icons/Icons'
 
 export const SchedulePage = ({
   fetchRoutines,
@@ -22,7 +21,7 @@ export const SchedulePage = ({
   }
 
   const getTopMessage = () => {
-    if(userRoutines.length > 0) return <p>Click circles to view set group exercises. Click days to execute exercises.</p>
+    if(userRoutines.length > 0) return <p>Click on days with set groups to execute exercises.</p>
   }
 
 
@@ -30,7 +29,7 @@ export const SchedulePage = ({
     <LayoutOne showTop={false}>
       <Container 
       style={{minHeight: 'fit-content'}}
-      className='page manage-routines container'>
+      className='page schedule-page container'>
         <FiRefreshCcw style={{color: 'limegreen', cursor: 'pointer'}} onClick={handleRefresh} />
         {getTopMessage()}
         {userRoutines.length > 0 && !crudingRoutine && 
