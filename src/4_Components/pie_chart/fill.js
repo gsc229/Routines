@@ -1,31 +1,31 @@
 export const fill=[
   {
       match: {
-        id: 'ruby'
+        id: 'Legs'
       },
       id: 'dots'
   },
   {
       match: {
-          id: 'c'
+          id: 'Back'
       },
       id: 'dots'
   },
   {
       match: {
-          id: 'go'
+          id: 'Arms'
+      },
+      id: 'lines'
+  },
+  {
+      match: {
+        id: 'Abs'
       },
       id: 'dots'
   },
   {
       match: {
-        id: 'python'
-      },
-      id: 'dots'
-  },
-  {
-      match: {
-          id: 'scala'
+          id: 'Chest'
       },
       id: 'lines'
   },

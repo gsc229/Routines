@@ -81,24 +81,14 @@ export const Dashboard = ({
         </div>
       </div>
       <div className='visualizations-container'>
-      <Tabs
-      variant='pills'
-      id='data-tabs'
-      activeKey={tabKey}
-      onSelect={k => setTabKey(k)}>
-        <Tab eventKey='set-breakdown' title='Set Break Down'>
           
-          <SetBreakDownTab
-          combinedExSets={combinedExSets}
-          weekIdDate={dateMaps.weekIdDate}
-          setGroupIdDate={dateMaps.setGroupIdDate}
-          startDate={startDate}
-          />
-
-        </Tab>
-        <Tab eventKey='muscle-group-totals' title='Muscle Group Totals'>
-
-        {tabKey==='muscle-group-totals' && 
+        <SetBreakDownTab
+        combinedExSets={combinedExSets}
+        weekIdDate={dateMaps.weekIdDate}
+        setGroupIdDate={dateMaps.setGroupIdDate}
+        startDate={startDate}
+        />
+        
         <MuscleGroupTotalsTab
         showActuals={showActuals}
         setShowActuals={setShowActuals}
@@ -112,10 +102,8 @@ export const Dashboard = ({
         startDate={startDate}
         capitalizeField={capitalizeField}
         lineChartData={lineChartData}
-        />}
+        />
         
-        </Tab>
-      </Tabs>
       </div>
     </div>
   )
