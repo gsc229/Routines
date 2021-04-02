@@ -1,5 +1,5 @@
 import React from 'react'
-import {ResponsivePieCanvas} from '@nivo/pie'
+import {ResponsivePie} from '@nivo/pie'
 import randomColor from 'randomcolor'
 import {defs} from './defs'
 import {fill} from './fill'
@@ -29,7 +29,7 @@ const NivoPie = ({exSetStratumData={}, exerciseNameMuscleGroupColor}) => {
   return (
     <div 
     className="novi-pie-chart-container">
-      <ResponsivePieCanvas
+      <ResponsivePie
         data={exerciseData}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={.5}
