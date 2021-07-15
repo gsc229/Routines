@@ -2,17 +2,16 @@ import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {successGifLinks} from '../../utils/randomGifs'
 import {setCurrentExerciseSet, saveExerciseSetChanges} from '../../1_Actions/exerciseSetActions'
-import {getExSetActiveFields} from '../../utils/getExSetActiveFields'
+import {getExSetActiveFields} from './getExSetActiveFields'
 import {useWindowSize} from '../../custom_hooks/useWindowSize'
 import ExecuteSetNavs from './ExecuteSetNavs'
 import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard'
 import Button from 'react-bootstrap/Button'
-import RecordInputs from './RecordInputs'
+import RecordInputs from './RecordAction'
 
 export const ExecuteSet = ({
   currentExerciseSet,
   routineNamesColorsStartDates,
-  saveExerciseSetChanges,
   setCurrentPage
 }) => {
 
@@ -23,7 +22,8 @@ export const ExecuteSet = ({
   const [targetsToActuals, setTargetsToActuals] = useState({})
   const [updateSuccess, setUpdateSuccess] = useState(false)
   const [sessionSaved, setSessionSaved] = useState(false)
-  
+  setCurrentPage('execute-set')
+
   useEffect(() => {
 
     const activeFields = getExSetActiveFields(currentExerciseSet)
@@ -31,12 +31,8 @@ export const ExecuteSet = ({
     setTargetsToActuals(activeFields.targetToActuals)
     setSessionSaved(false)
     
-  }, [currentExerciseSet._id, currentExerciseSet.updatedAt])
+  }, [currentExerciseSet._id, currentExerciseSet.updatedAt, currentExerciseSet])
 
-  
-  useEffect(() => {
-    setCurrentPage('execute-set')
-  }, [])
 
   return (
     <div 

@@ -35,11 +35,11 @@ export const Dashboard = ({
 
   useEffect(() => {
     const {weekIdDate, setGroupIdDate} = mapSgsToDates(userRoutines)
-    setDateMaps({
-      ...dateMaps,
+    setDateMaps((d) => ({
+      ...d,
       weekIdDate,
       setGroupIdDate
-    })
+    }))
     setCombinedExSets(combineExSets(userRoutines))
   },[userRoutines])
 
@@ -54,7 +54,7 @@ export const Dashboard = ({
       yearActual: getMonthCalendarWeeksMuscleGroupData(combinedExSets, selectedMuscleGroups, dateMaps.weekIdDate, startDate, field.replace('target', 'actual') , null , 'year').muscleGroupSets,
     }
     setLineChartData(newLineChartData)
-  }, [combinedExSets, startDate, selectedMuscleGroups, field])
+  }, [combinedExSets, startDate, selectedMuscleGroups, field, dateMaps.weekIdDate])
 
   const selectDate = (e) => {
     const newMomenet = moment.utc(e.target.value)

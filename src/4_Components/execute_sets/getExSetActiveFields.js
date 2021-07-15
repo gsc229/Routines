@@ -23,6 +23,6 @@ export const getExSetActiveFields = (currentExerciseSet, noValueStr=null) => {
 
     }
   })
-  console.log({activeTargets, activeActuals, targetToActuals})
+  
   return {activeTargets, activeActuals, targetToActuals}
 }

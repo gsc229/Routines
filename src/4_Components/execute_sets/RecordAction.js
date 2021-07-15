@@ -20,6 +20,10 @@ export const RecordInputs = ({
   const [editingActual, setEditingActual] = useState(null) 
   const [originalActuals, setOriginalActuals] = useState([])
 
+  useEffect(() => {
+    setOriginalActuals(getOriginalActuals())
+  }, [targets])
+
   const targetsEqualActuals = () => {
     for(let i = 0; i < targets.length; i++){
       if(targets[i].value !== currentExerciseSet[targets[i].field_name.replace('target', 'actual')]){
@@ -38,10 +42,7 @@ export const RecordInputs = ({
     return originals
   }
 
-  useEffect(() => {
-    setOriginalActuals(getOriginalActuals())
-
-  }, [targets])
+  
 
   
 
@@ -83,9 +84,8 @@ export const RecordInputs = ({
   const showActualsHaveChanged = () => {
 
     for(const actual of originalActuals){
-      
       const currentSetActual = currentExerciseSet[actual.field_name] 
-
+      console.log({currentSetActual, value: actual.value})
       if(actual.value !== currentSetActual){
         return true
       }
@@ -105,49 +105,49 @@ export const RecordInputs = ({
     <div
     className="revising-or-saved-container inputs-and-targets-revising-container">
           
-          <div className='submit-and-cancel-btns'>
-            
-            <Button
-            size='sm'
-            disabled={targets.length < 1 || targetsEqualActuals()}
-            onClick={handleAutoFill}
-            variant='danger'
-            className='submit-all-btn'>
-              {`Match Target${targets.length > 1 ? 's' : ''}`}
-            </Button>
-
-
-            <Button
-            size='sm'
-            disabled={!showActualsHaveChanged()}
-            onClick={handleSubmit}
-            variant={showActualsHaveChanged() ? 'outline-success' : 'outline-secondary' }
-            className='submit-all-btn'>
-              Submit
-            </Button>
-            <Button
-            size='sm'
-            disabled={!showActualsHaveChanged()}
-            onClick={handleCancel}
-            variant={showActualsHaveChanged() ? 'outline-primary' : 'outline-secondary' }
-            className='submit-all-btn'>
-              Cancel
-            </Button>
-
-          </div>
+      <div className='submit-and-cancel-btns'>
         
-          
-          <RecordSetList
-          userRoutines={userRoutines}
-          targets={targets}
-          targetsToActuals={targetsToActuals}
-          currentExerciseSet={currentExerciseSet}
-          setEditingActual={setEditingActual} 
-          editingActual={editingActual}
-          routineColor={routineColor}/>
+        <Button
+        size='sm'
+        disabled={targets.length < 1 || targetsEqualActuals()}
+        onClick={handleAutoFill}
+        variant='danger'
+        className='submit-all-btn'>
+          {`Match Target${targets.length > 1 ? 's' : ''}`}
+        </Button>
+
+        <Button
+        size='sm'
         
-        
+        onClick={handleSubmit}
+        variant='outline-success'
+        className='submit-all-btn'>
+          Submit
+        </Button>
+
+        {/* <Button
+        size='sm'
+        //disabled={!showActualsHaveChanged()}
+        onClick={handleCancel}
+        variant='outline-danger'
+        className='submit-all-btn'>
+          Cancel
+        </Button> */}
+
       </div>
+    
+      
+      <RecordSetList
+      userRoutines={userRoutines}
+      targets={targets}
+      targetsToActuals={targetsToActuals}
+      currentExerciseSet={currentExerciseSet}
+      setEditingActual={setEditingActual} 
+      editingActual={editingActual}
+      routineColor={routineColor}/>
+        
+        
+  </div>
   )
 }
 

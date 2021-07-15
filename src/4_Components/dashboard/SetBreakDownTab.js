@@ -4,8 +4,6 @@ import ExercisePies from './ExercisePies'
 import Form from 'react-bootstrap/Form'
 import { muscleGroupColorObj } from '../shared_helpers_and_variables/muscleGroupNameAndColorList'
 
-
-
 const SetBreakDownTab = ({
   combinedExSets,
   setGroupIdDate,
@@ -23,8 +21,8 @@ const SetBreakDownTab = ({
   useEffect(() => {
     const {exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor} = 
     exercisePieDataFromSetGroups(combinedExSets, setGroupIdDate, startDate, pieData.duration, muscleGroupColorObj)
-    setPieData({...pieData, exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor})
-  }, [pieData.duration, startDate, combinedExSets])
+    setPieData((p) => ({...p, exerciseNameExSetCount, muscleGroupCount, exerciseNameMuscleGroupColor}))
+  }, [pieData.duration, startDate, combinedExSets, setGroupIdDate])
 
 
   const handleAllTimePieClick = (e) => {
