@@ -137,12 +137,13 @@ export const RoutinesAccordion = ({
             {routine.description ? <p>{routine.description}</p> : <p>This routine has no description yet.</p>}
           </span></li>
         </ul> 
-        <a
+        <button
+          className="btn btn-danger"
           href='#'
           onClick={() => {
             setModalShow(true)
             setRoutineForDeletion(routine)
-          }}>DELETE ROUTINE</a> 
+          }}>DELETE ROUTINE</button> 
       </div>
     )
   }

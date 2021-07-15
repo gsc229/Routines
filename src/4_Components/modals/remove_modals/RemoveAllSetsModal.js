@@ -14,7 +14,7 @@ const RemoveAllModal = ({
 }) => {
 
   const handleConfirm = () => {
-    const success = handleRemoveAllClick(resource._id)
+    handleRemoveAllClick(resource._id)
     setModalShow(false)
   }
 

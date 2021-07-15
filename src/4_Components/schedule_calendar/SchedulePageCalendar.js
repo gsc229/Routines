@@ -44,7 +44,7 @@ const ScheduleCalendar = ({
       fetchUserRoutines()
     }
 
-  }, [])
+  }, [fetchRoutines, userId, userRoutines])
 
   useEffect(() => {  
     if(userRoutines){

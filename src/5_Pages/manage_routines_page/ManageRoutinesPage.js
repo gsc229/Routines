@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
@@ -13,8 +13,6 @@ import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 export const ManageRoutinesPage = ({
   history, 
   clearCurrentRoutine,
-  fetchRoutines,
-  userId,
   crudingRoutine,
   userRoutines
 }) => {

@@ -64,7 +64,19 @@ export const ExecuteSetNavs = ({
   setPrevPath(newPrevPath)
 
 
-  }, [currentOrderNum])
+  }, [
+    currentOrderNum, 
+    currentExerciseSet,
+    currentExerciseSet.order, 
+    currentExerciseSets, 
+    nextSet, 
+    order, 
+    prevSet, 
+    setDate,
+    setGroupId,
+    routineName, 
+    setCurrentExerciseSet
+  ])
 
 
   const handleSetSelect = (selectObj) => {

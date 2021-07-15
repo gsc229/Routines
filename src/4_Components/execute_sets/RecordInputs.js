@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import {saveExerciseSetChanges, setCurrentExerciseSet, localWritingExerciseSet} from '../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
-import NavLink from 'react-bootstrap/NavLink'
 import RecordSetList from './RecordSetList'
 
 export const RecordInputs = ({
@@ -20,6 +19,7 @@ export const RecordInputs = ({
 
   const [editingActual, setEditingActual] = useState(null) 
   const [originalActuals, setOriginalActuals] = useState([])
+
   const targetsEqualActuals = () => {
     for(let i = 0; i < targets.length; i++){
       if(targets[i].value !== currentExerciseSet[targets[i].field_name.replace('target', 'actual')]){
@@ -70,7 +70,7 @@ export const RecordInputs = ({
 
   }
 
-  const actualsComplete = () => {
+  /* const actualsComplete = () => {
 
     for(const target in targetsToActuals){
       if(targetsToActuals[target].value === 'not recorded'){
@@ -78,7 +78,7 @@ export const RecordInputs = ({
       }
     }
     return true
-  }
+  } */
 
   const showActualsHaveChanged = () => {
 

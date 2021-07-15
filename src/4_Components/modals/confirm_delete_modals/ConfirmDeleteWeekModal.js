@@ -19,8 +19,7 @@ export const ConfirmDeleteWeekModal = ({
   setSelectedWeekNumbers
 }) => {
 
-  failingTextObject ? failingTextObject = failingTextObject : failingTextObject = 
-  {title: "Sorry!", paragraph: "Looks like something went wrong. Try again later"}
+  failingTextObject = failingTextObject ? failingTextObject : {title: "Sorry!", paragraph: "Looks like something went wrong. Try again later"}
 
   const [deleteFailed, setDeleteFailed] = useState({
     failed: false,
@@ -29,7 +28,7 @@ export const ConfirmDeleteWeekModal = ({
   })
 
 
-  confirmingTextObject ? confirmingTextObject = confirmingTextObject : confirmingTextObject = {
+  confirmingTextObject  = confirmingTextObject ? confirmingTextObject : {
   title: <p className='delete-modal-heading-text'>Are you sure you want to delete <span className='delete-modal-heading-name-sapn'>Week: {currentWeek.week_number}</span> ?</p>, 
   paragraph: 
   "This will shift later weeks up one week. Deleting a week will delete all the set groups connected to that week, but your records for doing the exercises will be saved"}

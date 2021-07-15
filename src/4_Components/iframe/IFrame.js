@@ -1,11 +1,10 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment} from 'react'
 import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed'
 import {purifyIframe} from './sanitizeHTML'
 
 const IFrame = ({
   iframeString, 
   forFormValidation=false,
-  heading=false,
   validation_error_message=<h4>Sorry, only allows iframe elements from YouTube</h4>,
   default_error_message="",
   show_default_error_message=true

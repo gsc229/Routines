@@ -127,7 +127,6 @@ export const ExerciseForm = ({
             <Col md='4' style={{paddingLeft: 0}}>
               <Form.Control
               onChange={handleChange} 
-              name="difficulty_scale" 
               defaultValue={0} 
               name="difficulty_scale" 
               value={difficulty_scale ? difficulty_scale : 0} 

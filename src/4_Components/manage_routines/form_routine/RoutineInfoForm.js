@@ -33,7 +33,7 @@ export const RoutineInfoForm = ({
 }) => {
 
 
-  const {name, category, muscle_group, target_muscle, description, difficulty_scale, start_date, end_date} = currentRoutine
+  const {name, category, muscle_group, target_muscle, description, difficulty_scale, start_date} = currentRoutine
   
   const history = useHistory()
   const handleChange = e => {
@@ -142,8 +142,7 @@ export const RoutineInfoForm = ({
             onChange={handleChange}
             className='difficulty-slider'
             name="difficulty_scale" 
-            defaultValue={0} 
-            name="difficulty_scale" 
+            defaultValue={0}
             value={difficulty_scale ? difficulty_scale : 0} 
             type="range"
             custom

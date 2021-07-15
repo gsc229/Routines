@@ -56,10 +56,6 @@ const reducer = (state=initialState, action) => {
           loggedIn: false,
           creatingAccount: false
         }
-      case constants.LOG_OUT: 
-        return {
-          ...initialState
-        }
     case constants.LOG_OUT: 
       return {
         ...initialState

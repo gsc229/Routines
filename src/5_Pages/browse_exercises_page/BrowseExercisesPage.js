@@ -14,7 +14,7 @@ export const BrowseExercises = ({
 
   useEffect(() => {
     clearExerciseSearchResults()
-  },[])
+  },[clearExerciseSearchResults])
  
   return (
     <Layout>

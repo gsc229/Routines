@@ -38,7 +38,7 @@ export const ExecuteSetsPage = ({
       return history.push('/schedule')
     }
 
-  }, [])
+  }, [history, currentSetGroups, userRoutines])
   
   return (
     <LayoutOne showTop={false}>

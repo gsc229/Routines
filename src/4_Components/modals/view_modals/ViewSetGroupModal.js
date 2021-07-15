@@ -18,7 +18,7 @@ export const ViewSetGroupModal = ({
     
     const keyValueSets = []
 
-    Object.keys(exSet).map(key => {
+    Object.keys(exSet).forEach(key => {
       if(key.includes('target') && exSet[key]){
         const target = key.split("_").join(" ")
         const actual = target.replace('target', 'actual')

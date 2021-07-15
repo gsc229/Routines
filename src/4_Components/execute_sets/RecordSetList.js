@@ -48,7 +48,6 @@ const RecordSetList = ({
           {targets.length  > 0 && targets.map(target =>{ 
 
             const actualName = targetsToActuals[target.field_name].name
-            const actualValue = targetsToActuals[target.field_name].value 
             const actualField = targetsToActuals[target.field_name].field_name
 
             return( 
