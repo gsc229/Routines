@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import DaySection from './DaySection'
-import {weekStyles, dayStyles} from '../calendar/styles'
+import {dayStyles} from '../calendar/styles'
 import moment from 'moment'
 import fontSizeClamp from '../../utils/clampBuilder'
 
@@ -9,7 +9,6 @@ const ScheduleWeek = ({
   week,
   datesSetGroups,
   routinesEndDates,
-  userRoutines,
   routineNamesColorsStartDates,
   isSingleRoutine=false,
   handleDayClick,
@@ -37,7 +36,7 @@ const ScheduleWeek = ({
     })
 
     routineIdKeys
-    .map((idKey, idx) => {
+    .forEach((idKey, idx) => {
       const formattedStart = moment.utc(routineNamesColorsStartDates[idKey].start_date).format('MM-DD-YYYY')
 
       if(formattedDay === formattedStart){

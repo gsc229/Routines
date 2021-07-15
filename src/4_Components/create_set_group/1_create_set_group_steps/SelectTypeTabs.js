@@ -87,20 +87,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetGroupForm)
-   
-      {/* <Tabs
-      className='set-group-type-tab-btns'
-      variant= 'pills'
-      
-      onSelect={(type) => localWritingSetGroup('set_group_type',type)}
-      activeKey={set_group_type}>
-        {setGroupTypes.map(type=>
-        <Tab
-        disabled={currentStep !== 'choose-type'}
-        key={type}
-        title={type}
-        eventKey={type}>
-        <CreateSetGroupSteps />
-        </Tab>
-        )}
-      </Tabs> */}

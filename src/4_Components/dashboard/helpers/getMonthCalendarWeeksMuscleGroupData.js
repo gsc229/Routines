@@ -50,7 +50,7 @@ export const getMonthCalendarWeeksMuscleGroupData = (exSets=[{}], muscleGroups=[
     }
   })
 
-  Object.keys(muscleGroupSets).map(muscleGroup => {
+  Object.keys(muscleGroupSets).forEach(muscleGroup => {
     const dataObject = muscleGroupSets[muscleGroup].data 
     muscleGroupSets[muscleGroup].data = Object.keys(dataObject).map(datum => dataObject[datum])
   })

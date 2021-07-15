@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {minAndMaxAllowedExercises} from '../createSetGroupHelpers'
 import {localWritingCreateSetGroupData} from '../../../1_Actions/setGroupActions'
 import { removeFromCurrentExerciseSetsByExerciseID, localBulkWriteExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import {Droppable} from 'react-beautiful-dnd'
@@ -8,7 +7,6 @@ import BankCardDraggable from './BankCardDraggable'
 
 
 const BankCardDropZone = ({
-  currentSetGroup,
   droppableId='bank-card-drop-zone',
   direction='horizontal',
   zoneContainerIndex,

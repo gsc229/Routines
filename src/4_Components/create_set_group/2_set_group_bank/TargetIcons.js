@@ -1,7 +1,7 @@
 import React from 'react'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import ToolTip from 'react-bootstrap/Tooltip'
-import {DistanceIcon, WeightIcon, HashIcon, TimeIcon, SwimLapsIcon, RepsIcon} from '../../icons/Icons'
+import {DistanceIcon, WeightIcon, TimeIcon, SwimLapsIcon, RepsIcon} from '../../icons/Icons'
 
 const TargetIcons = ({exerciseSet}) => {
 

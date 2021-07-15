@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {setCurrentSetGroups} from '../../1_Actions/setGroupActions'
 import moment from 'moment'
 import buildCalendar from './build'
-import {dayStyles, beforeToday, weekStyles} from './styles'
 import mapSetGroupsToDates from './mapRoutinesToDates'
 import CalendarHeader from './CalendarHeader'
 import RoutineColorLegend from './RoutineColorLegend'
@@ -13,7 +12,6 @@ import {useWindowSize} from '../../custom_hooks/useWindowSize'
 const SingleRoutineCalendar = ({
   className, 
   routine,
-  isSingleRoutine=true,
   routineNamesColorsStartDates,
   userRoutines,
   setCurrentSetGroups

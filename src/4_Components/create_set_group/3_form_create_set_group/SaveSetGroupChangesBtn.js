@@ -17,7 +17,7 @@ export const SaveSetGroupChangesBtn = ({
  
   const handleSaveChanges = async () => {
 
-    const saveChagnesResponse = await saveSetGroupChanges(currentSetGroup._id, currentSetGroup)
+    await saveSetGroupChanges(currentSetGroup._id, currentSetGroup)
     setChangesSaved(true)
   }
 

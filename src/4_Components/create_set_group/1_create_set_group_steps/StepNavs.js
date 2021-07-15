@@ -16,7 +16,6 @@ export const StepNavs = ({
   currentSetGroup,
   createSetGroupData,
   showNextBtn=true,
-  showPrevBtn=true,
   localWritingCreateSetGroupData,
   crudingSetGroup
 }) => {
@@ -52,7 +51,7 @@ export const StepNavs = ({
     }
   }
 
-  const prevStep = {
+  /* const prevStep = {
     "preview-set-group": {
       step: "enter-info",
       text: `Back to ${set_group_type} Set Info`
@@ -69,7 +68,7 @@ export const StepNavs = ({
       step: "choose-type",
       text: ""
     }
-  }
+  } */
 
 
   return (

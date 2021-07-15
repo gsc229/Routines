@@ -15,7 +15,6 @@ export const AttachExerciseToSetGroupCard = ({
   
   const [showAddedAlert, setShowAddedAlert] = useState(false)
   const selected = currentExerciseSets.find(exSet => exSet.exercise._id === exercise._id)
-  const count = currentExerciseSets.reduce((counter, exSet) => exSet.exercise._id === exercise._id ? counter += 1 : counter, 0)
   const indexes = []
   currentExerciseSets.forEach((exSet, index) => {if(exSet.exercise._id === exercise._id) indexes.push(index + 1)} )
   

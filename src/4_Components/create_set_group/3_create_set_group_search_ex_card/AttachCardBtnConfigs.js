@@ -44,7 +44,7 @@ export const AddRemoveBtnConfigs = ({
 
   const {set_group_type, routine, week, user} = currentSetGroup
 
-  const compoud_set_groups = ["Super", "Super - Antagonist", "Super - Compound", "Super - Tri", "Super - Giant", "Circuit"]
+  //const compoud_set_groups = ["Super", "Super - Antagonist", "Super - Compound", "Super - Tri", "Super - Giant", "Circuit"]
 
   const exIsChosen = currentExerciseSets.find(exSet => exSet.exercise._id === exercise._id) 
 
