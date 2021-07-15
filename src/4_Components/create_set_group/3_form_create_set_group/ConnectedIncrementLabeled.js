@@ -30,12 +30,12 @@ export const ConnectedIncrementLabeled = ({
   
   useEffect(() => {
     localWritingCreateSetGroupData(`${incrementField}_increase`, 10)
-  }, [])
+  }, [localWritingCreateSetGroupData, incrementField])
 
   useEffect(()=>{
-    if(!createSetGroupData[`percent_${incrementField}_increase`] && !createSetGroupData[`${incrementField}_increase`]){
+    /* if(!createSetGroupData[`percent_${incrementField}_increase`] && !createSetGroupData[`${incrementField}_increase`]){
       localWritingCreateSetGroupData(`${incrementField}_increase`, 10)
-    }
+    } */
     if(increaseMethod.key === `percent_${incrementField}_increase`){
       localWritingCreateSetGroupData(increaseMethod.key, increaseMethod.value)
       localWritingCreateSetGroupData(`${incrementField}_increase`, 0)
@@ -44,7 +44,7 @@ export const ConnectedIncrementLabeled = ({
       localWritingCreateSetGroupData(`percent_${incrementField}_increase`, 0) 
     }
 
-  },[increaseMethod])
+  },[increaseMethod, incrementField, localWritingCreateSetGroupData])
 
   return (
     <Form.Group>

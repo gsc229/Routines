@@ -54,9 +54,9 @@ export const ConnectedDecrementLabeled = ({
   }, []) */
 
   useEffect(()=>{
-    if(!createSetGroupData[`percent_${decrementField}_decrease`] && !createSetGroupData[`${decrementField}_decrease`]){
+    /* if(!createSetGroupData[`percent_${decrementField}_decrease`] && !createSetGroupData[`${decrementField}_decrease`]){
       localWritingCreateSetGroupData(`${decrementField}_decrease`, Math.floor(maxDec/10))
-    }
+    } */
     if(decreaseMethod.key === `percent_${decrementField}_decrease`){
       localWritingCreateSetGroupData(decreaseMethod.key, decreaseMethod.value)
       localWritingCreateSetGroupData(`${decrementField}_decrease`, 0)
@@ -65,7 +65,7 @@ export const ConnectedDecrementLabeled = ({
       localWritingCreateSetGroupData(`percent_${decrementField}_decrease`, 0) 
     }
 
-  },[decreaseMethod])
+  },[decreaseMethod, decrementField, localWritingCreateSetGroupData, maxDec])
 
   return (
     <Form.Group>

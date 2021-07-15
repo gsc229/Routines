@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import {pathConstructor} from './pathConstructor'
@@ -50,12 +50,7 @@ export const CurrentSetGroups = ({
     setCurrentSetGroup(setGroup)
     setCurrentExerciseSets(setGroupExSets)
     setCurrentExerciseSet(firstSet)
-
   }
-
-  useEffect(() => {
-    setCurrentPage('all-set-groups')
-  }, [])
 
   return (
     <div className='current-sets'>
@@ -78,7 +73,6 @@ export const CurrentSetGroups = ({
 
         )}
       </div>
-      {/* {isDev && <p style={{color: 'white'}}>{JSON.stringify(currentSetGroups, null, 2)}</p>} */}
     </div>
   )
 }

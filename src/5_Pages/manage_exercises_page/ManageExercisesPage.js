@@ -5,7 +5,6 @@ import {userExercisesQuery, clearCurrentExercise} from '../../1_Actions/exercise
 import LayoutOne from '../../6_Layouts/layout_one/LayoutOne'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-//import ExerciseAccordion from '../../4_Components/exercise/accordion_exercise/ExerciseAccordion'
 import ExerciseCard from '../../4_Components/exercise/card_exercise/ExerciseCard'
 import {FaRegHandPointLeft} from 'react-icons/fa'
 
@@ -39,7 +38,6 @@ export const ManageExercisesPage = ({
         </div>
         <Link to='/browse-exercises'>Search for more exercises form other members <FaRegHandPointLeft /> </Link>
         <div className="exercise-bank">
-          {/* <ExerciseAccordion /> */}
           {!userExercises.length && <p>You currently don't have any exercises. Browse Exercises or Create Your Own</p>}
           {userExercises.length > 0 && userExercises.map(exercise => <ExerciseCard key={exercise._id} exercise={exercise} />)}
         </div>

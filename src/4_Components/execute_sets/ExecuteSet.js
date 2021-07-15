@@ -101,6 +101,7 @@ export const ExecuteSet = ({
       style={{display: 'flex'}}
       className='update-success-container'>
         <img
+        alt="success"
         style={{margin: 'auto', maxWidth: `${width - 50}px`}}
         src={successGifLinks[Math.floor(Math.random() * successGifLinks.length)]}></img>
       </div>}

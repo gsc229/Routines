@@ -28,7 +28,7 @@ export const StepNavs = ({
     if(mode !== 'editing' && currentSetGroup._id){
       localWritingCreateSetGroupData('mode', 'editing')
     }
-  }, [])
+  }, [mode, currentSetGroup, localWritingCreateSetGroupData])
 
   useEffect(() => {
     if(!crudingSetGroup && changesSaved){

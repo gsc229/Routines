@@ -20,16 +20,16 @@ export const RoutineColorLegend = ({
   useEffect(() => {
     if(isSingleRoutine && currentRoutine && currentRoutine._id){
       setInitialNamesColors({ [currentRoutine._id]: routineNamesColorsStartDates[currentRoutine._id] })
-    } else{
-      setInitialNamesColors(routineNamesColorsStartDates)
-    }
+    } 
 
-  }, [showPicker])
+  }, [showPicker, currentRoutine, isSingleRoutine, routineNamesColorsStartDates])
 
   
   const persistColorChanges = async(routineId) => {
     if(initialNamesColors[routineId].color !== routineNamesColorsStartDates[routineId].color){
+      
       const saveColorResponse =  await saveRoutineChanges(routineId, {color: routineNamesColorsStartDates[routineId].color })
+      
       if(!saveColorResponse.success){
         return changeColor({
           ...initialNamesColors,

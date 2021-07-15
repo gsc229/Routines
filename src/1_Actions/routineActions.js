@@ -109,6 +109,7 @@ export const createNewRoutine = (newRoutine) => dispatch => {
 }
 
 export const saveRoutineChanges = (routineId, updates) => dispatch => {
+  
   dispatch({type: constants.UPDATING_ROUTINE})
   return updateRoutine(routineId, updates)
   .then(response => {

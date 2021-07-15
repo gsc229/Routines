@@ -28,7 +28,7 @@ export const CreateSetGroupSteps = ({
 
     clearCurrentExerciseSet()
     clearExerciseSearchResults()
-  }, [])
+  }, [clearExerciseSearchResults, clearCurrentExerciseSet, currentExerciseSets.length, localWritingCreateSetGroupData])
 
   return (
     <div className='create-set-group-steps'>

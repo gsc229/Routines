@@ -22,7 +22,7 @@ const MuscleGroupSelector = ({
     setSelectedValues(newSelecedValues)
     
 
-  }, [selectedMuscleGroups, setSelectedMuscleGroups])
+  }, [selectedMuscleGroups, setSelectedMuscleGroups, muscleGroupList])
 
   
   

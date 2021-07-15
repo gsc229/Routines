@@ -13,7 +13,7 @@ export const SgNameInputForm = ({
 }) => {
 
   const [useAutoGenName, setUseAutoGen] = useState(false)
-
+  
   const setGroupType = currentSetGroup.set_group_type
   const firstThreeNames = []
 
@@ -29,17 +29,14 @@ export const SgNameInputForm = ({
 
   useEffect(() => {
 
-    if(!currentSetGroup.name || currentSetGroup.name.trim() === autoNameString.trim()) setUseAutoGen(true)
-
     if(useAutoGenName){
       localWritingSetGroup('name', autoNameString)
     }
-    if(!currentSetGroup.name && currentExerciseSets.length){
+    if(!currentSetGroup.name && currentExerciseSets.length && useAutoGenName){
       localWritingSetGroup('name', autoNameString)
     }
-  }, [currentExerciseSets, setGroupType])
-
-
+    
+  }, [currentExerciseSets, setGroupType, autoNameString, currentSetGroup.name, localWritingSetGroup, currentExerciseSets.length, useAutoGenName])
 
   const handlChooseAutoGen = () => {
     setUseAutoGen(!useAutoGenName)

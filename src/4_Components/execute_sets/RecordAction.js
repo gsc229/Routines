@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import {saveExerciseSetChanges, setCurrentExerciseSet, localWritingExerciseSet} from '../../1_Actions/exerciseSetActions'
 import Button from 'react-bootstrap/Button'
@@ -8,7 +8,6 @@ export const RecordInputs = ({
   currentExerciseSet,
   localWritingExerciseSet,
   saveExerciseSetChanges,
-  setCurrentExerciseSet,
   userRoutines,
   targets, 
   targetsToActuals,
@@ -18,11 +17,8 @@ export const RecordInputs = ({
 }) => {
 
   const [editingActual, setEditingActual] = useState(null) 
-  const [originalActuals, setOriginalActuals] = useState([])
 
-  useEffect(() => {
-    setOriginalActuals(getOriginalActuals())
-  }, [targets])
+  
 
   const targetsEqualActuals = () => {
     for(let i = 0; i < targets.length; i++){
@@ -33,18 +29,6 @@ export const RecordInputs = ({
     return true
   }
 
-  const getOriginalActuals = () => {
-    const originals = []
-    targets.forEach(target => {
-      const actualObj = targetsToActuals[target.field_name]
-      originals.push(actualObj)
-    })
-    return originals
-  }
-
-  
-
-  
 
   const handleSubmit = async() => {
     const updateResult = await saveExerciseSetChanges(currentExerciseSet._id, currentExerciseSet)
@@ -58,41 +42,7 @@ export const RecordInputs = ({
 
   }
 
-  const handleCancel = () => {
-    const revertedSet = {...currentExerciseSet}
-
-    for(const actual of originalActuals){
-      if(actual.value === 'not recorded') actual.value = null
-      revertedSet[actual.field_name] = actual.value
-    }
-
-    setCurrentExerciseSet(revertedSet)
-    setEditingActual(null)
-
-  }
-
-  /* const actualsComplete = () => {
-
-    for(const target in targetsToActuals){
-      if(targetsToActuals[target].value === 'not recorded'){
-        return false
-      }
-    }
-    return true
-  } */
-
-  const showActualsHaveChanged = () => {
-
-    for(const actual of originalActuals){
-      const currentSetActual = currentExerciseSet[actual.field_name] 
-      console.log({currentSetActual, value: actual.value})
-      if(actual.value !== currentSetActual){
-        return true
-      }
-    }
-
-    return false
-  }
+  
 
  const handleAutoFill = () => {
    targets.forEach(target => {
@@ -124,15 +74,6 @@ export const RecordInputs = ({
         className='submit-all-btn'>
           Submit
         </Button>
-
-        {/* <Button
-        size='sm'
-        //disabled={!showActualsHaveChanged()}
-        onClick={handleCancel}
-        variant='outline-danger'
-        className='submit-all-btn'>
-          Cancel
-        </Button> */}
 
       </div>
     

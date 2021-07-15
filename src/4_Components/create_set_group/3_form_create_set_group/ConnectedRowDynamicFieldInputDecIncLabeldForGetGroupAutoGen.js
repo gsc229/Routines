@@ -11,11 +11,9 @@ import ConnectedDynamicFiledInputLabeled from './ConnectedInputDynamicFieldLabel
 
 const ConnectedRowDynamicFiledInputForSetGroupAutoGen = ({
   localWritingCreateSetGroupData,
-  createSetGroupData,
   placeholderText='optional',
   startingField,
   fieldLabelText,
-  changeOptions,
   incrementLabelText,
   decrementLabelText,
   showLabel,
@@ -50,7 +48,7 @@ const ConnectedRowDynamicFiledInputForSetGroupAutoGen = ({
       localWritingCreateSetGroupData(`${decIncField}_increase`, 0)
     }
 
-  }, [changeOption])
+  }, [changeOption, decIncField, localWritingCreateSetGroupData])
 
   return (
     <Row>
