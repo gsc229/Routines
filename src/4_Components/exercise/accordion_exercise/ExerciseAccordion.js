@@ -56,7 +56,7 @@ export const ExercisesAccordion = ({
   }
 
   const editInCreatePage = (exercise) => {
-    console.log({exercise})
+    //console.log({exercise})
     if(currentExercise._id !== exercise._id) setCurrentExercise(exercise)
     history.push('/create-exercise')
   }
