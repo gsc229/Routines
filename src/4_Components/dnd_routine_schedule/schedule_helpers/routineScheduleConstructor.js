@@ -28,7 +28,7 @@ export const routineScheduleConstructor = (currentRoutineSetGroups, currentWeeks
     }) 
 
     
-    Object.keys(routineSchedule).map(key => {
+    Object.keys(routineSchedule).forEach(key => {
       for(let j = 1; j <= 7; j++ ){
         routineSchedule[key][j] = {
           day_name: dayKey[j],

@@ -1,12 +1,10 @@
-import React, {useState, useEffect, useLayoutEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import {useWindowSize} from '../../../custom_hooks/useWindowSize'
-import {isDev} from '../../../config/config'
 import { connect } from 'react-redux'
 import {localBulkWriteExerciseSets, bulkWriteExerciseSets} from '../../../1_Actions/exerciseSetActions'
 import BankCardDropZone from './BankCardDropZone'
 import {DragDropContext} from 'react-beautiful-dnd'
 import {onBankCardDragEnd} from './onBankCardDragEng'
-import DevComponent from './DevComponent'
 
 export const ChosenExercisesBankDND = ({
   currentExerciseSets,
@@ -15,7 +13,7 @@ export const ChosenExercisesBankDND = ({
   bulkWriteExerciseSets
 }) => {
   
-  const {height, width} = useWindowSize()
+  const { width } = useWindowSize()
   const [dropZoneSets, setDropZoneSets] = useState([])
 
   const [dndDimensions, setDndDimensions] = useState({

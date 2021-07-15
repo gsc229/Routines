@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { connect } from 'react-redux'
 import {setCurrentSetGroup} from '../../1_Actions/setGroupActions'
-import {numberToDay} from '../../4_Components/dnd_routine_schedule/schedule_helpers/routineScheduleConstructor'
 import Card from 'react-bootstrap/Card'
 import {BsGrid3X3Gap, BsEye} from 'react-icons/bs'
 import {RiDeleteBin5Line} from 'react-icons/ri'

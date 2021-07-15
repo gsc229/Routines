@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
-import {isDev} from '../../config/config'
 import { useHistory, useParams } from 'react-router-dom'
 import {pathConstructor} from './pathConstructor'
 import { setCurrentRoutine } from '../../1_Actions/routineActions'

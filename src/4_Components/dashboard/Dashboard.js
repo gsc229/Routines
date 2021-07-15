@@ -4,11 +4,9 @@ import moment from 'moment'
 import mapSgsToDates from '../calendar/mapRoutinesToDates'
 import { combineExSets } from './helpers/combineExSets'
 import { getMonthCalendarWeeksMuscleGroupData } from './helpers/getMonthCalendarWeeksMuscleGroupData'
-import {muscleGroupList, muscleGroupColorObj} from '../shared_helpers_and_variables/muscleGroupNameAndColorList'
+import {muscleGroupList} from '../shared_helpers_and_variables/muscleGroupNameAndColorList'
 import MuscleGroupTotalsTab from './MuscleGroupTotalsTab'
 import SetBreakDownTab from './SetBreakDownTab'
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
 
 export const Dashboard = ({
   userRoutines  
@@ -18,7 +16,6 @@ export const Dashboard = ({
     return field.split('_').map(word => word[0].toUpperCase() + word.slice(1, word.length)).join(" ")
   }
   
-  const [tabKey, setTabKey] = useState('set-breakdown')
   const [combinedExSets, setCombinedExSets] = useState([])
   const [selectedMuscleGroups, setSelectedMuscleGroups] = useState(muscleGroupList)
   const [dateMaps, setDateMaps] = useState({

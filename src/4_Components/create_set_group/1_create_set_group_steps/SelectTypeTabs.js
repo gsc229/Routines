@@ -7,7 +7,6 @@ export const SetGroupForm = ({
   currentSetGroup,
   setGroupTypes,
   localWritingSetGroup,
-  saveSetGroupChanges,
   currentStep,
   currentRoutine
 }) => {

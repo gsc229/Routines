@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import {saveSetGroupChanges} from '../../../1_Actions/setGroupActions'
 import Button from 'react-bootstrap/Button'

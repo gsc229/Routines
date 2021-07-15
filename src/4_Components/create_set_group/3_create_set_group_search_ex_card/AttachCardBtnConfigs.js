@@ -31,7 +31,6 @@ export const AddRemoveBtnConfigs = ({
   localBulkWriteExerciseSets,
   bulkWriteExerciseSets,
   removeFromCurrentExerciseSetsByExerciseID,
-  createNewExerciseSets,
   createSingleExerciseSet,
   showNextStepBtn,
   showNextStepBtnOnCardBtn,

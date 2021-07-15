@@ -29,7 +29,7 @@ export const onBankCardDragEnd = async (result, localBulkWriteExerciseSets, curr
   copyOfAllSets
   .forEach((set, index) => {
     set.order = index
-    if(mode=='editing'){
+    if(mode ==='editing'){
       updates.push({
         updateOne: {
           filter: {_id: set._id},
@@ -42,7 +42,7 @@ export const onBankCardDragEnd = async (result, localBulkWriteExerciseSets, curr
   localBulkWriteExerciseSets(copyOfAllSets)
 
   console.log({mode, updates})
-  if(mode==='editing'){
+  if(mode ==='editing'){
     // if it fails revert back to previous order an show an error message
     const setGroupId = currentExerciseSets[0].set_group
     const response = await bulkWriteExerciseSets(updates, {set_group: setGroupId})

@@ -21,9 +21,7 @@ export const createSetGroupLocal = (
   const exerciseSets = []
   
   const {
-    is_compound,
     total_sets, 
-    rep_max, 
     starting_weight, 
     starting_reps,
     starting_time,

@@ -4,17 +4,12 @@ import {IoDuplicateOutline} from 'react-icons/io5'
 import {clearErrorMessage} from '../../1_Actions/userActions'
 import {createNewSetGroup} from '../../1_Actions/setGroupActions'
 import {createNewExerciseSets} from '../../1_Actions/exerciseSetActions'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import ToolTip from 'react-bootstrap/Tooltip'
 
 export const DuplicateHereBtn = ({
   set_group,
   currentRoutineSets,
   createNewExerciseSets,
   createNewSetGroup,
-  clearErrorMessage,
-  set_group_ERROR,
-  exercise_set_ERROR
 }) => {
 
   const duplicate = async () => {
@@ -37,7 +32,7 @@ export const DuplicateHereBtn = ({
             set_group: newSetGroupResponse.data._id
           }
         })
-        const newSetsResponse = await createNewExerciseSets(newSets)
+        await createNewExerciseSets(newSets)
     }
   }
 

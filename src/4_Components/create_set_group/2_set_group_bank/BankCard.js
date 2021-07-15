@@ -88,7 +88,7 @@ export const BankCard = ({
     copySets.splice(index, 0, exerciseSet)
 
     if(createSetGroupData.mode === 'editing'){
-      const createResponse = await createSingleExerciseSet(copySet)
+      await createSingleExerciseSet(copySet)
     } else{
       localBulkWriteExerciseSets(copySets)
     }

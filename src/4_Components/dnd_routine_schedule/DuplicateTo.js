@@ -38,7 +38,7 @@ export const DuplicateTo = ({
             set_group: newSetGroupResponse.data._id
           }
         })
-        const newSetsResponse = await createNewExerciseSets(newSets)
+        await createNewExerciseSets(newSets)
     }
   }
 

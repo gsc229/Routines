@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setCurrentWeek, setSelectedWeekNumbers,  bulkWriteWeeks, clearCurrentWeek} from '../../1_Actions/weekActions'
+import { setCurrentWeek, setSelectedWeekNumbers,  bulkWriteWeeks, clearCurrentWeek } from '../../1_Actions/weekActions'
 import { bulkWriteSetGroups } from '../../1_Actions/setGroupActions'
 import {bulkWriteExerciseSets} from '../../1_Actions/exerciseSetActions'
 import {fetchFlattenedRoutine} from '../../1_Actions/routineActions'
@@ -24,10 +24,6 @@ export const WeekHeader = ({
   currentRoutineSetGroups,
   currentRoutineSets,
   setCurrentWeek,
-  crudingWeek,
-  crudingSetGroup,
-  setSelectedWeekNumbers,
-  selectedWeekNumbers,
   fetchFlattenedRoutine,
   clearCurrentWeek
 }) => {
@@ -209,7 +205,7 @@ export const WeekHeader = ({
       }
     })
 
-    const weekBulkWriteResults = await bulkWriteWeeks(currentWeeksUpdates, routineId)
+    await bulkWriteWeeks(currentWeeksUpdates, routineId)
   }
 
 

@@ -72,7 +72,7 @@ export const getSetComboType = (setGroupType) => {
 
 export const canMoveToPreview = (setGroupType, createSetGoupData, currentExerciseSets) => {
 
-  const {rep_max, starting_weight, percent_weight_decrease, weight_decrease, total_sets} = createSetGoupData
+  const { starting_weight, total_sets} = createSetGoupData
 
 
   switch(setGroupType){

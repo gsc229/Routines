@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react'
-import {useHistory} from 'react-router-dom'
+import React from 'react'
 import { connect } from 'react-redux'
 import {clearErrorMessage} from '../../../1_Actions/userActions'
 import {createNewSetGroup, fullResetCreateSetGroup} from '../../../1_Actions/setGroupActions'
@@ -12,12 +11,10 @@ import {GiBiceps} from 'react-icons/gi'
 export const CreateSetGroupBtn = ({
   changesSaved, 
   setChangesSaved,
-  currentRoutine,
   currentSetGroup,
   currentExerciseSets,
   createNewSetGroup,
   createNewExerciseSets,
-  fullResetCreateSetGroup,
   crudingSetGroup
 }) => {
 
